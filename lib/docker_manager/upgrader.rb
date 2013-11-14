@@ -22,7 +22,7 @@ class DockerManager::Upgrader
     else
       log("Warning: Sidekiq was not found")
     end
-    pid = `ps aux  | grep unicorn_launcher | grep -v grep | awk '{ print $2 }'`.strip
+    pid = `ps aux  | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`.strip
     if pid.to_i > 0
       log("Restarting unicorn")
       Process.kill("USR2", pid.to_i)
