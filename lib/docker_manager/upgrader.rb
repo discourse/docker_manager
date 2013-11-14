@@ -15,6 +15,13 @@ class DockerManager::Upgrader
     run("bundle install --deployment --without test --without development")
     run("bundle exec rake db:migrate")
     run("bundle exec rake assets:precompile")
+    sidekiq_pid = `ps aux | grep sidekiq.*busy | grep -v grep | awk '{ print $2 }'`.strip.to_i
+    if sidekiq_pid > 0
+      Process.kill("TERM", sidekiq_pid)
+      log("Killed sidekiq")
+    else
+      log("Warning: Sidekiq was not found")
+    end
     pid = `ps aux  | grep unicorn_launcher | grep -v grep | awk '{ print $2 }'`.strip
     if pid.to_i > 0
       log("Restarting unicorn")
