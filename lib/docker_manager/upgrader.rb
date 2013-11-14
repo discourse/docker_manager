@@ -24,7 +24,7 @@ class DockerManager::Upgrader
     end
     pid = `ps aux  | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`.strip
     if pid.to_i > 0
-      log("Restarting unicorn")
+      log("Restarting unicorn pid: #{pid}")
       Process.kill("USR2", pid.to_i)
       log("DONE")
     else
