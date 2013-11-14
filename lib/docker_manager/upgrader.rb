@@ -12,6 +12,7 @@ class DockerManager::Upgrader
 
   def upgrade
     run("cd #{path} && git pull")
+    run("bundle install --deployment --without test --without development")
     run("bundle exec rake db:migrate")
     run("bundle exec rake assets:precompile")
     pid = `ps aux  | grep unicorn_launcher | grep -v grep | awk '{ print $2 }'`.strip
