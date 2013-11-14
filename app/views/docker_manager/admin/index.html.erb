@@ -1,4 +1,9 @@
 <html>
+<head>
+<style>
+  #ps, #log { width: 1000px; max-height: 800px; height: 800px; overflow: auto; }
+</style>
+</head>
 <body>
 <h2>Discourse</h2>
 <p>
@@ -16,7 +21,17 @@
 </ul>
 
 <h2>Processes</h2>
+<pre id="ps"></pre>
 
 <h2>Log</h2>
+<div id="log">
+</div>
+
+<div id="main"></div>
+
+  <%= javascript_include_tag "preload_store" %>
+  <%= javascript_include_tag "locales/#{I18n.locale}" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "docker_manager" %>
 </body>
 </html>
