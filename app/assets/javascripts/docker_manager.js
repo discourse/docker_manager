@@ -30,6 +30,14 @@ $(function(){
   };
   ps();
   setInterval(ps, 5000);
+
+  Discourse.csrfToken = $('meta[name=csrf-token]').attr('content');
+
+  $.ajaxPrefilter(function(options, originalOptions, xhr) {
+    if (!options.crossDomain) {
+      xhr.setRequestHeader('X-CSRF-Token', Discourse.csrfToken);
+    }
+  });
 });
 
 

@@ -28,7 +28,7 @@ class DockerManager::GitRepo
   end
 
   def commits_behind
-    run("rev-list --count #{tracking_branch}..HEAD").to_i
+    run("rev-list --count HEAD..#{tracking_branch}").to_i
   end
 
   def url

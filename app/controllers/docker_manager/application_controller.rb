@@ -4,6 +4,13 @@ module DockerManager
     include CurrentUser
 
     before_filter :ensure_admin
+    protect_from_forgery
+
+    def handle_unverified_request
+      super
+      clear_current_user
+      render text: "['BAD CSRF']", status: 403
+    end
 
     protected
 
