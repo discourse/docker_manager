@@ -38,7 +38,10 @@ class DockerManager::Upgrader
   def run(cmd)
     log "$ #{cmd}"
     msg = ""
-    IO.popen("cd #{Rails.root} && RUBYLIB= BUNDLE_GEMFILE= BUNDLE_BIN_PATH= RUBYOPT= RAILS_ENV=production #{cmd} 2>&1") do |line|
+    clear_env = Hash[*ENV.map{|k,v| [k,nil]}.reject{|k,v| ["PWD","HOME","SHELL","PATH"].include?(k)}.flatten]
+    clear_env["RAILS_ENV"] = "production"
+
+    IO.popen(clear_env, "cd #{Rails.root} && #{cmd} 2>&1") do |line|
       line = line.read
       log(line)
       msg << line << "\n"
