@@ -37,12 +37,16 @@ class DockerManager::Upgrader
 
   def run(cmd)
     log "$ #{cmd}"
+    msg = ""
     IO.popen("cd #{Rails.root} && RUBYLIB= BUNDLE_GEMFILE= BUNDLE_BIN_PATH= RUBYOPT= RAILS_ENV=production #{cmd} 2>&1") do |line|
-      log(line.read)
+      line = line.read
+      log(line)
+      msg << line << "\n"
     end
 
     unless $?.success?
       STDERR.puts("FAILED: #{cmd}")
+      STDERR.msg(msg)
       raise RuntimeError
     end
   end
