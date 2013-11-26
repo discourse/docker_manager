@@ -37,7 +37,7 @@ class DockerManager::Upgrader
 
   def run(cmd)
     log "$ #{cmd}"
-    IO.popen("cd #{Rails.root} && RUBYOPT= RAILS_ENV=production #{cmd} 2>&1") do |line|
+    IO.popen("cd #{Rails.root} && RUBYLIB= BUNDLE_GEMFILE= BUNDLE_BIN_PATH= RUBYOPT= RAILS_ENV=production #{cmd} 2>&1") do |line|
       log(line.read)
     end
 
