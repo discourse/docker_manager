@@ -18,5 +18,27 @@ module DockerManager
     def ps
       render text: `ps aux --sort -rss`
     end
+
+    def runaway_cpu
+      Thread.new do
+        a = 1
+        while true
+         a += 1
+        end
+      end
+      render text: "Killing CPU on #{Process.pid}"
+    end
+
+    def runaway_mem
+      Thread.new do
+        a = []
+        while true
+          a << Array.new(50_000_000/8)
+          sleep 30
+        end
+      end
+      render text: "Leaking memory on #{Process.pid}"
+    end
+
   end
 end

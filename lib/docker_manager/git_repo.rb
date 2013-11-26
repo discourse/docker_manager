@@ -37,6 +37,8 @@ class DockerManager::GitRepo
       # hack so it works with git urls
       url = "https://github.com/#{url.split(":")[1]}"
     end
+
+    url
   end
 
   protected
