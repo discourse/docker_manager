@@ -30,12 +30,20 @@ class DockerManager::Upgrader
     else
       log("Did not find unicorn launcher")
     end
+  rescue
+    STDERR.puts("Docker Manager: FAILED TO UPGRADE")
+    raise
   end
 
   def run(cmd)
     log "$ #{cmd}"
     IO.popen("cd #{Rails.root} && #{cmd} 2>&1") do |line|
       log(line.read)
+    end
+
+    unless $?.success?
+      STDERR.puts("FAILED: #{cmd}")
+      raise RuntimeError
     end
   end
 
