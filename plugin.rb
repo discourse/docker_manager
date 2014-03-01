@@ -18,3 +18,5 @@ after_initialize do
     mount ::DockerManager::Engine, at: "/"
   end
 end
+
+register_asset "javascripts/admin/templates/version_checks.js.handlebars"
