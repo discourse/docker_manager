@@ -1,0 +1,5 @@
+en:
+  js:
+    docker:
+      upgrade: "Upgrades are performed by Docker."
+      perform_upgrade: "Click here to upgrade."

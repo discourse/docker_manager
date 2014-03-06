@@ -13,8 +13,9 @@ end
 Rails.configuration.assets.precompile += ['docker_manager.js']
 
 after_initialize do
-
   Discourse::Application.routes.append do
     mount ::DockerManager::Engine, at: "/"
   end
 end
+
+register_asset "javascripts/upgrade-header.js.handlebars"
