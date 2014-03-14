@@ -11,7 +11,9 @@ class DockerManager::Upgrader
   end
 
   def upgrade
-    run("cd #{path} && git pull")
+    # HEAD@{upstream} is just a fancy way how to say origin/master (in normal case)
+    # see http://stackoverflow.com/a/12699604/84283
+    run("cd #{path} && git fetch && git reset --hard HEAD@{upstream}")
     run("bundle install --deployment --without test --without development")
     run("bundle exec rake db:migrate")
     run("bundle exec rake assets:precompile")
