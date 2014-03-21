@@ -13,7 +13,7 @@ class DockerManager::Upgrader
   def upgrade
     run("cd #{path} && git pull")
     run("bundle install --deployment --without test --without development")
-    run("bundle exec rake db:migrate")
+    run("bundle exec rake multisite:migrate")
     run("bundle exec rake assets:precompile")
     sidekiq_pid = `ps aux | grep sidekiq.*busy | grep -v grep | awk '{ print $2 }'`.strip.to_i
     if sidekiq_pid > 0
