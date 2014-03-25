@@ -3,7 +3,7 @@
   Remote version: <a href="<%= repo.url %>"><%= repo.latest_origin_commit %></a> (<%= time_ago_in_words repo.latest_origin_commit_date %> ago)
   <% if repo.commits_behind > 0 %>
     commits behind: <%= repo.commits_behind %>
-    <button class="upgrade" action="" data-path="<%= repo.path %>">upgrade</button>
+    <button class="upgrade" action="" data-path="<%= repo.path %>">Upgrade Discourse</button>
   <% end %>
 <% else %>
     Not under source control.
