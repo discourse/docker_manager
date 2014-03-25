@@ -15,6 +15,8 @@ $(function(){
       data: { path: $(this).data("path") },
       dataType: "text",
       method: "POST"
+    }).then(function() {
+      alert("scroll to the bottom of your browser to watch the update");
     });
   });
 
