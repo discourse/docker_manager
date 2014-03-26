@@ -14,6 +14,7 @@ class DockerManager::Upgrader
     # HEAD@{upstream} is just a fancy way how to say origin/master (in normal case)
     # see http://stackoverflow.com/a/12699604/84283
     run("cd #{path} && git fetch && git reset --hard HEAD@{upstream}")
+    log("be patient, next steps might take a while...")
     run("bundle install --deployment --without test --without development")
     run("bundle exec rake multisite:migrate")
     run("bundle exec rake assets:precompile")
