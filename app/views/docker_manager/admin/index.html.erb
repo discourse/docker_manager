@@ -23,6 +23,16 @@
       <% end %>
     </ul>
 
+
+   <h2>Application Versions</h2>
+      <ul>
+        <% Discourse.app_info.each do |apps| %>
+        <li>
+          <%=apps %>
+        </li>
+      </ul>
+
+
     <h2>Processes</h2>
     <pre id="ps"></pre>
 
