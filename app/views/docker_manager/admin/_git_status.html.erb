@@ -1,6 +1,10 @@
 <% if repo.valid? %>
   Current version: <%= repo.latest_local_commit %> (<%= time_ago_in_words repo.latest_local_commit_date %> ago),
-  Remote version: <a href="<%= repo.url %>"><%= repo.latest_origin_commit %></a> (<%= time_ago_in_words repo.latest_origin_commit_date %> ago)
+  <% if repo.url.include? "github" %>
+    Remote version: <a href="<%= repo.url.gsub(".git", "") + "/compare/" + repo.latest_local_commit + "..." + repo.latest_origin_commit %>"><%= repo.latest_origin_commit %></a> (<%= time_ago_in_words repo.latest_origin_commit_date %> ago)
+  <% else %>
+    Remote version: <a href="<%= repo.url %>"><%= repo.latest_origin_commit %></a> (<%= time_ago_in_words repo.latest_origin_commit_date %> ago)
+  <% end %>
   <% if repo.commits_behind > 0 %>
     commits behind: <%= repo.commits_behind %>
     <button class="upgrade" action="" data-path="<%= repo.path %>"><%= upgrade_button_text %></button>
