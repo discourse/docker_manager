@@ -1,7 +1,7 @@
 $(function(){
   Discourse.MessageBus.start();
   Discourse.MessageBus.subscribe("/docker/log", function(message){
-    if(message == "DONE"){
+    if(message === "DONE"){
       $("button.upgrade").attr("disabled", false);
     } else {
       $("#log").append($("<pre>" + message + "<pre>"));

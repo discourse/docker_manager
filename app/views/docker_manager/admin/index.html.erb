@@ -29,11 +29,16 @@
     <h2>Log</h2>
     <div id="log"></div>
     <div id="main"></div>
-
-    <%= javascript_include_tag "preload_store" %>
-    <%= javascript_include_tag "locales/#{I18n.locale}" %>
-    <%= javascript_include_tag "vendor" %>
-    <%= javascript_include_tag "application" %>
+    <script>
+      Discourse = {};
+    </script>
+    <%= javascript_include_tag "jquery_include.js" %>
+    <%= javascript_include_tag "message-bus" %>
+    <script>
+      Discourse.MessageBus = window.MessageBus;
+      Discourse.ajax = $.ajax;
+      Discourse.MessageBus.start();
+    </script>
     <%= javascript_include_tag "docker_manager" %>
   </body>
 </html>
