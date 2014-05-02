@@ -31,6 +31,33 @@ define("docker-manager/components/progress-bar",
 
     });
   });
+define("docker-manager/components/x-console", 
+  ["exports"],
+  function(__exports__) {
+    "use strict";
+    __exports__["default"] = Em.Component.extend({
+      classNameBindings: [':logs'],
+
+      render: function(buffer) {
+        buffer.push(this.get('output'));
+      },
+
+      _outputChanged: function() {
+        Em.run.scheduleOnce('afterRender', this, '_scrollBottom');
+        this.rerender();
+      }.observes('output'),
+
+      _scrollBottom: function() {
+        if (this.get('followOutput')) {
+          this.$().scrollTop(this.$()[0].scrollHeight);
+        }
+      },
+
+      _scrollOnInsert: function() {
+        this._scrollBottom();
+      }.on('didInsertElement')
+    });
+  });
 define("docker-manager/components/x-tab", 
   ["exports"],
   function(__exports__) {
@@ -682,13 +709,14 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 define('docker-manager/templates/processes', ['exports'], function(__exports__){ __exports__['default'] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1;
+  var buffer = '', helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 
-  data.buffer.push("<h3>Processes</h3>\n\n<div class='logs'>");
-  stack1 = helpers._triageMustache.call(depth0, "output", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n");
+  data.buffer.push("<h3>Processes</h3>\n\n");
+  data.buffer.push(escapeExpression((helper = helpers['x-console'] || (depth0 && depth0['x-console']),options={hash:{
+    'output': ("output")
+  },hashTypes:{'output': "ID"},hashContexts:{'output': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "x-console", options))));
+  data.buffer.push("\n");
   return buffer;
   
 }); });
@@ -765,10 +793,12 @@ function program8(depth0,data) {
   data.buffer.push("\n\n");
   stack1 = helpers['if'].call(depth0, "upToDate", {hash:{},hashTypes:{},hashContexts:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n\n<div class='logs'>");
-  stack1 = helpers._triageMustache.call(depth0, "output", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</div>\n");
+  data.buffer.push("\n\n");
+  data.buffer.push(escapeExpression((helper = helpers['x-console'] || (depth0 && depth0['x-console']),options={hash:{
+    'output': ("output"),
+    'followOutput': (true)
+  },hashTypes:{'output': "ID",'followOutput': "BOOLEAN"},hashContexts:{'output': depth0,'followOutput': depth0},contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "x-console", options))));
+  data.buffer.push("\n");
   return buffer;
   
 }); });
