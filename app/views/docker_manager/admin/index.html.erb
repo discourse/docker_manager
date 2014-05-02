@@ -1,45 +1,21 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <%= csrf_meta_tags %>
-    <style>
-      #ps, #log { width: 1000px; max-height: 800px; height: 800px; overflow: auto; }
-    </style>
-  </head>
-  <body>
-    <h2>Discourse</h2>
-    <p>
-      <span style="color:red">You <i>must</i> manually refresh this page several times to get the latest version status. Yes, seriously.</span>
-    </p>
-    <p>
-      <%= render partial: 'git_status', locals: { repo: @main_repo, upgrade_button_text: "Upgrade Discourse" } %>
-    </p>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Docker Manager</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <h2>Plugins</h2>
-    <ul>
-      <% Discourse.plugins.each do |plugin| %>
-        <li>
-          <%= plugin.name %> - <%= render partial: 'git_status', locals: { repo: DockerManager::GitRepo.new(File.dirname(plugin.path)), upgrade_button_text: "Upgrade Plugin" } %>
-        </li>
-      <% end %>
-    </ul>
+  <%= javascript_include_tag "docker-manager-vendor" %>
+  <%= javascript_include_tag "docker-manager-app" %>
+  <%= javascript_include_tag "docker-manager-config" %>
+  <%= stylesheet_link_tag "docker-manager-app" %>
+</head>
+<body>
+  <script>
+    window.App = require('docker-manager/app')['default'].create(ENV.APP);
+  </script>
 
-    <h2>Processes</h2>
-    <pre id="ps"></pre>
-
-
-    <h2>Log</h2>
-    <div id="log"></div>
-    <div id="main"></div>
-    <script>
-      Discourse = {};
-    </script>
-    <%= javascript_include_tag "jquery_include.js" %>
-    <%= javascript_include_tag "message-bus.js" %>
-    <script>
-      Discourse.MessageBus = window.MessageBus;
-      Discourse.ajax = $.ajax;
-      Discourse.MessageBus.start();
-    </script>
-    <%= javascript_include_tag "docker_manager" %>
-  </body>
+</body>
 </html>

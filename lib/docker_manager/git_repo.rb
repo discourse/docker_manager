@@ -1,10 +1,23 @@
 # like Grit just very very minimal
 class DockerManager::GitRepo
-  attr_reader :path
+  attr_reader :path, :name
 
-  def initialize(path)
+  def initialize(path, name=nil)
     @path = path
+    @name = name
     @memoize = {}
+  end
+
+  def start_upgrading
+    $redis.setnx(upgrade_key, 1)
+  end
+
+  def stop_upgrading
+    $redis.del(upgrade_key)
+  end
+
+  def upgrading?
+    $redis.get(upgrade_key).present?
   end
 
   def valid?
@@ -41,7 +54,15 @@ class DockerManager::GitRepo
     url
   end
 
+  def update!
+    `cd #{path} && git remote update`
+  end
+
   protected
+
+  def upgrade_key
+    @upgrade_key ||= "upgrade:#{path}"
+  end
 
   def commit_date(commit)
     unix_timestamp = run('show -s --format="%ct" ' << commit).to_i
@@ -52,15 +73,7 @@ class DockerManager::GitRepo
     run "for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)"
   end
 
-  def ensure_updated
-    @updated ||= Thread.new do
-                   # this is a very slow operation, make it async
-                   `cd #{path} && git remote update`
-                 end
-  end
-
   def run(cmd)
-    ensure_updated
     @memoize[cmd] ||= `cd #{path} && git #{cmd}`.strip
   rescue => e
     p e

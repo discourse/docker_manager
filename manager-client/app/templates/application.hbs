@@ -1,0 +1,15 @@
+<header class="container">
+  {{#link-to 'index'}}<img src="/assets/images/docker-manager-ea64623b074c8ec2b0303bae846e21e6.png" class="logo">{{/link-to}}
+  <h1>{{#link-to 'index'}}Docker Manager{{/link-to}}</h1>
+</header>
+
+
+<div class="container">
+
+  <ul class="nav nav-tabs">
+    {{#x-tab route="index"}}Home{{/x-tab}}
+    {{#x-tab route="processes"}}Processes{{/x-tab}}
+  </ul>
+
+  {{outlet}}
+</div>

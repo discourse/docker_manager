@@ -1,0 +1,83 @@
+/* Put your CSS here */
+
+html{
+  margin: 20px;
+  overflow-y: scroll;
+  overflow-x: auto;
+}
+
+header {
+  img.logo {
+    width: 200px;
+    float: left;
+  }
+
+  a[href] {
+    text-decoration: none;
+    color: black;
+  }
+  h1 {
+    text-align: right;
+  }
+  clear: both;
+}
+
+div.logs {
+  margin-top: 20px;
+  overflow-x: scroll;
+  height: 400px;
+  white-space: pre;
+  font-family: monospace;
+  background-color: black;
+  color: #ddd;
+  padding: 10px;
+}
+
+table#repos {
+  margin-top: 10px;
+}
+
+h3.loading {
+  display: none;
+}
+
+.new-version {
+  h4 {
+    margin: 0 0 10px 0;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li.new-commits {
+    font-style: italic;
+  }
+
+  button {
+    display: block;
+    padding: 2px 5px;
+    margin: 10px 0 0px 0;
+  }
+}
+
+button.btn {
+  background: #00aaff;
+  color: white !important;
+  border-radius: 0;
+
+  &:hover {
+    background-color: #0081c2;
+  }
+}
+
+button.unlock {
+  float: right;
+  background-color: red;
+  &:hover {
+    background-color: #a00;
+  }
+}

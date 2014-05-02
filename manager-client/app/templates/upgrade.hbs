@@ -1,0 +1,26 @@
+<h3>Upgrade {{name}}</h3>
+
+{{progress-bar percent=percent}}
+
+{{#if complete}}
+  <p>Upgrade completed successfully!</p>
+  <p>Note: The web server restarts in the background. It's a good idea to wait 30 seconds or so
+     before refreshing your browser to see the latest version of the application.</p>
+{{/if}}
+
+{{#if failed}}
+  <p>Sorry, there wasn an error upgrading Discourse. Please check the logs.</p>
+{{/if}}
+
+{{#if upToDate}}
+  <p>{{name}} is at the newest version {{fmt-commit version url}}.</p>
+{{else}}
+  <div style='clear: both'>
+    <button {{action start}} {{bind-attr disabled="upgrading"}} class='btn'>{{upgradeButtonText}}</button>
+    {{#if upgrading}}
+      <button {{action resetUpgrade}} class="btn unlock">Reset Upgrade</button>
+    {{/if}}
+  </div>
+{{/if}}
+
+<div class='logs'>{{output}}</div>
