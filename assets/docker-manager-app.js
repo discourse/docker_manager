@@ -39,7 +39,9 @@ define("docker-manager/components/x-console",
       classNameBindings: [':logs'],
 
       render: function(buffer) {
-        buffer.push(this.get('output'));
+        if (!Em.isEmpty(this.get('output'))) {
+          buffer.push(this.get('output'));
+        }
       },
 
       _outputChanged: function() {

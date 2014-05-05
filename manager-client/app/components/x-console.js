@@ -2,7 +2,9 @@ export default Em.Component.extend({
   classNameBindings: [':logs'],
 
   render: function(buffer) {
-    buffer.push(this.get('output'));
+    if (!Em.isEmpty(this.get('output'))) {
+      buffer.push(this.get('output'));
+    }
   },
 
   _outputChanged: function() {
