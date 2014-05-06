@@ -211,6 +211,18 @@ define("docker-manager/controllers/upgrade",
 
     });
   });
+define("docker-manager/helpers/fmt-ago", 
+  ["exports"],
+  function(__exports__) {
+    "use strict";
+    __exports__["default"] = Em.Handlebars.makeBoundHelper(function(dt) {
+      if (Em.isEmpty(dt)) {
+        return new Handlebars.SafeString("&mdash;");
+      }
+
+      return moment(dt).fromNow();
+    });
+  });
 define("docker-manager/helpers/fmt-commit", 
   ["exports"],
   function(__exports__) {
@@ -655,8 +667,7 @@ function program7(depth0,data) {
   data.buffer.push("\n            <div class='new-version'>\n              <h4>New Version Available!</h4>\n              <ul>\n                <li>Remote Version: ");
   data.buffer.push(escapeExpression((helper = helpers['fmt-commit'] || (depth0 && depth0['fmt-commit']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0,depth0],types:["ID","ID"],data:data},helper ? helper.call(depth0, "latest.version", "url", options) : helperMissing.call(depth0, "fmt-commit", "latest.version", "url", options))));
   data.buffer.push("</li>\n                <li>Last Updated: ");
-  stack1 = helpers._triageMustache.call(depth0, "latest.date", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
-  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(escapeExpression((helper = helpers['fmt-ago'] || (depth0 && depth0['fmt-ago']),options={hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data},helper ? helper.call(depth0, "latest.date", options) : helperMissing.call(depth0, "fmt-ago", "latest.date", options))));
   data.buffer.push("</li>\n                <li class='new-commits'>");
   stack1 = helpers._triageMustache.call(depth0, "latest.commits_behind", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }

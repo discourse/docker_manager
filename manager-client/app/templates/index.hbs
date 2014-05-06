@@ -23,7 +23,7 @@
               <h4>New Version Available!</h4>
               <ul>
                 <li>Remote Version: {{fmt-commit latest.version url}}</li>
-                <li>Last Updated: {{latest.date}}</li>
+                <li>Last Updated: {{fmt-ago latest.date}}</li>
                 <li class='new-commits'>{{latest.commits_behind}} new commits</li>
               </ul>
               {{#if upgrading}}
