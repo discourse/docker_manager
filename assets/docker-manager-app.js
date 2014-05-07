@@ -19,7 +19,11 @@ define("docker-manager/components/progress-bar",
   function(__exports__) {
     "use strict";
     __exports__["default"] = Em.Component.extend({
-      classNameBindings: [':progress'],
+      classNameBindings: [':progress', ':progress-striped', 'active'],
+
+      active: function() {
+        return parseInt(this.get('percent'), 10) !== 100;
+      }.property('percent'),
 
       barStyle: function() {
         var percent = parseInt(this.get('percent'), 10);
@@ -295,8 +299,8 @@ define("docker-manager/models/repo",
     var Repo = Em.Object.extend({
 
       upToDate: function() {
-        return this.get('version') === this.get('latest.version');
-      }.property('version', 'latest.version'),
+        return !this.get('upgrading') & (this.get('version') === this.get('latest.version'));
+      }.property('upgrading', 'version', 'latest.version'),
 
       shouldCheck: function() {
         if (Em.isNone(this.get('version'))) { return false; }

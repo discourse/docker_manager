@@ -5,8 +5,8 @@ var loaded = [];
 var Repo = Em.Object.extend({
 
   upToDate: function() {
-    return this.get('version') === this.get('latest.version');
-  }.property('version', 'latest.version'),
+    return !this.get('upgrading') & (this.get('version') === this.get('latest.version'));
+  }.property('upgrading', 'version', 'latest.version'),
 
   shouldCheck: function() {
     if (Em.isNone(this.get('version'))) { return false; }

@@ -1,5 +1,9 @@
 export default Em.Component.extend({
-  classNameBindings: [':progress'],
+  classNameBindings: [':progress', ':progress-striped', 'active'],
+
+  active: function() {
+    return parseInt(this.get('percent'), 10) !== 100;
+  }.property('percent'),
 
   barStyle: function() {
     var percent = parseInt(this.get('percent'), 10);

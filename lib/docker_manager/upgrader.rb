@@ -15,6 +15,7 @@ class DockerManager::Upgrader
   def upgrade
     return unless @repo.start_upgrading
 
+    percent(0)
     clear_logs
 
     # HEAD@{upstream} is just a fancy way how to say origin/master (in normal case)
