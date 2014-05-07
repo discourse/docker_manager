@@ -9,15 +9,19 @@ class DockerManager::GitRepo
   end
 
   def start_upgrading
-    $redis.setnx(upgrade_key, 1)
+    $redis.setnx(upgrade_key, latest_local_commit)
   end
 
   def stop_upgrading
     $redis.del(upgrade_key)
   end
 
+  def upgrade_version
+    @upgrade_version ||= $redis.get(upgrade_key)
+  end
+
   def upgrading?
-    $redis.get(upgrade_key).present?
+    upgrade_version.present?
   end
 
   def valid?

@@ -20,7 +20,10 @@ module DockerManager
           result[:id] = r.name.downcase.gsub(/[^a-z]/, '_').gsub(/_+/, '_').sub(/_$/, '')
           result[:version] = r.latest_local_commit
           result[:url] = r.url
-          result[:upgrading] = r.upgrading?
+          if r.upgrading?
+            result[:upgrading] = true
+            result[:version] = r.upgrade_version
+          end
         end
         result
       end
