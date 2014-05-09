@@ -24,6 +24,7 @@ class DockerManager::Upgrader
     log("********************************************************")
     log("*** Please be patient, next steps might take a while ***")
     log("********************************************************")
+    percent(5)
     run("bundle install --deployment --without test --without development")
     percent(25)
     run("bundle exec rake multisite:migrate")
