@@ -51,6 +51,9 @@ button.btn {
   border-radius: 0; }
   button.btn:hover {
     background-color: #0081c2; }
+  button.btn:disabled {
+    background-color: #666;
+    color: #ccc !important; }
 
 button.unlock {
   float: right;

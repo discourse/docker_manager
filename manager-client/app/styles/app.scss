@@ -72,6 +72,11 @@ button.btn {
   &:hover {
     background-color: #0081c2;
   }
+
+  &:disabled {
+    background-color: #666;
+    color: #ccc !important;
+  }
 }
 
 button.unlock {
