@@ -1,22 +1,37 @@
 class DockerManager::Upgrader
-  attr_accessor :user_id, :path
 
-  def self.upgrade(user_id, path)
-    self.new(user_id: user_id, path: path).upgrade
+  def initialize(user_id, repo, from_version)
+    @user_id = user_id
+    @repo = repo
+    @from_version = from_version
   end
 
-  def initialize(opts)
-    self.user_id = opts[:user_id]
-    self.path= opts[:path]
+  def reset!
+    @repo.stop_upgrading
+    clear_logs
+    percent(0)
   end
 
   def upgrade
+    return unless @repo.start_upgrading
+
+    percent(0)
+    clear_logs
+
     # HEAD@{upstream} is just a fancy way how to say origin/master (in normal case)
     # see http://stackoverflow.com/a/12699604/84283
-    run("cd #{path} && git fetch && git reset --hard HEAD@{upstream}")
+    run("cd #{@repo.path} && git fetch && git reset --hard HEAD@{upstream}")
+    log("********************************************************")
+    log("*** Please be patient, next steps might take a while ***")
+    log("********************************************************")
+    percent(5)
     run("bundle install --deployment --without test --without development")
+    percent(25)
     run("bundle exec rake multisite:migrate")
+    percent(50)
+    log("***  Bundling assets. This might take a while *** ")
     run("bundle exec rake assets:precompile")
+    percent(75)
     sidekiq_pid = `ps aux | grep sidekiq.*busy | grep -v grep | awk '{ print $2 }'`.strip.to_i
     if sidekiq_pid > 0
       Process.kill("TERM", sidekiq_pid)
@@ -24,17 +39,30 @@ class DockerManager::Upgrader
     else
       log("Warning: Sidekiq was not found")
     end
+    percent(100)
+    publish('status', 'complete')
     pid = `ps aux  | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`.strip
     if pid.to_i > 0
+      log("***********************************************")
+      log("*** After restart, upgrade will be complete ***")
+      log("***********************************************")
       log("Restarting unicorn pid: #{pid}")
       Process.kill("USR2", pid.to_i)
       log("DONE")
     else
       log("Did not find unicorn launcher")
     end
-  rescue
+  rescue => ex
+    publish('status', 'failed')
     STDERR.puts("Docker Manager: FAILED TO UPGRADE")
+    STDERR.puts(ex.inspect)
     raise
+  ensure
+    @repo.stop_upgrading
+  end
+
+  def publish(type, value)
+    MessageBus.publish("/docker/upgrade", {type: type, value: value}, user_ids: [@user_id])
   end
 
   def run(cmd)
@@ -61,7 +89,35 @@ class DockerManager::Upgrader
     end
   end
 
+  def logs_key
+    "logs:#{@repo.path}:#{@from_version}"
+  end
+
+  def clear_logs
+    $redis.del(logs_key)
+  end
+
+  def find_logs
+    $redis.get(logs_key)
+  end
+
+  def percent_key
+    "percent:#{@repo.path}:#{@from_version}"
+  end
+
+  def last_percentage
+    $redis.get(percent_key)
+  end
+
+  def percent(val)
+    $redis.set(percent_key, val)
+    $redis.expire(percent_key, 30.minutes)
+    publish('percent', val)
+  end
+
   def log(message)
-    MessageBus.publish("/docker/log", message, user_ids: [user_id])
+    $redis.append logs_key, message + "\n"
+    $redis.expire(logs_key, 30.minutes)
+    publish 'log', message
   end
 end
