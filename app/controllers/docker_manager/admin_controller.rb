@@ -28,6 +28,14 @@ module DockerManager
       end
       render text: "Killing CPU on #{Process.pid}"
     end
+    
+    def generate_app_info
+        @app_info = [
+          "Ruby Version: #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}",
+          "PostgreSQL Version: " + `psql --version`,
+          "Redis Version: " + `redis-server --version`
+        ] 
+    end
 
     def runaway_mem
       Thread.new do
