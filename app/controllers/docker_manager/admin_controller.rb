@@ -5,6 +5,11 @@ module DockerManager
     def index
       require_dependency 'docker_manager/git_repo'
       @main_repo = DockerManager::GitRepo.new(Rails.root)
+      @app_info = [
+          "Ruby Version: #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}",
+          "PostgreSQL Version: " + `psql --version`,
+          "Redis Version: " + `redis-server --version`
+        ] 
     end
 
     def upgrade
@@ -27,14 +32,6 @@ module DockerManager
         end
       end
       render text: "Killing CPU on #{Process.pid}"
-    end
-    
-    def generate_app_info
-        @app_info = [
-          "Ruby Version: #{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}",
-          "PostgreSQL Version: " + `psql --version`,
-          "Redis Version: " + `redis-server --version`
-        ] 
     end
 
     def runaway_mem
