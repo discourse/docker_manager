@@ -752,7 +752,7 @@ function program1(depth0,data) {
 function program3(depth0,data) {
   
   
-  data.buffer.push("\n  <p>Sorry, there wasn an error upgrading Discourse. Please check the logs.</p>\n");
+  data.buffer.push("\n  <p>Sorry, there was an error upgrading Discourse. Please check the logs below.</p>\n");
   }
 
 function program5(depth0,data) {
