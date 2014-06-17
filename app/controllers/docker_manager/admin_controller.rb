@@ -15,7 +15,7 @@ module DockerManager
         repos << DockerManager::GitRepo.new(File.dirname(p.path), p.name)
       end
       repos.map! do |r|
-        result = {name: r.name, path: r.path, branch: r.branch }
+        result = {name: r.name, path: r.path }
         if r.valid?
           result[:id] = r.name.downcase.gsub(/[^a-z]/, '_').gsub(/_+/, '_').sub(/_$/, '')
           result[:version] = r.latest_local_commit

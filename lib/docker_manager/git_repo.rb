@@ -1,14 +1,11 @@
 # like Grit just very very minimal
 class DockerManager::GitRepo
-  attr_reader :path, :name, :branch
+  attr_reader :path, :name
 
   def initialize(path, name=nil)
     @path = path
     @name = name
     @memoize = {}
-
-    # For discourse proper, defauilt to the `tests-passed` branch
-    @branch = (path == Rails.root.to_s) ? 'tests-passed' : 'master'
   end
 
   def start_upgrading
@@ -77,10 +74,7 @@ class DockerManager::GitRepo
   end
 
   def tracking_branch
-    return @tracking_branch if @tracking_branch
-    @tracking_branch = run("for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)")
-    @tracking_branch.gsub!('master', branch)
-    @tracking_branch
+    run "for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)"
   end
 
   def run(cmd)
