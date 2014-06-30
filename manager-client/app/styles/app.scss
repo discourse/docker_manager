@@ -1,5 +1,12 @@
 /* Put your CSS here */
 
+$tertiary: #0088cc !default;
+$shadow:   0 0 8px rgba(0, 0, 0, 0.6) !default;
+
+@mixin box-shadow($shadow) {
+  box-shadow: $shadow;
+}
+
 html{
   margin: 20px;
   overflow-y: scroll;
@@ -84,5 +91,19 @@ button.unlock {
   background-color: red;
   &:hover {
     background-color: #a00;
+  }
+}
+
+#banner {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background: scale-color($tertiary, $lightness: 90%);
+  @include box-shadow(0 1px 2px scale-color($tertiary, $lightness: 70%));
+  max-width: 1140px;
+
+  .close {
+    font-size: 20px !important;
+    margin-top: -10px !important;
   }
 }
