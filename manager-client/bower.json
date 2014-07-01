@@ -2,8 +2,10 @@
   "name": "ember-app-kit",
   "dependencies": {
     "bootstrap": "~3.1.1",
+    "bootbox": "~4.2.0",
     "handlebars": "~1.1.2",
     "jquery": "~1.9.1",
+    "moment": "~2.7.0",
     "ember": "~1.5.0",
     "ember-resolver": "git://github.com/stefanpenner/ember-jj-abrams-resolver.git#master",
     "ic-ajax": "~1.0.4",

@@ -23,7 +23,7 @@ var Repo = Em.Object.extend({
 
   repoAjax: function(url, args) {
     args = args || {};
-    args.data = this.getProperties('path', 'version');
+    args.data = this.getProperties('path', 'version', 'branch');
     return ajax(url, args);
   },
 

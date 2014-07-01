@@ -1,11 +1,14 @@
 # like Grit just very very minimal
 class DockerManager::GitRepo
-  attr_reader :path, :name
+  attr_reader :path, :name, :branch
 
   def initialize(path, name=nil)
     @path = path
     @name = name
     @memoize = {}
+
+    # For discourse proper, return tracking branch
+    @branch = (path == Rails.root.to_s) ? tracking_branch : 'master'
   end
 
   def start_upgrading

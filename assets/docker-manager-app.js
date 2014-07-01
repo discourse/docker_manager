@@ -76,6 +76,20 @@ define("docker-manager/components/x-tab",
       }.property('childViews.@each.active')
     });
   });
+define("docker-manager/controllers/application", 
+  ["exports"],
+  function(__exports__) {
+    "use strict";
+    __exports__["default"] = Em.ObjectController.extend({
+      showBanner: false,
+
+      actions: {
+        dismiss: function () {
+          this.set("showBanner", false);
+        }
+      }
+    });
+  });
 define("docker-manager/controllers/index", 
   ["exports"],
   function(__exports__) {
@@ -317,7 +331,7 @@ define("docker-manager/models/repo",
 
       repoAjax: function(url, args) {
         args = args || {};
-        args.data = this.getProperties('path', 'version');
+        args.data = this.getProperties('path', 'version', 'branch');
         return ajax(url, args);
       },
 
@@ -417,6 +431,7 @@ define("docker-manager/routes/index",
       },
 
       setupController: function(controller, model) {
+        var self = this;
         controller.setProperties({ model: model, upgrading: null });
 
         model.forEach(function(repo) {
@@ -429,6 +444,12 @@ define("docker-manager/routes/index",
           if (repo.get('id') === 'docker_manager') {
             controller.set('managerRepo', repo);
           }
+
+          // Special case: If the branch is "master" warn user
+          if (repo.get('id') === 'discourse' && repo.get('branch') === 'origin/master') {
+            self.controllerFor('application').set('showBanner', true);
+          }
+
         });
       },
 
@@ -540,7 +561,7 @@ define("docker-manager/views/processes",
 define('docker-manager/templates/application', ['exports'], function(__exports__){ __exports__['default'] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, helper, options, self=this, helperMissing=helpers.helperMissing;
+  var buffer = '', stack1, helper, options, escapeExpression=this.escapeExpression, self=this, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
   
@@ -556,11 +577,20 @@ function program3(depth0,data) {
 
 function program5(depth0,data) {
   
+  var buffer = '';
+  data.buffer.push("\n    <div id=\"banner\">\n      <div id=\"banner-content\">\n        <div class=\"close\" ");
+  data.buffer.push(escapeExpression(helpers.action.call(depth0, "dismiss", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
+  data.buffer.push("><i class=\"fa fa-times\" title=\"Dismiss this banner.\"></i></div>\n        <p><b>WARNING:</b> Your Discourse instance is tracking 'master' branch which may be unstable, we recommend tracking 'tests-passed' branch.</p> <p>Refer <a href=\"https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014\">this howto</a> to change your tracking branch.</p>\n      </div>\n    </div>\n  ");
+  return buffer;
+  }
+
+function program7(depth0,data) {
+  
   
   data.buffer.push("Home");
   }
 
-function program7(depth0,data) {
+function program9(depth0,data) {
   
   
   data.buffer.push("Processes");
@@ -572,15 +602,18 @@ function program7(depth0,data) {
   data.buffer.push("\n  <h1>");
   stack1 = (helper = helpers['link-to'] || (depth0 && depth0['link-to']),options={hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["STRING"],data:data},helper ? helper.call(depth0, "index", options) : helperMissing.call(depth0, "link-to", "index", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("</h1>\n</header>\n\n\n<div class=\"container\">\n\n  <ul class=\"nav nav-tabs\">\n    ");
+  data.buffer.push("</h1>\n</header>\n\n<div class=\"container\">\n\n  ");
+  stack1 = helpers['if'].call(depth0, "showBanner", {hash:{},hashTypes:{},hashContexts:{},inverse:self.noop,fn:self.program(5, program5, data),contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push("\n\n  <ul class=\"nav nav-tabs\">\n    ");
   stack1 = (helper = helpers['x-tab'] || (depth0 && depth0['x-tab']),options={hash:{
     'route': ("index")
-  },hashTypes:{'route': "STRING"},hashContexts:{'route': depth0},inverse:self.noop,fn:self.program(5, program5, data),contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "x-tab", options));
+  },hashTypes:{'route': "STRING"},hashContexts:{'route': depth0},inverse:self.noop,fn:self.program(7, program7, data),contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "x-tab", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n    ");
   stack1 = (helper = helpers['x-tab'] || (depth0 && depth0['x-tab']),options={hash:{
     'route': ("processes")
-  },hashTypes:{'route': "STRING"},hashContexts:{'route': depth0},inverse:self.noop,fn:self.program(7, program7, data),contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "x-tab", options));
+  },hashTypes:{'route': "STRING"},hashContexts:{'route': depth0},inverse:self.noop,fn:self.program(9, program9, data),contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "x-tab", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n  </ul>\n\n  ");
   stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
