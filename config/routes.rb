@@ -1,5 +1,6 @@
 DockerManager::Engine.routes.draw do
-  get "admin/docker" => "admin#index"
+  get "admin/docker", to: redirect("/admin/upgrade")
+  get "admin/upgrade" => "admin#index"
   get "admin/docker/repos" => "admin#repos"
   get "admin/docker/latest" => "admin#latest"
   get "admin/docker/progress" => "admin#progress"
