@@ -75,6 +75,7 @@ class DockerManager::Upgrader
                      }
                      .flatten]
     clear_env["RAILS_ENV"] = "production"
+    clear_env["TERM"] = 'xterm' # unbuffer the output
 
     IO.popen(clear_env, "cd #{Rails.root} && #{cmd} 2>&1") do |line|
       line = line.read
@@ -84,7 +85,7 @@ class DockerManager::Upgrader
 
     unless $?.success?
       STDERR.puts("FAILED: #{cmd}")
-      STDERR.msg(msg)
+      STDERR.puts(msg)
       raise RuntimeError
     end
   end
