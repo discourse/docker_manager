@@ -75,16 +75,21 @@ class DockerManager::Upgrader
                      }
                      .flatten]
     clear_env["RAILS_ENV"] = "production"
+    clear_env["TERM"] = 'dumb' # claim we have a terminal
 
-    IO.popen(clear_env, "cd #{Rails.root} && #{cmd} 2>&1") do |line|
-      line = line.read
-      log(line)
-      msg << line << "\n"
+    retval = nil
+    Open3.popen2e(clear_env, "cd #{Rails.root} && #{cmd} 2>&1") do |_in, out, wait_thread|
+      out.each do |line|
+        line.rstrip! # the client adds newlines, so remove the one we're given
+        log(line)
+        msg << line << "\n"
+      end
+      retval = wait_thread.value
     end
 
-    unless $?.success?
-      STDERR.puts("FAILED: #{cmd}")
-      STDERR.msg(msg)
+    unless retval == 0
+      STDERR.puts("FAILED: '#{cmd}' exited with a return value of #{retval}")
+      STDERR.puts(msg)
       raise RuntimeError
     end
   end
