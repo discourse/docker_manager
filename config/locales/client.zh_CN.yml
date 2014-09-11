@@ -1,0 +1,5 @@
+zh_CN:
+  js:
+    docker:
+      upgrade: "Docker 负责升级。"
+      perform_upgrade: "点击这儿升级。"
