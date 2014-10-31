@@ -52767,26 +52767,72 @@ if (typeof location !== 'undefined' && (location.hostname === 'localhost' || loc
 var define, requireModule, require, requirejs;
 
 (function() {
-  var registry = {}, seen = {}, state = {};
+
+  var _isArray;
+  if (!Array.isArray) {
+    _isArray = function (x) {
+      return Object.prototype.toString.call(x) === "[object Array]";
+    };
+  } else {
+    _isArray = Array.isArray;
+  }
+
+  var registry = {}, seen = {};
   var FAILED = false;
 
+  var uuid = 0;
+
+  function tryFinally(tryable, finalizer) {
+    try {
+      return tryable();
+    } finally {
+      finalizer();
+    }
+  }
+
+
+  function Module(name, deps, callback, exports) {
+    var defaultDeps = ['require', 'exports', 'module'];
+
+    this.id       = uuid++;
+    this.name     = name;
+    this.deps     = !deps.length && callback.length ? defaultDeps : deps;
+    this.exports  = exports || { };
+    this.callback = callback;
+    this.state    = undefined;
+  }
+
   define = function(name, deps, callback) {
-    registry[name] = {
-      deps: deps,
-      callback: callback
-    };
+    if (!_isArray(deps)) {
+      callback = deps;
+      deps     =  [];
+    }
+
+    registry[name] = new Module(name, deps, callback);
   };
 
-  function reify(deps, name, seen) {
+  define.amd = {};
+
+  function reify(mod, name, seen) {
+    var deps = mod.deps;
     var length = deps.length;
     var reified = new Array(length);
     var dep;
-    var exports;
+    // TODO: new Module
+    // TODO: seen refactor
+    var module = { };
 
     for (var i = 0, l = length; i < l; i++) {
       dep = deps[i];
       if (dep === 'exports') {
-        exports = reified[i] = seen;
+        module.exports = reified[i] = seen;
+      } else if (dep === 'require') {
+        reified[i] = function requireDep(dep) {
+          return require(resolve(dep, name));
+        };
+      } else if (dep === 'module') {
+        mod.exports = seen;
+        module = reified[i] = mod;
       } else {
         reified[i] = require(resolve(dep, name));
       }
@@ -52794,38 +52840,49 @@ var define, requireModule, require, requirejs;
 
     return {
       deps: reified,
-      exports: exports
+      module: module
     };
   }
 
   requirejs = require = requireModule = function(name) {
-    if (state[name] !== FAILED &&
+    var mod = registry[name];
+    if (!mod) {
+      throw new Error('Could not find module ' + name);
+    }
+
+    if (mod.state !== FAILED &&
         seen.hasOwnProperty(name)) {
       return seen[name];
     }
 
-    if (!registry[name]) {
-      throw new Error('Could not find module ' + name);
-    }
-
-    var mod = registry[name];
     var reified;
     var module;
     var loaded = false;
 
     seen[name] = { }; // placeholder for run-time cycles
 
-    try {
-      reified = reify(mod.deps, name, seen[name]);
+    tryFinally(function() {
+      reified = reify(mod, name, seen[name]);
       module = mod.callback.apply(this, reified.deps);
       loaded = true;
-    } finally {
+    }, function() {
       if (!loaded) {
-        state[name] = FAILED;
+        mod.state = FAILED;
       }
+    });
+
+    var obj;
+    if (module === undefined && reified.module.exports) {
+      obj = reified.module.exports;
+    } else {
+      obj = seen[name] = module;
     }
 
-    return reified.exports ? seen[name] : (seen[name] = module);
+    if (obj !== null && typeof obj === 'object' && obj['default'] === undefined) {
+      obj['default'] = obj;
+    }
+
+    return (seen[name] = obj);
   };
 
   function resolve(child, name) {
@@ -52833,13 +52890,7 @@ var define, requireModule, require, requirejs;
 
     var parts = child.split('/');
     var nameParts = name.split('/');
-    var parentBase;
-
-    if (nameParts.length === 1) {
-      parentBase = nameParts;
-    } else {
-      parentBase = nameParts.slice(0, -1);
-    }
+    var parentBase = nameParts.slice(0, -1);
 
     for (var i = 0, l = parts.length; i < l; i++) {
       var part = parts[i];
@@ -52867,7 +52918,7 @@ var define, requireModule, require, requirejs;
 // ==========================================================================
 
 
- // Version: 0.1.2
+ // Version: 0.1.5
 
 (function() {
 /*globals define registry requirejs */
@@ -52889,7 +52940,7 @@ define("ember/resolver",
    *     output. The loader's _moduleEntries is consulted so that classes can be
    *     resolved directly via the module loader, without needing a manual
    *     `import`.
-   *  2) is able provide injections to classes that implement `extend`
+   *  2) is able to provide injections to classes that implement `extend`
    *     (as is typical with Ember).
    */
 
@@ -52905,6 +52956,17 @@ define("ember/resolver",
     };
   }
 
+  if (!(Object.create && !Object.create(null).hasOwnProperty)) {
+    throw new Error("This browser does not support Object.create(null), please polyfil with es5-sham: http://git.io/yBU2rg");
+  }
+
+  function makeDictionary() {
+    var cache = Object.create(null);
+    cache['_dict'] = null;
+    delete cache['_dict'];
+    return cache;
+  }
+
   var underscore = Ember.String.underscore;
   var classify = Ember.String.classify;
   var get = Ember.get;
@@ -52914,15 +52976,28 @@ define("ember/resolver",
 
     if (fullName.parsedName === true) { return fullName; }
 
-    var nameParts = fullName.split(":"),
-        type = nameParts[0], fullNameWithoutType = nameParts[1],
-        name = fullNameWithoutType,
-        namespace = get(this, 'namespace'),
-        root = namespace;
+    var prefixParts = fullName.split('@');
+    var prefix;
+
+    if (prefixParts.length === 2) {
+      if (prefixParts[0].split(':')[0] === 'view') {
+        prefixParts[0] = prefixParts[0].split(':')[1];
+        prefixParts[1] = 'view:' + prefixParts[1];
+      }
+
+      prefix = prefixParts[0];
+    }
+
+    var nameParts = prefixParts[prefixParts.length - 1].split(":");
+    var type = nameParts[0], fullNameWithoutType = nameParts[1];
+    var name = fullNameWithoutType;
+    var namespace = get(this, 'namespace');
+    var root = namespace;
 
     return {
       parsedName: true,
       fullName: fullName,
+      prefix: prefix || this.prefix({type: type}),
       type: type,
       fullNameWithoutType: fullNameWithoutType,
       name: name,
@@ -52990,6 +53065,7 @@ define("ember/resolver",
   var Resolver = Ember.DefaultResolver.extend({
     resolveOther: resolveOther,
     resolveTemplate: resolveOther,
+    pluralizedTypes: null,
 
     makeToString: function(factory, fullName) {
       return '' + this.namespace.modulePrefix + '@' + fullName + ':';
@@ -52998,7 +53074,20 @@ define("ember/resolver",
     shouldWrapInClassFactory: function(module, parsedName){
       return false;
     },
+    init: function() {
+      this._super();
+      this._normalizeCache = makeDictionary();
+
+      this.pluralizedTypes = this.pluralizedTypes || makeDictionary();
+
+      if (!this.pluralizedTypes.config) {
+        this.pluralizedTypes.config = 'config';
+      }
+    },
     normalize: function(fullName) {
+      return this._normalizeCache[fullName] || (this._normalizeCache[fullName] = this._normalize(fullName));
+    },
+    _normalize: function(fullName) {
       // replace `.` with `/` in order to make nested controllers work in the following cases
       // 1. `needs: ['posts/post']`
       // 2. `{{render "posts/post"}}`
@@ -53011,8 +53100,11 @@ define("ember/resolver",
       }
     },
 
-    podBasedModuleName: function(parsedName) {
-      var podPrefix = this.namespace.podModulePrefix || this.namespace.modulePrefix;
+    pluralize: function(type) {
+      return this.pluralizedTypes[type] || (this.pluralizedTypes[type] = type + 's');
+    },
+
+    podBasedLookupWithPrefix: function(podPrefix, parsedName) {
       var fullNameWithoutType = parsedName.fullNameWithoutType;
 
       if (parsedName.type === 'template') {
@@ -53022,9 +53114,24 @@ define("ember/resolver",
         return podPrefix + '/' + fullNameWithoutType + '/' + parsedName.type;
     },
 
+    podBasedModuleName: function(parsedName) {
+      var podPrefix = this.namespace.podModulePrefix || this.namespace.modulePrefix;
+
+      return this.podBasedLookupWithPrefix(podPrefix, parsedName);
+    },
+
+    podBasedComponentsInSubdir: function(parsedName) {
+      var podPrefix = this.namespace.podModulePrefix || this.namespace.modulePrefix;
+      podPrefix = podPrefix + '/components';
+
+      if (parsedName.type === 'component' || parsedName.fullNameWithoutType.match(/^components/)) {
+        return this.podBasedLookupWithPrefix(podPrefix, parsedName);
+      }
+    },
+
     mainModuleName: function(parsedName) {
       // if router:main or adapter:main look for a module with just the type first
-      var tmpModuleName = this.prefix(parsedName) + '/' + parsedName.type;
+      var tmpModuleName = parsedName.prefix + '/' + parsedName.type;
 
       if (parsedName.fullNameWithoutType === 'main') {
         return tmpModuleName;
@@ -53032,7 +53139,7 @@ define("ember/resolver",
     },
 
     defaultModuleName: function(parsedName) {
-      return this.prefix(parsedName) + '/' +  parsedName.type + 's/' + parsedName.fullNameWithoutType;
+      return parsedName.prefix + '/' +  this.pluralize(parsedName.type) + '/' + parsedName.fullNameWithoutType;
     },
 
     prefix: function(parsedName) {
@@ -53057,6 +53164,7 @@ define("ember/resolver",
     moduleNameLookupPatterns: Ember.computed(function(){
       return Ember.A([
         this.podBasedModuleName,
+        this.podBasedComponentsInSubdir,
         this.mainModuleName,
         this.defaultModuleName
       ]);
@@ -53468,55 +53576,6 @@ window.MessageBus = (function() {
   failCount = 0;
   baseUrl = "/";
 
-  /* TODO: The plan is to force a long poll as soon as page becomes visible
-  // MIT based off https://github.com/mathiasbynens/jquery-visibility/blob/master/jquery-visibility.js
-  initVisibilityTracking =  function(window, document, $, undefined) {
-    var prefix;
-    var property;
-    // In Opera, `'onfocusin' in document == true`, hence the extra `hasFocus` check to detect IE-like behavior
-    var eventName = 'onfocusin' in document && 'hasFocus' in document ? 'focusin focusout' : 'focus blur';
-    var prefixes = ['webkit', 'o', 'ms', 'moz', ''];
-    var $event = $.event;
-
-    while ((prefix = prefixes.pop()) !== undefined) {
-      property = (prefix ? prefix + 'H': 'h') + 'idden';
-      var supportsVisibility = typeof document[property] === 'boolean';
-      if (supportsVisibility) {
-        eventName = prefix + 'visibilitychange';
-        break;
-      }
-    }
-
-    $(/blur$/.test(eventName) ? window : document).on(eventName, function(event) {
-      var type = event.type;
-      var originalEvent = event.originalEvent;
-
-      // Avoid errors from triggered native events for which `originalEvent` is
-      // not available.
-      if (!originalEvent) {
-              return;
-      }
-
-      var toElement = originalEvent.toElement;
-
-      // If it's a `{focusin,focusout}` event (IE), `fromElement` and `toElement`
-      // should both be `null` or `undefined`; else, the page visibility hasn't
-      // changed, but the user just clicked somewhere in the doc. In IE9, we need
-      // to check the `relatedTarget` property instead.
-      if (
-              !/^focus./.test(type) || (
-                      toElement === undefined &&
-                      originalEvent.fromElement === undefined &&
-                      originalEvent.relatedTarget === undefined
-              )
-      ) {
-          visibilityChanged(property && document[property] || /^(?:blur|focusout)$/.test(type) ? 'hide' : 'show');
-      }
-    });
-
-  };
-  */
-
   var hiddenProperty;
 
   $.each(["","webkit","ms","moz","ms"], function(index, prefix){
@@ -53548,7 +53607,8 @@ window.MessageBus = (function() {
     lastAjax = new Date();
     totalAjaxCalls += 1;
 
-    return $.ajax(baseUrl + "message-bus/" + clientId + "/poll?" + (!shouldLongPoll() || !me.enableLongPolling ? "dlp=t" : ""), {
+    return me.ajax({
+      url: me.baseUrl + "message-bus/" + me.clientId + "/poll?" + (!shouldLongPoll() || !me.enableLongPolling ? "dlp=t" : ""),
       data: data,
       cache: false,
       dataType: 'json',
@@ -53599,9 +53659,7 @@ window.MessageBus = (function() {
             if (failCount > 2) {
               interval = interval * failCount;
             } else if (!shouldLongPoll()) {
-              // slowing down stuff a lot when hidden
-              // we will need to fine tune this
-              interval = interval * 4;
+              interval = me.backgroundCallbackInterval;
             }
             if (interval > me.maxPollInterval) {
               interval = me.maxPollInterval;
@@ -53619,7 +53677,7 @@ window.MessageBus = (function() {
           }
         }
 
-        pollTimeout = setTimeout(poll, interval);
+        pollTimeout = setTimeout(function(){pollTimeout=null; poll();}, interval);
         me.longPoll = null;
       }
     });
@@ -53628,11 +53686,15 @@ window.MessageBus = (function() {
   me = {
     enableLongPolling: true,
     callbackInterval: 15000,
+    backgroundCallbackInterval: 60000,
     maxPollInterval: 3 * 60 * 1000,
     callbacks: callbacks,
     clientId: clientId,
     alwaysLongPoll: false,
     baseUrl: baseUrl,
+    // TODO we can make the dependency on $ and jQuery conditional
+    // all we really need is an implementation of ajax
+    ajax: $.ajax,
 
     diagnostics: function(){
       console.log("Stopped: " + stopped + " Started: " + started);
@@ -53649,7 +53711,7 @@ window.MessageBus = (function() {
 
     // Start polling
     start: function(opts) {
-      var poll;
+      var poll, delayPollTimeout;
 
       if (started) return;
       started = true;
@@ -53665,7 +53727,9 @@ window.MessageBus = (function() {
         }
 
         if (callbacks.length === 0) {
-          setTimeout(poll, 500);
+          if(!delayPollTimeout) {
+            delayPollTimeout = setTimeout(function(){ delayPollTimeout = null; poll();}, 500);
+          }
           return;
         }
 
@@ -53673,8 +53737,22 @@ window.MessageBus = (function() {
         $.each(callbacks, function(_,callback) {
           data[callback.channel] = callback.last_id;
         });
+
         me.longPoll = longPoller(poll,data);
       };
+
+
+      // monitor visibility, issue a new long poll when the page shows
+      if(document.addEventListener && 'hidden' in document){
+        me.visibilityEvent = document.addEventListener('visibilitychange', function(){
+          if(!document.hidden && !me.longPoll && pollTimeout){
+            clearTimeout(pollTimeout);
+            pollTimeout = null;
+            poll();
+          }
+        });
+      }
+
       poll();
     },
 
@@ -53699,7 +53777,7 @@ window.MessageBus = (function() {
     },
 
     // Unsubscribe from a channel
-    unsubscribe: function(channel) {
+    unsubscribe: function(channel, func) {
       // TODO proper globbing
       var glob;
       if (channel.indexOf("*", channel.length - 1) !== -1) {
@@ -53707,12 +53785,21 @@ window.MessageBus = (function() {
         glob = true;
       }
       callbacks = $.grep(callbacks,function(callback) {
+        var keep;
+
         if (glob) {
-          return callback.channel.substr(0, channel.length) !== channel;
+          keep = callback.channel.substr(0, channel.length) !== channel;
         } else {
-          return callback.channel !== channel;
+          keep = callback.channel !== channel;
         }
+
+        if(!keep && func && callback.func !== func){
+          keep = true;
+        }
+
+        return keep;
       });
+
       if (me.longPoll) {
         return me.longPoll.abort();
       }
