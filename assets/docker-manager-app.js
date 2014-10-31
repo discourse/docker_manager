@@ -580,7 +580,7 @@ function program5(depth0,data) {
   var buffer = '';
   data.buffer.push("\n    <div id=\"banner\">\n      <div id=\"banner-content\">\n        <div class=\"close\" ");
   data.buffer.push(escapeExpression(helpers.action.call(depth0, "dismiss", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data})));
-  data.buffer.push("><i class=\"fa fa-times\" title=\"Dismiss this banner.\"></i></div>\n        <p><b>WARNING:</b> Your Discourse instance is tracking 'master' branch which may be unstable, we recommend tracking 'tests-passed' branch.</p> <p>Refer <a href=\"https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014\">this howto</a> to change your tracking branch.</p>\n      </div>\n    </div>\n  ");
+  data.buffer.push("><i class=\"fa fa-times\" title=\"Dismiss this banner.\"></i></div>\n        <p><b>WARNING:</b> Your Discourse is tracking the 'master' branch which may be unstable, <a href=\"https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014\">we recommend tracking the 'tests-passed' branch</a>.</p>\n      </div>\n    </div>\n  ");
   return buffer;
   }
 
@@ -615,7 +615,7 @@ function program9(depth0,data) {
     'route': ("processes")
   },hashTypes:{'route': "STRING"},hashContexts:{'route': depth0},inverse:self.noop,fn:self.program(9, program9, data),contexts:[],types:[],data:data},helper ? helper.call(depth0, options) : helperMissing.call(depth0, "x-tab", options));
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
-  data.buffer.push("\n  </ul>\n\n  ");
+  data.buffer.push("\n    <li><a href='/'>Return to site</a></li>\n    <li><a href='/admin/backups'>Backups</a></li>\n  </ul>\n\n  ");
   stack1 = helpers._triageMustache.call(depth0, "outlet", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
   if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
   data.buffer.push("\n</div>\n");
