@@ -1,4 +1,6 @@
-export default Em.Handlebars.makeBoundHelper(function(sha1, url) {
-  if (Em.isNone(url)) { return; }
-  return new Em.Handlebars.SafeString("(<a href='" + url + "'>" + sha1 + "</a>)");
+import Ember from 'ember';
+
+export default Ember.Handlebars.makeBoundHelper(function(sha1, url) {
+  if (Ember.isNone(url)) { return; }
+  return new Ember.Handlebars.SafeString("(<a href='" + url + "'>" + sha1 + "</a>)");
 });

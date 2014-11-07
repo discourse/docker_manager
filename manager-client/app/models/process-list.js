@@ -1,6 +1,7 @@
 import ajax from "ic-ajax";
+import Ember from 'ember';
 
-var ProcessList = Em.Object.extend({
+var ProcessList = Ember.Object.extend({
 
   init: function() {
     this._super();

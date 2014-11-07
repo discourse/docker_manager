@@ -1,15 +1,16 @@
 import ajax from "ic-ajax";
+import Ember from 'ember';
 
 var loaded = [];
 
-var Repo = Em.Object.extend({
+var Repo = Ember.Object.extend({
 
   upToDate: function() {
     return !this.get('upgrading') & (this.get('version') === this.get('latest.version'));
   }.property('upgrading', 'version', 'latest.version'),
 
   shouldCheck: function() {
-    if (Em.isNone(this.get('version'))) { return false; }
+    if (Ember.isNone(this.get('version'))) { return false; }
     if (this.get('checking')) { return false; }
 
     // Only check once every minute
@@ -30,7 +31,7 @@ var Repo = Em.Object.extend({
   findLatest: function() {
     var self = this;
 
-    return new Em.RSVP.Promise(function(resolve, reject) {
+    return new Ember.RSVP.Promise(function(resolve) {
       if (!self.get('shouldCheck')) { return resolve(); }
 
       self.set('checking', true);
@@ -38,7 +39,7 @@ var Repo = Em.Object.extend({
         self.setProperties({
           checking: false,
           lastCheckedAt: new Date().getTime(),
-          latest: Em.Object.create(result.latest)
+          latest: Ember.Object.create(result.latest)
         });
         resolve();
       });
@@ -70,7 +71,7 @@ var Repo = Em.Object.extend({
 
 Repo.reopenClass({
   findAll: function() {
-    return new Em.RSVP.Promise(function (resolve) {
+    return new Ember.RSVP.Promise(function (resolve) {
       if (loaded.length) { return resolve(loaded); }
 
       ajax("/admin/docker/repos").then(function(result) {

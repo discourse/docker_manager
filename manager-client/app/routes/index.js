@@ -1,6 +1,7 @@
 import Repo from 'docker-manager/models/repo';
+import Ember from 'ember';
 
-export default Em.Route.extend({
+export default Ember.Route.extend({
   model: function() {
     return Repo.findAll();
   },

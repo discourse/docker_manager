@@ -16,9 +16,9 @@
   <p>{{name}} is at the newest version {{fmt-commit version url}}.</p>
 {{else}}
   <div style='clear: both'>
-    <button {{action start}} {{bind-attr disabled="upgrading"}} class='btn'>{{upgradeButtonText}}</button>
+    <button {{action "start"}} {{bind-attr disabled="upgrading"}} class='btn'>{{upgradeButtonText}}</button>
     {{#if upgrading}}
-      <button {{action resetUpgrade}} class="btn unlock">Reset Upgrade</button>
+      <button {{action "resetUpgrade"}} class="btn unlock">Reset Upgrade</button>
     {{/if}}
   </div>
 {{/if}}

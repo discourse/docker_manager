@@ -1,4 +1,9 @@
-var Router = Ember.Router.extend(); // ensure we don't share routes between all Router instances
+import Ember from 'ember';
+import config from './config/environment';
+
+var Router = Ember.Router.extend({
+  location: config.locationType
+});
 
 Router.map(function() {
   this.route("processes");

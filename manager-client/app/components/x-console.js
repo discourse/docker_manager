@@ -1,14 +1,16 @@
-export default Em.Component.extend({
+import Ember from 'ember';
+
+export default Ember.Component.extend({
   classNameBindings: [':logs'],
 
   render: function(buffer) {
-    if (!Em.isEmpty(this.get('output'))) {
+    if (!Ember.isEmpty(this.get('output'))) {
       buffer.push(this.get('output'));
     }
   },
 
   _outputChanged: function() {
-    Em.run.scheduleOnce('afterRender', this, '_scrollBottom');
+    Ember.run.scheduleOnce('afterRender', this, '_scrollBottom');
     this.rerender();
   }.observes('output'),
 

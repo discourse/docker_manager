@@ -1,4 +1,6 @@
-export default Em.Component.extend({
+import Ember from 'ember';
+
+export default Ember.Component.extend({
   classNameBindings: [':progress', ':progress-striped', 'active'],
 
   active: function() {

@@ -1,14 +1,15 @@
-/* global MessageBus, confirm */
+/* global MessageBus, bootbox */
+import Ember from 'ember';
 
-export default Em.ObjectController.extend({
+export default Ember.ObjectController.extend({
 
   init: function() {
     this._super();
     this.reset();
   },
 
-  complete: Em.computed.equal('status', 'complete'),
-  failed: Em.computed.equal('status', 'failed'),
+  complete: Ember.computed.equal('status', 'complete'),
+  failed: Ember.computed.equal('status', 'failed'),
 
   messageReceived: function(msg) {
     switch(msg.type) {
@@ -65,15 +66,16 @@ export default Em.ObjectController.extend({
 
     resetUpgrade: function() {
       var self = this;
-      if (
-        confirm("WARNING: You should only reset upgrades that have failed and are not running.\n\n"+
-                "This will NOT cancel currently running builds and should only be used as a last resort.")
-      ) {
+
+      bootbox.confirm("WARNING: You should only reset upgrades that have failed and are not running.\n\n"+
+                      "This will NOT cancel currently running builds and should only be used as a last resort.", function(result) {
+        if (result) {
           var repo = self.get('model');
           repo.resetUpgrade().then(function() {
             self.reset();
           });
-      }
+        }
+      });
     }
   },
 

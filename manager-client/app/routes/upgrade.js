@@ -1,12 +1,13 @@
 import Repo from 'docker-manager/models/repo';
+import Ember from 'ember';
 
-export default Em.Route.extend({
+export default Ember.Route.extend({
 
   model: function(params) {
     return Repo.find(params.id);
   },
 
-  afterModel: function(model, transition) {
+  afterModel: function(model) {
     var self = this;
     return Repo.findUpgrading().then(function(u) {
       if (u && u !== model) {

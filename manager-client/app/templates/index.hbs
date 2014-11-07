@@ -27,9 +27,9 @@
                 <li class='new-commits'>{{latest.commits_behind}} new commits</li>
               </ul>
               {{#if upgrading}}
-                <button class="btn" {{action upgrade this}}>Currently Upgrading...</button>
+                <button class="btn" {{action "upgrade" this}}>Currently Upgrading...</button>
               {{else}}
-                <button class="btn" {{action upgrade this}} {{bind-attr disabled="upgradeDisabled"}}>Upgrade to the Latest Version</button>
+                <button class="btn" {{action "upgrade" this}} {{bind-attr disabled="upgradeDisabled"}}>Upgrade to the Latest Version</button>
               {{/if}}
             </div>
           {{/if}}
