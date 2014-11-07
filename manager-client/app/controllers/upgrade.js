@@ -1,4 +1,4 @@
-/* global MessageBus, bootbox */
+/* global MessageBus, confirm */
 
 export default Em.ObjectController.extend({
 
@@ -65,14 +65,15 @@ export default Em.ObjectController.extend({
 
     resetUpgrade: function() {
       var self = this;
-      bootbox.confirm("<p><b>WARNING:</b> You should only reset upgrades that have failed and are not running.</p> <p>This will NOT cancel currently running builds and should only be used as a last resort.</p>", function(cancel) {
-        if (cancel) {
+      if (
+        confirm("WARNING: You should only reset upgrades that have failed and are not running.\n\n"+
+                "This will NOT cancel currently running builds and should only be used as a last resort.")
+      ) {
           var repo = self.get('model');
           repo.resetUpgrade().then(function() {
             self.reset();
           });
-        }
-      });
+      }
     }
   },
 
