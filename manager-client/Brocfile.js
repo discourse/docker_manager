@@ -6,6 +6,9 @@ var app = new EmberApp({
   fingerprint: {
     enabled: false
   },
+  'ember-cli-bootstrap': {
+    'importBootstrapJS': true
+  },
   vendorFiles: {
     'handlebars.js': {
       production:  'bower_components/handlebars/handlebars.js'
