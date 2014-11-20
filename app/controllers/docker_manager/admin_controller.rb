@@ -72,6 +72,13 @@ module DockerManager
       render text: ps_output
     end
 
+    def versions
+      # Get the different version numbers of the programs used
+      render json: {versions: {ruby: "#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}",
+                                postgresql: `postmaster -V`,
+                                redis: `redis-server --version`}}
+    end
+
     def runaway_cpu
       Thread.new do
         a = 1
