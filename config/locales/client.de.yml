@@ -1,0 +1,5 @@
+de:
+  js:
+    docker:
+      upgrade: "Deine Installation von Discourse ist veraltet."
+      perform_upgrade: "Klicke hier, um zu aktualisieren."
