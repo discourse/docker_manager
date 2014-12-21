@@ -9,7 +9,9 @@
     <div id="banner">
       <div id="banner-content">
         <div class="close" {{action "dismiss"}}><i class="fa fa-times" title="Dismiss this banner."></i></div>
-        <p><b>WARNING:</b> Your Discourse is tracking the 'master' branch which may be unstable, <a href="https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014">we recommend tracking the 'tests-passed' branch</a>.</p>
+        {{#each row in banner}}
+        <p>{{{row}}}</p>
+        {{/each}}
       </div>
     </div>
   {{/if}}
