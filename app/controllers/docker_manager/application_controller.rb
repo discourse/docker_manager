@@ -1,8 +1,6 @@
 module DockerManager
   class ApplicationController < ActionController::Base
 
-    helper DockerManager::ApplicationHelper
-
     include CurrentUser
 
     before_filter :ensure_admin
