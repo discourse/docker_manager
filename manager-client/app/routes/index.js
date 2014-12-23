@@ -12,7 +12,7 @@ export default Ember.Route.extend({
 
     controller.setProperties({ model: model, upgrading: null });
 
-    if(!window.Discourse.hasUglify){
+    if(!(window.Discourse && window.Discourse.hasUglify)){
       applicationController.appendBannerHtml("<b>WARNING:</b> You are running an old Docker image, <a href='https://meta.discourse.org/t/how-do-i-update-my-docker-image-to-latest/23325'>please upgrade</a>.");
     }
 
