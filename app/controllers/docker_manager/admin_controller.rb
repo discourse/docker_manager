@@ -39,7 +39,7 @@ module DockerManager
 
     def latest
       repo = DockerManager::GitRepo.new(params[:path])
-      repo.update!
+      repo.update! if Rails.env == 'production'
 
       render json: {latest: {version: repo.latest_origin_commit,
                              commits_behind: repo.commits_behind,

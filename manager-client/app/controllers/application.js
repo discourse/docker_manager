@@ -13,7 +13,7 @@ export default Ember.ObjectController.extend({
   appendBannerHtml: function(html){
     var banner = this.get("banner") || [];
     if(banner.indexOf(html) === -1){
-      banner.push(html);
+      banner.pushObject(html);
     }
     this.set("banner", banner);
   },
