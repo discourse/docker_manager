@@ -8,7 +8,13 @@ export default Ember.Route.extend({
 
   setupController: function(controller, model) {
     var self = this;
+    var applicationController = self.controllerFor('application');
+
     controller.setProperties({ model: model, upgrading: null });
+
+    if(!window.Discourse.hasUglify){
+      applicationController.appendBannerHtml("<b>WARNING:</b> You are running an old Docker image, <a href='https://meta.discourse.org/t/how-do-i-update-my-docker-image-to-latest/23325'>please upgrade</a>.");
+    }
 
     model.forEach(function(repo) {
       repo.findLatest();
@@ -23,7 +29,7 @@ export default Ember.Route.extend({
 
       // Special case: If the branch is "master" warn user
       if (repo.get('id') === 'discourse' && repo.get('branch') === 'origin/master') {
-        self.controllerFor('application').set('showBanner', true);
+        applicationController.appendBannerHtml("<b>WARNING:</b> Your Discourse is tracking the 'master' branch which may be unstable, <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'>we recommend tracking the 'tests-passed' branch</a>.");
       }
 
     });
