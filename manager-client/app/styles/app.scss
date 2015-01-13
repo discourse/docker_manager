@@ -25,6 +25,7 @@ header {
   }
   h1 {
     text-align: right;
+    font-size: 2em;
   }
   clear: both;
 }
@@ -106,4 +107,8 @@ button.unlock {
     font-size: 20px !important;
     margin-top: -10px !important;
   }
+}
+
+th {
+    border-top: none;
 }
