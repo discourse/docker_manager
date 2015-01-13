@@ -18,7 +18,7 @@ var app = new EmberApp({
 
 app.import("bower_components/bootbox/bootbox.js");
 app.import("bower_components/message-bus/assets/message-bus.js");
-app.import("vendor/moment/moment.js");
+app.import("bower_components/momentjs/moment.js");
 
 // Use `app.import` to add additional libraries to the generated
 // output files.
