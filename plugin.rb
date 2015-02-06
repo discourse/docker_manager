@@ -2,6 +2,7 @@
 # about: Docker manager for Discourse image
 # version: 0.1
 # authors: Robin Ward, Sam Saffron
+# url: https://github.com/discourse/docker_manager
 
 
 module ::DockerManager
