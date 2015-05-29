@@ -13,7 +13,7 @@
 {{/if}}
 
 {{#if model.upToDate}}
-  <p>{{name}} is at the newest version {{fmt-commit version url}}.</p>
+  <p>{{model.name}} is at the newest version {{fmt-commit model.version model.url}}.</p>
 {{else}}
   <div style='clear: both'>
     <button {{action "start"}} {{bind-attr disabled="model.upgrading"}} class='btn'>{{upgradeButtonText}}</button>
