@@ -28,7 +28,7 @@ export default Ember.Controller.extend({
         }
 
         if (msg.value === 'complete') {
-          this.set('model.version', this.get('latest.version'));
+          this.set('model.version', this.get('model.latest.version'));
         }
         break;
     }
