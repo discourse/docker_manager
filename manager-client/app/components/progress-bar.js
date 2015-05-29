@@ -8,11 +8,13 @@ export default Ember.Component.extend({
   }.property('percent'),
 
   barStyle: function() {
-    var percent = parseInt(this.get('percent'), 10);
+    let percent = parseInt(this.get('percent'), 10);
     if (percent > 0)  {
       if (percent > 100) { percent = 100; }
-      return 'width: ' + this.get('percent') + '%';
+      return ('width: ' + this.get('percent') + '%').htmlSafe();
     }
+
+    return "".htmlSafe();
   }.property('percent')
 
 });

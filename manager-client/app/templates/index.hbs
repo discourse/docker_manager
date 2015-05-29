@@ -4,36 +4,8 @@
     <th>Status</th>
   </tr>
   <tbody>
-    {{#each model itemController="repo"}}
-    <tr>
-      <td>
-        {{name}}
-        {{fmt-commit version url}}
-      </td>
-      <td>
-        {{#if checking}}
-          Checking for new version...
-        {{else}}
-          {{#if upToDate}}
-            Up to date
-          {{else}}
-            <div class='new-version'>
-              <h4>New Version Available!</h4>
-              <ul>
-                <li>Remote Version: {{fmt-commit latest.version url}}</li>
-                <li>Last Updated: {{fmt-ago latest.date}}</li>
-                <li class='new-commits'>{{latest.commits_behind}} new commits</li>
-              </ul>
-              {{#if upgrading}}
-                <button class="btn" {{action "upgrade" this}}>Currently Upgrading...</button>
-              {{else}}
-                <button class="btn" {{action "upgrade" this}} {{bind-attr disabled="upgradeDisabled"}}>Upgrade to the Latest Version</button>
-              {{/if}}
-            </div>
-          {{/if}}
-        {{/if}}
-      </td>
-    </tr>
+    {{#each model as |repo|}}
+      {{repo-status repo=repo upgradingRepo=upgrading managerRepo=managerRepo upgrade="upgrade"}}
     {{/each}}
   </tbody>
 </table>

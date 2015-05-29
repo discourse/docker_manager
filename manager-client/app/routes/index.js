@@ -2,13 +2,13 @@ import Repo from 'docker-manager/models/repo';
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model: function() {
+  model() {
     return Repo.findAll();
   },
 
-  setupController: function(controller, model) {
-    var self = this;
-    var applicationController = self.controllerFor('application');
+  setupController(controller, model) {
+    const self = this;
+    const applicationController = self.controllerFor('application');
 
     controller.setProperties({ model: model, upgrading: null });
 
@@ -36,7 +36,7 @@ export default Ember.Route.extend({
   },
 
   actions: {
-    upgrade: function(repo) {
+    upgrade(repo) {
       this.transitionTo('upgrade', repo);
     }
   }

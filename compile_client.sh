@@ -18,4 +18,4 @@ cp manager-client/dist/fonts/fontawesome-webfont.ttf assets/fonts/fontawesome-we
 cp manager-client/dist/fonts/fontawesome-webfont.woff assets/fonts/fontawesome-webfont.woff
 
 # fix invalid paths
-sed 's/\.\.\/fonts/fonts/g' -i assets/docker-manager-vendor.css
+sed -i '' 's/\.\.\/fonts/fonts/g' assets/docker-manager-vendor.css

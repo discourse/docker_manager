@@ -6,12 +6,12 @@ export default Ember.Controller.extend({
       return false;
     }
 
-    var banner = this.get("banner");
+    const banner = this.get("banner");
     return banner && banner.length > 0;
   }.property("banner", "bannerDismissed", "banner.@each"),
 
   appendBannerHtml: function(html){
-    var banner = this.get("banner") || [];
+    const banner = this.get("banner") || [];
     if(banner.indexOf(html) === -1){
       banner.pushObject(html);
     }

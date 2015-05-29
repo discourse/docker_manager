@@ -10,9 +10,7 @@ var app = new EmberApp({
     'importBootstrapJS': true
   },
   vendorFiles: {
-    'handlebars.js': {
-      production:  'bower_components/handlebars/handlebars.js'
-    }
+    'handlebars.js': null
   }
 });
 
