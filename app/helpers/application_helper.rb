@@ -1,5 +1,11 @@
+require 'open3'
+
 module DockerManager::ApplicationHelper
-  def has_uglify_js
-    @has_uglify_js ||= `which uglifyjs`.present?
+  def has_latest_pngcrush
+    cmd = 'pngcrush -version'
+    Open3.popen3(cmd) do |stdin, stdout, stderr|
+      pngcrush_version = stderr.read.strip.split(/\s+/)[1][0...-1]
+      @has_latest_pngcrush ||= Gem::Version.new(pngcrush_version) >= Gem::Version.new('1.7.85')
+    end
   end
 end
