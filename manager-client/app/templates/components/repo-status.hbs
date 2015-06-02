@@ -15,7 +15,7 @@
         <li>Last Updated: {{fmt-ago repo.latest.date}}</li>
         <li class='new-commits'>{{repo.latest.commits_behind}} new commits</li>
       </ul>
-      {{#if upgrading}}
+      {{#if repo.upgrading}}
         <button class="btn" {{action "upgrade"}}>Currently Upgrading...</button>
       {{else}}
         <button class="btn" {{action "upgrade"}} {{bind-attr disabled="upgradeDisabled"}}>Upgrade to the Latest Version</button>
