@@ -6,9 +6,6 @@ var app = new EmberApp({
   fingerprint: {
     enabled: false
   },
-  'ember-cli-bootstrap': {
-    'importBootstrapJS': true
-  },
   vendorFiles: {
     'handlebars.js': null
   }
@@ -17,6 +14,7 @@ var app = new EmberApp({
 app.import("bower_components/bootbox/bootbox.js");
 app.import("bower_components/message-bus/assets/message-bus.js");
 app.import("bower_components/momentjs/moment.js");
+app.import("bower_components/bootstrap/js/modal.js");
 
 // Use `app.import` to add additional libraries to the generated
 // output files.
