@@ -18,7 +18,7 @@ module DockerManager
 
         render text: <<HTML
 <html><head></head><body>
-<h2>You are running an old version of the Discourse image.<h2>
+<h2>You are running an old version of the Discourse image.</h2>
 <p>
 Upgraded via the web UI are disabled until you upgrade the image.
 </p>
