@@ -14,7 +14,7 @@ module DockerManager
       version = Gem::Version.new(version)
       expected_version = Gem::Version.new('1.0.13')
 
-      unless version < expected_version
+      if version < expected_version
 
         render text: <<HTML
 <html><head></head><body>
