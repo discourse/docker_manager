@@ -20,7 +20,7 @@ module DockerManager
 <html><head></head><body>
 <h2>You are running an old version of the Discourse image.</h2>
 <p>
-Upgraded via the web UI are disabled until you upgrade the image.
+Upgrades via the web UI are disabled until you run the latest image.
 </p>
 <p>
 To do so log in to your server using SSH and run:
