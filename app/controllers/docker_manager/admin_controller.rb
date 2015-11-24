@@ -6,17 +6,37 @@ module DockerManager
     layout nil
 
     def index
-      unless File.exist?('/usr/local/lib/libpng16.so.16.19.0')
-        render text: "
-You are running an old version of the Discourse image. Please upgrade to the latest version to use the web UI.
+      version = File.read('/VERSION') rescue '1.0.0'
+      if version == '1.0.0'
+        version = '1.0.13' if File.exist?('/usr/local/lib/libpng16.so.16.19.0')
+      end
 
-To do so log in to your server and run:
+      version = Gem::Version.new(version)
+      expected_version = Gem::Version.new('1.0.13')
 
+      unless version < expected_version
+
+        render text: <<HTML
+<html><head></head><body>
+<h2>You are running an old version of the Discourse image.<h2>
+<p>
+Upgraded via the web UI are disabled until you upgrade the image.
+</p>
+<p>
+To do so log in to your server using SSH and run:
+</p>
+
+<pre>
 cd /var/discourse
 git pull
 ./launcher rebuild app
-
-"
+</pre>
+<p>
+<a href='https://meta.discourse.org/t/how-do-i-update-my-docker-image-to-latest/23325'>More info on our support site</a>
+</p>
+</body>
+</html>
+HTML
       else
         render
       end
