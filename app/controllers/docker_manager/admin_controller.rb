@@ -6,7 +6,20 @@ module DockerManager
     layout nil
 
     def index
-      render
+      unless File.exist?('/usr/local/lib/libpng16.so.16.19.0')
+        render text: "
+You are running an old version of the Discourse image. Please upgrade to the latest version to use the web UI.
+
+To do so log in to your server and run:
+
+cd /var/discourse
+git pull
+./launcher rebuild app
+
+"
+      else
+        render
+      end
     end
 
     def repos
