@@ -1,6 +1,5 @@
 {{#unless versionCheck.upToDate}}
 <tr>
-  <!-- TODO: this link needs to include relative_url_root to support subfolder installs: -->
-  <th colspan="5">{{i18n "docker.upgrade"}} <a href="/admin/upgrade" data-auto-route="true">{{i18n "docker.perform_upgrade"}}</a></th>
+  <th colspan="5">{{i18n "docker.upgrade"}} <a href="{{Discourse.BaseUri}}/admin/upgrade" data-auto-route="true">{{i18n "docker.perform_upgrade"}}</a></th>
 </tr>
 {{/unless}}
