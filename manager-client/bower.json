@@ -12,7 +12,7 @@
     "loader.js": "ember-cli/loader.js#3.2.0",
     "qunit": "~1.17.1",
     "bootbox": "~4.3.0",
-    "message-bus": "https://raw.githubusercontent.com/SamSaffron/message_bus.git",
+    "message-bus": "https://github.com/SamSaffron/message_bus.git",
     "momentjs": "~2.8.4"
   }
 }

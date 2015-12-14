@@ -8,4 +8,8 @@ module DockerManager::ApplicationHelper
       @has_latest_pngcrush ||= Gem::Version.new(pngcrush_version) >= Gem::Version.new('1.7.85')
     end
   end
+
+  def discourse_root_url
+    Discourse.base_uri
+  end
 end

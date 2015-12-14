@@ -25,7 +25,7 @@ var Repo = Ember.Object.extend({
   repoAjax: function(url, args) {
     args = args || {};
     args.data = this.getProperties('path', 'version', 'branch');
-    return ajax(url, args);
+    return ajax(Discourse.getURL(url), args);
   },
 
   findLatest: function() {
@@ -74,7 +74,7 @@ Repo.reopenClass({
     return new Ember.RSVP.Promise(function (resolve) {
       if (loaded.length) { return resolve(loaded); }
 
-      ajax("/admin/docker/repos").then(function(result) {
+      ajax(Discourse.getURL("/admin/docker/repos")).then(function(result) {
         loaded = result.repos.map(function(r) {
           return Repo.create(r);
         });

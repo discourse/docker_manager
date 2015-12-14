@@ -1,5 +1,5 @@
 <header class="container">
-  {{#link-to 'index'}}<img src="/assets/images/docker-manager-ea64623b074c8ec2b0303bae846e21e6.png" class="logo">{{/link-to}}
+  {{#link-to 'index'}}<img {{bind-attr src="logoUrl"}} class="logo">{{/link-to}}
   <h1>{{#link-to 'index'}}Upgrade{{/link-to}}</h1>
 </header>
 
@@ -19,8 +19,8 @@
   <ul class="nav nav-tabs">
     {{#x-tab route="index"}}Versions{{/x-tab}}
     {{#x-tab route="processes"}}Processes{{/x-tab}}
-    <li><a href='/'>Return to site</a></li>
-    <li><a href='/admin/backups'>Backups</a></li>
+    <li><a {{bind-attr href="returnToSiteUrl"}}>Return to site</a></li>
+    <li><a {{bind-attr href="backupsUrl"}}>Backups</a></li>
   </ul>
 
   {{outlet}}

@@ -9,7 +9,7 @@ var ProcessList = Ember.Object.extend({
 
   refresh: function() {
     var self = this;
-    return ajax("/admin/docker/ps").then(function(result) {
+    return ajax(Discourse.getURL("/admin/docker/ps")).then(function(result) {
       self.set('output', result);
       return self;
     });

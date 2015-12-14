@@ -5,7 +5,7 @@ export default {
   name: "findCsrfToken",
 
   initialize: function() {
-    return ajax('/session/csrf').then(function(result) {
+    return ajax(Discourse.getURL('/session/csrf')).then(function(result) {
       var token = result.csrf;
       $.ajaxPrefilter(function(options, originalOptions, xhr) {
         if (!options.crossDomain) {
