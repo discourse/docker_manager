@@ -6,6 +6,8 @@ module DockerManager
     layout nil
 
     def index
+      return if Rails.env.development?
+
       version = File.read('/VERSION') rescue '1.0.0'
       if version == '1.0.0'
         version = '1.0.13' if File.exist?('/usr/local/lib/libpng16.so.16.19.0')

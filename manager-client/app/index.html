@@ -13,6 +13,16 @@
     <link rel="stylesheet" href="assets/docker-manager.css">
 
     {{content-for 'head-footer'}}
+
+  <script>
+    window.Discourse = {
+      hasLatestPngcrush: true,
+      getURL: function(url) {
+        return url;
+      }
+    };
+  </script>
+
   </head>
   <body>
     {{content-for 'body'}}
