@@ -17,7 +17,7 @@ module DockerManager
     protected
 
     def ensure_admin
-      raise Discourse::InvalidAccess.new unless current_user.admin?
+      raise Discourse::InvalidAccess.new unless current_user && current_user.admin?
     end
 
   end
