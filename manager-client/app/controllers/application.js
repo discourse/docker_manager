@@ -19,7 +19,7 @@ export default Ember.Controller.extend({
   },
 
   logoUrl: function() {
-    return Discourse.getURL("/assets/images/docker-manager-ea64623b074c8ec2b0303bae846e21e6.png");
+    return Discourse.getURL("/assets/images/docker-manager-aff8eaea0445c0488c19f8cfd14faa8c2b278924438f19048eacc175d7d134e4.png");
   }.property(),
 
   returnToSiteUrl: function() {
