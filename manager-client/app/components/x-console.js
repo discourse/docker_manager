@@ -5,7 +5,7 @@ export default Ember.Component.extend({
 
   render: function(buffer) {
     if (!Ember.isEmpty(this.get('output'))) {
-      buffer.push(this.get('output'));
+      buffer.push(Ember.Handlebars.Utils.escapeExpression(this.get('output')));
     }
   },
 

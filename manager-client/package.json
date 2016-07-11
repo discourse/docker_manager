@@ -32,6 +32,6 @@
     "ember-cli-uglify": "^1.0.1",
     "ember-export-application-global": "^1.0.2",
     "ember-cli-font-awesome": "0.0.4",
-    "ember-cli-ic-ajax": "^0.1.1"
+    "ember-cli-ic-ajax": "0.1.1"
   }
 }
