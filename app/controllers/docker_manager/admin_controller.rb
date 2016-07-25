@@ -15,8 +15,10 @@ module DockerManager
 
       version = Gem::Version.new(version)
       expected_version = Gem::Version.new('1.3.5')
+      ruby_version = Gem::Version.new(RUBY_VERSION)
+      expected_ruby_version = Gem::Version.new('2.3')
 
-      if version < expected_version
+      if (version < expected_version) || (ruby_version < expected_ruby_version)
 
         render text: <<HTML
 <html><head></head><body>
