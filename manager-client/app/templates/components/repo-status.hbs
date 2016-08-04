@@ -1,6 +1,6 @@
 <td>
   {{repo.name}}
-  {{fmt-commit repo.version repo.url}}
+  {{fmt-commit repo.version repo.url repo.branch}}
 </td>
 <td>
   {{#if repo.checking}}
@@ -11,7 +11,7 @@
     <div class='new-version'>
       <h4>New Version Available!</h4>
       <ul>
-        <li>Remote Version: {{fmt-commit repo.latest.version url}}</li>
+        <li>Remote Version: {{fmt-commit repo.latest.version repo.url repo.branch}}</li>
         <li>Last Updated: {{fmt-ago repo.latest.date}}</li>
         <li class='new-commits'>{{repo.latest.commits_behind}} new commits</li>
       </ul>
