@@ -6,9 +6,7 @@ class DockerManager::GitRepo
     @path = path
     @name = name
     @memoize = {}
-
-    # For discourse proper, return tracking branch
-    @branch = (path == Rails.root.to_s) ? tracking_branch : 'master'
+    @branch = tracking_branch
   end
 
   def start_upgrading
