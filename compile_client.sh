@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Compile the application using grunt
+# Compile the application using ember-cli
 (cd manager-client && ember build --environment=production)
 
 # Remove old assets
