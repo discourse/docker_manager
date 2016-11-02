@@ -6,7 +6,7 @@ export default Ember.Handlebars.makeBoundHelper(function(sha1, url, branch) {
     return new Ember.Handlebars.SafeString("(<a href='" + url + "'>" + sha1 + "</a>)");
   }
 
-  var _url = url.substr(0, url.indexOf('.git'));
+  var _url = url.substr(0, url.search(/(\.git)?$/));
   var _branch = (branch.indexOf('/') !== -1) ? branch.split('/')[1] : branch;
   return new Ember.Handlebars.SafeString("(<a href='" + _url + "/compare/" + sha1 + "..." + _branch + "'>" + sha1 + "</a>)");
 });
