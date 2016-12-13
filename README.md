@@ -6,7 +6,7 @@ This plugin works with the Discourse docker image. It allows you to perform upgr
 
 * Install `node.js`, `bower`, `grunt`
 * Clone this repo to desired folder path
-* In console, from folder path do `cd manger_client`, `npm install`, `bower install`
+* In console, from folder path do `cd manger-client`, `npm install`, `bower install`
 * Create a symlink for this folder in your local Discourse instance "plugins" folder (eg. `path/to/your/discourse_folder/plugins/discourse_manager`)
 * Make sure your Discourse instance is running locally at port 3000 and you are logged in as Admin
 
