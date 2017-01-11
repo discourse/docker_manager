@@ -1,3 +1,5 @@
+/* global Discourse */
+
 import request from 'ember-ajax/request';
 import Ember from 'ember';
 
@@ -36,7 +38,7 @@ var Repo = Ember.Object.extend({
       if (!self.get('shouldCheck')) { return resolve(); }
 
       self.set('checking', true);
-      self.repoAjax('/admin/docker/latest').then(function(result) {
+      self.repoAjax(Discourse.getURL('/admin/docker/latest')).then(function(result) {
         self.setProperties({
           checking: false,
           lastCheckedAt: new Date().getTime(),
@@ -48,14 +50,14 @@ var Repo = Ember.Object.extend({
   },
 
   findProgress: function() {
-    return this.repoAjax('/admin/docker/progress').then(function(result) {
+    return this.repoAjax(Discourse.getURL('/admin/docker/progress')).then(function(result) {
       return result.progress;
     });
   },
 
   resetUpgrade: function() {
     var self = this;
-    return this.repoAjax('/admin/docker/upgrade', { type: 'DELETE' }).then(function() {
+    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { type: 'DELETE' }).then(function() {
       self.set('upgrading', false);
     });
   },
@@ -64,7 +66,7 @@ var Repo = Ember.Object.extend({
     var self = this;
     this.set('upgrading', true);
 
-    return this.repoAjax('/admin/docker/upgrade', { type: 'POST' }).catch(function() {
+    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { type: 'POST' }).catch(function() {
       self.set('upgrading', false);
     });
   }

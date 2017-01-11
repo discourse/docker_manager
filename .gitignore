@@ -1,2 +1,3 @@
 *.swp
 manager-client/vendor/*
+*.sublime-workspace

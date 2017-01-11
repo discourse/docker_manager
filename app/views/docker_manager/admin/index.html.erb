@@ -12,6 +12,7 @@
     window.Discourse = {
       hasLatestPngcrush: <%= has_latest_pngcrush %>,
       rootUrl: '<%= discourse_root_url %>',
+      longPollingBaseUrl: '<%= long_polling_base_url %>',
 
       getURL: function(url) {
         if (!url) return url;

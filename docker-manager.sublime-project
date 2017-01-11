@@ -1,0 +1,17 @@
+{
+  "folders":
+  [
+    {
+      "path": ".",
+      "follow_symlinks": true,
+      "folder_exclude_patterns": ["node_modules", "bower_components", "dist"],
+      "file_exclude_patterns": ["assets/docker-manager-*"]
+    }
+  ],
+
+  "settings":
+  {
+    "translate_tabs_to_spaces": true,
+    "tab_size": 2
+  }
+}

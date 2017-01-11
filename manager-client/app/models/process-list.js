@@ -1,3 +1,5 @@
+/* global Discourse */
+
 import request from 'ember-ajax/request';
 import Ember from 'ember';
 
