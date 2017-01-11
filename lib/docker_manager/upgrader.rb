@@ -68,6 +68,7 @@ class DockerManager::Upgrader
   def run(cmd)
     log "$ #{cmd}"
     msg = ""
+
     clear_env = Hash[*ENV.map{|k,v| [k,nil]}
                      .reject{ |k,v|
                        ["PWD","HOME","SHELL","PATH"].include?(k) ||

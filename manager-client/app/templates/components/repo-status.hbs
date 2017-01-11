@@ -12,13 +12,19 @@
       <h4>New Version Available!</h4>
       <ul>
         <li>Remote Version: {{fmt-commit repo.latest.version repo.url repo.branch}}</li>
-        <li>Last Updated: {{fmt-ago repo.latest.date}}</li>
+        <li>Last Updated:
+          {{#if repo.latest.date}}
+            {{moment-from-now repo.latest.date interval=1000}}
+          {{else}}
+            &mdash;
+          {{/if}}
+        </li>
         <li class='new-commits'>{{repo.latest.commits_behind}} new commits</li>
       </ul>
       {{#if repo.upgrading}}
         <button class="btn" {{action "upgrade"}}>Currently Upgrading...</button>
       {{else}}
-        <button class="btn" {{action "upgrade"}} {{bind-attr disabled="upgradeDisabled"}}>Upgrade to the Latest Version</button>
+        <button class="btn" {{action "upgrade"}} disabled={{upgradeDisabled}}>Upgrade to the Latest Version</button>
       {{/if}}
     </div>
   {{/if}}

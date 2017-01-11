@@ -1,11 +1,11 @@
 /* global $:true */
-import ajax from "ic-ajax";
+import request from 'ember-ajax/request';
 
 export default {
   name: "findCsrfToken",
 
-  initialize: function() {
-    return ajax(Discourse.getURL('/session/csrf')).then(function(result) {
+  initialize() {
+    return request(Discourse.getURL('/session/csrf')).then(function(result) {
       var token = result.csrf;
       $.ajaxPrefilter(function(options, originalOptions, xhr) {
         if (!options.crossDomain) {

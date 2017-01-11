@@ -16,7 +16,7 @@
   <p>{{model.name}} is at the newest version {{fmt-commit model.version model.url model.branch}}.</p>
 {{else}}
   <div style='clear: both'>
-    <button {{action "start"}} {{bind-attr disabled="model.upgrading"}} class='btn'>{{upgradeButtonText}}</button>
+    <button {{action "start"}} disabled={{model.upgrading}} class='btn'>{{upgradeButtonText}}</button>
     {{#if model.upgrading}}
       <button {{action "resetUpgrade"}} class="btn unlock">Reset Upgrade</button>
     {{/if}}

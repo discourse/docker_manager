@@ -1,4 +1,4 @@
-import Repo from 'docker-manager/models/repo';
+import Repo from 'manager-client/models/repo';
 import Ember from 'ember';
 
 export default Ember.Route.extend({

@@ -1,13 +1,14 @@
 import Ember from 'ember';
 import config from './config/environment';
 
-var Router = Ember.Router.extend({
-  location: config.locationType
+const Router = Ember.Router.extend({
+  location: config.locationType,
+  rootURL: config.rootURL
 });
 
 Router.map(function() {
   this.route("processes");
-  this.resource('upgrade', { path: '/upgrade/:id' });
+  this.route('upgrade', { path: '/upgrade/:id' });
 });
 
 export default Router;

@@ -3,12 +3,6 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNameBindings: [':logs'],
 
-  render: function(buffer) {
-    if (!Ember.isEmpty(this.get('output'))) {
-      buffer.push(Ember.Handlebars.Utils.escapeExpression(this.get('output')));
-    }
-  },
-
   _outputChanged: function() {
     Ember.run.scheduleOnce('afterRender', this, '_scrollBottom');
     this.rerender();

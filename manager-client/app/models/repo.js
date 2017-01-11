@@ -1,4 +1,4 @@
-import ajax from "ic-ajax";
+import request from 'ember-ajax/request';
 import Ember from 'ember';
 
 var loaded = [];
@@ -25,7 +25,8 @@ var Repo = Ember.Object.extend({
   repoAjax: function(url, args) {
     args = args || {};
     args.data = this.getProperties('path', 'version', 'branch');
-    return ajax(Discourse.getURL(url), args);
+
+    return request(Discourse.getURL(url), args);
   },
 
   findLatest: function() {
@@ -70,11 +71,11 @@ var Repo = Ember.Object.extend({
 });
 
 Repo.reopenClass({
-  findAll: function() {
+  findAll() {
     return new Ember.RSVP.Promise(function (resolve) {
       if (loaded.length) { return resolve(loaded); }
 
-      ajax(Discourse.getURL("/admin/docker/repos")).then(function(result) {
+      request(Discourse.getURL("/admin/docker/repos")).then(function(result) {
         loaded = result.repos.map(function(r) {
           return Repo.create(r);
         });

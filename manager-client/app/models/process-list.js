@@ -1,24 +1,22 @@
-import ajax from "ic-ajax";
+import request from 'ember-ajax/request';
 import Ember from 'ember';
 
 var ProcessList = Ember.Object.extend({
 
-  init: function() {
+  init() {
     this._super();
   },
 
-  refresh: function() {
-    var self = this;
-    return ajax(Discourse.getURL("/admin/docker/ps")).then(function(result) {
-      self.set('output', result);
-      return self;
+  refresh() {
+    return request(Discourse.getURL("/admin/docker/ps"), {dataType: 'text'}).then(result => {
+      this.set('output', result);
     });
   }
 });
 
 ProcessList.reopenClass({
-  find: function() {
-    var list = ProcessList.create();
+  find() {
+    const list = ProcessList.create();
     return list.refresh();
   }
 });
