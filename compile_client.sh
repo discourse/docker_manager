@@ -6,8 +6,8 @@
 # Remove old assets
 rm assets/docker-manager-*
 
-cp manager-client/dist/assets/docker-manager.css assets/docker-manager-app.css
-cp manager-client/dist/assets/docker-manager.js assets/docker-manager-app.js
+cp manager-client/dist/assets/manager-client.css assets/docker-manager-app.css
+cp manager-client/dist/assets/manager-client.js assets/docker-manager-app.js
 cp manager-client/dist/assets/vendor.js assets/docker-manager-vendor.js
 cp manager-client/dist/assets/vendor.css assets/docker-manager-vendor.css
 
