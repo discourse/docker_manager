@@ -57,7 +57,7 @@ var Repo = Ember.Object.extend({
 
   resetUpgrade: function() {
     var self = this;
-    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { type: 'DELETE' }).then(function() {
+    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { dataType: 'text', type: 'DELETE' }).then(function() {
       self.set('upgrading', false);
     });
   },
@@ -66,7 +66,7 @@ var Repo = Ember.Object.extend({
     var self = this;
     this.set('upgrading', true);
 
-    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { type: 'POST' }).catch(function() {
+    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { dataType: 'text', type: 'POST' }).catch(function(e) {
       self.set('upgrading', false);
     });
   }
