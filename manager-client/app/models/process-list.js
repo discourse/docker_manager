@@ -3,25 +3,19 @@
 import request from 'ember-ajax/request';
 import Ember from 'ember';
 
-var ProcessList = Ember.Object.extend({
-
-  init() {
-    this._super();
-  },
+const ProcessList = Ember.Object.extend({
+  output: null,
 
   refresh() {
     return request(Discourse.getURL("/admin/docker/ps"), {dataType: 'text'}).then(result => {
       this.set('output', result);
+      return this;
     });
   }
 });
 
-ProcessList.reopenClass({
-  find() {
-    const list = ProcessList.create();
-    return list.refresh();
-  }
-});
-
+export function find() {
+  return ProcessList.create().refresh();
+}
 
 export default ProcessList;

@@ -5,7 +5,6 @@ export default Ember.Component.extend({
 
   _outputChanged: function() {
     Ember.run.scheduleOnce('afterRender', this, '_scrollBottom');
-    this.rerender();
   }.observes('output'),
 
   _scrollBottom: function() {
