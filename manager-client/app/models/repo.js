@@ -66,7 +66,7 @@ var Repo = Ember.Object.extend({
     var self = this;
     this.set('upgrading', true);
 
-    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { dataType: 'text', type: 'POST' }).catch(function(e) {
+    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { dataType: 'text', type: 'POST' }).catch(function() {
       self.set('upgrading', false);
     });
   }
