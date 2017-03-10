@@ -92,8 +92,9 @@ class DockerManager::Upgrader
     #
     #
     if ENV["UNICORN_SIDEKIQS"].to_i > 0
-      log "Stopping job queue to reclaim memory"
+      log "Stopping job queue to reclaim memory, master pid is #{master_pid}"
       Process.kill("TSTP", master_pid)
+      sleep 1
       # older versions do not have support, so quickly send a cont so master process is not hung
       Process.kill("CONT", master_pid)
     end
