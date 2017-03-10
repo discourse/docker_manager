@@ -28,6 +28,13 @@ class DockerManager::Upgrader
     `ps aux  | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`.strip.to_i
   end
 
+  def try(times, cond)
+    while cond.call && times > 0
+      times -= 1
+      yield
+    end
+  end
+
   def upgrade
     return unless @repo.start_upgrading
 
@@ -61,16 +68,12 @@ class DockerManager::Upgrader
 
     percent(10)
 
-    i = 20
-    while i > 0 && master_pid == unicorn_master_pid
+    try(20, -> {master_pid == unicorn_master_pid}) do
       sleep 1
-      i -= 1
     end
 
-    i = 20
-    while i > 0 && num_unicorn_workers < 2
+    try(20, -> {num_unicorn_workers < 2}) do
       sleep 1
-      i -= 1
     end
 
     master_pid = unicorn_master_pid
