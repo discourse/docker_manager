@@ -61,34 +61,36 @@ class DockerManager::Upgrader
       raise "No unicorn master or launcher"
     end
 
-    log("Cycling web, to free up memory")
-    Process.kill("USR2", launcher_pid.to_i)
-
-    sleep 10
-
-    percent(10)
-
-    try(20, -> {master_pid == unicorn_master_pid}) do
-      sleep 1
-    end
-
-    try(20, -> {num_unicorn_workers < 2}) do
-      sleep 1
-    end
-
-    master_pid = unicorn_master_pid
-    workers = num_unicorn_workers
-
-    percent(15)
-
-    # wince down so we only have 2 workers
-    if workers > min_workers
-      log "Stopping #{workers-min_workers} web workers, to free up memory"
-      (workers - min_workers).times do
-        Process.kill("TTOU", master_pid)
-      end
-    end
-
+    # log("Cycling web, to free up memory")
+    # Process.kill("USR2", launcher_pid.to_i)
+    #
+    # sleep 10
+    #
+    # percent(10)
+    #
+    # try(20, -> {master_pid == unicorn_master_pid}) do
+    #   sleep 1
+    # end
+    #
+    # try(20, -> {num_unicorn_workers < 2}) do
+    #   sleep 1
+    # end
+    #
+    # master_pid = unicorn_master_pid
+    # workers = num_unicorn_workers
+    # log "New master pid is #{master_pid}"
+    #
+    # percent(15)
+    #
+    # # wince down so we only have 2 workers
+    # if workers > min_workers
+    #   log "Stopping #{workers-min_workers} web workers, to free up memory"
+    #   (workers - min_workers).times do
+    #     Process.kill("TTOU", master_pid)
+    #   end
+    # end
+    #
+    #
     if ENV["UNICORN_SIDEKIQS"].to_i > 0
       log "Stopping job queue to reclaim memory"
       Process.kill("TSTP", master_pid)
