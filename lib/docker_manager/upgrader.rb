@@ -12,46 +12,109 @@ class DockerManager::Upgrader
     percent(0)
   end
 
+  def num_unicorn_workers
+    `ps aux | grep "unicorn worker\\[" | wc -l`.strip.to_i
+  end
+
+  def unicorn_master_pid
+    `ps aux | grep "unicorn master -E" | grep -v "grep" | awk '{print $2}'`.strip.to_i
+  end
+
+  def min_workers
+    2
+  end
+
+  def unicorn_launcher_pid
+    `ps aux  | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`.strip.to_i
+  end
+
   def upgrade
     return unless @repo.start_upgrading
 
     percent(0)
+
     clear_logs
+
+    log("********************************************************")
+    log("*** Please be patient, next steps might take a while ***")
+    log("********************************************************")
+
+    launcher_pid = unicorn_launcher_pid
+
+    master_pid = unicorn_master_pid
+    workers = num_unicorn_workers
+
+    if workers < 2
+      log("ABORTING, you do not have enough unicorn workers running")
+      raise "Not enough workers"
+    end
+
+    if launcher_pid <= 0 || master_pid <= 0
+      log("ABORTING, missing unicorn launcher or unicorn master")
+      raise "No unicorn master or launcher"
+    end
+
+    log("Cycling web, to free up memory")
+    Process.kill("USR2", launcher_pid.to_i)
+
+    sleep 10
+
+    percent(10)
+
+    i = 20
+    while i > 0 && master_pid == unicorn_master_pid
+      sleep 1
+      i -= 1
+    end
+
+    i = 20
+    while i > 0 && num_unicorn_workers < 2
+      sleep 1
+      i -= 1
+    end
+
+    master_pid = unicorn_master_pid
+    workers = num_unicorn_workers
+
+    percent(15)
+
+    # wince down so we only have 2 workers
+    if workers > min_workers
+      log "Stopping #{workers-min_workers} web workers, to free up memory"
+      (workers - min_workers).times do
+        Process.kill("TTOU", master_pid)
+      end
+    end
+
+    if ENV["UNICORN_SIDEKIQS"].to_i > 0
+      log "Stopping job queue to reclaim memory"
+      Process.kill("TSTP", master_pid)
+      # older versions do not have support, so quickly send a cont so master process is not hung
+      Process.kill("CONT", master_pid)
+    end
 
     # HEAD@{upstream} is just a fancy way how to say origin/master (in normal case)
     # see http://stackoverflow.com/a/12699604/84283
     run("cd #{@repo.path} && git fetch --tags && git reset --hard HEAD@{upstream}")
-    log("********************************************************")
-    log("*** Please be patient, next steps might take a while ***")
-    log("********************************************************")
-    percent(5)
+    percent(20)
     run("bundle install --deployment --without test --without development")
-    percent(25)
+    percent(30)
     run("bundle exec rake multisite:migrate")
-    percent(50)
-    log("***  Bundling assets. This might take a while *** ")
-    run("bundle exec rake assets:precompile")
-    percent(75)
-    sidekiq_pid = `ps aux | grep sidekiq.*busy | grep -v grep | awk '{ print $2 }'`.strip.to_i
-    if sidekiq_pid > 0
-      Process.kill("TERM", sidekiq_pid)
-      log("Killed sidekiq")
-    else
-      log("Warning: Sidekiq was not found")
-    end
+    percent(40)
+    log("***  Bundling assets. This will take a while *** ")
+    less_memory_flags = "RUBY_GC_MALLOC_LIMIT_MAX=20971520 RUBY_GC_OLDMALLOC_LIMIT_MAX=20971520 RUBY_GC_HEAP_GROWTH_MAX_SLOTS=50000 RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR=0.9 "
+    run("#{less_memory_flags} bundle exec rake assets:precompile")
+
     percent(100)
     publish('status', 'complete')
-    pid = `ps aux  | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`.strip
-    if pid.to_i > 0
-      log("***********************************************")
-      log("*** After restart, upgrade will be complete ***")
-      log("***********************************************")
-      log("Restarting unicorn pid: #{pid}")
-      Process.kill("USR2", pid.to_i)
-      log("DONE")
-    else
-      log("Did not find unicorn launcher")
-    end
+
+    log("***********************************************")
+    log("*** After restart, upgrade will be complete ***")
+    log("***********************************************")
+    log("Restarting unicorn pid: #{launcher_pid}")
+    Process.kill("USR2", launcher_pid)
+    log("DONE")
+
   rescue => ex
     publish('status', 'failed')
     STDERR.puts("Docker Manager: FAILED TO UPGRADE")
