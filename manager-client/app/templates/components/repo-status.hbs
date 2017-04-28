@@ -3,7 +3,7 @@
   {{fmt-commit repo.version repo.url repo.branch}}
 </td>
 <td>
-  {{#if repo.checking}}
+  {{#if repo.checkingStatus}}
     Checking for new version...
   {{else if repo.upToDate}}
     Up to date

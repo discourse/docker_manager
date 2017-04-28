@@ -6,18 +6,26 @@ export default Ember.Route.extend({
     return Repo.findAll();
   },
 
+  loadRepos(list) {
+    if (list.length === 0) { return; }
+    this.loadRepo(list.shift()).then(() => this.loadRepos(list));
+  },
+
+  loadRepo(repo) {
+    return repo.findLatest();
+  },
+
   setupController(controller, model) {
     const self = this;
-    const applicationController = self.controllerFor('application');
 
-    controller.setProperties({ model: model, upgrading: null });
+    const applicationController = this.controllerFor('application');
+    controller.setProperties({ model, upgrading: null });
 
     if(!(window.Discourse && window.Discourse.hasLatestPngcrush)){
       applicationController.appendBannerHtml("<b>WARNING:</b> You are running an old Docker image, <a href='https://meta.discourse.org/t/how-do-i-update-my-docker-image-to-latest/23325'>please upgrade</a>.");
     }
 
-    model.forEach(function(repo) {
-      repo.findLatest();
+    model.forEach(repo => {
       if (repo.get('upgrading')) {
         controller.set('upgrading', repo);
       }
@@ -31,8 +39,9 @@ export default Ember.Route.extend({
       if (repo.get('id') === 'discourse' && repo.get('branch') === 'origin/master') {
         applicationController.appendBannerHtml("<b>WARNING:</b> Your Discourse is tracking the 'master' branch which may be unstable, <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'>we recommend tracking the 'tests-passed' branch</a>.");
       }
-
     });
+
+    this.loadRepos(model.slice(0));
   },
 
   actions: {

@@ -6,7 +6,10 @@ import Ember from 'ember';
 var loaded = [];
 
 var Repo = Ember.Object.extend({
+  unloaded: true,
+  checking: false,
 
+  checkingStatus: Ember.computed.or('unloaded', 'checking'),
   upToDate: function() {
     return !this.get('upgrading') & (this.get('version') === this.get('latest.version'));
   }.property('upgrading', 'version', 'latest.version'),
@@ -35,11 +38,15 @@ var Repo = Ember.Object.extend({
     var self = this;
 
     return new Ember.RSVP.Promise(function(resolve) {
-      if (!self.get('shouldCheck')) { return resolve(); }
+      if (!self.get('shouldCheck')) {
+        self.set('unloaded', false);
+        return resolve();
+      }
 
       self.set('checking', true);
       self.repoAjax(Discourse.getURL('/admin/docker/latest')).then(function(result) {
         self.setProperties({
+          unloaded: false,
           checking: false,
           lastCheckedAt: new Date().getTime(),
           latest: Ember.Object.create(result.latest)
