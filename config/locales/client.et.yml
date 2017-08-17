@@ -1,0 +1,5 @@
+et:
+  js:
+    docker:
+      upgrade: "Sinu Discourse' installatsioon on aegunud"
+      perform_upgrade: "Kliki siia, et uuendada."

@@ -1,0 +1,5 @@
+id:
+  js:
+    docker:
+      upgrade: "Instalasi Discourse Anda usang."
+      perform_upgrade: "Klik di sini untuk melakukan pembaruan."

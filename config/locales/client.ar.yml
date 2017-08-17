@@ -1,0 +1,5 @@
+ar:
+  js:
+    docker:
+      upgrade: "نسختك من دسكورس قديمة."
+      perform_upgrade: "انقر هنا للترقية."

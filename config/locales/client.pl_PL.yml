@@ -1,5 +1,5 @@
 pl_PL:
   js:
     docker:
-      upgrade: "Aktualizacje wykonuje Docker."
-      perform_upgrade: "Kliknij, aby zaktualizować."
+      upgrade: "Twoja instancja Discourse wymaga aktualizacji. "
+      perform_upgrade: "Kliknij tu, aby zaktualizować."

@@ -1,5 +1,5 @@
 zh_CN:
   js:
     docker:
-      upgrade: "Docker 负责升级。"
-      perform_upgrade: "点击这儿升级。"
+      upgrade: "当前使用 Discourse 的旧版本。"
+      perform_upgrade: "点击这里升级。"

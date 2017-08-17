@@ -1,0 +1,5 @@
+gl:
+  js:
+    docker:
+      upgrade: "A instalación do Discourse non está actualizada."
+      perform_upgrade: "Preme aquí para actualizar."

@@ -1,0 +1,5 @@
+ko:
+  js:
+    docker:
+      upgrade: "당신의 Discourse 설치는 구 버전 입니다."
+      perform_upgrade: "업그레이드하려면 여기를 클릭하세요."

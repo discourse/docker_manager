@@ -1,0 +1,5 @@
+sv:
+  js:
+    docker:
+      upgrade: "Din Discourse-installation är föråldrad."
+      perform_upgrade: "Klicka här för att uppgradera."

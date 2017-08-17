@@ -1,0 +1,5 @@
+uk:
+  js:
+    docker:
+      upgrade: "Ваш інсталятор Discourse застарів."
+      perform_upgrade: "Натисніть тут для оновлення."

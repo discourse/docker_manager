@@ -1,0 +1,5 @@
+sq:
+  js:
+    docker:
+      upgrade: "Platforma juaj Discourse ka përtëritje."
+      perform_upgrade: "Kliko këtu për ta përtëritur."

@@ -1,0 +1,5 @@
+bs_BA:
+  js:
+    docker:
+      upgrade: "Vaša Discourse instalacije je zastarijela."
+      perform_upgrade: "Klikni ovjde za nadogradnju."

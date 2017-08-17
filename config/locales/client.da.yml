@@ -1,0 +1,5 @@
+da:
+  js:
+    docker:
+      upgrade: "Din Discourse-installation er forældet."
+      perform_upgrade: "Klik her for at opgradere."

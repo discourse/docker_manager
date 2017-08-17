@@ -1,0 +1,5 @@
+sk:
+  js:
+    docker:
+      upgrade: "  Vaša Discourse inštalácia je neaktuálna."
+      perform_upgrade: "Kliknite sem pre upgrade."

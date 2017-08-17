@@ -1,0 +1,5 @@
+ja:
+  js:
+    docker:
+      upgrade: "インストールされているDiscourseは古いバージョンです。"
+      perform_upgrade: "クリックしてアップグレードを行う"

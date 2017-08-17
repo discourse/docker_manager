@@ -1,5 +1,5 @@
 es:
   js:
     docker:
-      upgrade: "Las actualizaciones son realizadas por Docker."
-      perform_upgrade: "Clic aquí para actualizar."
+      upgrade: "Tu instalación de Discourse está desactualizada."
+      perform_upgrade: "Haz clic aquí para actualizar."

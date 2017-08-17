@@ -1,0 +1,5 @@
+cs:
+  js:
+    docker:
+      upgrade: "Vaše instalace Discourse je zastaralá."
+      perform_upgrade: "Klikněte zde pro aktualizaci."

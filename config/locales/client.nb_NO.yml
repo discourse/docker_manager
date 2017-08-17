@@ -1,0 +1,5 @@
+nb_NO:
+  js:
+    docker:
+      upgrade: "Din Discourse-installasjon kjører ikke siste versjon."
+      perform_upgrade: "Trykk her for å oppgradere."

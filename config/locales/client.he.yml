@@ -1,0 +1,5 @@
+he:
+  js:
+    docker:
+      upgrade: "התקנת ה-Discourse שלכם אינה מעודכנת."
+      perform_upgrade: "לחצו כאן כדי לשדרג."

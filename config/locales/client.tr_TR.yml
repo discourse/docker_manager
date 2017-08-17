@@ -1,0 +1,5 @@
+tr_TR:
+  js:
+    docker:
+      upgrade: "Discourse yüklemeniz güncel değil."
+      perform_upgrade: "Güncellemek için buraya tıklayın."

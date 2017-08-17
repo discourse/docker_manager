@@ -1,0 +1,5 @@
+el:
+  js:
+    docker:
+      upgrade: "Η εγκατεστημένη έκδοση του Discourse είναι παρωχημένη."
+      perform_upgrade: "Πάτα εδώ για να αναβαθμίσεις."

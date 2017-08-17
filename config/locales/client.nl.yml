@@ -1,0 +1,5 @@
+nl:
+  js:
+    docker:
+      upgrade: "Je Discourse-installatie is verouderd."
+      perform_upgrade: "Klik hier om te upgraden."

@@ -1,0 +1,5 @@
+ro:
+  js:
+    docker:
+      upgrade: "Versiunea Discourse nu este actualizată."
+      perform_upgrade: "Click aici pentru actualizare."
