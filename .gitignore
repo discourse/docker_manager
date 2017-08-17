@@ -1,3 +1,5 @@
 *.swp
 manager-client/vendor/*
 *.sublime-workspace
+.DS_Store
+._.DS_Store
