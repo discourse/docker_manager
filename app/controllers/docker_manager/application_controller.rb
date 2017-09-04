@@ -5,7 +5,7 @@ module DockerManager
 
     include CurrentUser
 
-    before_filter :ensure_admin
+    before_action :ensure_admin
     protect_from_forgery
 
     def handle_unverified_request
