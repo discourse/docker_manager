@@ -1,6 +1,5 @@
 module DockerManager
   class ApplicationController < ActionController::Base
-
     helper DockerManager::ApplicationHelper
 
     include CurrentUser
@@ -17,7 +16,8 @@ module DockerManager
     protected
 
     def ensure_admin
-      raise Discourse::InvalidAccess.new unless current_user && current_user.admin?
+      return redirect_to '/login' if !current_user
+      return render(plain: I18n.t('invalid_access'), status: 404) if !current_user.admin?
     end
 
   end
