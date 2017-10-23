@@ -10,7 +10,7 @@ module DockerManager
     def handle_unverified_request
       super
       clear_current_user
-      render text: "['BAD CSRF']", status: 403
+      render plain: "['BAD CSRF']", status: 403
     end
 
     protected

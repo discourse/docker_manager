@@ -20,7 +20,7 @@ module DockerManager
 
       if (version < expected_version) || (ruby_version < expected_ruby_version)
 
-        render text: <<~HTML
+        render plain: <<~HTML
         <html><head></head><body>
         <h2>You are running an old version of the Discourse image.</h2>
         <p>
@@ -89,14 +89,14 @@ module DockerManager
         upgrader = Upgrader.new(current_user.id, repo, params[:version])
         upgrader.upgrade
       end
-      render text: "OK"
+      render plain: "OK"
     end
 
     def reset_upgrade
       repo = DockerManager::GitRepo.new(params[:path])
       upgrader = Upgrader.new(current_user.id, repo, params[:version])
       upgrader.reset!
-      render text: "OK"
+      render plain: "OK"
     end
 
     def ps
@@ -106,7 +106,7 @@ module DockerManager
       else
         ps_output = `ps aux --sort -rss`
       end
-      render text: ps_output
+      render plain: ps_output
     end
 
     def runaway_cpu
@@ -116,7 +116,7 @@ module DockerManager
          a += 1
         end
       end
-      render text: "Killing CPU on #{Process.pid}"
+      render plain: "Killing CPU on #{Process.pid}"
     end
 
     def runaway_mem
@@ -127,7 +127,7 @@ module DockerManager
           sleep 30
         end
       end
-      render text: "Leaking memory on #{Process.pid}"
+      render plain: "Leaking memory on #{Process.pid}"
     end
 
   end
