@@ -1,5 +1,12 @@
+# encoding: utf-8
+#
+# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+#
+# To work with us on translations, join this project:
+# https://www.transifex.com/projects/p/discourse-org/
+
 ko:
   js:
     docker:
-      upgrade: "당신의 Discourse 설치는 구 버전 입니다."
-      perform_upgrade: "업그레이드하려면 여기를 클릭하세요."
+      upgrade: "설치된 Discourse가 최신 버전이 아닙니다."
+      perform_upgrade: "업그레이드 하려면 클릭"
