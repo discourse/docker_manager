@@ -1,0 +1,5 @@
+sr:
+  js:
+    docker:
+      upgrade: "Tvoja Discourse instalacija nije sinhronizovana sa zadnjim zakrpama."
+      perform_upgrade: "Klikni ovde za nadogradnju."
