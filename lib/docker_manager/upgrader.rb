@@ -113,6 +113,7 @@ class DockerManager::Upgrader
 
     percent(100)
     publish('status', 'complete')
+    log_version_upgrade
 
     log("***********************************************")
     log("*** After restart, upgrade will be complete ***")
@@ -194,5 +195,9 @@ class DockerManager::Upgrader
     $redis.append logs_key, message + "\n"
     $redis.expire(logs_key, 30.minutes)
     publish 'log', message
+  end
+
+  def log_version_upgrade
+    StaffActionLogger.new(User.find(@user_id)).log_custom('discourse_upgrade', from_version: @from_version, repository: @repo.path)
   end
 end
