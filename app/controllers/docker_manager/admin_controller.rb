@@ -9,18 +9,15 @@ module DockerManager
       return if Rails.env.development?
 
       version = File.read('/VERSION') rescue '1.0.0'
-      if version == '1.0.0'
-        version = '1.0.13' if File.exist?('/usr/local/lib/libpng16.so.16.19.0')
-      end
 
       version = Gem::Version.new(version)
-      expected_version = Gem::Version.new('2.0.20171008')
+      expected_version = Gem::Version.new('2.0.20171204')
       ruby_version = Gem::Version.new(RUBY_VERSION)
       expected_ruby_version = Gem::Version.new('2.4')
 
       if (version < expected_version) || (ruby_version < expected_ruby_version)
 
-        render plain: <<~HTML
+        render html: <<~HTML
         <html><head></head><body>
         <h2>You are running an old version of the Discourse image.</h2>
         <p>
