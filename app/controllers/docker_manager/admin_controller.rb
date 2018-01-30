@@ -17,7 +17,7 @@ module DockerManager
 
       if (version < expected_version) || (ruby_version < expected_ruby_version)
 
-        render html: <<~HTML
+        message = <<~HTML
         <html><head></head><body>
         <h2>You are running an old version of the Discourse image.</h2>
         <p>
@@ -38,6 +38,8 @@ module DockerManager
         </body>
         </html>
         HTML
+
+        render html: message.html_safe
       else
         render
       end
