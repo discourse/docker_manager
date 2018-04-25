@@ -1,4 +1,9 @@
 <td>
+  {{#if repo.official}}
+    <span class="glyphicon glyphicon-check" title="Official Plugin"></span>
+  {{/if}}
+</td>
+<td>
   {{repo.name}}
   {{fmt-commit repo.version repo.url repo.branch}}
 </td>

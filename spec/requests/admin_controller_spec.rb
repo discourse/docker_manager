@@ -30,4 +30,18 @@ RSpec.describe DockerManager::AdminController do
       expect(response.status).to eq(200)
     end
   end
+
+  describe '#repos' do
+    it 'should return the right response' do
+      sign_in(Fabricate(:admin))
+
+      get '/admin/docker/repos'
+
+      expect(response.status).to eq(200)
+
+      body = JSON.parse(response.body)
+
+      expect(body["repos"].first["official"]).to eq(false)
+    end
+  end
 end

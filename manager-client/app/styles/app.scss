@@ -44,6 +44,15 @@ div.logs {
 
 table#repos {
   margin-top: 10px;
+
+  td:first-child {
+    width: 3%;
+    padding-left: 8px;
+  }
+
+  td {
+    padding: 8px 8px 8px 0px;
+  }
 }
 
 h3.loading {
