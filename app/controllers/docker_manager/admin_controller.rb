@@ -47,8 +47,13 @@ module DockerManager
 
     def repos
       repos = [DockerManager::GitRepo.new(Rails.root.to_s, 'discourse')]
-      Discourse.visible_plugins.each do |p|
+      p = Proc.new { |p|
         repos << DockerManager::GitRepo.new(File.dirname(p.path), p.name)
+      }
+      if Discourse.respond_to?(:visible_plugins)
+        Discourse.visible_plugins.each(&p)
+      else
+        Discourse.plugins.each(&p)
       end
       repos.map! do |r|
         result = {
