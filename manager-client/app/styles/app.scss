@@ -29,6 +29,7 @@ header {
     font-size: 2em;
   }
   clear: both;
+  overflow: auto;
 }
 
 div.logs {
@@ -110,7 +111,8 @@ button.unlock {
 }
 
 #banner {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  margin-top: 15px;
   padding: 10px;
   border-radius: 5px;
   background: scale-color($tertiary, $lightness: 90%);
@@ -123,6 +125,16 @@ button.unlock {
   }
 }
 
+div.progress {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 th {
-    border-top: none;
+  border-top: none;
+}
+
+ul.nav-tabs {
+  width: 100%;
+  margin-bottom: 15px;
 }

@@ -17,15 +17,15 @@
   {{/if}}
 
   <ul class="nav nav-tabs">
-    {{#link-to "index" tagName="li"}}
-      {{#link-to "index"}}Versions{{/link-to}}
+    {{#link-to "index" tagName="li" class="nav-item"}}
+      {{#link-to "index" class="nav-link"}}Versions{{/link-to}}
     {{/link-to}}
-    {{#link-to "processes" tagName="li"}}
-      {{#link-to "processes"}}Processes{{/link-to}}
+    {{#link-to "processes" tagName="li" class="nav-item"}}
+      {{#link-to "processes" class="nav-link"}}Processes{{/link-to}}
     {{/link-to}}
 
-    <li><a href={{returnToSiteUrl}}>Return to site</a></li>
-    <li><a href={{backupsUrl}}>Backups</a></li>
+    <li class="nav-item"><a class="nav-link" href={{returnToSiteUrl}}>Return to site</a></li>
+    <li class="nav-item"><a class="nav-link" href={{backupsUrl}}>Backups</a></li>
   </ul>
 
   {{outlet}}
