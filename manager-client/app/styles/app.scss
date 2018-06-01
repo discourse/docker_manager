@@ -70,6 +70,9 @@ table#repos {
     width: 3%;
     padding-left: 8px;
   }
+  th {
+    border-top: none;
+  }
 
   td, th {
     padding: 8px 15px 8px 0px;
