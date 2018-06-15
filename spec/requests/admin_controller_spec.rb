@@ -2,22 +2,19 @@ require 'rails_helper'
 
 RSpec.describe DockerManager::AdminController do
   describe 'anonymous user' do
-    it 'should redirect to login page' do
+    it 'should be a 404' do
       get '/admin/upgrade'
 
-      expect(response.status).to eq(302)
-      expect(response).to redirect_to('/login')
+      expect(response.status).to eq(404)
     end
   end
 
   describe 'when user is not an admin' do
-    it 'should redirect to login page' do
+    it 'should 404' do
       sign_in(Fabricate(:user))
 
       get '/admin/upgrade'
-
       expect(response.status).to eq(404)
-      expect(response.body).to eq(I18n.t('invalid_access'))
     end
   end
 
@@ -26,7 +23,6 @@ RSpec.describe DockerManager::AdminController do
       sign_in(Fabricate(:admin))
 
       get '/admin/upgrade'
-
       expect(response.status).to eq(200)
     end
   end
@@ -36,11 +32,8 @@ RSpec.describe DockerManager::AdminController do
       sign_in(Fabricate(:admin))
 
       get '/admin/docker/repos'
-
       expect(response.status).to eq(200)
-
       body = JSON.parse(response.body)
-
       expect(body["repos"].first["official"]).to eq(false)
     end
   end
