@@ -59,7 +59,7 @@ class DockerManager::GitRepo
     url
   end
 
-  def update!
+  def update_remote!
     `cd #{path} && git remote update`
   end
 

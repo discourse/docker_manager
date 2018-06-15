@@ -64,7 +64,7 @@ module DockerManager
       repo = DockerManager::GitRepo.find(params[:path])
       raise Discourse::NotFound unless repo.present?
 
-      repo.update! if Rails.env == 'production'
+      repo.update_remote! if Rails.env == 'production'
 
       render json: {
         latest: {
@@ -103,27 +103,5 @@ module DockerManager
       end
       render plain: ps_output
     end
-
-    def runaway_cpu
-      Thread.new do
-        a = 1
-        while true
-          a += 1
-        end
-      end
-      render plain: "Killing CPU on #{Process.pid}"
-    end
-
-    def runaway_mem
-      Thread.new do
-        a = []
-        while true
-          a << Array.new(50_000_000 / 8)
-          sleep 30
-        end
-      end
-      render plain: "Leaking memory on #{Process.pid}"
-    end
-
   end
 end
