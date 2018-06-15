@@ -1,0 +1,21 @@
+<html>
+  <head></head>
+  <body>
+    <h2>You are running an old version of the Discourse image.</h2>
+    <p>
+    Upgrades via the web UI are disabled until you run the latest image.
+    </p>
+    <p>
+    To do so log in to your server using SSH and run:
+    </p>
+
+    <pre>
+        cd /var/discourse
+        git pull
+        ./launcher rebuild app
+    </pre>
+    <p>
+    <a href='https://meta.discourse.org/t/how-do-i-update-my-docker-image-to-latest/23325'>More info on our support site</a>
+    </p>
+  </body>
+</html>

@@ -16,45 +16,14 @@ module DockerManager
       expected_ruby_version = Gem::Version.new('2.4')
 
       if (version < expected_version) || (ruby_version < expected_ruby_version)
-
-        message = <<~HTML
-        <html><head></head><body>
-        <h2>You are running an old version of the Discourse image.</h2>
-        <p>
-        Upgrades via the web UI are disabled until you run the latest image.
-        </p>
-        <p>
-        To do so log in to your server using SSH and run:
-        </p>
-
-        <pre>
-        cd /var/discourse
-        git pull
-        ./launcher rebuild app
-        </pre>
-        <p>
-        <a href='https://meta.discourse.org/t/how-do-i-update-my-docker-image-to-latest/23325'>More info on our support site</a>
-        </p>
-        </body>
-        </html>
-        HTML
-
-        render html: message.html_safe
+        render 'upgrade_required', layout: false
       else
         render
       end
     end
 
     def repos
-      repos = [DockerManager::GitRepo.new(Rails.root.to_s, 'discourse')]
-      p = Proc.new { |p|
-        repos << DockerManager::GitRepo.new(File.dirname(p.path), p.name)
-      }
-      if Discourse.respond_to?(:visible_plugins)
-        Discourse.visible_plugins.each(&p)
-      else
-        Discourse.plugins.each(&p)
-      end
+      repos = DockerManager::GitRepo.find_all
       repos.map! do |r|
         result = {
           name: r.name,
@@ -75,26 +44,40 @@ module DockerManager
         result
       end
 
-      render json: {repos: repos}
+      render json: { repos: repos }
     end
 
     def progress
-      repo = DockerManager::GitRepo.new(params[:path])
+      repo = DockerManager::GitRepo.find(params[:path])
+      raise Discourse::NotFound unless repo.present?
+
       upgrader = Upgrader.new(current_user.id, repo, params[:version])
-      render json: {progress: {logs: upgrader.find_logs, percentage: upgrader.last_percentage } }
+      render json: {
+        progress: {
+          logs: upgrader.find_logs,
+          percentage: upgrader.last_percentage
+        }
+      }
     end
 
     def latest
-      repo = DockerManager::GitRepo.new(params[:path])
+      repo = DockerManager::GitRepo.find(params[:path])
+      raise Discourse::NotFound unless repo.present?
+
       repo.update! if Rails.env == 'production'
 
-      render json: {latest: {version: repo.latest_origin_commit,
-                             commits_behind: repo.commits_behind,
-                             date: repo.latest_origin_commit_date } }
+      render json: {
+        latest: {
+          version: repo.latest_origin_commit,
+          commits_behind: repo.commits_behind,
+          date: repo.latest_origin_commit_date
+        }
+      }
     end
 
     def upgrade
-      repo = DockerManager::GitRepo.new(params[:path])
+      repo = DockerManager::GitRepo.find(params[:path])
+      raise Discourse::NotFound unless repo.present?
       Thread.new do
         upgrader = Upgrader.new(current_user.id, repo, params[:version])
         upgrader.upgrade
@@ -103,7 +86,9 @@ module DockerManager
     end
 
     def reset_upgrade
-      repo = DockerManager::GitRepo.new(params[:path])
+      repo = DockerManager::GitRepo.find(params[:path])
+      raise Discourse::NotFound unless repo.present?
+
       upgrader = Upgrader.new(current_user.id, repo, params[:version])
       upgrader.reset!
       render plain: "OK"
@@ -123,7 +108,7 @@ module DockerManager
       Thread.new do
         a = 1
         while true
-         a += 1
+          a += 1
         end
       end
       render plain: "Killing CPU on #{Process.pid}"
@@ -133,7 +118,7 @@ module DockerManager
       Thread.new do
         a = []
         while true
-          a << Array.new(50_000_000/8)
+          a << Array.new(50_000_000 / 8)
           sleep 30
         end
       end

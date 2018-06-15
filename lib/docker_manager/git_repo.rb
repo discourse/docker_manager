@@ -2,7 +2,7 @@
 class DockerManager::GitRepo
   attr_reader :path, :name, :branch
 
-  def initialize(path, name=nil)
+  def initialize(path, name = nil)
     @path = path
     @name = name
     @memoize = {}
@@ -61,6 +61,24 @@ class DockerManager::GitRepo
 
   def update!
     `cd #{path} && git remote update`
+  end
+
+  def self.find_all
+    repos = [DockerManager::GitRepo.new(Rails.root.to_s, 'discourse')]
+    p = Proc.new { |x|
+      repos << DockerManager::GitRepo.new(File.dirname(x.path), x.name)
+    }
+    if Discourse.respond_to?(:visible_plugins)
+      Discourse.visible_plugins.each(&p)
+    else
+      Discourse.plugins.each(&p)
+    end
+    repos
+
+  end
+
+  def self.find(path)
+    find_all.detect { |r| r.path == path }
   end
 
   protected

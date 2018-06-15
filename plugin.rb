@@ -4,7 +4,6 @@
 # authors: Robin Ward, Sam Saffron
 # url: https://github.com/discourse/docker_manager
 
-
 module ::DockerManager
   # should be automatic, but something is weird
   load File.expand_path(File.dirname(__FILE__)) << '/app/helpers/application_helper.rb'
@@ -21,7 +20,6 @@ assets.skip_minification ||= []
 
 assets.precompile += ['docker-manager-app.js', 'docker-manager-app.css', 'docker-manager-vendor.js', 'docker-manager-vendor.css', 'images/docker-manager.png']
 assets.skip_minification += ['docker-manager-app.js', 'docker-manager-vendor.js']
-
 
 after_initialize do
   Discourse::Application.routes.append do
