@@ -1,13 +1,13 @@
 class DockerManager::Upgrader
 
-  def initialize(user_id, repo, from_version)
+  def initialize(user_id, repos, from_version)
     @user_id = user_id
-    @repo = repo
+    @repos = repos.is_a?(Array) ? repos : [repos]
     @from_version = from_version
   end
 
   def reset!
-    @repo.stop_upgrading
+    @repos.each(&:stop_upgrading)
     clear_logs
     percent(0)
   end
@@ -36,7 +36,9 @@ class DockerManager::Upgrader
   end
 
   def upgrade
-    return unless @repo.start_upgrading
+    @repos.each do |repo|
+      return unless repo.start_upgrading
+    end
 
     percent(0)
 
@@ -101,8 +103,12 @@ class DockerManager::Upgrader
 
     # HEAD@{upstream} is just a fancy way how to say origin/master (in normal case)
     # see http://stackoverflow.com/a/12699604/84283
-    run("cd #{@repo.path} && git fetch --tags && git reset --hard HEAD@{upstream}")
-    percent(20)
+
+    @repos.each_with_index do |repo, index|
+      run("cd #{repo.path} && git fetch --tags && git reset --hard HEAD@{upstream}")
+      percent(20 * (index + 1) / @repos.size)
+    end
+
     run("bundle install --deployment --without test --without development")
     percent(30)
     run("bundle exec rake multisite:migrate")
@@ -128,7 +134,7 @@ class DockerManager::Upgrader
     STDERR.puts(ex.inspect)
     raise
   ensure
-    @repo.stop_upgrading
+    @repos.each(&:stop_upgrading)
   end
 
   def publish(type, value)
@@ -166,7 +172,7 @@ class DockerManager::Upgrader
   end
 
   def logs_key
-    "logs:#{@repo.path}:#{@from_version}"
+    "logs:#{@repos.map(&:path).join(", ")}:#{@from_version}"
   end
 
   def clear_logs
@@ -178,7 +184,7 @@ class DockerManager::Upgrader
   end
 
   def percent_key
-    "percent:#{@repo.path}:#{@from_version}"
+    "percent:#{@repos.map(&:path).join(", ")}:#{@from_version}"
   end
 
   def last_percentage
@@ -198,6 +204,6 @@ class DockerManager::Upgrader
   end
 
   def log_version_upgrade
-    StaffActionLogger.new(User.find(@user_id)).log_custom('discourse_upgrade', from_version: @from_version, repository: @repo.path)
+    StaffActionLogger.new(User.find(@user_id)).log_custom('discourse_upgrade', from_version: @from_version, repository: @repos.map(&:path).join(", "))
   end
 end

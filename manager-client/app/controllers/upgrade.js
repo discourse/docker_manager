@@ -1,5 +1,6 @@
 /* global MessageBus, bootbox */
 import Ember from 'ember';
+import Repo from 'manager-client/models/repo';
 
 export default Ember.Controller.extend({
   output: null,
@@ -11,6 +12,34 @@ export default Ember.Controller.extend({
 
   complete: Ember.computed.equal('status', 'complete'),
   failed: Ember.computed.equal('status', 'failed'),
+
+  multiUpgrade: function() {
+    return this.get("model.length") !== 1;
+  }.property("model.length"),
+
+  title: function () {
+    return this.get("multiUpgrade") ? "All" : this.get("model")[0].get("name");
+  }.property("model.@each.name"),
+
+  isUpToDate: function () {
+    return this.get("model").every(repo => repo.get("upToDate"));
+  }.property("model.@each.upToDate"),
+
+  upgrading: function () {
+    return this.get("model").some(repo => repo.get("upgrading"));
+  }.property("model.@each.upgrading"),
+
+  repos() {
+    const model = this.get("model");
+    return this.get("isMultiple") ? model : [model];
+  },
+
+  updateAttribute(key, value, valueIsKey = false) {
+    this.get("model").forEach(repo => {
+      value = valueIsKey ? repo.get(value) : value; 
+      repo.set(key, value);
+    });
+  },
 
   messageReceived(msg) {
     switch(msg.type) {
@@ -24,23 +53,23 @@ export default Ember.Controller.extend({
         this.set('status', msg.value);
 
         if (msg.value === 'complete' || msg.value === 'failed') {
-          this.set('model.upgrading', false);
+          this.updateAttribute('upgrading', false);
         }
 
         if (msg.value === 'complete') {
-          this.set('model.version', this.get('model.latest.version'));
+          this.updateAttribute('version', "latest.version", true);
         }
         break;
     }
   },
 
   upgradeButtonText: function() {
-    if (this.get('model.upgrading')) {
+    if (this.get("upgrading")) {
       return "Upgrading...";
     } else {
       return "Start Upgrading";
     }
-  }.property('model.upgrading'),
+  }.property("upgrading"),
 
   startBus() {
     const self = this;
@@ -60,7 +89,13 @@ export default Ember.Controller.extend({
   actions: {
     start() {
       this.reset();
-      const repo = this.get('model');
+
+      if (this.get("multiUpgrade")) {
+        this.updateAttribute("upgrading", true);
+        return Repo.upgradeAll().finally(() => this.updateAttribute("upgrading", false));
+      }
+
+      const repo = this.get('model')[0];
       if (repo.get('upgrading')) { return; }
       repo.startUpgrade();
     },
@@ -71,7 +106,14 @@ export default Ember.Controller.extend({
       bootbox.confirm("WARNING: You should only reset upgrades that have failed and are not running.\n\n"+
                       "This will NOT cancel currently running builds and should only be used as a last resort.", function(result) {
         if (result) {
-          const repo = self.get('model');
+          if (self.get("multiUpgrade")) {
+            return Repo.resetAll().finally(() => {
+              self.reset();
+              this.updateAttribute("upgrading", false);
+            });
+          }
+
+          const repo = self.get('model')[0];
           repo.resetUpgrade().then(function() {
             self.reset();
           });

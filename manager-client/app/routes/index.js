@@ -16,8 +16,6 @@ export default Ember.Route.extend({
   },
 
   setupController(controller, model) {
-    const self = this;
-
     const applicationController = this.controllerFor('application');
     controller.setProperties({ model, upgrading: null });
 

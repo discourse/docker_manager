@@ -15,7 +15,7 @@ export default Ember.Component.extend({
   }.property('upgradingRepo', 'repo', 'managerRepo', 'managerRepo.upToDate'),
 
   officialRepoImageSrc: function() {
-    if (!this.get('repo.official')) return;
+    if (!this.get('repo.official')) { return; }
     return Discourse.getURL("/plugins/docker_manager/images/font-awesome-check-circle.png");
   }.property('repo.official'),
 

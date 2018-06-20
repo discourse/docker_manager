@@ -48,10 +48,12 @@ module DockerManager
     end
 
     def progress
-      repo = DockerManager::GitRepo.find(params[:path])
+      repo = find_repos(params[:path], upgrading: true)
+      repo = find_repos(params[:path], all: true) if all_repos? && repo.blank?
+
       raise Discourse::NotFound unless repo.present?
 
-      upgrader = Upgrader.new(current_user.id, repo, params[:version])
+      upgrader = Upgrader.new(current_user.id, repo, repo_version(repo))
       render json: {
         progress: {
           logs: upgrader.find_logs,
@@ -61,35 +63,46 @@ module DockerManager
     end
 
     def latest
-      repo = DockerManager::GitRepo.find(params[:path])
-      raise Discourse::NotFound unless repo.present?
-
-      repo.update_remote! if Rails.env == 'production'
-
-      render json: {
-        latest: {
+      proc = Proc.new do |repo|
+        repo.update_remote! if Rails.env == 'production'
+        {
+          path: repo.path,
           version: repo.latest_origin_commit,
           commits_behind: repo.commits_behind,
           date: repo.latest_origin_commit_date
         }
+      end
+
+      if all_repos?
+        return render json: {
+          repos: DockerManager::GitRepo.find_all.map(&proc)
+        }
+      end
+
+      repo = DockerManager::GitRepo.find(params[:path])
+      raise Discourse::NotFound unless repo.present?
+
+      render json: {
+        latest: proc.call(repo)
       }
     end
 
     def upgrade
-      repo = DockerManager::GitRepo.find(params[:path])
+      repo = find_repos(params[:path])
       raise Discourse::NotFound unless repo.present?
+
       Thread.new do
-        upgrader = Upgrader.new(current_user.id, repo, params[:version])
+        upgrader = Upgrader.new(current_user.id, repo, repo_version(repo))
         upgrader.upgrade
       end
       render plain: "OK"
     end
 
     def reset_upgrade
-      repo = DockerManager::GitRepo.find(params[:path])
+      repo = find_repos(params[:path], upgrading: true)
       raise Discourse::NotFound unless repo.present?
 
-      upgrader = Upgrader.new(current_user.id, repo, params[:version])
+      upgrader = Upgrader.new(current_user.id, repo, repo_version(repo))
       upgrader.reset!
       render plain: "OK"
     end
@@ -102,6 +115,33 @@ module DockerManager
         ps_output = `ps aux --sort -rss`
       end
       render plain: ps_output
+    end
+
+    private
+
+    def all_repos?
+      params[:path] == "all"
+    end
+
+    def find_repos(path, upgrading: false, all: false)
+      unless all_repos?
+        return DockerManager::GitRepo.find(path)
+      end
+
+      repos = DockerManager::GitRepo.find_all
+      return repos if all
+
+      repos.select do |repo|
+        (upgrading || !repo.upgrading?) && (repo.latest_local_commit != repo.latest_origin_commit)
+      end
+    end
+
+    def repo_version(repo)
+      return repo.is_a?(Array) ? concat_repos_versions(repo) : params[:version]
+    end
+
+    def concat_repos_versions(repos)
+      repos.map(&:latest_local_commit).join(", ")
     end
   end
 end
