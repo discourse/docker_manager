@@ -1,4 +1,4 @@
-<h3>Upgrade {{model.name}}</h3>
+<h3>Upgrade {{title}}</h3>
 
 {{progress-bar percent=percent}}
 
@@ -12,12 +12,16 @@
   <p>Sorry, there was an error upgrading Discourse. Please check the logs below.</p>
 {{/if}}
 
-{{#if model.upToDate}}
-  <p>{{model.name}} is at the newest version {{fmt-commit model.version model.url model.branch}}.</p>
+{{#if isUpToDate}}
+  {{#unless multiUpgrade}}
+    <p>{{title}} is at the newest version {{fmt-commit model.0.version model.0.url model.0.branch}}.</p>
+  {{else}}
+    <p>Everything is up-to-date.</p>
+  {{/unless}}
 {{else}}
   <div style='clear: both'>
-    <button {{action "start"}} disabled={{model.upgrading}} class='btn'>{{upgradeButtonText}}</button>
-    {{#if model.upgrading}}
+    <button {{action "start"}} disabled={{upgrading}} class='btn'>{{upgradeButtonText}}</button>
+    {{#if upgrading}}
       <button {{action "resetUpgrade"}} class="btn unlock">Reset Upgrade</button>
     {{/if}}
   </div>

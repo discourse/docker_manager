@@ -105,6 +105,21 @@ Repo.reopenClass({
     });
   },
 
+  upgradeAll() {
+    return request(Discourse.getURL("/admin/docker/upgrade"), { dataType: "text", type: "POST", data: { path: "all" } });
+  },
+
+  resetAll() {
+    return request(Discourse.getURL("/admin/docker/upgrade"), { dataType: "text", type: "DELETE", data: { path: "all" } });
+  },
+
+  findLatestAll() {
+    return request(Discourse.getURL("/admin/docker/latest"), { dataType: "text", type: "GET", data: { path: "all" } });
+  },
+
+  findAllProgress() {
+    return request(Discourse.getURL("/admin/docker/progress"), { dataType: "text", type: "GET", data: { path: "all" } });
+  },
 });
 
 export default Repo;

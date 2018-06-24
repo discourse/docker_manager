@@ -1,3 +1,11 @@
+<button disabled={{upgradeAllButtonDisabled}} id="upgrade-all" class="btn" {{action "upgradeAllButton"}}>
+  {{#if allUpToDate}}
+    All Up-to-date
+  {{else}}
+    Upgrade All
+  {{/if}}
+</button>
+
 <table class='table' id='repos'>
   <tr>
     <th></th>
