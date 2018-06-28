@@ -52,13 +52,16 @@ export default Ember.Controller.extend({
       case "status":
         this.set('status', msg.value);
 
+        if (msg.value === "complete") {
+	        this.get("model").filter(repo => repo.get("upgrading")).forEach(repo => {
+            repo.set("version", repo.get("latest.version"));
+          });
+        }
+
         if (msg.value === 'complete' || msg.value === 'failed') {
           this.updateAttribute('upgrading', false);
         }
 
-        if (msg.value === 'complete') {
-          this.updateAttribute('version', "latest.version", true);
-        }
         break;
     }
   },
@@ -72,9 +75,8 @@ export default Ember.Controller.extend({
   }.property("upgrading"),
 
   startBus() {
-    const self = this;
-    MessageBus.subscribe("/docker/upgrade", function(msg) {
-      self.messageReceived(msg);
+    MessageBus.subscribe("/docker/upgrade", msg => {
+      this.messageReceived(msg);
     });
   },
 
@@ -91,7 +93,7 @@ export default Ember.Controller.extend({
       this.reset();
 
       if (this.get("multiUpgrade")) {
-        this.updateAttribute("upgrading", true);
+        this.get("model").filter(repo => !repo.get("upToDate")).forEach(repo => repo.set("upgrading", true));
         return Repo.upgradeAll();
       }
 
@@ -101,21 +103,19 @@ export default Ember.Controller.extend({
     },
 
     resetUpgrade() {
-      const self = this;
-
       bootbox.confirm("WARNING: You should only reset upgrades that have failed and are not running.\n\n"+
-                      "This will NOT cancel currently running builds and should only be used as a last resort.", function(result) {
+                      "This will NOT cancel currently running builds and should only be used as a last resort.", result => {
         if (result) {
-          if (self.get("multiUpgrade")) {
-            return Repo.resetAll().finally(() => {
-              self.reset();
+          if (this.get("multiUpgrade")) {
+            return Repo.resetAll(this.get("model").filter(repo => !repo.get("upToDate"))).finally(() => {
+              this.reset();
               this.updateAttribute("upgrading", false);
             });
           }
 
-          const repo = self.get('model')[0];
+          const repo = this.get('model')[0];
           repo.resetUpgrade().then(function() {
-            self.reset();
+            this.reset();
           });
         }
       });
