@@ -92,7 +92,7 @@ export default Ember.Controller.extend({
 
       if (this.get("multiUpgrade")) {
         this.updateAttribute("upgrading", true);
-        return Repo.upgradeAll().finally(() => this.updateAttribute("upgrading", false));
+        return Repo.upgradeAll();
       }
 
       const repo = this.get('model')[0];
