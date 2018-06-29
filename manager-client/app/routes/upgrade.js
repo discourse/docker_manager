@@ -20,7 +20,7 @@ export default Ember.Route.extend({
           repo.set("latest", Ember.Object.create(_repo));
         });
 
-        return Repo.findAllProgress().then(progress => {
+        return Repo.findAllProgress(model.filter(repo => !repo.get("upToDate"))).then(progress => {
           this.set("progress", JSON.parse(progress).progress);
         });
       });

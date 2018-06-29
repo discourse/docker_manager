@@ -49,17 +49,10 @@ module DockerManager
 
     def progress
       repo = find_repos(params[:path], upgrading: true)
-      repo = find_repos(params[:path], all: true) if all_repos? && repo.blank?
-
-      raise Discourse::NotFound unless repo.present?
+      return respond_progress if repo.blank?
 
       upgrader = Upgrader.new(current_user.id, repo, repo_version(repo))
-      render json: {
-        progress: {
-          logs: upgrader.find_logs,
-          percentage: upgrader.last_percentage
-        }
-      }
+      respond_progress(logs: upgrader.find_logs, percentage: upgrader.last_percentage)
     end
 
     def latest
@@ -119,6 +112,15 @@ module DockerManager
 
     private
 
+    def respond_progress(logs: nil, percentage: nil)
+      render json: {
+        progress: {
+          logs: logs,
+          percentage: percentage
+        }
+      }
+    end
+
     def all_repos?
       params[:path] == "all"
     end
@@ -132,12 +134,16 @@ module DockerManager
       return repos if all
 
       repos.select do |repo|
-        (upgrading || !repo.upgrading?) && (repo.latest_local_commit != repo.latest_origin_commit)
+        if upgrading
+          repo.upgrading?
+        else
+          !repo.upgrading? && (repo.latest_local_commit != repo.latest_origin_commit)
+        end
       end
     end
 
     def repo_version(repo)
-      return repo.is_a?(Array) ? concat_repos_versions(repo) : params[:version]
+      return repo.is_a?(Array) && params[:version].blank? ? concat_repos_versions(repo) : params[:version]
     end
 
     def concat_repos_versions(repos)

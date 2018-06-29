@@ -3,9 +3,13 @@
 import request from 'ember-ajax/request';
 import Ember from 'ember';
 
-var loaded = [];
+let loaded = [];
 
-var Repo = Ember.Object.extend({
+function concatVersions(repos) {
+  return repos.map(repo => repo.get("version")).join(", ");
+}
+
+const Repo = Ember.Object.extend({
   unloaded: true,
   checking: false,
 
@@ -35,17 +39,15 @@ var Repo = Ember.Object.extend({
   },
 
   findLatest: function() {
-    var self = this;
-
-    return new Ember.RSVP.Promise(function(resolve) {
-      if (!self.get('shouldCheck')) {
-        self.set('unloaded', false);
+    return new Ember.RSVP.Promise(resolve => {
+      if (!this.get('shouldCheck')) {
+        this.set('unloaded', false);
         return resolve();
       }
 
-      self.set('checking', true);
-      self.repoAjax(Discourse.getURL('/admin/docker/latest')).then(function(result) {
-        self.setProperties({
+      this.set('checking', true);
+      this.repoAjax(Discourse.getURL('/admin/docker/latest')).then(result => {
+        this.setProperties({
           unloaded: false,
           checking: false,
           lastCheckedAt: new Date().getTime(),
@@ -57,24 +59,20 @@ var Repo = Ember.Object.extend({
   },
 
   findProgress: function() {
-    return this.repoAjax(Discourse.getURL('/admin/docker/progress')).then(function(result) {
-      return result.progress;
-    });
+    return this.repoAjax(Discourse.getURL('/admin/docker/progress')).then(result => result.progress);
   },
 
   resetUpgrade: function() {
-    var self = this;
-    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { dataType: 'text', type: 'DELETE' }).then(function() {
-      self.set('upgrading', false);
+    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { dataType: 'text', type: 'DELETE' }).then(() => {
+      this.set('upgrading', false);
     });
   },
 
   startUpgrade: function() {
-    var self = this;
     this.set('upgrading', true);
 
-    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { dataType: 'text', type: 'POST' }).catch(function() {
-      self.set('upgrading', false);
+    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { dataType: 'text', type: 'POST' }).catch(() => {
+      this.set('upgrading', false);
     });
   }
 });
@@ -84,41 +82,35 @@ Repo.reopenClass({
     return new Ember.RSVP.Promise(function (resolve) {
       if (loaded.length) { return resolve(loaded); }
 
-      request(Discourse.getURL("/admin/docker/repos")).then(function(result) {
-        loaded = result.repos.map(function(r) {
-          return Repo.create(r);
-        });
+      request(Discourse.getURL("/admin/docker/repos")).then(result => {
+        loaded = result.repos.map(r => Repo.create(r));
         resolve(loaded);
       });
     });
   },
 
   findUpgrading: function() {
-    return this.findAll().then(function(result) {
-      return result.findBy('upgrading', true);
-    });
+    return this.findAll().then(result => result.findBy('upgrading', true));
   },
 
   find: function(id) {
-    return this.findAll().then(function(result) {
-      return result.findBy('id', id);
-    });
+    return this.findAll().then(result => result.findBy('id', id));
   },
 
   upgradeAll() {
     return request(Discourse.getURL("/admin/docker/upgrade"), { dataType: "text", type: "POST", data: { path: "all" } });
   },
 
-  resetAll() {
-    return request(Discourse.getURL("/admin/docker/upgrade"), { dataType: "text", type: "DELETE", data: { path: "all" } });
+  resetAll(repos) {
+    return request(Discourse.getURL("/admin/docker/upgrade"), { dataType: "text", type: "DELETE", data: { path: "all", version: concatVersions(repos) } });
   },
 
   findLatestAll() {
     return request(Discourse.getURL("/admin/docker/latest"), { dataType: "text", type: "GET", data: { path: "all" } });
   },
 
-  findAllProgress() {
-    return request(Discourse.getURL("/admin/docker/progress"), { dataType: "text", type: "GET", data: { path: "all" } });
+  findAllProgress(repos) {
+    return request(Discourse.getURL("/admin/docker/progress"), { dataType: "text", type: "GET", data: { path: "all", version: concatVersions(repos) } });
   },
 });
 
