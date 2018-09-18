@@ -111,23 +111,34 @@ class DockerManager::Upgrader
 
     run("bundle install --deployment --without test --without development")
     percent(30)
-    run("bundle exec rake multisite:migrate")
+    run("SKIP_POST_DEPLOYMENT_MIGRATIONS=1 bundle exec rake multisite:migrate")
     percent(40)
     log("***  Bundling assets. This will take a while *** ")
     less_memory_flags = "RUBY_GC_MALLOC_LIMIT_MAX=20971520 RUBY_GC_OLDMALLOC_LIMIT_MAX=20971520 RUBY_GC_HEAP_GROWTH_MAX_SLOTS=50000 RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR=0.9 "
     run("#{less_memory_flags} bundle exec rake assets:precompile")
 
+    percent(80)
+
+    log("Restarting unicorn pid: #{launcher_pid}")
+    Process.kill("USR2", launcher_pid)
+
+    iterations = 0
+
+    while master_pid == unicorn_master_pid do
+      iterations += 1
+      break if iterations >= 60
+      log("Waiting for Unicorn to reload...")
+      sleep 1
+    end
+
+    percent(90)
+    log("Running post deploy migrations")
+    run("bundle exec rake multisite:migrate")
+
     percent(100)
     publish('status', 'complete')
     log_version_upgrade
-
-    log("***********************************************")
-    log("*** After restart, upgrade will be complete ***")
-    log("***********************************************")
-    log("Restarting unicorn pid: #{launcher_pid}")
-    Process.kill("USR2", launcher_pid)
     log("DONE")
-
   rescue => ex
     publish('status', 'failed')
     STDERR.puts("Docker Manager: FAILED TO UPGRADE")
