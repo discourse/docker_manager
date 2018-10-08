@@ -49,7 +49,6 @@ class DockerManager::Upgrader
     log("********************************************************")
 
     launcher_pid = unicorn_launcher_pid
-
     master_pid = unicorn_master_pid
     workers = num_unicorn_workers
 
@@ -103,7 +102,6 @@ class DockerManager::Upgrader
 
     # HEAD@{upstream} is just a fancy way how to say origin/master (in normal case)
     # see http://stackoverflow.com/a/12699604/84283
-
     @repos.each_with_index do |repo, index|
       run("cd #{repo.path} && git fetch --tags && git reset --hard HEAD@{upstream}")
       percent(20 * (index + 1) / @repos.size)
@@ -111,28 +109,38 @@ class DockerManager::Upgrader
 
     run("bundle install --deployment --without test --without development")
     percent(30)
-    run("bundle exec rake multisite:migrate")
+    run("SKIP_POST_DEPLOYMENT_MIGRATIONS=1 bundle exec rake multisite:migrate")
     percent(40)
     log("***  Bundling assets. This will take a while *** ")
     less_memory_flags = "RUBY_GC_MALLOC_LIMIT_MAX=20971520 RUBY_GC_OLDMALLOC_LIMIT_MAX=20971520 RUBY_GC_HEAP_GROWTH_MAX_SLOTS=50000 RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR=0.9 "
     run("#{less_memory_flags} bundle exec rake assets:precompile")
 
-    percent(100)
-    publish('status', 'complete')
-    log_version_upgrade
-
-    log("***********************************************")
-    log("*** After restart, upgrade will be complete ***")
-    log("***********************************************")
+    percent(80)
     log("Restarting unicorn pid: #{launcher_pid}")
+    original_master_pid = unicorn_master_pid
     Process.kill("USR2", launcher_pid)
-    log("DONE")
 
+    iterations = 0
+
+    while pid_exists?(original_master_pid) do
+      iterations += 1
+      break if iterations >= 60
+      log("Waiting for Unicorn to reload")
+      sleep 1
+    end
+
+    percent(90)
+    log("Running post deploy migrations")
+    run("bundle exec rake multisite:migrate")
+    log_version_upgrade
+    percent(100)
+    log("DONE")
+    publish('status', 'complete')
   rescue => ex
     publish('status', 'failed')
     STDERR.puts("Docker Manager: FAILED TO UPGRADE")
     STDERR.puts(ex.inspect)
-    raise
+    raise ex
   ensure
     @repos.each(&:stop_upgrading)
   end
@@ -151,6 +159,7 @@ class DockerManager::Upgrader
                          k =~ /^DISCOURSE_/
                      }
                      .flatten]
+
     clear_env["RAILS_ENV"] = "production"
     clear_env["TERM"] = 'dumb' # claim we have a terminal
 
@@ -205,5 +214,13 @@ class DockerManager::Upgrader
 
   def log_version_upgrade
     StaffActionLogger.new(User.find(@user_id)).log_custom('discourse_upgrade', from_version: @from_version, repository: @repos.map(&:path).join(", "))
+  end
+
+  private
+
+  def pid_exists?(pid)
+    Process.getpgid(pid)
+  rescue Errno::ESRCH
+    false
   end
 end

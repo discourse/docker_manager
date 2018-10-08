@@ -84,10 +84,15 @@ module DockerManager
       repo = find_repos(params[:path])
       raise Discourse::NotFound unless repo.present?
 
-      Thread.new do
-        upgrader = Upgrader.new(current_user.id, repo, repo_version(repo))
-        upgrader.upgrade
+      pid = fork do
+        exit if fork
+        Process.setsid
+        exit if fork
+        Upgrader.new(current_user.id, repo, repo_version(repo)).upgrade
       end
+
+      Process.waitpid(pid)
+
       render plain: "OK"
     end
 
