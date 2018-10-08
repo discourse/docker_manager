@@ -240,7 +240,7 @@ class DockerManager::Upgrader
     end
 
     iterations = 0
-    while `curl -s http://127.0.0.1:3000/srv/status` != "ok" do
+    while `curl -s #{local_web_url}` != "ok" do
       iterations += 1
       break if iterations >= 60
       log("Waiting for Unicorn workers to start up")
