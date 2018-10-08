@@ -12,14 +12,6 @@ class DockerManager::Upgrader
     percent(0)
   end
 
-  def num_unicorn_workers
-    `ps aux | grep "unicorn worker\\[" | wc -l`.strip.to_i
-  end
-
-  def unicorn_master_pid
-    `ps aux | grep "unicorn master -E" | grep -v "grep" | awk '{print $2}'`.strip.to_i
-  end
-
   def min_workers
     2
   end
@@ -63,7 +55,7 @@ class DockerManager::Upgrader
     end
 
     # log("Cycling web, to free up memory")
-    # Process.kill("USR2", launcher_pid.to_i)
+    # Process.kill("USR2", launcher_pid)
     #
     # sleep 10
     #
@@ -111,23 +103,12 @@ class DockerManager::Upgrader
     percent(30)
     run("SKIP_POST_DEPLOYMENT_MIGRATIONS=1 bundle exec rake multisite:migrate")
     percent(40)
-    log("***  Bundling assets. This will take a while *** ")
+    log("*** Bundling assets. This will take a while *** ")
     less_memory_flags = "RUBY_GC_MALLOC_LIMIT_MAX=20971520 RUBY_GC_OLDMALLOC_LIMIT_MAX=20971520 RUBY_GC_HEAP_GROWTH_MAX_SLOTS=50000 RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR=0.9 "
     run("#{less_memory_flags} bundle exec rake assets:precompile")
 
     percent(80)
-    log("Restarting unicorn pid: #{launcher_pid}")
-    original_master_pid = unicorn_master_pid
-    Process.kill("USR2", launcher_pid)
-
-    iterations = 0
-
-    while pid_exists?(original_master_pid) do
-      iterations += 1
-      break if iterations >= 60
-      log("Waiting for Unicorn to reload")
-      sleep 1
-    end
+    reload_unicorn(launcher_pid)
 
     percent(90)
     log("Running post deploy migrations")
@@ -146,7 +127,10 @@ class DockerManager::Upgrader
   end
 
   def publish(type, value)
-    MessageBus.publish("/docker/upgrade", {type: type, value: value}, user_ids: [@user_id])
+    MessageBus.publish("/docker/upgrade",
+      { type: type, value: value },
+      user_ids: [@user_id]
+    )
   end
 
   def run(cmd)
@@ -222,5 +206,45 @@ class DockerManager::Upgrader
     Process.getpgid(pid)
   rescue Errno::ESRCH
     false
+  end
+
+  def num_unicorn_workers
+    `ps aux | grep "unicorn worker\\[" | wc -l`.strip.to_i
+  end
+
+  def unicorn_master_pid
+    `ps aux | grep "unicorn master -E" | grep -v "grep" | awk '{print $2}'`.strip.to_i
+  end
+
+  def unicorn_workers_running?(master_pid)
+    `ps -f --ppid #{master_pid} | grep worker | awk '{ print $2 }'`
+      .split("\n")
+      .present?
+  end
+
+  def local_web_url
+    "http://127.0.0.1:#{ENV['UNICORN_PORT']}/srv/status"
+  end
+
+  def reload_unicorn(launcher_pid)
+    log("Restarting unicorn pid: #{launcher_pid}")
+    original_master_pid = unicorn_master_pid
+    Process.kill("USR2", launcher_pid)
+
+    iterations = 0
+    while pid_exists?(original_master_pid) do
+      iterations += 1
+      break if iterations >= 60
+      log("Waiting for Unicorn to reload")
+      sleep 1
+    end
+
+    iterations = 0
+    while `curl -s http://127.0.0.1:3000/srv/status` != "ok" do
+      iterations += 1
+      break if iterations >= 60
+      log("Waiting for Unicorn workers to start up")
+      sleep 1
+    end
   end
 end
