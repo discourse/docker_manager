@@ -223,7 +223,7 @@ class DockerManager::Upgrader
   end
 
   def local_web_url
-    "http://127.0.0.1:#{ENV['UNICORN_PORT']}/srv/status"
+    "http://127.0.0.1:#{ENV['UNICORN_PORT'] || 3000}/srv/status"
   end
 
   def reload_unicorn(launcher_pid)
