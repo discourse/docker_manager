@@ -13,18 +13,7 @@ class DockerManager::Upgrader
   end
 
   def min_workers
-    2
-  end
-
-  def unicorn_launcher_pid
-    `ps aux  | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`.strip.to_i
-  end
-
-  def try(times, cond)
-    while cond.call && times > 0
-      times -= 1
-      yield
-    end
+    1
   end
 
   def upgrade
@@ -42,7 +31,7 @@ class DockerManager::Upgrader
 
     launcher_pid = unicorn_launcher_pid
     master_pid = unicorn_master_pid
-    workers = num_unicorn_workers
+    workers = unicorn_workers(master_pid).size
 
     if workers < 2
       log("ABORTING, you do not have enough unicorn workers running")
@@ -54,42 +43,22 @@ class DockerManager::Upgrader
       raise "No unicorn master or launcher"
     end
 
-    # log("Cycling web, to free up memory")
-    # Process.kill("USR2", launcher_pid)
-    #
-    # sleep 10
-    #
-    # percent(10)
-    #
-    # try(20, -> {master_pid == unicorn_master_pid}) do
-    #   sleep 1
-    # end
-    #
-    # try(20, -> {num_unicorn_workers < 2}) do
-    #   sleep 1
-    # end
-    #
-    # master_pid = unicorn_master_pid
-    # workers = num_unicorn_workers
-    # log "New master pid is #{master_pid}"
-    #
-    # percent(15)
-    #
-    # # wince down so we only have 2 workers
-    # if workers > min_workers
-    #   log "Stopping #{workers-min_workers} web workers, to free up memory"
-    #   (workers - min_workers).times do
-    #     Process.kill("TTOU", master_pid)
-    #   end
-    # end
-    #
-    #
+    log("Cycling Unicorn, to free up memory")
+    reload_unicorn(launcher_pid)
+
+    percent(10)
+
+    if workers > min_workers
+      log "Stopping #{workers - min_workers} Unicorn worker(s), to free up memory"
+      (workers - min_workers).times { Process.kill("TTOU", unicorn_master_pid) }
+    end
+
     if ENV["UNICORN_SIDEKIQS"].to_i > 0
       log "Stopping job queue to reclaim memory, master pid is #{master_pid}"
-      Process.kill("TSTP", master_pid)
+      Process.kill("TSTP", unicorn_master_pid)
       sleep 1
       # older versions do not have support, so quickly send a cont so master process is not hung
-      Process.kill("CONT", master_pid)
+      Process.kill("CONT", unicorn_master_pid)
     end
 
     # HEAD@{upstream} is just a fancy way how to say origin/master (in normal case)
@@ -197,7 +166,11 @@ class DockerManager::Upgrader
   end
 
   def log_version_upgrade
-    StaffActionLogger.new(User.find(@user_id)).log_custom('discourse_upgrade', from_version: @from_version, repository: @repos.map(&:path).join(", "))
+    StaffActionLogger.new(User.find(@user_id)).log_custom(
+      'discourse_upgrade',
+      from_version: @from_version,
+      repository: @repos.map(&:path).join(", ")
+    )
   end
 
   private
@@ -208,18 +181,18 @@ class DockerManager::Upgrader
     false
   end
 
-  def num_unicorn_workers
-    `ps aux | grep "unicorn worker\\[" | wc -l`.strip.to_i
+  def unicorn_launcher_pid
+    `ps aux  | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`.strip.to_i
   end
 
   def unicorn_master_pid
     `ps aux | grep "unicorn master -E" | grep -v "grep" | awk '{print $2}'`.strip.to_i
   end
 
-  def unicorn_workers_running?(master_pid)
+  def unicorn_workers(master_pid)
     `ps -f --ppid #{master_pid} | grep worker | awk '{ print $2 }'`
       .split("\n")
-      .present?
+      .map(&:to_i)
   end
 
   def local_web_url
@@ -247,4 +220,5 @@ class DockerManager::Upgrader
       sleep 1
     end
   end
+
 end
