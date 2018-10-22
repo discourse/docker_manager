@@ -1,14 +1,14 @@
 /* Put your CSS here */
-@import 'bootstrap';
+@import "bootstrap";
 
 $tertiary: #0088cc !default;
-$shadow:   0 0 8px rgba(0, 0, 0, 0.6) !default;
+$shadow: 0 0 8px rgba(0, 0, 0, 0.6) !default;
 
 @mixin box-shadow($shadow) {
   box-shadow: $shadow;
 }
 
-html{
+html {
   overflow-y: scroll;
   overflow-x: auto;
 }
@@ -74,7 +74,8 @@ table#repos {
     border-top: none;
   }
 
-  td, th {
+  td,
+  th {
     padding: 8px 15px 8px 0px;
   }
 

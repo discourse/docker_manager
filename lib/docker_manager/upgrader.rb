@@ -106,12 +106,12 @@ class DockerManager::Upgrader
     log "$ #{cmd}"
     msg = ""
 
-    clear_env = Hash[*ENV.map{|k,v| [k,nil]}
-                     .reject{ |k,v|
-                       ["PWD","HOME","SHELL","PATH"].include?(k) ||
+    clear_env = Hash[*ENV.map { |k, v| [k, nil] }
+      .reject { |k, v|
+                       ["PWD", "HOME", "SHELL", "PATH"].include?(k) ||
                          k =~ /^DISCOURSE_/
                      }
-                     .flatten]
+      .flatten]
 
     clear_env["RAILS_ENV"] = "production"
     clear_env["TERM"] = 'dumb' # claim we have a terminal
