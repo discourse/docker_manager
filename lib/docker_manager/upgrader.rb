@@ -91,7 +91,8 @@ class DockerManager::Upgrader
 
     [
       "Docker Manager: FAILED TO UPGRADE",
-      ex.inspect
+      ex.inspect,
+      ex.backtrace.join("\n"),
     ].each do |message|
 
       STDERR.puts(message)
