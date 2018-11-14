@@ -88,8 +88,16 @@ class DockerManager::Upgrader
     publish('status', 'complete')
   rescue => ex
     publish('status', 'failed')
-    STDERR.puts("Docker Manager: FAILED TO UPGRADE")
-    STDERR.puts(ex.inspect)
+
+    [
+      "Docker Manager: FAILED TO UPGRADE",
+      ex.inspect
+    ].each do |message|
+
+      STDERR.puts(message)
+      log(message)
+    end
+
     raise ex
   ensure
     @repos.each(&:stop_upgrading)
