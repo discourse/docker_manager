@@ -208,7 +208,7 @@ class DockerManager::Upgrader
     while pid_exists?(original_master_pid) do
       iterations += 1
       break if iterations >= 60
-      log("Waiting for Unicorn to reload")
+      log("Waiting for Unicorn to reload#{iterations * '.'}")
       sleep 1
     end
 
@@ -216,7 +216,7 @@ class DockerManager::Upgrader
     while `curl -s #{local_web_url}` != "ok" do
       iterations += 1
       break if iterations >= 60
-      log("Waiting for Unicorn workers to start up")
+      log("Waiting for Unicorn workers to start up#{iterations * '.'}")
       sleep 1
     end
   end
