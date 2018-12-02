@@ -3,3 +3,5 @@ manager-client/vendor/*
 *.sublime-workspace
 .DS_Store
 ._.DS_Store
+
+.rubocop-https---raw-githubusercontent-com-discourse-discourse-master--rubocop-yml
