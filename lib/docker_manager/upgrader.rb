@@ -47,10 +47,12 @@ class DockerManager::Upgrader
     reload_unicorn(launcher_pid)
 
     percent(10)
+    reloaded = false
+    num_workers_spun_down = workers - min_workers
 
-    if workers > min_workers
+    if num_workers_spun_down.positive?
       log "Stopping #{workers - min_workers} Unicorn worker(s), to free up memory"
-      (workers - min_workers).times { Process.kill("TTOU", unicorn_master_pid) }
+      (num_workers_spun_down).times { Process.kill("TTOU", unicorn_master_pid) }
     end
 
     if ENV["UNICORN_SIDEKIQS"].to_i > 0
@@ -78,6 +80,7 @@ class DockerManager::Upgrader
 
     percent(80)
     reload_unicorn(launcher_pid)
+    reloaded = true
 
     percent(90)
     log("Running post deploy migrations")
@@ -97,6 +100,11 @@ class DockerManager::Upgrader
 
       STDERR.puts(message)
       log(message)
+    end
+
+    if num_workers_spun_down.positive? && !reloaded
+      log "Spinning up #{num_workers_spun_down} Unicorn worker(s) that were stopped initially"
+      (num_workers_spun_down).times { Process.kill("TTIN", unicorn_master_pid) }
     end
 
     raise ex
