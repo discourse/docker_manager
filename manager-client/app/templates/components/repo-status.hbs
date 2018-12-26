@@ -5,7 +5,7 @@
 </td>
 <td>
   {{repo.name}}
-  {{fmt-commit repo.version repo.url repo.branch}}
+  {{repo.version}}
 </td>
 <td>
   {{#if repo.checkingStatus}}
@@ -16,7 +16,7 @@
     <div class='new-version'>
       <h4>New Version Available!</h4>
       <ul>
-        <li>Remote Version: {{fmt-commit repo.latest.version repo.url repo.branch}}</li>
+        <li>Remote Version: {{repo.latest.version}}</li>
         <li>Last Updated:
           {{#if repo.latest.date}}
             {{moment-from-now repo.latest.date interval=1000}}
@@ -24,7 +24,7 @@
             &mdash;
           {{/if}}
         </li>
-        <li class='new-commits'>{{repo.latest.commits_behind}} new commits</li>
+        <li class='new-commits'>{{new-commits repo.latest.commits_behind repo.version repo.latest.version repo.url}}</li>
       </ul>
       {{#if repo.upgrading}}
         <button class="btn" {{action "upgrade"}}>Currently Upgrading...</button>
