@@ -1,6 +1,5 @@
 /* global Discourse */
 
-import request from 'ember-ajax/request';
 import { default as EmberObject, computed } from '@ember/object';
 import { or } from '@ember/object/computed';
 import { isNone } from '@ember/utils';
@@ -38,7 +37,7 @@ const Repo = EmberObject.extend({
     args = args || {};
     args.data = this.getProperties('path', 'version', 'branch');
 
-    return request(Discourse.getURL(url), args);
+    return Em.$.ajax(Discourse.getURL(url), args);
   },
 
   findLatest() {
@@ -85,7 +84,7 @@ Repo.reopenClass({
     return new Promise(resolve => {
       if (loaded.length) { return resolve(loaded); }
 
-      request(Discourse.getURL("/admin/docker/repos")).then(result => {
+      Em.$.ajax(Discourse.getURL("/admin/docker/repos")).then(result => {
         loaded = result.repos.map(r => Repo.create(r));
         resolve(loaded);
       });
@@ -101,19 +100,19 @@ Repo.reopenClass({
   },
 
   upgradeAll() {
-    return request(Discourse.getURL("/admin/docker/upgrade"), { dataType: "text", type: "POST", data: { path: "all" } });
+    return Em.$.ajax(Discourse.getURL("/admin/docker/upgrade"), { dataType: "text", type: "POST", data: { path: "all" } });
   },
 
   resetAll(repos) {
-    return request(Discourse.getURL("/admin/docker/upgrade"), { dataType: "text", type: "DELETE", data: { path: "all", version: concatVersions(repos) } });
+    return Em.$.ajax(Discourse.getURL("/admin/docker/upgrade"), { dataType: "text", type: "DELETE", data: { path: "all", version: concatVersions(repos) } });
   },
 
   findLatestAll() {
-    return request(Discourse.getURL("/admin/docker/latest"), { dataType: "text", type: "GET", data: { path: "all" } });
+    return Em.$.ajax(Discourse.getURL("/admin/docker/latest"), { dataType: "text", type: "GET", data: { path: "all" } });
   },
 
   findAllProgress(repos) {
-    return request(Discourse.getURL("/admin/docker/progress"), { dataType: "text", type: "GET", data: { path: "all", version: concatVersions(repos) } });
+    return Em.$.ajax(Discourse.getURL("/admin/docker/progress"), { dataType: "text", type: "GET", data: { path: "all", version: concatVersions(repos) } });
   },
 });
 
