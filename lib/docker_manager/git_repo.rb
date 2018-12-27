@@ -37,6 +37,14 @@ class DockerManager::GitRepo
     run "rev-parse --short #{tracking_branch}"
   end
 
+  def latest_local_tag_version
+    prettify_tag_version("describe HEAD")
+  end
+
+  def latest_origin_tag_version
+    prettify_tag_version("describe #{tracking_branch}")
+  end
+
   def latest_origin_commit_date
     commit_date(latest_origin_commit)
   end
@@ -82,6 +90,16 @@ class DockerManager::GitRepo
   end
 
   protected
+
+  def prettify_tag_version(command)
+    result = run(command)
+    return unless result.present?
+
+    if result =~ /-(\d+)-/
+      result.gsub!(/-(\d+)-.*/, " +#{$1}")
+    end
+    result
+  end
 
   def upgrade_key
     @upgrade_key ||= "upgrade:#{path}"

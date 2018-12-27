@@ -34,7 +34,7 @@ module DockerManager
 
         if r.valid?
           result[:id] = r.name.downcase.gsub(/[^a-z]/, '_').gsub(/_+/, '_').sub(/_$/, '')
-          result[:version] = r.latest_local_commit
+          result[:version] = r.latest_local_tag_version || r.latest_local_commit
           result[:url] = r.url
           if r.upgrading?
             result[:upgrading] = true
@@ -60,7 +60,7 @@ module DockerManager
         repo.update_remote! if Rails.env == 'production'
         {
           path: repo.path,
-          version: repo.latest_origin_commit,
+          version: repo.latest_origin_tag_version || repo.latest_origin_commit,
           commits_behind: repo.commits_behind,
           date: repo.latest_origin_commit_date
         }
