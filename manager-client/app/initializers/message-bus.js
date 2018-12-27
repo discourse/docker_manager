@@ -1,3 +1,5 @@
+import Discourse from "manager-client/discourse";
+
 export default {
   name: "message-bus",
 

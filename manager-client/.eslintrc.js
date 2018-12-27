@@ -9,7 +9,6 @@ module.exports = {
   ],
   globals: {
     Em: false,
-    Discourse: false,
     MessageBus: false
   },
   extends: [

@@ -1,3 +1,4 @@
+import Discourse from "manager-client/discourse";
 import Component from '@ember/component';
 import { computed } from "@ember/object";
 

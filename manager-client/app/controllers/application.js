@@ -1,5 +1,4 @@
-/* global Discourse */
-
+import Discourse from "manager-client/discourse";
 import Controller from '@ember/controller';
 import { computed } from "@ember/object";
 
