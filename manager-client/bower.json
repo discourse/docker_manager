@@ -1,9 +1,0 @@
-{
-  "name": "manager-client",
-  "dependencies": {
-    "ember": "~2.10.0",
-    "bootbox": "~4.3.0",
-    "ember-cli-shims": "0.1.3",
-    "message-bus": "https://github.com/SamSaffron/message_bus.git#84f733c14e5b4e7f2464b5b45944ceccec727899"
-  }
-}

@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from "@ember/object";
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'tr',
 
-  upgradeDisabled: function() {
+  upgradeDisabled: computed("upgradingRepo", "repo", "managerRepo", "managerRepo.upToDate",  function() {
     const upgradingRepo = this.get('upgradingRepo');
 
     if (!upgradingRepo) {
@@ -12,16 +13,16 @@ export default Ember.Component.extend({
       return (!managerRepo.get('upToDate')) && managerRepo !== this.get('repo');
     }
     return true;
-  }.property('upgradingRepo', 'repo', 'managerRepo', 'managerRepo.upToDate'),
+  }),
 
-  officialRepoImageSrc: function() {
+  officialRepoImageSrc: computed("repo.official", function() {
     if (!this.get('repo.official')) { return; }
     return Discourse.getURL("/plugins/docker_manager/images/font-awesome-check-circle.png");
-  }.property('repo.official'),
+  }),
 
   actions: {
-    upgrade: function() {
-      this.sendAction('upgrade', this.get('repo'));
+    upgrade() {
+      this.upgrade(this.get('repo'));
     }
   }
 });

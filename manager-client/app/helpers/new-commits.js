@@ -1,6 +1,8 @@
-import Ember from "ember";
+import { helper as buildHelper } from '@ember/component/helper';
+import { isNone } from '@ember/utils';
+import { htmlSafe } from '@ember/template';
 
-export default Ember.Helper.helper(function(params) {
+export default buildHelper(function(params) {
   const [commitsBehind, oldSha, newSha, url] = params;
 
   if (parseInt(commitsBehind) === 0) {
@@ -11,12 +13,12 @@ export default Ember.Helper.helper(function(params) {
     commitsBehind === 1 ? "" : "s"
   }`;
 
-  if (Ember.isNone(url)) {
+  if (isNone(url)) {
     return description;
   }
 
-  var _url = url.substr(0, url.search(/(\.git)?$/));
+  const _url = url.substr(0, url.search(/(\.git)?$/));
   description = `<a href='${_url}/compare/${oldSha}..${newSha}'>${description}</a>`;
 
-  return new Ember.String.htmlSafe(description);
+  return new htmlSafe(description);
 });

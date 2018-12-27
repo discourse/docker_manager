@@ -1,23 +1,25 @@
 import Repo from 'manager-client/models/repo';
-import Ember from 'ember';
+import Route from '@ember/routing/route';
+import EmberObject from '@ember/object';
+import { Promise } from 'rsvp';
 
-export default Ember.Route.extend({
+export default Route.extend({
 
-  model: function(params) {
+  model(params) {
     if (params.id === "all") {
       return Repo.findAll();
     }
     return Repo.find(params.id);
   },
 
-  afterModel: function(model) {
+  afterModel(model) {
     if (Array.isArray(model)) {
       return Repo.findLatestAll().then(response => {
         JSON.parse(response).repos.forEach(_repo => {
           const repo = model.find(repo => repo.get("path") === _repo.path);
           if (!repo) { return; }
           delete _repo.path;
-          repo.set("latest", Ember.Object.create(_repo));
+          repo.set("latest", EmberObject.create(_repo));
         });
 
         return Repo.findAllProgress(model.filter(repo => !repo.get("upToDate"))).then(progress => {
@@ -28,7 +30,7 @@ export default Ember.Route.extend({
 
     return Repo.findUpgrading().then(u => {
       if (u && u !== model) {
-        return Ember.RSVP.Promise.reject("wat");
+        return Promise.reject("wat");
       }
       return model.findLatest().then(() => {
         return model.findProgress().then(progress => {
@@ -39,7 +41,7 @@ export default Ember.Route.extend({
 
   },
 
-  setupController: function(controller, model) {
+  setupController(controller, model) {
     controller.reset();
     controller.setProperties({
       model: Array.isArray(model) ? model : [model],
@@ -49,8 +51,7 @@ export default Ember.Route.extend({
     controller.startBus();
   },
 
-  deactivate: function() {
+  deactivate() {
     this.controllerFor('upgrade').stopBus();
   }
-
 });

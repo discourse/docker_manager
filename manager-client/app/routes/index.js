@@ -1,7 +1,7 @@
 import Repo from 'manager-client/models/repo';
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
   model() {
     return Repo.findAll();
   },
@@ -36,11 +36,5 @@ export default Ember.Route.extend({
     });
 
     this.loadRepos(model.slice(0));
-  },
-
-  actions: {
-    upgrade(repo) {
-      this.transitionTo('upgrade', repo);
-    }
   }
 });

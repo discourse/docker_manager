@@ -1,7 +1,10 @@
 /* global Discourse */
 
 import request from 'ember-ajax/request';
-import Ember from 'ember';
+import { default as EmberObject, computed } from '@ember/object';
+import { or } from '@ember/object/computed';
+import { isNone } from '@ember/utils';
+import { Promise } from 'rsvp';
 
 let loaded = [];
 
@@ -9,37 +12,37 @@ function concatVersions(repos) {
   return repos.map(repo => repo.get("version")).join(", ");
 }
 
-const Repo = Ember.Object.extend({
+const Repo = EmberObject.extend({
   unloaded: true,
   checking: false,
 
-  checkingStatus: Ember.computed.or('unloaded', 'checking'),
-  upToDate: function() {
+  checkingStatus: or('unloaded', 'checking'),
+  upToDate: computed("upgrading", "version", "latest.version", function() {
     return !this.get('upgrading') & (this.get('version') === this.get('latest.version'));
-  }.property('upgrading', 'version', 'latest.version'),
+  }),
 
-  shouldCheck: function() {
-    if (Ember.isNone(this.get('version'))) { return false; }
+  shouldCheck: computed(function() {
+    if (isNone(this.get('version'))) { return false; }
     if (this.get('checking')) { return false; }
 
     // Only check once every minute
-    var lastCheckedAt = this.get('lastCheckedAt');
+    const lastCheckedAt = this.get('lastCheckedAt');
     if (lastCheckedAt) {
-      var ago = new Date().getTime() - lastCheckedAt;
+      const ago = new Date().getTime() - lastCheckedAt;
       return ago > 60 * 1000;
     }
     return true;
-  }.property().volatile(),
+  }).volatile(),
 
-  repoAjax: function(url, args) {
+  repoAjax(url, args) {
     args = args || {};
     args.data = this.getProperties('path', 'version', 'branch');
 
     return request(Discourse.getURL(url), args);
   },
 
-  findLatest: function() {
-    return new Ember.RSVP.Promise(resolve => {
+  findLatest() {
+    return new Promise(resolve => {
       if (!this.get('shouldCheck')) {
         this.set('unloaded', false);
         return resolve();
@@ -51,24 +54,24 @@ const Repo = Ember.Object.extend({
           unloaded: false,
           checking: false,
           lastCheckedAt: new Date().getTime(),
-          latest: Ember.Object.create(result.latest)
+          latest: EmberObject.create(result.latest)
         });
         resolve();
       });
     });
   },
 
-  findProgress: function() {
+  findProgress() {
     return this.repoAjax(Discourse.getURL('/admin/docker/progress')).then(result => result.progress);
   },
 
-  resetUpgrade: function() {
+  resetUpgrade() {
     return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { dataType: 'text', type: 'DELETE' }).then(() => {
       this.set('upgrading', false);
     });
   },
 
-  startUpgrade: function() {
+  startUpgrade() {
     this.set('upgrading', true);
 
     return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { dataType: 'text', type: 'POST' }).catch(() => {
@@ -79,7 +82,7 @@ const Repo = Ember.Object.extend({
 
 Repo.reopenClass({
   findAll() {
-    return new Ember.RSVP.Promise(function (resolve) {
+    return new Promise(resolve => {
       if (loaded.length) { return resolve(loaded); }
 
       request(Discourse.getURL("/admin/docker/repos")).then(result => {
@@ -89,11 +92,11 @@ Repo.reopenClass({
     });
   },
 
-  findUpgrading: function() {
+  findUpgrading() {
     return this.findAll().then(result => result.findBy('upgrading', true));
   },
 
-  find: function(id) {
+  find(id) {
     return this.findAll().then(result => result.findBy('id', id));
   },
 

@@ -1,6 +1,6 @@
 import { find } from 'manager-client/models/process-list';
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
   model: find
 });

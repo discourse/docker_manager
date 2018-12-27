@@ -1,13 +1,14 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed } from "@ember/object";
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNameBindings: [':progress', ':progress-striped', 'active'],
 
-  active: function() {
+  active: computed("percent", function() {
     return parseInt(this.get('percent'), 10) !== 100;
-  }.property('percent'),
+  }),
 
-  barStyle: function() {
+  barStyle: computed("percent", function() {
     let percent = parseInt(this.get('percent'), 10);
     if (percent > 0)  {
       if (percent > 100) { percent = 100; }
@@ -15,7 +16,5 @@ export default Ember.Component.extend({
     }
 
     return "".htmlSafe();
-  }.property('percent')
-
+  })
 });
-
