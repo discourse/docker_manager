@@ -38,11 +38,11 @@ class DockerManager::GitRepo
   end
 
   def latest_local_tag_version
-    prettify_tag_version("describe HEAD")
+    prettify_tag_version("describe HEAD 2>/dev/null")
   end
 
   def latest_origin_tag_version
-    prettify_tag_version("describe #{tracking_branch}")
+    prettify_tag_version("describe #{tracking_branch} 2>/dev/null")
   end
 
   def latest_origin_commit_date
