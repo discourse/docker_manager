@@ -1,8 +1,8 @@
 import Discourse from "manager-client/discourse";
-import { default as EmberObject, computed } from '@ember/object';
-import { or } from '@ember/object/computed';
-import { isNone } from '@ember/utils';
-import { Promise } from 'rsvp';
+import { default as EmberObject, computed } from "@ember/object";
+import { or } from "@ember/object/computed";
+import { isNone } from "@ember/utils";
+import { Promise } from "rsvp";
 
 let loaded = [];
 
@@ -14,9 +14,12 @@ const Repo = EmberObject.extend({
   unloaded: true,
   checking: false,
 
-  checkingStatus: or('unloaded', 'checking'),
+  checkingStatus: or("unloaded", "checking"),
   upToDate: computed("upgrading", "version", "latest.version", function() {
-    return !this.get('upgrading') & (this.get('version') === this.get('latest.version'));
+    return (
+      !this.get("upgrading") &
+      (this.get("version") === this.get("latest.version"))
+    );
   }),
 
   prettyVersion: computed("version", "pretty_version", function() {
@@ -28,11 +31,15 @@ const Repo = EmberObject.extend({
   }),
 
   shouldCheck: computed(function() {
-    if (isNone(this.get('version'))) { return false; }
-    if (this.get('checking')) { return false; }
+    if (isNone(this.get("version"))) {
+      return false;
+    }
+    if (this.get("checking")) {
+      return false;
+    }
 
     // Only check once every minute
-    const lastCheckedAt = this.get('lastCheckedAt');
+    const lastCheckedAt = this.get("lastCheckedAt");
     if (lastCheckedAt) {
       const ago = new Date().getTime() - lastCheckedAt;
       return ago > 60 * 1000;
@@ -42,20 +49,20 @@ const Repo = EmberObject.extend({
 
   repoAjax(url, args) {
     args = args || {};
-    args.data = this.getProperties('path', 'version', 'branch');
+    args.data = this.getProperties("path", "version", "branch");
 
     return Em.$.ajax(Discourse.getURL(url), args);
   },
 
   findLatest() {
     return new Promise(resolve => {
-      if (!this.get('shouldCheck')) {
-        this.set('unloaded', false);
+      if (!this.get("shouldCheck")) {
+        this.set("unloaded", false);
         return resolve();
       }
 
-      this.set('checking', true);
-      this.repoAjax(Discourse.getURL('/admin/docker/latest')).then(result => {
+      this.set("checking", true);
+      this.repoAjax(Discourse.getURL("/admin/docker/latest")).then(result => {
         this.setProperties({
           unloaded: false,
           checking: false,
@@ -68,20 +75,28 @@ const Repo = EmberObject.extend({
   },
 
   findProgress() {
-    return this.repoAjax(Discourse.getURL('/admin/docker/progress')).then(result => result.progress);
+    return this.repoAjax(Discourse.getURL("/admin/docker/progress")).then(
+      result => result.progress
+    );
   },
 
   resetUpgrade() {
-    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { dataType: 'text', type: 'DELETE' }).then(() => {
-      this.set('upgrading', false);
+    return this.repoAjax(Discourse.getURL("/admin/docker/upgrade"), {
+      dataType: "text",
+      type: "DELETE"
+    }).then(() => {
+      this.set("upgrading", false);
     });
   },
 
   startUpgrade() {
-    this.set('upgrading', true);
+    this.set("upgrading", true);
 
-    return this.repoAjax(Discourse.getURL('/admin/docker/upgrade'), { dataType: 'text', type: 'POST' }).catch(() => {
-      this.set('upgrading', false);
+    return this.repoAjax(Discourse.getURL("/admin/docker/upgrade"), {
+      dataType: "text",
+      type: "POST"
+    }).catch(() => {
+      this.set("upgrading", false);
     });
   }
 });
@@ -89,7 +104,9 @@ const Repo = EmberObject.extend({
 Repo.reopenClass({
   findAll() {
     return new Promise(resolve => {
-      if (loaded.length) { return resolve(loaded); }
+      if (loaded.length) {
+        return resolve(loaded);
+      }
 
       Em.$.ajax(Discourse.getURL("/admin/docker/repos")).then(result => {
         loaded = result.repos.map(r => Repo.create(r));
@@ -99,28 +116,44 @@ Repo.reopenClass({
   },
 
   findUpgrading() {
-    return this.findAll().then(result => result.findBy('upgrading', true));
+    return this.findAll().then(result => result.findBy("upgrading", true));
   },
 
   find(id) {
-    return this.findAll().then(result => result.findBy('id', id));
+    return this.findAll().then(result => result.findBy("id", id));
   },
 
   upgradeAll() {
-    return Em.$.ajax(Discourse.getURL("/admin/docker/upgrade"), { dataType: "text", type: "POST", data: { path: "all" } });
+    return Em.$.ajax(Discourse.getURL("/admin/docker/upgrade"), {
+      dataType: "text",
+      type: "POST",
+      data: { path: "all" }
+    });
   },
 
   resetAll(repos) {
-    return Em.$.ajax(Discourse.getURL("/admin/docker/upgrade"), { dataType: "text", type: "DELETE", data: { path: "all", version: concatVersions(repos) } });
+    return Em.$.ajax(Discourse.getURL("/admin/docker/upgrade"), {
+      dataType: "text",
+      type: "DELETE",
+      data: { path: "all", version: concatVersions(repos) }
+    });
   },
 
   findLatestAll() {
-    return Em.$.ajax(Discourse.getURL("/admin/docker/latest"), { dataType: "text", type: "GET", data: { path: "all" } });
+    return Em.$.ajax(Discourse.getURL("/admin/docker/latest"), {
+      dataType: "text",
+      type: "GET",
+      data: { path: "all" }
+    });
   },
 
   findAllProgress(repos) {
-    return Em.$.ajax(Discourse.getURL("/admin/docker/progress"), { dataType: "text", type: "GET", data: { path: "all", version: concatVersions(repos) } });
-  },
+    return Em.$.ajax(Discourse.getURL("/admin/docker/progress"), {
+      dataType: "text",
+      type: "GET",
+      data: { path: "all", version: concatVersions(repos) }
+    });
+  }
 });
 
 export default Repo;

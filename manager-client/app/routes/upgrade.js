@@ -1,10 +1,9 @@
-import Repo from 'manager-client/models/repo';
-import Route from '@ember/routing/route';
-import EmberObject from '@ember/object';
-import { Promise } from 'rsvp';
+import Repo from "manager-client/models/repo";
+import Route from "@ember/routing/route";
+import EmberObject from "@ember/object";
+import { Promise } from "rsvp";
 
 export default Route.extend({
-
   model(params) {
     if (params.id === "all") {
       return Repo.findAll();
@@ -17,12 +16,16 @@ export default Route.extend({
       return Repo.findLatestAll().then(response => {
         JSON.parse(response).repos.forEach(_repo => {
           const repo = model.find(repo => repo.get("path") === _repo.path);
-          if (!repo) { return; }
+          if (!repo) {
+            return;
+          }
           delete _repo.path;
           repo.set("latest", EmberObject.create(_repo));
         });
 
-        return Repo.findAllProgress(model.filter(repo => !repo.get("upToDate"))).then(progress => {
+        return Repo.findAllProgress(
+          model.filter(repo => !repo.get("upToDate"))
+        ).then(progress => {
           this.set("progress", JSON.parse(progress).progress);
         });
       });
@@ -38,20 +41,19 @@ export default Route.extend({
         });
       });
     });
-
   },
 
   setupController(controller, model) {
     controller.reset();
     controller.setProperties({
       model: Array.isArray(model) ? model : [model],
-      output: this.get('progress.logs'),
-      percent: this.get('progress.percentage')
+      output: this.get("progress.logs"),
+      percent: this.get("progress.percentage")
     });
     controller.startBus();
   },
 
   deactivate() {
-    this.controllerFor('upgrade').stopBus();
+    this.controllerFor("upgrade").stopBus();
   }
 });

@@ -1,4 +1,4 @@
-import Controller from '@ember/controller';
+import Controller from "@ember/controller";
 
 export default Controller.extend({
   autoRefresh: false,
@@ -11,9 +11,8 @@ export default Controller.extend({
   },
 
   performRefresh() {
-    if (this.get('autoRefresh')) {
-      this.get('model').refresh();
+    if (this.get("autoRefresh")) {
+      this.get("model").refresh();
     }
   }
 });
-

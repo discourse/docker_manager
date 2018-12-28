@@ -1,5 +1,5 @@
-import config from './config/environment';
-import EmberRouter from '@ember/routing/router';
+import config from "./config/environment";
+import EmberRouter from "@ember/routing/router";
 
 const Router = EmberRouter.extend({
   location: config.locationType,
@@ -8,7 +8,7 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
   this.route("processes");
-  this.route('upgrade', { path: '/upgrade/:id' });
+  this.route("upgrade", { path: "/upgrade/:id" });
 });
 
 export default Router;

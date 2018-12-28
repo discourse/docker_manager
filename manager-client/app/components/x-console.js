@@ -1,16 +1,16 @@
-import Component from '@ember/component';
+import Component from "@ember/component";
 import { observer } from "@ember/object";
-import { scheduleOnce } from '@ember/runloop';
+import { scheduleOnce } from "@ember/runloop";
 
 export default Component.extend({
-  classNameBindings: [':logs'],
+  classNameBindings: [":logs"],
 
   _outputChanged: observer("output", function() {
-    scheduleOnce('afterRender', this, '_scrollBottom');
+    scheduleOnce("afterRender", this, "_scrollBottom");
   }),
 
   _scrollBottom() {
-    if (this.get('followOutput')) {
+    if (this.get("followOutput")) {
       this.$().scrollTop(this.$()[0].scrollHeight);
     }
   },
@@ -20,4 +20,3 @@ export default Component.extend({
     this._scrollBottom();
   }
 });
-
