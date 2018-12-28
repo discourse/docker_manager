@@ -4,9 +4,9 @@ This plugin works with the Discourse docker image. It allows you to perform upgr
 
 ## Development Notes
 
-* Install `node.js`, `bower`, `grunt`
+* Install `node.js` and `yarn`
 * Clone this repo to desired folder path
-* In console, from folder path do `cd manager-client`, `npm install`, `bower install`
+* In console, from folder path do `cd manager-client`, `yarn install`
 * Create a symlink for this folder in your local Discourse instance "plugins" folder (eg. `path/to/your/discourse_folder/plugins/discourse_manager`)
 * Make sure your Discourse instance is running locally at port 3000 and you are logged in as Admin
 
@@ -14,9 +14,9 @@ This plugin works with the Discourse docker image. It allows you to perform upgr
 
 * Install the client app dependencies:
   * `cd manager-client`
-  * `npm install`
-  * `bower install`
-* Use `ember server --proxy "http://localhost:3000"` to proxy to your Discourse instance running on port 3000
+  * `yarn install`
+* Make sure your local Discourse instance is running at port 3000
+* Run `./dev_server` which will run ember server for you with proxy to your local Discourse instance
   * If that gives errors, you may need to start your Discourse rails server like this: `bundle exec rails s -b 127.0.0.1`
 * JUST open up a browser to port 4200 and you're off to the races!
 
