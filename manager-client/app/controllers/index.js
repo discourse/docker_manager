@@ -16,9 +16,6 @@ export default Controller.extend({
   actions: {
     upgradeAllButton() {
       this.replaceRoute("upgrade", "all");
-    },
-    upgrade(repo) {
-      this.transitionToRoute("upgrade", repo);
     }
   }
 });

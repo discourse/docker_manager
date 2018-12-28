@@ -14,7 +14,7 @@
   </tr>
   <tbody>
     {{#each model as |repo|}}
-      {{repo-status repo=repo upgradingRepo=upgrading managerRepo=managerRepo upgrade=(action "upgrade")}}
+      {{repo-status repo=repo upgradingRepo=upgrading managerRepo=managerRepo}}
     {{/each}}
   </tbody>
 </table>
