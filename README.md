@@ -25,6 +25,15 @@ The client application is built using [Ember CLI](http://www.ember-cli.com/).
 To create a compiled version for distribution, run `./compile_client.sh` to compile the site and
 move it into the proper directories.
 
+## Running tests
+
+* Ruby
+  * Run `RAILS_ENV=test bundle exec rake plugin:spec[docker_manager]` in your discourse directory.
+
+* JS Tests
+  * Run `ember s` in the `/manager-client` directory
+  * Open up your favorite browser and head to `http://localhost:4200/tests`and you should see all passing/failing tests
+
 ## Contributing
 
 1. Fork it
