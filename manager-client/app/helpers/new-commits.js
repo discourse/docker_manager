@@ -18,7 +18,7 @@ export default buildHelper(function(params) {
   }
 
   const _url = url.substr(0, url.search(/(\.git)?$/));
-  description = `<a href='${_url}/compare/${oldSha}..${newSha}'>${description}</a>`;
+  description = `<a href='${_url}/compare/${oldSha}...${newSha}'>${description}</a>`;
 
   return new htmlSafe(description);
 });
