@@ -9,7 +9,7 @@ You will need the following things properly installed on your computer.
 
 * [Git](https://git-scm.com/)
 * [Node.js](https://nodejs.org/) (with NPM)
-* [Bower](https://bower.io/)
+* [Yarn](https://yarnpkg.com)
 * [Ember CLI](https://ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
 
@@ -17,12 +17,11 @@ You will need the following things properly installed on your computer.
 
 * `git clone <repository-url>` this repository
 * `cd manager-client`
-* `npm install`
-* `bower install`
+* `yarn install`
 
 ## Running / Development
 
-* `ember serve`
+* `./dev_server` (in root directory of this plugin)
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
 ### Code Generators
@@ -38,10 +37,6 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 * `ember build` (development)
 * `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
 
 ## Further Reading / Useful Links
 

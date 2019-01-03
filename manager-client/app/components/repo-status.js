@@ -1,27 +1,43 @@
-import Ember from 'ember';
+import Discourse from "manager-client/discourse";
+import Component from "@ember/component";
+import { computed } from "@ember/object";
+import { inject as service } from "@ember/service";
 
-export default Ember.Component.extend({
-  tagName: 'tr',
+export default Component.extend({
+  router: service(),
+  tagName: "tr",
 
-  upgradeDisabled: function() {
-    const upgradingRepo = this.get('upgradingRepo');
+  upgradeDisabled: computed(
+    "upgradingRepo",
+    "repo",
+    "managerRepo",
+    "managerRepo.upToDate",
+    function() {
+      const upgradingRepo = this.get("upgradingRepo");
 
-    if (!upgradingRepo) {
-      const managerRepo = this.get('managerRepo');
-      if (!managerRepo) { return false; }
-      return (!managerRepo.get('upToDate')) && managerRepo !== this.get('repo');
+      if (!upgradingRepo) {
+        const managerRepo = this.get("managerRepo");
+        if (!managerRepo) {
+          return false;
+        }
+        return !managerRepo.get("upToDate") && managerRepo !== this.get("repo");
+      }
+      return true;
     }
-    return true;
-  }.property('upgradingRepo', 'repo', 'managerRepo', 'managerRepo.upToDate'),
+  ),
 
-  officialRepoImageSrc: function() {
-    if (!this.get('repo.official')) { return; }
-    return Discourse.getURL("/plugins/docker_manager/images/font-awesome-check-circle.png");
-  }.property('repo.official'),
+  officialRepoImageSrc: computed("repo.official", function() {
+    if (!this.get("repo.official")) {
+      return;
+    }
+    return Discourse.getURL(
+      "/plugins/docker_manager/images/font-awesome-check-circle.png"
+    );
+  }),
 
   actions: {
-    upgrade: function() {
-      this.sendAction('upgrade', this.get('repo'));
+    upgrade() {
+      this.get("router").transitionTo("upgrade", this.get("repo"));
     }
   }
 });

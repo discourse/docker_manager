@@ -1,16 +1,21 @@
-import Ember from 'ember';
+import Controller from "@ember/controller";
+import { computed } from "@ember/object";
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   managerRepo: null,
   upgrading: null,
 
-  upgradeAllButtonDisabled: function () {
-    return !this.get("managerRepo.upToDate") || this.get("allUpToDate");
-  }.property("managerRepo.upToDate", "allUpToDate"),
+  upgradeAllButtonDisabled: computed(
+    "managerRepo.upToDate",
+    "allUpToDate",
+    function() {
+      return !this.get("managerRepo.upToDate") || this.get("allUpToDate");
+    }
+  ),
 
-  allUpToDate: function() {
+  allUpToDate: computed("model.[].upToDate", function() {
     return this.get("model").every(repo => repo.get("upToDate"));
-  }.property("model.@each.upToDate"),
+  }),
 
   actions: {
     upgradeAllButton() {

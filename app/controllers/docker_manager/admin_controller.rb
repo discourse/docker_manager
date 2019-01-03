@@ -35,6 +35,7 @@ module DockerManager
         if r.valid?
           result[:id] = r.name.downcase.gsub(/[^a-z]/, '_').gsub(/_+/, '_').sub(/_$/, '')
           result[:version] = r.latest_local_commit
+          result[:pretty_version] = r.latest_local_tag_version.presence
           result[:url] = r.url
           if r.upgrading?
             result[:upgrading] = true
@@ -61,6 +62,7 @@ module DockerManager
         {
           path: repo.path,
           version: repo.latest_origin_commit,
+          pretty_version: repo.latest_origin_tag_version.presence,
           commits_behind: repo.commits_behind,
           date: repo.latest_origin_commit_date
         }

@@ -1,14 +1,14 @@
-/* global Discourse */
+import EmberObject from "@ember/object";
+import Discourse from "manager-client/discourse";
 
-import request from 'ember-ajax/request';
-import Ember from 'ember';
-
-const ProcessList = Ember.Object.extend({
+const ProcessList = EmberObject.extend({
   output: null,
 
   refresh() {
-    return request(Discourse.getURL("/admin/docker/ps"), {dataType: 'text'}).then(result => {
-      this.set('output', result);
+    return Em.$.ajax(Discourse.getURL("/admin/docker/ps"), {
+      dataType: "text"
+    }).then(result => {
+      this.set("output", result);
       return this;
     });
   }

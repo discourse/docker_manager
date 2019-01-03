@@ -1,11 +1,11 @@
 <td>
   {{#if repo.official}}
-    <img class="check-circle" src={{officialRepoImageSrc}} alt="Official Plugin" title="Official Plugin"/>
+    <img class="check-circle" src={{officialRepoImageSrc}} alt="Official Plugin" title="Official Plugin">
   {{/if}}
 </td>
 <td>
-  {{repo.name}}
-  {{repo.version}}
+  <a href="{{repo.url}}">{{repo.name}}</a>
+  <span class="current commit-hash">{{repo.prettyVersion}}</span>
 </td>
 <td>
   {{#if repo.checkingStatus}}
@@ -16,7 +16,7 @@
     <div class='new-version'>
       <h4>New Version Available!</h4>
       <ul>
-        <li>Remote Version: {{repo.latest.version}}</li>
+        <li>Remote Version: <span class="new commit-hash">{{repo.prettyLatestVersion}}</span></li>
         <li>Last Updated:
           {{#if repo.latest.date}}
             {{moment-from-now repo.latest.date interval=1000}}
@@ -27,9 +27,9 @@
         <li class='new-commits'>{{new-commits repo.latest.commits_behind repo.version repo.latest.version repo.url}}</li>
       </ul>
       {{#if repo.upgrading}}
-        <button class="btn" {{action "upgrade"}}>Currently Upgrading...</button>
+        <button class="btn" disabled=true>Currently Upgrading...</button>
       {{else}}
-        <button class="btn" {{action "upgrade"}} disabled={{upgradeDisabled}}>Upgrade</button>
+        <button class="upgrade-button btn" {{action "upgrade"}} disabled={{upgradeDisabled}}>Upgrade</button>
       {{/if}}
     </div>
   {{/if}}

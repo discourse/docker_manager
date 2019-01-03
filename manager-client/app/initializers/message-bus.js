@@ -1,4 +1,4 @@
-/* global MessageBus, Discourse, $:true */
+import Discourse from "manager-client/discourse";
 
 export default {
   name: "message-bus",
@@ -6,14 +6,16 @@ export default {
   initialize() {
     MessageBus.baseUrl = Discourse.longPollingBaseUrl;
 
-    if (MessageBus.baseUrl !== '/') {
+    if (MessageBus.baseUrl !== "/") {
       MessageBus.ajax = function(opts) {
         opts.headers = opts.headers || {};
-        opts.headers['X-Shared-Session-Key'] = $('meta[name=shared_session_key]').attr('content');
-        return $.ajax(opts);
+        opts.headers["X-Shared-Session-Key"] = Em.$(
+          "meta[name=shared_session_key]"
+        ).attr("content");
+        return Em.$.ajax(opts);
       };
     } else {
-      MessageBus.baseUrl = Discourse.getURL('/');
+      MessageBus.baseUrl = Discourse.getURL("/");
     }
   }
 };

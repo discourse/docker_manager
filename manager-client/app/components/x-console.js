@@ -1,20 +1,22 @@
-import Ember from 'ember';
+import Component from "@ember/component";
+import { observer } from "@ember/object";
+import { scheduleOnce } from "@ember/runloop";
 
-export default Ember.Component.extend({
-  classNameBindings: [':logs'],
+export default Component.extend({
+  classNameBindings: [":logs"],
 
-  _outputChanged: function() {
-    Ember.run.scheduleOnce('afterRender', this, '_scrollBottom');
-  }.observes('output'),
+  _outputChanged: observer("output", function() {
+    scheduleOnce("afterRender", this, "_scrollBottom");
+  }),
 
-  _scrollBottom: function() {
-    if (this.get('followOutput')) {
+  _scrollBottom() {
+    if (this.get("followOutput")) {
       this.$().scrollTop(this.$()[0].scrollHeight);
     }
   },
 
-  _scrollOnInsert: function() {
+  didInsertElement() {
+    this._super(...arguments);
     this._scrollBottom();
-  }.on('didInsertElement')
+  }
 });
-

@@ -6,6 +6,7 @@
     <title>DockerManager</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta id="preloaded-data" data-preload="{&quot;rootUrl&quot;:&quot;/&quot;,&quot;longPollingBaseUrl&quot;:&quot;/&quot;}">
 
     {{content-for 'head'}}
 
@@ -13,17 +14,6 @@
     <link rel="stylesheet" href="assets/manager-client.css">
 
     {{content-for 'head-footer'}}
-
-  <script>
-    window.Discourse = {
-      rootUrl: '/',
-      longPollingBaseUrl: '/',
-
-      getURL: function(url) {
-        return url;
-      }
-    };
-  </script>
 
   </head>
   <body>

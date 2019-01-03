@@ -7,25 +7,7 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="manager-client/config/environment" content="%7B%22modulePrefix%22%3A%22manager-client%22%2C%22environment%22%3A%22development%22%2C%22rootURL%22%3A%22/%22%2C%22locationType%22%3A%22hash%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%2C%22EXTEND_PROTOTYPES%22%3A%7B%22Date%22%3Afalse%7D%7D%2C%22APP%22%3A%7B%22name%22%3A%22manager-client%22%2C%22version%22%3A%220.0.0+cfc32897%22%7D%2C%22exportApplicationGlobal%22%3Atrue%7D" />
-
-  <script>
-    window.Discourse = {
-      rootUrl: '<%= discourse_root_url %>',
-      longPollingBaseUrl: '<%= long_polling_base_url %>',
-
-      getURL: function(url) {
-        if (!url) return url;
-
-        // if it's a non relative URL, return it.
-        if (url !== '/' && !/^\/[^\/]/.test(url)) return url;
-
-        if (url.indexOf(Discourse.rootUrl) !== -1) return url;
-        if (url[0] !== "/") url = "/" + url;
-
-        return Discourse.rootUrl + url;
-      }
-    };
-  </script>
+  <meta id="preloaded-data" data-preload="<%= { rootUrl: discourse_root_url, longPollingBaseUrl: long_polling_base_url }.to_json %>">
 
   <%= javascript_include_tag "docker-manager-vendor" %>
   <%= javascript_include_tag "docker-manager-app" %>
