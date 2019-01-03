@@ -19,15 +19,15 @@ export default Controller.extend({
     return this.get("model.length") !== 1;
   }),
 
-  title: computed("model.[].name", function() {
+  title: computed("model.@each.name", function() {
     return this.get("multiUpgrade") ? "All" : this.get("model")[0].get("name");
   }),
 
-  isUpToDate: computed("model.[].upToDate", function() {
+  isUpToDate: computed("model.@each.upToDate", function() {
     return this.get("model").every(repo => repo.get("upToDate"));
   }),
 
-  upgrading: computed("model.[].upgrading", function() {
+  upgrading: computed("model.@each.upgrading", function() {
     return this.get("model").some(repo => repo.get("upgrading"));
   }),
 
