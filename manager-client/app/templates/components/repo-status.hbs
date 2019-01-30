@@ -27,7 +27,7 @@
         <li class='new-commits'>{{new-commits repo.latest.commits_behind repo.version repo.latest.version repo.url}}</li>
       </ul>
       {{#if repo.upgrading}}
-        <button class="btn" disabled=true>Currently Upgrading...</button>
+        <button class="btn" {{action "upgrade"}}>Currently Upgrading...</button>
       {{else}}
         <button class="upgrade-button btn" {{action "upgrade"}} disabled={{upgradeDisabled}}>Upgrade</button>
       {{/if}}
