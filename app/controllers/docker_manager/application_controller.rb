@@ -7,9 +7,11 @@ module DockerManager
     protect_from_forgery
 
     def handle_unverified_request
-      super
-      clear_current_user
-      render plain: "['BAD CSRF']", status: 403
+      unless is_api?
+        super
+        clear_current_user
+        render plain: "['BAD CSRF']", status: 403
+      end
     end
 
   end
