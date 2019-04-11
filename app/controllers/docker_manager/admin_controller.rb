@@ -13,7 +13,7 @@ module DockerManager
       version = Gem::Version.new(version)
       expected_version = Gem::Version.new('2.0.20190211')
       ruby_version = Gem::Version.new(RUBY_VERSION)
-      expected_ruby_version = Gem::Version.new('2.5.2')
+      expected_ruby_version = Gem::Version.new('2.6.1')
 
       if (version < expected_version) || (ruby_version < expected_ruby_version)
         render 'upgrade_required', layout: false
