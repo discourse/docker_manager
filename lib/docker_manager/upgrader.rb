@@ -123,11 +123,19 @@ class DockerManager::Upgrader
     log "$ #{cmd}"
     msg = ""
 
+    allowed_env = %w{
+      PWD
+      HOME
+      SHELL
+      PATH
+      COMPRESS_BROTLI
+    }
+
     clear_env = Hash[*ENV.map { |k, v| [k, nil] }
       .reject { |k, v|
-                       ["PWD", "HOME", "SHELL", "PATH"].include?(k) ||
-                         k =~ /^DISCOURSE_/
-                     }
+        allowed_env.include?(k) ||
+        k =~ /^DISCOURSE_/
+      }
       .flatten]
 
     clear_env["RAILS_ENV"] = "production"
