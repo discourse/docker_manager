@@ -70,7 +70,7 @@ class DockerManager::Upgrader
       percent(20 * (index + 1) / @repos.size)
     end
 
-    run("bundle install --deployment --without test --without development")
+    run("bundle install --deployment --jobs 4 --without test development")
     percent(30)
     run("SKIP_POST_DEPLOYMENT_MIGRATIONS=1 bundle exec rake multisite:migrate")
     percent(40)
