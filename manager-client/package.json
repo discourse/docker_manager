@@ -15,7 +15,7 @@
     "test": "ember test"
   },
   "devDependencies": {
-    "@ember/jquery": "^0.5.2",
+    "jquery": "3.4.1",
     "@ember/optional-features": "^0.6.3",
     "broccoli-asset-rev": "^2.7.0",
     "ember-ajax": "^4.0.1",
