@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DockerManager
   class ApplicationController < ActionController::Base
     helper DockerManager::ApplicationHelper

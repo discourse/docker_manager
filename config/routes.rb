@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 DockerManager::Engine.routes.draw do
   get "admin/docker", to: redirect("/admin/upgrade"), constraints: AdminConstraint.new
   get "admin/upgrade" => "admin#index", constraints: AdminConstraint.new

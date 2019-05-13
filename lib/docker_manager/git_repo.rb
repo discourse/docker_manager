@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # like Grit just very very minimal
 class DockerManager::GitRepo
   attr_reader :path, :name, :branch
@@ -96,7 +98,7 @@ class DockerManager::GitRepo
     return unless result.present?
 
     if result =~ /-(\d+)-/
-      result.gsub!(/-(\d+)-.*/, " +#{$1}")
+      result = result.gsub(/-(\d+)-.*/, " +#{$1}")
     end
     result
   end
@@ -106,7 +108,7 @@ class DockerManager::GitRepo
   end
 
   def commit_date(commit)
-    unix_timestamp = run('show -s --format="%ct" ' << commit).to_i
+    unix_timestamp = run(+'show -s --format="%ct" ' << commit).to_i
     Time.at(unix_timestamp).to_datetime
   end
 

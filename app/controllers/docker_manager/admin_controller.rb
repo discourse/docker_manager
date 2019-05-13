@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_dependency 'docker_manager/git_repo'
 require_dependency 'docker_manager/upgrader'
 

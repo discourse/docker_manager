@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DockerManager::Upgrader
 
   def initialize(user_id, repos, from_version)
@@ -121,7 +123,7 @@ class DockerManager::Upgrader
 
   def run(cmd)
     log "$ #{cmd}"
-    msg = ""
+    msg = +""
 
     allowed_env = %w{
       PWD
