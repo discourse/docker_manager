@@ -4,7 +4,7 @@ export default {
   name: "message-bus",
 
   initialize() {
-    MessageBus.baseUrl = Discourse.longPollingBaseUrl + "/";
+    MessageBus.baseUrl = Discourse.longPollingBaseUrl.replace(/\/$/, "") + "/";
 
     if (MessageBus.baseUrl !== "/") {
       MessageBus.ajax = function(opts) {
