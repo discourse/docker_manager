@@ -13,7 +13,7 @@ module DockerManager
       version = File.read('/VERSION') rescue '1.0.0'
 
       version = Gem::Version.new(version)
-      expected_version = Gem::Version.new('2.0.20190211')
+      expected_version = Gem::Version.new('2.0.20190625')
       ruby_version = Gem::Version.new(RUBY_VERSION)
       expected_ruby_version = Gem::Version.new('2.6.1')
 
