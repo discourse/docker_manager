@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Compile the application using ember-cli
-(cd manager-client && ember build --environment=production)
+(cd manager-client && yarn run ember build --environment=production)
 
 # Remove old assets
 rm assets/docker-manager-*
