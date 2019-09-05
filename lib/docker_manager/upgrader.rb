@@ -68,7 +68,7 @@ class DockerManager::Upgrader
     # HEAD@{upstream} is just a fancy way how to say origin/master (in normal case)
     # see http://stackoverflow.com/a/12699604/84283
     @repos.each_with_index do |repo, index|
-      run("cd #{repo.path} && git fetch --tags && git reset --hard HEAD@{upstream}")
+      run("cd #{repo.path} && git fetch --tags --force && git reset --hard HEAD@{upstream}")
       percent(20 * (index + 1) / @repos.size)
     end
 
