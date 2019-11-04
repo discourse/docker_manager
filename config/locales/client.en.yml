@@ -9,3 +9,4 @@ en:
     docker:
       upgrade: "Your Discourse installation is out of date."
       perform_upgrade: "Click here to upgrade."
+      link_to_upgrade: "Perform upgrades here."
