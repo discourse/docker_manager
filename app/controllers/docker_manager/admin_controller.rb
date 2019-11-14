@@ -152,7 +152,7 @@ module DockerManager
     end
 
     def repo_version(repo)
-      return repo.is_a?(Array) && params[:version].blank? ? concat_repos_versions(repo) : params[:version]
+      repo.is_a?(Array) && params[:version].blank? ? concat_repos_versions(repo) : params[:version]
     end
 
     def concat_repos_versions(repos)
