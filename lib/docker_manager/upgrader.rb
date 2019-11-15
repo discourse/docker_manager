@@ -84,6 +84,13 @@ class DockerManager::Upgrader
     reload_unicorn(launcher_pid)
     reloaded = true
 
+    # Flush nginx cache here - this is not critical, and the rake task may not exist yet - ignore failures here.
+    percent(85)
+    begin
+      run("bundle exec rake assets:flush_sw")
+    rescue
+    end
+
     percent(90)
     log("Running post deploy migrations")
     run("bundle exec rake multisite:migrate")
