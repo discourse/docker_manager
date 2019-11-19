@@ -88,7 +88,7 @@ class DockerManager::Upgrader
     percent(85)
     begin
       run("bundle exec rake assets:flush_sw")
-    rescue
+    rescue RuntimeError
       log "WARNING: Unable to flush service worker file"
     end
 
