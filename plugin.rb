@@ -6,7 +6,6 @@
 # authors: Robin Ward, Sam Saffron
 # url: https://github.com/discourse/docker_manager
 
-
 if !defined? ::Discourse.redis
   # HACK: make Discourse.redis work on old versions of Discourse
   module ::Discourse
