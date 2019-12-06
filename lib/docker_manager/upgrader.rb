@@ -173,11 +173,11 @@ class DockerManager::Upgrader
   end
 
   def clear_logs
-    Discourse.redis.del(logs_key)
+    $redis.del(logs_key)
   end
 
   def find_logs
-    Discourse.redis.get(logs_key)
+    $redis.get(logs_key)
   end
 
   def percent_key
@@ -185,18 +185,18 @@ class DockerManager::Upgrader
   end
 
   def last_percentage
-    Discourse.redis.get(percent_key)
+    $redis.get(percent_key)
   end
 
   def percent(val)
-    Discourse.redis.set(percent_key, val)
-    Discourse.redis.expire(percent_key, 30.minutes)
+    $redis.set(percent_key, val)
+    $redis.expire(percent_key, 30.minutes)
     publish('percent', val)
   end
 
   def log(message)
-    Discourse.redis.append logs_key, message + "\n"
-    Discourse.redis.expire(logs_key, 30.minutes)
+    $redis.append logs_key, message + "\n"
+    $redis.expire(logs_key, 30.minutes)
     publish 'log', message
   end
 
