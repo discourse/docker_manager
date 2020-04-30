@@ -41,7 +41,7 @@
     "ember-source": "~3.8.0",
     "ember-welcome-page": "^3.2.0",
     "eslint-plugin-ember": "^5.2.0",
-    "jquery": "3.4.1",
+    "jquery": "3.5.0",
     "loader.js": "^4.7.0",
     "qunit-dom": "^0.8.0",
     "sass": "^1.23"
