@@ -244,7 +244,7 @@ class DockerManager::Upgrader
       iterations += 1
       break if iterations >= 60
       log("Waiting for Unicorn to reload#{'.' * iterations}")
-      sleep 1
+      sleep 2
     end
 
     iterations = 0
@@ -252,7 +252,7 @@ class DockerManager::Upgrader
       iterations += 1
       break if iterations >= 60
       log("Waiting for Unicorn workers to start up#{'.' * iterations}")
-      sleep 1
+      sleep 2
     end
   end
 
