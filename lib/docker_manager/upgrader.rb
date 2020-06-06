@@ -73,6 +73,11 @@ class DockerManager::Upgrader
     end
 
     run("bundle install --deployment --jobs 4 --without test development")
+    begin
+      run("bundle exec rake plugin:pull_compatible_all")
+    rescue RuntimeError
+      log "Unable checkout compatible plugin versions"
+    end
     percent(30)
     run("SKIP_POST_DEPLOYMENT_MIGRATIONS=1 bundle exec rake multisite:migrate")
     percent(40)

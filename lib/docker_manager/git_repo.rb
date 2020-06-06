@@ -113,7 +113,7 @@ class DockerManager::GitRepo
   end
 
   def tracking_branch
-    run "for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)"
+    Discourse.find_compatible_git_resource(path) || run("for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)")
   end
 
   def run(cmd)
