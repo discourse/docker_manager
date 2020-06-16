@@ -80,6 +80,11 @@ class DockerManager::Upgrader
     less_memory_flags = "RUBY_GC_MALLOC_LIMIT_MAX=20971520 RUBY_GC_OLDMALLOC_LIMIT_MAX=20971520 RUBY_GC_HEAP_GROWTH_MAX_SLOTS=50000 RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR=0.9 "
     run("#{less_memory_flags} bundle exec rake assets:precompile")
 
+    # if assets are served from S3, upload newly created ones to the bucket
+    if ENV["DISCOURSE_USE_S3"] && ENV["DISCOURSE_S3_BUCKET"] && ENV["DISCOURSE_S3_CDN_URL"]
+      run("#{less_memory_flags} bundle exec rake s3:upload_assets")
+    end
+
     percent(80)
     reload_unicorn(launcher_pid)
     reloaded = true
