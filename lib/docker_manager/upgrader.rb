@@ -144,6 +144,7 @@ class DockerManager::Upgrader
       SHELL
       PATH
       COMPRESS_BROTLI
+      FORCE_S3_UPLOADS
     }
 
     clear_env = Hash[*ENV.map { |k, v| [k, nil] }
