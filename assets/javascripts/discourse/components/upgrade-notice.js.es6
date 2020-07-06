@@ -1,6 +1,6 @@
 export default Ember.Component.extend({
   tagName: "tr",
   href: function() {
-    return Discourse.getURL("/admin/upgrade");
+    return Discourse.getAppURL("/admin/upgrade");
   }.property()
 });

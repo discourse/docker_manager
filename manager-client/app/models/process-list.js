@@ -5,7 +5,7 @@ const ProcessList = EmberObject.extend({
   output: null,
 
   refresh() {
-    return Em.$.ajax(Discourse.getURL("/admin/docker/ps"), {
+    return Em.$.ajax(Discourse.getAppURL("/admin/docker/ps"), {
       dataType: "text"
     }).then(result => {
       this.set("output", result);

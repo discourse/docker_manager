@@ -4,7 +4,7 @@ function init() {
 }
 
 const Discourse = {
-  getURL(url) {
+  getAppURL(url) {
     if (!this.hasOwnProperty("rootUrl")) {
       init();
     }

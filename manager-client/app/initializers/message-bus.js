@@ -15,7 +15,7 @@ export default {
         return Em.$.ajax(opts);
       };
     } else {
-      MessageBus.baseUrl = Discourse.getURL("/");
+      MessageBus.baseUrl = Discourse.getAppURL("/");
     }
   }
 };

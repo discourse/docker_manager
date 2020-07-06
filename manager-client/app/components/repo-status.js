@@ -30,7 +30,7 @@ export default Component.extend({
     if (!this.get("repo.official")) {
       return;
     }
-    return Discourse.getURL(
+    return Discourse.getAppURL(
       "/plugins/docker_manager/images/font-awesome-check-circle.png"
     );
   }),
