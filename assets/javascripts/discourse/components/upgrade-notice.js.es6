@@ -1,6 +1,8 @@
+import getURL from "discourse-common/lib/get-url";
+
 export default Ember.Component.extend({
   tagName: "tr",
   href: function() {
-    return Discourse.getAppURL("/admin/upgrade");
+    return getURL("/admin/upgrade");
   }.property()
 });
