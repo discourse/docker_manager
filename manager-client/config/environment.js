@@ -44,6 +44,7 @@ module.exports = function(environment) {
   }
 
   if (environment === "production") {
+    // Production-specific configuration goes here
   }
 
   return ENV;
