@@ -30,7 +30,7 @@ const Repo = EmberObject.extend({
     return this.get("latest.pretty_version") || this.get("latest.version");
   }),
 
-  shouldCheck: computed(function() {
+  get shouldCheck() {
     if (isNone(this.get("version"))) {
       return false;
     }
@@ -45,7 +45,7 @@ const Repo = EmberObject.extend({
       return ago > 60 * 1000;
     }
     return true;
-  }).volatile(),
+  },
 
   repoAjax(url, args) {
     args = args || {};
