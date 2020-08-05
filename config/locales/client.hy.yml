@@ -4,14 +4,13 @@
 # To work with us on translations, join this project:
 # https://translate.discourse.org/
 
-gl:
+hy:
   js:
     admin:
       logs:
         staff_actions:
           actions:
-            discourse_upgrade: "Actualizar á última versión"
+            discourse_upgrade: "Թարմացնել մինչև Վերջին Տարբերակ"
     docker:
-      upgrade: "A instalación do Discourse non está actualizada."
-      perform_upgrade: "Preme aquí para actualizar."
-      link_to_upgrade: "Executar actualizacións aquí."
+      upgrade: "Ձեր Discourse-ը ժամկետանց է"
+      perform_upgrade: "Սեղմեք այստեղ` թարմացման համար:"

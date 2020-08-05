@@ -1,12 +1,17 @@
-# encoding: utf-8
-#
-# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
 #
 # To work with us on translations, join this project:
-# https://www.transifex.com/projects/p/discourse-org/
+# https://translate.discourse.org/
 
 pt_BR:
   js:
+    admin:
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "Atualize para a Versão Mais Recente"
     docker:
       upgrade: "Sua instalação do Discourse está desatualizada."
       perform_upgrade: "Clique aqui para atualizar."
+      link_to_upgrade: "Faça atualizações aqui."

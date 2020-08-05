@@ -1,5 +1,16 @@
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
+#
+# To work with us on translations, join this project:
+# https://translate.discourse.org/
+
 sr:
   js:
+    admin:
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "Nadogradi na poslednju verziju"
     docker:
       upgrade: "Tvoja Discourse instalacija nije sinhronizovana sa zadnjim zakrpama."
       perform_upgrade: "Klikni ovde za nadogradnju."

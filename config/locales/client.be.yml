@@ -4,8 +4,4 @@
 # To work with us on translations, join this project:
 # https://translate.discourse.org/
 
-lv:
-  js:
-    docker:
-      upgrade: "Tava Discourse instalācija ir novecojusi. "
-      perform_upgrade: "Spied šeit, lai uzlabotu."
+be: 

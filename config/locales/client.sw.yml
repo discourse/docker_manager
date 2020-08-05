@@ -4,14 +4,13 @@
 # To work with us on translations, join this project:
 # https://translate.discourse.org/
 
-gl:
+sw:
   js:
     admin:
       logs:
         staff_actions:
           actions:
-            discourse_upgrade: "Actualizar á última versión"
+            discourse_upgrade: "Boresha kwenda Toleo jipya"
     docker:
-      upgrade: "A instalación do Discourse non está actualizada."
-      perform_upgrade: "Preme aquí para actualizar."
-      link_to_upgrade: "Executar actualizacións aquí."
+      upgrade: "Toleo lako la Discourse limepitwa na wakati."
+      perform_upgrade: "Bonyeza hapa kupata toleo jipya."

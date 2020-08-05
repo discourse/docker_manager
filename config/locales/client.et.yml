@@ -1,12 +1,16 @@
-# encoding: utf-8
-#
-# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
 #
 # To work with us on translations, join this project:
-# https://www.transifex.com/projects/p/discourse-org/
+# https://translate.discourse.org/
 
 et:
   js:
+    admin:
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "Värskenda uusimale versioonile"
     docker:
       upgrade: "Sinu Discourse' installatsioon on aegunud"
       perform_upgrade: "Kliki siia, et uuendada."
