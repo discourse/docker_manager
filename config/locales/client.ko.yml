@@ -1,12 +1,16 @@
-# encoding: utf-8
-#
-# Never edit this file. It will be overwritten when translations are pulled from Transifex.
+# WARNING: Never edit this file.
+# It will be overwritten when translations are pulled from Crowdin.
 #
 # To work with us on translations, join this project:
-# https://www.transifex.com/projects/p/discourse-org/
+# https://translate.discourse.org/
 
 ko:
   js:
+    admin:
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "최신 버전으로 업그레이드"
     docker:
-      upgrade: "설치된 Discourse가 최신 버전이 아닙니다."
-      perform_upgrade: "업그레이드 하려면 클릭"
+      upgrade: "설치된 Discourse가 구 버전입니다."
+      perform_upgrade: "업그레이드하려면 여기를 클릭하세요."

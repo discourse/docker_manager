@@ -6,6 +6,12 @@
 
 el:
   js:
+    admin:
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "Αναβάθμιση στην πιο πρόσφατη έκδοση"
     docker:
-      upgrade: "Η εγκατεστημένη έκδοση του Discourse είναι παρωχημένη."
-      perform_upgrade: "Πάτα εδώ για να αναβαθμίσεις."
+      upgrade: "Η εγκατάσταση του Discourse σας δεν είναι ενημερωμένη."
+      perform_upgrade: "Κάντε κλικ εδώ για αναβάθμιση."
+      link_to_upgrade: "Εκτελέστε τις αναβαθμίσεις τωρα."
