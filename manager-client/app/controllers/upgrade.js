@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /* global MessageBus, bootbox */
 import Repo from "manager-client/models/repo";
 import Controller from "@ember/controller";
@@ -15,20 +17,20 @@ export default Controller.extend({
   complete: equal("status", "complete"),
   failed: equal("status", "failed"),
 
-  multiUpgrade: computed("model.length", function() {
+  multiUpgrade: computed("model.length", function () {
     return this.get("model.length") !== 1;
   }),
 
-  title: computed("model.@each.name", function() {
+  title: computed("model.@each.name", function () {
     return this.get("multiUpgrade") ? "All" : this.get("model")[0].get("name");
   }),
 
-  isUpToDate: computed("model.@each.upToDate", function() {
-    return this.get("model").every(repo => repo.get("upToDate"));
+  isUpToDate: computed("model.@each.upToDate", function () {
+    return this.get("model").every((repo) => repo.get("upToDate"));
   }),
 
-  upgrading: computed("model.@each.upgrading", function() {
-    return this.get("model").some(repo => repo.get("upgrading"));
+  upgrading: computed("model.@each.upgrading", function () {
+    return this.get("model").some((repo) => repo.get("upgrading"));
   }),
 
   repos() {
@@ -37,7 +39,7 @@ export default Controller.extend({
   },
 
   updateAttribute(key, value, valueIsKey = false) {
-    this.get("model").forEach(repo => {
+    this.get("model").forEach((repo) => {
       value = valueIsKey ? repo.get(value) : value;
       repo.set(key, value);
     });
@@ -56,8 +58,8 @@ export default Controller.extend({
 
         if (msg.value === "complete") {
           this.get("model")
-            .filter(repo => repo.get("upgrading"))
-            .forEach(repo => {
+            .filter((repo) => repo.get("upgrading"))
+            .forEach((repo) => {
               repo.set("version", repo.get("latest.version"));
             });
         }
@@ -70,7 +72,7 @@ export default Controller.extend({
     }
   },
 
-  upgradeButtonText: computed("upgrading", function() {
+  upgradeButtonText: computed("upgrading", function () {
     if (this.get("upgrading")) {
       return "Upgrading...";
     } else {
@@ -79,7 +81,7 @@ export default Controller.extend({
   }),
 
   startBus() {
-    MessageBus.subscribe("/docker/upgrade", msg => {
+    MessageBus.subscribe("/docker/upgrade", (msg) => {
       this.messageReceived(msg);
     });
   },
@@ -98,8 +100,8 @@ export default Controller.extend({
 
       if (this.get("multiUpgrade")) {
         this.get("model")
-          .filter(repo => !repo.get("upToDate"))
-          .forEach(repo => repo.set("upgrading", true));
+          .filter((repo) => !repo.get("upToDate"))
+          .forEach((repo) => repo.set("upgrading", true));
         return Repo.upgradeAll();
       }
 
@@ -114,11 +116,11 @@ export default Controller.extend({
       bootbox.confirm(
         "WARNING: You should only reset upgrades that have failed and are not running.\n\n" +
           "This will NOT cancel currently running builds and should only be used as a last resort.",
-        result => {
+        (result) => {
           if (result) {
             if (this.get("multiUpgrade")) {
               return Repo.resetAll(
-                this.get("model").filter(repo => !repo.get("upToDate"))
+                this.get("model").filter((repo) => !repo.get("upToDate"))
               ).finally(() => {
                 this.reset();
                 this.updateAttribute("upgrading", false);
@@ -132,6 +134,8 @@ export default Controller.extend({
           }
         }
       );
-    }
-  }
+    },
+  },
 });
+
+/* eslint-enable */

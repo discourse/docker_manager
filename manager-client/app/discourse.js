@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 function init() {
   const data = Em.$("#preloaded-data").data("preload");
   Em.$.extend(Discourse, data);
@@ -17,7 +19,9 @@ const Discourse = {
     if (url[0] !== "/") url = "/" + url;
 
     return this.rootUrl + url;
-  }
+  },
 };
 
 export default Discourse;
+
+/* eslint-enable */

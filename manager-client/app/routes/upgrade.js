@@ -13,9 +13,9 @@ export default Route.extend({
 
   afterModel(model) {
     if (Array.isArray(model)) {
-      return Repo.findLatestAll().then(response => {
-        JSON.parse(response).repos.forEach(_repo => {
-          const repo = model.find(repo => repo.get("path") === _repo.path);
+      return Repo.findLatestAll().then((response) => {
+        JSON.parse(response).repos.forEach((_repo) => {
+          const repo = model.find((repo) => repo.get("path") === _repo.path);
           if (!repo) {
             return;
           }
@@ -24,19 +24,19 @@ export default Route.extend({
         });
 
         return Repo.findAllProgress(
-          model.filter(repo => !repo.get("upToDate"))
-        ).then(progress => {
+          model.filter((repo) => !repo.get("upToDate"))
+        ).then((progress) => {
           this.set("progress", JSON.parse(progress).progress);
         });
       });
     }
 
-    return Repo.findUpgrading().then(u => {
+    return Repo.findUpgrading().then((u) => {
       if (u && u !== model) {
         return Promise.reject("wat");
       }
       return model.findLatest().then(() => {
-        return model.findProgress().then(progress => {
+        return model.findProgress().then((progress) => {
           this.set("progress", progress);
         });
       });
@@ -48,12 +48,12 @@ export default Route.extend({
     controller.setProperties({
       model: Array.isArray(model) ? model : [model],
       output: this.get("progress.logs"),
-      percent: this.get("progress.percentage")
+      percent: this.get("progress.percentage"),
     });
     controller.startBus();
   },
 
   deactivate() {
     this.controllerFor("upgrade").stopBus();
-  }
+  },
 });
