@@ -12,5 +12,6 @@ ro:
           actions:
             discourse_upgrade: "Actualizează la cea mai recentă versiune"
     docker:
-      upgrade: "Versiunea Discourse nu este actualizată."
-      perform_upgrade: "Click aici pentru actualizare."
+      upgrade: "Versiunea Discourse nu este la zi."
+      perform_upgrade: "Apasă aici pentru actualizare."
+      link_to_upgrade: "Efectuează upgrade-uri aici."
