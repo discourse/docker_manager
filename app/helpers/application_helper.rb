@@ -2,7 +2,7 @@
 
 module DockerManager::ApplicationHelper
   def discourse_root_url
-    Discourse.base_uri
+    Discourse.base_path
   end
 
   def long_polling_base_url
