@@ -87,16 +87,18 @@ module DockerManager
     def upgrade
       repo = find_repos(params[:path])
       raise Discourse::NotFound unless repo.present?
+      script_path = File.expand_path(File.join(__dir__, '../../../scripts/docker_manager_upgrade.rb'))
 
-      pid = fork do
-        exit if fork
-        Process.setsid
-        exit if fork
-        Upgrader.new(current_user.id, repo, repo_version(repo)).upgrade
-      end
-
-      Process.waitpid(pid)
-
+      pid = spawn(
+        {
+          'UPGRADE_USER_ID' => current_user.id.to_s,
+          'UPGRADE_PATH' => params[:path].to_s,
+          'UPGRADE_REPO_VERSION' => repo_version(repo).to_s,
+          'RAILS_ENV' => Rails.env
+        },
+        "bundle exec rails runner #{script_path}"
+      )
+      Process.detach(pid)
       render plain: "OK"
     end
 
@@ -119,23 +121,12 @@ module DockerManager
       render plain: ps_output
     end
 
-    private
-
-    def respond_progress(logs: nil, percentage: nil)
-      render json: {
-        progress: {
-          logs: logs,
-          percentage: percentage
-        }
-      }
+    def self.all_repos?(path)
+      path == "all"
     end
 
-    def all_repos?
-      params[:path] == "all"
-    end
-
-    def find_repos(path, upgrading: false, all: false)
-      unless all_repos?
+    def self.find_repos(path, upgrading: false, all: false)
+      unless all_repos?(path)
         return DockerManager::GitRepo.find(path)
       end
 
@@ -149,6 +140,25 @@ module DockerManager
           !repo.upgrading? && (repo.latest_local_commit != repo.latest_origin_commit)
         end
       end
+    end
+
+    private
+
+    def respond_progress(logs: nil, percentage: nil)
+      render json: {
+        progress: {
+          logs: logs,
+          percentage: percentage
+        }
+      }
+    end
+
+    def all_repos?
+      self.class.all_repos?(params[:path])
+    end
+
+    def find_repos(path, upgrading: false, all: false)
+      self.class.find_repos(path, upgrading: upgrading, all: all)
     end
 
     def repo_version(repo)
