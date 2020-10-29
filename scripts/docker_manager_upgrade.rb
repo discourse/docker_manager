@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
+# we fork and let the parent die because we want the upgrade/child process
+# to be orphaned and adopted by the init process to prevent the upgrade
+# process from getting killed if/when unicorn gets killed.
 fork do
+  Process.setsid
   require_relative '../lib/docker_manager/upgrader.rb'
 
   user_id = ENV['UPGRADE_USER_ID'].to_i
