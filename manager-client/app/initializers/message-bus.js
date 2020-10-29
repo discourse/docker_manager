@@ -1,4 +1,5 @@
 import Discourse from "manager-client/discourse";
+import jQuery from "jquery";
 
 export default {
   name: "message-bus",
@@ -7,15 +8,16 @@ export default {
     MessageBus.baseUrl = Discourse.longPollingBaseUrl.replace(/\/$/, "") + "/";
 
     if (MessageBus.baseUrl !== "/") {
-      MessageBus.ajax = function(opts) {
+      MessageBus.ajax = function (opts) {
         opts.headers = opts.headers || {};
-        opts.headers["X-Shared-Session-Key"] = Em.$(
-          "meta[name=shared_session_key]"
-        ).attr("content");
-        return Em.$.ajax(opts);
+        const meta = document.querySelector("meta[name=shared_session_key]");
+        if (meta) {
+          opts.headers["X-Shared-Session-Key"] = meta.content;
+        }
+        return jQuery.ajax(opts);
       };
     } else {
       MessageBus.baseUrl = Discourse.getAppURL("/");
     }
-  }
+  },
 };

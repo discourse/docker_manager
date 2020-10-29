@@ -1,8 +1,11 @@
 /* eslint-disable */
+import jQuery from "jquery";
 
 function init() {
-  const data = Em.$("#preloaded-data").data("preload");
-  Em.$.extend(Discourse, data);
+  const data = JSON.parse(
+    document.getElementById("preloaded-data").dataset.preload
+  );
+  jQuery.extend(Discourse, data);
 }
 
 const Discourse = {

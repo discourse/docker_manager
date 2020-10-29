@@ -13,7 +13,7 @@ export default Component.extend({
 
   _scrollBottom() {
     if (this.get("followOutput")) {
-      this.$().scrollTop(this.$()[0].scrollHeight);
+      this.element.scrollTop = this.element.scrollHeight;
     }
   },
 
