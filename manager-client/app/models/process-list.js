@@ -1,17 +1,20 @@
 import EmberObject from "@ember/object";
 import Discourse from "manager-client/discourse";
+import jQuery from "jquery";
 
 const ProcessList = EmberObject.extend({
   output: null,
 
   refresh() {
-    return Em.$.ajax(Discourse.getAppURL("/admin/docker/ps"), {
-      dataType: "text"
-    }).then(result => {
-      this.set("output", result);
-      return this;
-    });
-  }
+    return jQuery
+      .ajax(Discourse.getAppURL("/admin/docker/ps"), {
+        dataType: "text",
+      })
+      .then((result) => {
+        this.set("output", result);
+        return this;
+      });
+  },
 });
 
 export function find() {
