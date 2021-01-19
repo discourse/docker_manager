@@ -14,3 +14,4 @@ nb_NO:
     docker:
       upgrade: "Din Discourse-installasjon kjører ikke siste versjon."
       perform_upgrade: "Trykk her for å oppgradere."
+      link_to_upgrade: "Perform upgrades here."

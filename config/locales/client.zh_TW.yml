@@ -14,3 +14,4 @@ zh_TW:
     docker:
       upgrade: "您的 Discourse 版本已過期。"
       perform_upgrade: "點此進行升級。"
+      link_to_upgrade: "Perform upgrades here."

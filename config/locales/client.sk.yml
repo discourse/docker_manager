@@ -14,3 +14,4 @@ sk:
     docker:
       upgrade: " Vaša Discourse inštalácia je neaktuálna."
       perform_upgrade: "Aktualizuj kliknutím sem"
+      link_to_upgrade: "Perform upgrades here."

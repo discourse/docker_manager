@@ -14,3 +14,4 @@ hy:
     docker:
       upgrade: "Ձեր Discourse-ը ժամկետանց է"
       perform_upgrade: "Սեղմեք այստեղ` թարմացման համար:"
+      link_to_upgrade: "Perform upgrades here."

@@ -14,3 +14,4 @@ sr:
     docker:
       upgrade: "Tvoja Discourse instalacija nije sinhronizovana sa zadnjim zakrpama."
       perform_upgrade: "Klikni ovde za nadogradnju."
+      link_to_upgrade: "Perform upgrades here."

@@ -4,4 +4,14 @@
 # To work with us on translations, join this project:
 # https://translate.discourse.org/
 
-be: 
+be:
+  js:
+    admin:
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "Upgrade to the Latest Version"
+    docker:
+      upgrade: "Your Discourse installation is out of date."
+      perform_upgrade: "Click here to upgrade."
+      link_to_upgrade: "Perform upgrades here."

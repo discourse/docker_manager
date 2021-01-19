@@ -6,6 +6,12 @@
 
 te:
   js:
+    admin:
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "Upgrade to the Latest Version"
     docker:
       upgrade: "మీ డిస్కోర్సు ప్రతిష్టాపన కాలాతీతమైంది."
       perform_upgrade: "ఉన్నతీకరించడానికి ఇక్కడ నొక్కండి"
+      link_to_upgrade: "Perform upgrades here."

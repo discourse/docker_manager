@@ -14,3 +14,4 @@ bg:
     docker:
       upgrade: "Твоята Discourse инсталация не е обновена."
       perform_upgrade: "Щракни тук за обновяване."
+      link_to_upgrade: "Perform upgrades here."

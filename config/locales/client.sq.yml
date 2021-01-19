@@ -14,3 +14,4 @@ sq:
     docker:
       upgrade: "Platforma juaj Discourse ka përtëritje."
       perform_upgrade: "Kliko këtu për ta përtëritur."
+      link_to_upgrade: "Perform upgrades here."

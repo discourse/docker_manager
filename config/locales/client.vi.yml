@@ -6,6 +6,12 @@
 
 vi:
   js:
+    admin:
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "Upgrade to the Latest Version"
     docker:
       upgrade: "Có bản cập nhật mới cho Discourse."
       perform_upgrade: "Nhấn vào đây để cập nhật"
+      link_to_upgrade: "Perform upgrades here."

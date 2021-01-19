@@ -14,3 +14,4 @@ sw:
     docker:
       upgrade: "Toleo lako la Discourse limepitwa na wakati."
       perform_upgrade: "Bonyeza hapa kupata toleo jipya."
+      link_to_upgrade: "Perform upgrades here."

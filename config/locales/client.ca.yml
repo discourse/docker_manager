@@ -14,3 +14,4 @@ ca:
     docker:
       upgrade: "La instal·lació de Discourse no està actualitzada."
       perform_upgrade: "Feu clic aquí per a actualitzar"
+      link_to_upgrade: "Perform upgrades here."

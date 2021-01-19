@@ -6,6 +6,12 @@
 
 lv:
   js:
+    admin:
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "Upgrade to the Latest Version"
     docker:
       upgrade: "Tava Discourse instalācija ir novecojusi. "
       perform_upgrade: "Spied šeit, lai uzlabotu."
+      link_to_upgrade: "Perform upgrades here."

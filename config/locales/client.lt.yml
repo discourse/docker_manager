@@ -14,3 +14,4 @@ lt:
     docker:
       upgrade: "Prašome atnaujinti Diskurse instaliacija, jūs naudojate senąja versija."
       perform_upgrade: "Spauskite čia, kad atnaujintumėte."
+      link_to_upgrade: "Perform upgrades here."

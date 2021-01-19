@@ -14,3 +14,4 @@ cs:
     docker:
       upgrade: "Vaše instalace Discourse je zastaralá."
       perform_upgrade: "Klikněte zde pro aktualizaci."
+      link_to_upgrade: "Perform upgrades here."
