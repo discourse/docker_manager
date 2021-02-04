@@ -112,12 +112,29 @@ class DockerManager::GitRepo
     Time.at(unix_timestamp).to_datetime
   end
 
+  def upstream_branch
+    run("for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)")
+  end
+
+  def has_origin_main?
+    run("branch -r").include?("origin/main") rescue false
+  end
+
   def tracking_branch
     branch = nil
     if defined?(Discourse.find_compatible_git_resource)
       branch = Discourse.find_compatible_git_resource(path)
     end
-    branch || run("for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)")
+    return branch if branch.present?
+
+    head = upstream_branch
+
+    # We prefer `origin/main` to `origin/master`
+    if head == "origin/master"
+      return "origin/main" if has_origin_main?
+    end
+
+    head
   end
 
   def run(cmd)
