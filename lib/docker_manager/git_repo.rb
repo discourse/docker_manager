@@ -121,7 +121,7 @@ class DockerManager::GitRepo
   end
 
   def has_origin_main?
-    run("branch -r").include?("origin/main") rescue false
+    run("branch -a").match?(/remotes\/origin\/main$/) rescue false
   end
 
   def tracking_branch
