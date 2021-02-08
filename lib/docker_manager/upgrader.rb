@@ -68,7 +68,25 @@ class DockerManager::Upgrader
     # HEAD@{upstream} is just a fancy way how to say origin/master (in normal case)
     # see http://stackoverflow.com/a/12699604/84283
     @repos.each_with_index do |repo, index|
-      run("cd #{repo.path} && git fetch --tags --force && git reset --hard HEAD@{upstream}")
+
+      # We automatically handle renames from `master` -> `main`
+      if repo.upstream_branch == "origin/master" && repo.branch == "origin/main"
+        log "Branch has changed to #{repo.branch}"
+
+        # Just in case `main` exists locally but is not used. Perhaps it was fetched?
+        if repo.has_local_main?
+          run "cd #{repo.path} && git checkout main"
+        else
+          run "cd #{repo.path} && git branch -m master main"
+        end
+
+        run "cd #{repo.path} && git fetch origin --tags --force"
+        run "cd #{repo.path} && git branch -u origin/main main"
+        run("cd #{repo.path} && git reset --hard HEAD@{upstream}")
+      else
+        run("cd #{repo.path} && git fetch --tags --force && git reset --hard HEAD@{upstream}")
+      end
+
       percent(20 * (index + 1) / @repos.size)
     end
 

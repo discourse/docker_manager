@@ -91,6 +91,14 @@ class DockerManager::GitRepo
     find_all.detect { |r| r.path == path }
   end
 
+  def upstream_branch
+    @upstream_branch ||= run("for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)")
+  end
+
+  def has_local_main?
+    run("show-ref refs/heads/main").present?
+  end
+
   protected
 
   def prettify_tag_version(command)
@@ -112,12 +120,8 @@ class DockerManager::GitRepo
     Time.at(unix_timestamp).to_datetime
   end
 
-  def upstream_branch
-    run("for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)")
-  end
-
   def has_origin_main?
-    run("branch -r").include?("origin/main") rescue false
+    run("branch -a").match?(/remotes\/origin\/main$/) rescue false
   end
 
   def tracking_branch
