@@ -82,7 +82,6 @@ class DockerManager::Upgrader
 
         run "cd #{repo.path} && git fetch origin --tags --force"
         run "cd #{repo.path} && git branch -u origin/main main"
-        run("cd #{repo.path} && git reset --hard HEAD@{upstream}")
       else
         run("cd #{repo.path} && git fetch --tags --force && git reset --hard HEAD@{upstream}")
       end
