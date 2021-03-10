@@ -34,6 +34,8 @@ module DockerManager
           official: Plugin::Metadata::OFFICIAL_PLUGINS.include?(r.name)
         }
 
+        result[:fork] = true if result[:official] && !r.url.starts_with?("https://github.com/discourse/")
+
         if r.valid?
           result[:id] = r.name.downcase.gsub(/[^a-z]/, '_').gsub(/_+/, '_').sub(/_$/, '')
           result[:version] = r.latest_local_commit
