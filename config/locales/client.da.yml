@@ -14,3 +14,4 @@ da:
     docker:
       upgrade: "Din Discourse-installation er forældet."
       perform_upgrade: "Klik her for at opgradere."
+      link_to_upgrade: "Udfør opgraderinger her."
