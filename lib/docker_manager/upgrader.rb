@@ -90,6 +90,10 @@ class DockerManager::Upgrader
       percent(20 * (index + 1) / @repos.size)
     end
 
+    bundler_version = parse_bundler_version
+    raise "Unable to determine bundler version from lockfile" if bundler_version.nil?
+    run("gem install bundler --conservative -v #{bundler_version}")
+
     run("bundle install --deployment --jobs 4 --without test development")
     begin
       run("bundle exec rake plugin:pull_compatible_all")
@@ -238,6 +242,12 @@ class DockerManager::Upgrader
   end
 
   private
+
+  def parse_bundler_version
+    File.read("Gemfile.lock").lines.each_cons(2).find do |heading, version|
+      return version.strip if heading.strip == "BUNDLED WITH"
+    end
+  end
 
   def pid_exists?(pid)
     Process.getpgid(pid)
