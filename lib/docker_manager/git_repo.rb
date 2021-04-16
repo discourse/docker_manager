@@ -74,8 +74,12 @@ class DockerManager::GitRepo
   end
 
   def self.find_all
-    repos = [DockerManager::GitRepo.new(Rails.root.to_s, 'discourse')]
+    repos = [
+      DockerManager::GitRepo.new(Rails.root.to_s, 'discourse'),
+      DockerManager::GitRepo.new("#{Rails.root}/plugins/docker_manager", "docker_manager")
+    ]
     p = Proc.new { |x|
+      next if x.name == "docker_manager"
       repos << DockerManager::GitRepo.new(File.dirname(x.path), x.name)
     }
     if Discourse.respond_to?(:visible_plugins)
