@@ -97,7 +97,7 @@ module DockerManager
           'UPGRADE_REPO_VERSION' => repo_version(repo).to_s,
           'RAILS_ENV' => Rails.env
       }
-      ["http_proxy","https_proxy","no_proxy","HTTP_PROXY","HTTPS_PROXY","NO_PROXY"].each do |p|
+      ["http_proxy", "https_proxy", "no_proxy", "HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY"].each do |p|
         env_vars[p] = ENV[p] if ! ENV[p].nil?
       end
       pid = spawn(
