@@ -91,13 +91,17 @@ module DockerManager
       raise Discourse::NotFound unless repo.present?
       script_path = File.expand_path(File.join(__dir__, '../../../scripts/docker_manager_upgrade.rb'))
 
-      pid = spawn(
-        {
+      env_vars = {
           'UPGRADE_USER_ID' => current_user.id.to_s,
           'UPGRADE_PATH' => params[:path].to_s,
           'UPGRADE_REPO_VERSION' => repo_version(repo).to_s,
           'RAILS_ENV' => Rails.env
-        },
+      }
+      ["http_proxy","https_proxy","no_proxy","HTTP_PROXY","HTTPS_PROXY","NO_PROXY"].each do |p|
+        env_vars[p] = ENV[p] if ! ENV[p].nil?
+      end
+      pid = spawn(
+        env_vars,
         "bundle exec rails runner #{script_path}"
       )
       Process.detach(pid)
