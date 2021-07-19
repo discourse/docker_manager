@@ -168,6 +168,12 @@ class DockerManager::Upgrader
       PATH
       COMPRESS_BROTLI
       FORCE_S3_UPLOADS
+      HTTP_PROXY
+      HTTPS_PROXY
+      NO_PROXY
+      http_proxy
+      https_proxy
+      no_proxy
     }
 
     clear_env = Hash[*ENV.map { |k, v| [k, nil] }
