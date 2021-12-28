@@ -12,6 +12,6 @@ fr:
           actions:
             discourse_upgrade: "Mettre à jour vers la dernière version"
     docker:
-      upgrade: "Votre installation de Discourse est obsolète."
+      upgrade: "Votre installation de Discourse n'est pas à jour."
       perform_upgrade: "Cliquez ici pour mettre à jour."
-      link_to_upgrade: "Rechercher les mises à jour ici."
+      link_to_upgrade: "Effectuez les mises à jour ici."
