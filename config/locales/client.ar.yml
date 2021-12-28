@@ -10,8 +10,8 @@ ar:
       logs:
         staff_actions:
           actions:
-            discourse_upgrade: "التحديث إلى الاصدار الاخير"
+            discourse_upgrade: "الترقية إلى الإصدار الأخير"
     docker:
-      upgrade: "نسختك من دسكورس قديمة."
+      upgrade: "إصدار Discourse قديم."
       perform_upgrade: "انقر هنا للترقية."
-      link_to_upgrade: "قم بإجراء التحديثات هنا."
+      link_to_upgrade: "يمكنك إجراء الترقيات من هنا."

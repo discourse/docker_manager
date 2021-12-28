@@ -10,8 +10,8 @@ de:
       logs:
         staff_actions:
           actions:
-            discourse_upgrade: "Aktualisieren auf neueste Version"
+            discourse_upgrade: "Upgrade auf die neueste Version"
     docker:
       upgrade: "Deine Installation von Discourse ist veraltet."
-      perform_upgrade: "Klicke hier, um zu aktualisieren."
+      perform_upgrade: "Klicke hier, um ein Upgrade durchzuführen."
       link_to_upgrade: "Führe hier Upgrades durch."

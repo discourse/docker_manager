@@ -12,6 +12,6 @@ zh_CN:
           actions:
             discourse_upgrade: "升级到最新版本"
     docker:
-      upgrade: "当前使用 Discourse 的旧版本。"
-      perform_upgrade: "点击这里升级。"
-      link_to_upgrade: "在此处进行升级。"
+      upgrade: "您的 Discourse 安装已过期。"
+      perform_upgrade: "点击此处升级。"
+      link_to_upgrade: "在此处执行升级。"
