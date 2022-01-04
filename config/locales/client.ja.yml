@@ -12,6 +12,6 @@ ja:
           actions:
             discourse_upgrade: "最新バージョンへのアップグレード"
     docker:
-      upgrade: "インストールされているDiscourseは古いバージョンです。"
-      perform_upgrade: "アップグレードを行うにはここをクリック"
-      link_to_upgrade: "ここでアップグレードを実行"
+      upgrade: "インストールされている Discourse は古いバージョンです。"
+      perform_upgrade: "ここをクリックしてアップグレードしてください。"
+      link_to_upgrade: "ここでアップグレードを実行します。"
