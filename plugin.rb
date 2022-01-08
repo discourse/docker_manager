@@ -6,15 +6,6 @@
 # authors: Robin Ward, Sam Saffron
 # url: https://github.com/discourse/docker_manager
 
-if !defined? ::Discourse.redis
-  # HACK: make Discourse.redis work on old versions of Discourse
-  module ::Discourse
-    def self.redis
-      $redis # rubocop:disable Style/GlobalVars
-    end
-  end
-end
-
 module ::DockerManager
   # should be automatic, but something is weird
   load File.expand_path(File.dirname(__FILE__)) + '/app/helpers/application_helper.rb'
