@@ -92,7 +92,7 @@ class DockerManager::Upgrader
 
     run("bundle install --deployment --jobs 4 --without test development")
     begin
-      run("bundle exec rake plugin:pull_compatible_all")
+      run("LOAD_PLUGINS=0 bundle exec rake plugin:pull_compatible_all")
     rescue RuntimeError
       log "Unable checkout compatible plugin versions"
     end
