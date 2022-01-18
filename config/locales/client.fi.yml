@@ -14,4 +14,4 @@ fi:
     docker:
       upgrade: "Discourse-asennuksesi ei ole ajan tasalla."
       perform_upgrade: "Klikkaa tästä päivittääksesi."
-      link_to_upgrade: "Tarkastele päivityksiä"
+      link_to_upgrade: "Päivitä täällä."
