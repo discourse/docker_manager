@@ -24,11 +24,14 @@ const Repo = EmberObject.extend({
   }),
 
   prettyVersion: computed("version", "pretty_version", function () {
-    return this.get("pretty_version") || this.get("version");
+    return this.get("pretty_version") || this.get("version")?.substring(0, 8);
   }),
 
   prettyLatestVersion: computed("latest.{version,pretty_version}", function () {
-    return this.get("latest.pretty_version") || this.get("latest.version");
+    return (
+      this.get("latest.pretty_version") ||
+      this.get("latest.version")?.substring(0, 8)
+    );
   }),
 
   get shouldCheck() {
