@@ -32,11 +32,11 @@ class DockerManager::GitRepo
   end
 
   def latest_local_commit
-    run "rev-parse --short HEAD"
+    run "rev-parse HEAD"
   end
 
   def latest_origin_commit
-    run "rev-parse --short #{tracking_branch}"
+    run "rev-parse #{tracking_branch}"
   end
 
   def latest_local_tag_version

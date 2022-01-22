@@ -5,7 +5,7 @@
 </td>
 <td>
   <a href="{{repo.url}}">{{repo.name}}</a>
-  <span class="current commit-hash">{{repo.prettyVersion}}</span>
+  <span class="current commit-hash" title={{repo.version}}>{{repo.prettyVersion}}</span>
 </td>
 <td>
   {{#if repo.checkingStatus}}
@@ -16,7 +16,7 @@
     <div class='new-version'>
       <h4>New Version Available!</h4>
       <ul>
-        <li>Remote Version: <span class="new commit-hash">{{repo.prettyLatestVersion}}</span></li>
+        <li>Remote Version: <span class="new commit-hash" title={{repo.latestVersion}}>{{repo.prettyLatestVersion}}</span></li>
         <li>Last Updated:
           {{#if repo.latest.date}}
             {{moment-from-now repo.latest.date interval=1000}}
