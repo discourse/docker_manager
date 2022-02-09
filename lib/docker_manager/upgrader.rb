@@ -91,6 +91,7 @@ class DockerManager::Upgrader
     end
 
     run("bundle install --deployment --jobs 4 --without test development")
+    run("yarn install --production")
     begin
       run("LOAD_PLUGINS=0 bundle exec rake plugin:pull_compatible_all")
     rescue RuntimeError
