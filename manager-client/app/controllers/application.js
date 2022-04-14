@@ -21,9 +21,7 @@ export default Controller.extend({
   },
 
   logoUrl: computed(function() {
-    return Discourse.getAppURL(
-      "/assets/images/docker-manager-aff8eaea0445c0488c19f8cfd14faa8c2b278924438f19048eacc175d7d134e4.png"
-    );
+    return Discourse.logoUrl;
   }),
 
   returnToSiteUrl: computed(function() {
