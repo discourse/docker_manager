@@ -183,7 +183,7 @@ module DockerManager
 
     def discourse_upgrade_required?(min_stable_version, min_beta_version)
       tracking_stable = Discourse::VERSION::PRE.nil?
-      discourse_version = Gem::Version.new(Discourse.full_version.delete_prefix('v'))
+      discourse_version = Gem::Version.new(Discourse::VERSION::STRING)
 
       target_version = tracking_stable ? min_stable_version : min_beta_version
 
