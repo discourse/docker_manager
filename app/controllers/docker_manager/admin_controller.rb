@@ -16,7 +16,6 @@ module DockerManager
       expected_version = Gem::Version.new('2.0.20220128-1817')
       ruby_version = Gem::Version.new(RUBY_VERSION)
       expected_ruby_version = Gem::Version.new('2.7.6')
-      # Force self-hosters to rebuild if running an older version.
       min_stable_version = Gem::Version.new('2.8.6')
       min_beta_version = Gem::Version.new('2.9.0.beta7')
 
