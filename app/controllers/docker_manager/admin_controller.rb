@@ -16,8 +16,14 @@ module DockerManager
       expected_version = Gem::Version.new('2.0.20220128-1817')
       ruby_version = Gem::Version.new(RUBY_VERSION)
       expected_ruby_version = Gem::Version.new('2.7.6')
+      min_stable_version = Gem::Version.new('2.8.6')
+      min_beta_version = Gem::Version.new('2.9.0.beta7')
 
-      if (version < expected_version) || (ruby_version < expected_ruby_version)
+      upgrade_image = version < expected_version
+      upgrade_ruby = ruby_version < expected_ruby_version
+      upgrade_discourse = discourse_upgrade_required?(min_stable_version, min_beta_version)
+
+      if upgrade_image || upgrade_ruby || upgrade_discourse
         render 'upgrade_required', layout: false
       else
         render
@@ -173,6 +179,15 @@ module DockerManager
 
     def concat_repos_versions(repos)
       repos.map(&:latest_local_commit).join(", ")
+    end
+
+    def discourse_upgrade_required?(min_stable_version, min_beta_version)
+      tracking_stable = Discourse::VERSION::PRE.nil?
+      discourse_version = Gem::Version.new(Discourse::VERSION::STRING)
+
+      target_version = tracking_stable ? min_stable_version : min_beta_version
+
+      discourse_version < target_version
     end
   end
 end
