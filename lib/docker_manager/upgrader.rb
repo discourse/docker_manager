@@ -104,8 +104,9 @@ class DockerManager::Upgrader
     less_memory_flags = "RUBY_GC_MALLOC_LIMIT_MAX=20971520 RUBY_GC_OLDMALLOC_LIMIT_MAX=20971520 RUBY_GC_HEAP_GROWTH_MAX_SLOTS=50000 RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR=0.9 "
     run("#{less_memory_flags} bundle exec rake themes:update assets:precompile")
 
-    # if assets are served from S3, upload newly created ones to the bucket
-    if ENV["DISCOURSE_USE_S3"] && ENV["DISCOURSE_S3_BUCKET"] && ENV["DISCOURSE_S3_CDN_URL"]
+    using_s3_assets = ENV["DISCOURSE_USE_S3"] && ENV["DISCOURSE_S3_BUCKET"] && ENV["DISCOURSE_S3_CDN_URL"]
+
+    if using_s3_assets
       run("#{less_memory_flags} bundle exec rake s3:upload_assets")
     end
 
@@ -124,6 +125,11 @@ class DockerManager::Upgrader
     percent(90)
     log("Running post deploy migrations")
     run("bundle exec rake multisite:migrate")
+
+    if using_s3_assets
+      run("bundle exec rake s3:expire_missing_assets")
+    end
+
     log_version_upgrade
     percent(100)
     log("DONE")
