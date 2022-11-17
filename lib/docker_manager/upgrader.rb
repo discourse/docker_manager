@@ -127,7 +127,7 @@ class DockerManager::Upgrader
     run("bundle exec rake multisite:migrate")
 
     if using_s3_assets
-      run("bundle exec rake s3:expire_missing_assets")
+      run("#{less_memory_flags} bundle exec rake s3:expire_missing_assets")
     end
 
     log_version_upgrade
