@@ -25,5 +25,3 @@ after_initialize do
     mount ::DockerManager::Engine, at: "/"
   end
 end
-
-register_asset "javascripts/upgrade-header.js.handlebars"
