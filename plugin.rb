@@ -5,6 +5,7 @@
 # version: 0.1
 # authors: Robin Ward, Sam Saffron
 # url: https://github.com/discourse/docker_manager
+# transpile_js: true
 
 module ::DockerManager
   # should be automatic, but something is weird
