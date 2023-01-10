@@ -10,7 +10,7 @@ tr_TR:
       logs:
         staff_actions:
           actions:
-            discourse_upgrade: "En son sürüme güncelleyin"
+            discourse_upgrade: "En Son Sürüme güncelleyin"
     docker:
       upgrade: "Discourse yüklemeniz güncel değil."
       perform_upgrade: "Güncellemek için buraya tıklayın."
