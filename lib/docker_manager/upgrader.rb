@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class DockerManager::Upgrader
-
   def initialize(user_id, repos, from_version)
     @user_id = user_id
     @repos = repos.is_a?(Array) ? repos : [repos]
@@ -19,9 +18,7 @@ class DockerManager::Upgrader
   end
 
   def upgrade
-    @repos.each do |repo|
-      return unless repo.start_upgrading
-    end
+    @repos.each { |repo| return unless repo.start_upgrading }
 
     percent(0)
 
@@ -68,7 +65,6 @@ class DockerManager::Upgrader
     # HEAD@{upstream} is just a fancy way how to say origin/master (in normal case)
     # see http://stackoverflow.com/a/12699604/84283
     @repos.each_with_index do |repo, index|
-
       # We automatically handle renames from `master` -> `main`
       if repo.upstream_branch == "origin/master" && repo.branch == "origin/main"
         log "Branch has changed to #{repo.branch}"
@@ -84,7 +80,9 @@ class DockerManager::Upgrader
         run "cd #{repo.path} && git branch -u origin/main main"
         run("cd #{repo.path} && git reset --hard HEAD@{upstream}")
       else
-        run("cd #{repo.path} && git fetch --tags --force && git reset --hard HEAD@{upstream}")
+        run(
+          "cd #{repo.path} && git fetch --tags --force && git reset --hard HEAD@{upstream}"
+        )
       end
 
       percent(20 * (index + 1) / @repos.size)
@@ -101,10 +99,13 @@ class DockerManager::Upgrader
     run("SKIP_POST_DEPLOYMENT_MIGRATIONS=1 bundle exec rake multisite:migrate")
     percent(40)
     log("*** Bundling assets. This will take a while *** ")
-    less_memory_flags = "RUBY_GC_MALLOC_LIMIT_MAX=20971520 RUBY_GC_OLDMALLOC_LIMIT_MAX=20971520 RUBY_GC_HEAP_GROWTH_MAX_SLOTS=50000 RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR=0.9 "
+    less_memory_flags =
+      "RUBY_GC_MALLOC_LIMIT_MAX=20971520 RUBY_GC_OLDMALLOC_LIMIT_MAX=20971520 RUBY_GC_HEAP_GROWTH_MAX_SLOTS=50000 RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR=0.9 "
     run("#{less_memory_flags} bundle exec rake themes:update assets:precompile")
 
-    using_s3_assets = ENV["DISCOURSE_USE_S3"] && ENV["DISCOURSE_S3_BUCKET"] && ENV["DISCOURSE_S3_CDN_URL"]
+    using_s3_assets =
+      ENV["DISCOURSE_USE_S3"] && ENV["DISCOURSE_S3_BUCKET"] &&
+        ENV["DISCOURSE_S3_CDN_URL"]
 
     if using_s3_assets
       run("#{less_memory_flags} bundle exec rake s3:upload_assets")
@@ -133,16 +134,15 @@ class DockerManager::Upgrader
     log_version_upgrade
     percent(100)
     log("DONE")
-    publish('status', 'complete')
+    publish("status", "complete")
   rescue => ex
-    publish('status', 'failed')
+    publish("status", "failed")
 
     [
       "Docker Manager: FAILED TO UPGRADE",
       ex.inspect,
-      ex.backtrace.join("\n"),
+      ex.backtrace.join("\n")
     ].each do |message|
-
       STDERR.puts(message)
       log(message)
     end
@@ -158,7 +158,8 @@ class DockerManager::Upgrader
   end
 
   def publish(type, value)
-    MessageBus.publish("/docker/upgrade",
+    MessageBus.publish(
+      "/docker/upgrade",
       { type: type, value: value },
       user_ids: [@user_id]
     )
@@ -168,7 +169,7 @@ class DockerManager::Upgrader
     log "$ #{cmd}"
     msg = +""
 
-    allowed_env = %w{
+    allowed_env = %w[
       PWD
       HOME
       SHELL
@@ -181,20 +182,24 @@ class DockerManager::Upgrader
       http_proxy
       https_proxy
       no_proxy
-    }
+    ]
 
-    clear_env = Hash[*ENV.map { |k, v| [k, nil] }
-      .reject { |k, v|
-        allowed_env.include?(k) ||
-        k =~ /^DISCOURSE_/
-      }
-      .flatten]
+    clear_env =
+      Hash[
+        *ENV
+          .map { |k, v| [k, nil] }
+          .reject { |k, v| allowed_env.include?(k) || k =~ /^DISCOURSE_/ }
+          .flatten
+      ]
 
     clear_env["RAILS_ENV"] = "production"
-    clear_env["TERM"] = 'dumb' # claim we have a terminal
+    clear_env["TERM"] = "dumb" # claim we have a terminal
 
     retval = nil
-    Open3.popen2e(clear_env, "cd #{Rails.root} && #{cmd} 2>&1") do |_in, out, wait_thread|
+    Open3.popen2e(
+      clear_env,
+      "cd #{Rails.root} && #{cmd} 2>&1"
+    ) do |_in, out, wait_thread|
       out.each do |line|
         line.rstrip! # the client adds newlines, so remove the one we're given
         log(line)
@@ -233,18 +238,18 @@ class DockerManager::Upgrader
   def percent(val)
     Discourse.redis.set(percent_key, val)
     Discourse.redis.expire(percent_key, 30.minutes)
-    publish('percent', val)
+    publish("percent", val)
   end
 
   def log(message)
     Discourse.redis.append logs_key, message + "\n"
     Discourse.redis.expire(logs_key, 30.minutes)
-    publish 'log', message
+    publish "log", message
   end
 
   def log_version_upgrade
     StaffActionLogger.new(User.find(@user_id)).log_custom(
-      'discourse_upgrade',
+      "discourse_upgrade",
       from_version: @from_version,
       repository: @repos.map(&:path).join(", ")
     )
@@ -267,13 +272,13 @@ class DockerManager::Upgrader
   end
 
   def unicorn_workers(master_pid)
-    `ps -f --ppid #{master_pid} | grep worker | awk '{ print $2 }'`
-      .split("\n")
-      .map(&:to_i)
+    `ps -f --ppid #{master_pid} | grep worker | awk '{ print $2 }'`.split(
+      "\n"
+    ).map(&:to_i)
   end
 
   def local_web_url
-    "http://127.0.0.1:#{ENV['UNICORN_PORT'] || 3000}/srv/status"
+    "http://127.0.0.1:#{ENV["UNICORN_PORT"] || 3000}/srv/status"
   end
 
   def reload_unicorn(launcher_pid)
@@ -282,20 +287,19 @@ class DockerManager::Upgrader
     Process.kill("USR2", launcher_pid)
 
     iterations = 0
-    while pid_exists?(original_master_pid) do
+    while pid_exists?(original_master_pid)
       iterations += 1
       break if iterations >= 60
-      log("Waiting for Unicorn to reload#{'.' * iterations}")
+      log("Waiting for Unicorn to reload#{"." * iterations}")
       sleep 2
     end
 
     iterations = 0
-    while `curl -s #{local_web_url}` != "ok" do
+    while `curl -s #{local_web_url}` != "ok"
       iterations += 1
       break if iterations >= 60
-      log("Waiting for Unicorn workers to start up#{'.' * iterations}")
+      log("Waiting for Unicorn workers to start up#{"." * iterations}")
       sleep 2
     end
   end
-
 end
