@@ -1,7 +1,10 @@
 import Controller from "@ember/controller";
 import { computed } from "@ember/object";
+import { inject as service } from "@ember/service";
 
 export default Controller.extend({
+  router: service(),
+
   managerRepo: null,
   upgrading: null,
 
@@ -19,7 +22,7 @@ export default Controller.extend({
 
   actions: {
     upgradeAllButton() {
-      this.replaceRoute("upgrade", "all");
+      this.router.replaceWith("upgrade.show", "all");
     },
   },
 });
