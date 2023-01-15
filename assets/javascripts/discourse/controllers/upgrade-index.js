@@ -8,18 +8,18 @@ export default Controller.extend({
   upgradeAllButtonDisabled: computed(
     "managerRepo.upToDate",
     "allUpToDate",
-    function() {
+    function () {
       return !this.get("managerRepo.upToDate") || this.get("allUpToDate");
     }
   ),
 
-  allUpToDate: computed("model.@each.upToDate", function() {
-    return this.get("model").every(repo => repo.get("upToDate"));
+  allUpToDate: computed("model.@each.upToDate", function () {
+    return this.get("model").every((repo) => repo.get("upToDate"));
   }),
 
   actions: {
     upgradeAllButton() {
       this.replaceRoute("upgrade", "all");
-    }
-  }
+    },
+  },
 });

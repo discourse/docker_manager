@@ -3,7 +3,7 @@ import { computed } from "@ember/object";
 import getURL from "discourse-common/lib/get-url";
 
 export default Controller.extend({
-  showBanner: computed("banner", "bannerDismissed", "banner.[]", function() {
+  showBanner: computed("banner", "bannerDismissed", "banner.[]", function () {
     if (this.get("bannerDismissed")) {
       return false;
     }
@@ -20,13 +20,13 @@ export default Controller.extend({
     this.set("banner", banner);
   },
 
-  backupsUrl: computed(function() {
+  backupsUrl: computed(function () {
     return getURL("/admin/backups");
   }),
 
   actions: {
     dismiss() {
       this.set("bannerDismissed", true);
-    }
-  }
+    },
+  },
 });
