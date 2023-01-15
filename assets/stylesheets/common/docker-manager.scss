@@ -1,0 +1,107 @@
+.docker-manager {
+  div.logs {
+    margin-top: 20px;
+    overflow-x: scroll;
+    height: 400px;
+    white-space: pre;
+    font-family: monospace;
+    background-color: black;
+    color: #ddd;
+    padding: 10px;
+  }
+
+  .check-circle {
+    height: 15px;
+  }
+
+  table#repos {
+    margin-top: 10px;
+
+    td:first-child {
+      width: 3%;
+      padding-left: 8px;
+    }
+
+    th {
+      border-top: none;
+    }
+
+    td,
+    th {
+      padding: 8px 15px 8px 0px;
+    }
+
+    button {
+      padding-left: 15%;
+      padding-right: 15%;
+    }
+  }
+
+  .new-version {
+    h4 {
+      margin: 0 0 10px 0;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 10px;
+    }
+
+    li.new-commits {
+      font-style: italic;
+    }
+
+    button {
+      display: block;
+      padding: 2px 5px;
+      margin: 10px 0 0px 0;
+    }
+  }
+
+  span.commit-hash {
+    color: #959595;
+  }
+
+  button.unlock {
+    float: right;
+    background-color: red;
+    &:hover {
+      background-color: #a00;
+    }
+  }
+
+  #upgrade-all {
+    float: right;
+  }
+
+  #banner {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background: scale-color($tertiary, $lightness: 90%);
+    box-shadow: 0 1px 2px scale-color($tertiary, $lightness: 70%);
+    max-width: 1140px;
+
+    .close {
+      font-size: 20px !important;
+      margin-top: -10px !important;
+    }
+  }
+
+  div.progress {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  th {
+    border-top: none;
+  }
+
+  ul.nav-tabs {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}
