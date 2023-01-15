@@ -65,17 +65,15 @@ const Repo = EmberObject.extend({
       }
 
       this.set("checking", true);
-      this.repoAjax("/admin/docker/latest").then(
-        (result) => {
-          this.setProperties({
-            unloaded: false,
-            checking: false,
-            lastCheckedAt: new Date().getTime(),
-            latest: EmberObject.create(result.latest),
-          });
-          resolve();
-        }
-      );
+      this.repoAjax("/admin/docker/latest").then((result) => {
+        this.setProperties({
+          unloaded: false,
+          checking: false,
+          lastCheckedAt: new Date().getTime(),
+          latest: EmberObject.create(result.latest),
+        });
+        resolve();
+      });
     });
   },
 

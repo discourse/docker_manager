@@ -1,35 +1,67 @@
 <td>
   {{#if officialRepoImageSrc}}
-    <img class="check-circle" src={{officialRepoImageSrc}} alt={{officialRepoImageTitle}} title={{officialRepoImageTitle}}>
+    <img
+      class="check-circle"
+      src={{officialRepoImageSrc}}
+      alt={{officialRepoImageTitle}}
+      title={{officialRepoImageTitle}}
+    />
   {{/if}}
 </td>
+
 <td>
   <a href="{{repo.url}}">{{repo.name}}</a>
-  <span class="current commit-hash" title={{repo.version}}>{{repo.prettyVersion}}</span>
+  <span class="current commit-hash" title={{repo.version}}>
+    {{repo.prettyVersion}}
+  </span>
 </td>
+
 <td>
   {{#if repo.checkingStatus}}
     Checking for new version...
   {{else if repo.upToDate}}
     Up to date
   {{else}}
-    <div class='new-version'>
+    <div class="new-version">
       <h4>New Version Available!</h4>
+
       <ul>
-        <li>Remote Version: <span class="new commit-hash" title={{repo.latestVersion}}>{{repo.prettyLatestVersion}}</span></li>
-        <li>Last Updated:
+        <li>
+          Remote Version:
+          <span class="new commit-hash" title={{repo.latestVersion}}>
+            {{repo.prettyLatestVersion}}
+          </span>
+        </li>
+        <li>
+          Last Updated:
           {{#if repo.latest.date}}
             {{moment-from-now repo.latest.date interval=1000}}
           {{else}}
             &mdash;
           {{/if}}
         </li>
-        <li class='new-commits'>{{new-commits repo.latest.commits_behind repo.version repo.latest.version repo.url}}</li>
+        <li class="new-commits">
+          {{new-commits
+            repo.latest.commits_behind
+            repo.version
+            repo.latest.version
+            repo.url
+          }}
+        </li>
       </ul>
+
       {{#if repo.upgrading}}
-        <button class="btn" {{action "upgrade"}}>Currently Upgrading...</button>
+        <button class="btn" {{action "upgrade"}}>
+          Currently Upgrading...
+        </button>
       {{else}}
-        <button class="upgrade-button btn" {{action "upgrade"}} disabled={{upgradeDisabled}}>Upgrade</button>
+        <button
+          class="upgrade-button btn"
+          {{action "upgrade"}}
+          disabled={{upgradeDisabled}}
+        >
+          Upgrade
+        </button>
       {{/if}}
     </div>
   {{/if}}

@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 /* global MessageBus, bootbox */
 import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 import Controller from "@ember/controller";
@@ -137,5 +135,3 @@ export default Controller.extend({
     },
   },
 });
-
-/* eslint-enable */

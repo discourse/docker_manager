@@ -1,7 +1,12 @@
 <div class="container">
   <header class="container">
-    {{#link-to 'upgrade.index'}}<img src={{logoUrl}} class="logo">{{/link-to}}
-    <h1>{{#link-to 'upgrade.index'}}Upgrade{{/link-to}}</h1>
+    {{#link-to "upgrade.index"}}
+      <img src={{logoUrl}} class="logo" />
+    {{/link-to}}
+
+    <h1>
+      {{#link-to "upgrade.index"}}Upgrade{{/link-to}}
+    </h1>
   </header>
 
   <div class="container">
@@ -9,7 +14,10 @@
     {{#if showBanner}}
       <div id="banner">
         <div id="banner-content">
-          <div class="close" {{action "dismiss"}}><i class="fa fa-times" title="Dismiss this banner."></i></div>
+          <div class="close" {{action "dismiss"}}>
+            <i class="fa fa-times" title="Dismiss this banner."></i>
+          </div>
+
           {{#each banner as |row|}}
             <p>{{{row}}}</p>
           {{/each}}
@@ -21,11 +29,16 @@
       {{#link-to "upgrade.index" tagName="li" class="nav-item"}}
         {{#link-to "upgrade.index" class="nav-link"}}Versions{{/link-to}}
       {{/link-to}}
+
       {{#link-to "upgrade.processes" tagName="li" class="nav-item"}}
         {{#link-to "upgrade.processes" class="nav-link"}}Processes{{/link-to}}
       {{/link-to}}
 
-      <li class="nav-item"><a class="nav-link" href={{backupsUrl}}>Backups</a></li>
+      <li class="nav-item">
+        <a class="nav-link" href={{backupsUrl}}>
+          Backups
+        </a>
+      </li>
     </ul>
 
     {{outlet}}

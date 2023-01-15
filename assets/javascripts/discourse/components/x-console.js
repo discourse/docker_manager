@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import Component from "@ember/component";
 import { observer } from "@ember/object";
 import { scheduleOnce } from "@ember/runloop";
@@ -22,5 +20,3 @@ export default Component.extend({
     this._scrollBottom();
   },
 });
-
-/* eslint-enable */

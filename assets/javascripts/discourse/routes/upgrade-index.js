@@ -21,7 +21,7 @@ export default Route.extend({
     const applicationController = this.controllerFor("application");
     controller.setProperties({ model, upgrading: null });
 
-    model.forEach(repo => {
+    model.forEach((repo) => {
       if (repo.get("upgrading")) {
         controller.set("upgrading", repo);
       }
@@ -43,5 +43,5 @@ export default Route.extend({
     });
 
     this.loadRepos(model.slice(0));
-  }
+  },
 });

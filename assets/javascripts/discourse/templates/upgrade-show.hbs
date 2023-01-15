@@ -17,10 +17,15 @@
     <p>Everything is up-to-date.</p>
   {{/unless}}
 {{else}}
-  <div style='clear: both'>
-    <button {{action "start"}} disabled={{upgrading}} class='btn'>{{upgradeButtonText}}</button>
+  <div style="clear: both">
+    <button {{action "start"}} disabled={{upgrading}} class="btn">
+      {{upgradeButtonText}}
+    </button>
+
     {{#if upgrading}}
-      <button {{action "resetUpgrade"}} class="btn unlock">Reset Upgrade</button>
+      <button {{action "resetUpgrade"}} class="btn unlock">
+        Reset Upgrade
+      </button>
     {{/if}}
   </div>
 {{/if}}

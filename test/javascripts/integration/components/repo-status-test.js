@@ -19,8 +19,8 @@ const repoObject = Repo.create({
     date: "2018-12-26T20:52:07.000+03:00",
     path: "/c/discourse",
     pretty_version: "v2.2.0.beta6 +101",
-    version: "2b006c0"
-  }
+    version: "2b006c0",
+  },
 });
 
 const managerRepo = Repo.create({
@@ -38,14 +38,14 @@ const managerRepo = Repo.create({
     date: "2018-12-26T20:52:07.000+03:00",
     path: "/c/discourse/plugins/docker_manager",
     pretty_version: null,
-    version: "0b1fb4b"
-  }
+    version: "0b1fb4b",
+  },
 });
 
-module("Integration | Component | repo-status", function(hooks) {
+module("Integration | Component | repo-status", function (hooks) {
   setupRenderingTest(hooks);
 
-  test("it renders correctly", async function(assert) {
+  test("it renders correctly", async function (assert) {
     this.set("repo", repoObject);
     this.set("managerRepo", managerRepo);
     await render(hbs`{{repo-status repo=repo managerRepo=managerRepo}}`);

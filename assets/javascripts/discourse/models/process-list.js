@@ -6,12 +6,11 @@ const ProcessList = EmberObject.extend({
 
   refresh() {
     return ajax("/admin/docker/ps", {
-        dataType: "text",
-      })
-      .then((result) => {
-        this.set("output", result);
-        return this;
-      });
+      dataType: "text",
+    }).then((result) => {
+      this.set("output", result);
+      return this;
+    });
   },
 });
 
