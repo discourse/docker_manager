@@ -1,12 +1,12 @@
 import { module, test } from "qunit";
 import { setupRenderingTest } from "ember-qunit";
-import { render, find } from "@ember/test-helpers";
+import { find, render } from "@ember/test-helpers";
 import hbs from "htmlbars-inline-precompile";
 import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 
 const repoObject = Repo.create({
   unloaded: false,
-  branch: "origin/master",
+  branch: "origin/main",
   id: "discourse",
   name: "discourse",
   official: false,
@@ -25,7 +25,7 @@ const repoObject = Repo.create({
 
 const managerRepo = Repo.create({
   unloaded: false,
-  branch: "origin/master",
+  branch: "origin/main",
   id: "docker_manager",
   name: "docker_manager",
   official: true,
