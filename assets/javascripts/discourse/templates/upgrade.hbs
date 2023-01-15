@@ -1,28 +1,33 @@
-<h3>Upgrade {{title}}</h3>
+<div class="container">
+  <header class="container">
+    {{#link-to 'upgrade.index'}}<img src={{logoUrl}} class="logo">{{/link-to}}
+    <h1>{{#link-to 'upgrade.index'}}Upgrade{{/link-to}}</h1>
+  </header>
 
-{{progress-bar percent=percent}}
+  <div class="container">
 
-{{#if complete}}
-  <p>Upgrade completed successfully!</p>
-{{/if}}
-
-{{#if failed}}
-  <p>Sorry, there was an error upgrading Discourse. Please check the logs below.</p>
-{{/if}}
-
-{{#if isUpToDate}}
-  {{#unless multiUpgrade}}
-    <p>{{title}} is at the newest version.</p>
-  {{else}}
-    <p>Everything is up-to-date.</p>
-  {{/unless}}
-{{else}}
-  <div style='clear: both'>
-    <button {{action "start"}} disabled={{upgrading}} class='btn'>{{upgradeButtonText}}</button>
-    {{#if upgrading}}
-      <button {{action "resetUpgrade"}} class="btn unlock">Reset Upgrade</button>
+    {{#if showBanner}}
+      <div id="banner">
+        <div id="banner-content">
+          <div class="close" {{action "dismiss"}}><i class="fa fa-times" title="Dismiss this banner."></i></div>
+          {{#each banner as |row|}}
+            <p>{{{row}}}</p>
+          {{/each}}
+        </div>
+      </div>
     {{/if}}
-  </div>
-{{/if}}
 
-{{x-console output=output followOutput=true}}
+    <ul class="nav nav-tabs">
+      {{#link-to "upgrade.index" tagName="li" class="nav-item"}}
+        {{#link-to "upgrade.index" class="nav-link"}}Versions{{/link-to}}
+      {{/link-to}}
+      {{#link-to "upgrade.processes" tagName="li" class="nav-item"}}
+        {{#link-to "upgrade.processes" class="nav-link"}}Processes{{/link-to}}
+      {{/link-to}}
+
+      <li class="nav-item"><a class="nav-link" href={{backupsUrl}}>Backups</a></li>
+    </ul>
+
+    {{outlet}}
+  </div>
+</div>
