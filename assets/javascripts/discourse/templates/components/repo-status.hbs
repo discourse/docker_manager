@@ -35,7 +35,7 @@
         <li>
           Last Updated:
           {{#if repo.latest.date}}
-            {{moment-from-now repo.latest.date interval=1000}}
+            {{format-date repo.latest.date}}
           {{else}}
             &mdash;
           {{/if}}
