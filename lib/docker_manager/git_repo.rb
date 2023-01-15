@@ -82,16 +82,9 @@ class DockerManager::GitRepo
       )
     ]
 
-    p =
-      Proc.new do |x|
-        next if x.name == "docker_manager"
-        repos << DockerManager::GitRepo.new(File.dirname(x.path), x.name)
-      end
-
-    if Discourse.respond_to?(:visible_plugins)
-      Discourse.visible_plugins.each(&p)
-    else
-      Discourse.plugins.each(&p)
+    Discourse.visible_plugins.each do |p|
+      next if p.name == "docker_manager"
+      repos << DockerManager::GitRepo.new(File.dirname(p.path), p.name)
     end
 
     repos
