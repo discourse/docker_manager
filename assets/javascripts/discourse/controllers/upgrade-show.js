@@ -110,10 +110,15 @@ export default Controller.extend({
     },
 
     resetUpgrade() {
-      bootbox.confirm(
-        "WARNING: You should only reset upgrades that have failed and are not running.\n\n" +
-          "This will NOT cancel currently running builds and should only be used as a last resort.",
-        (result) => {
+      const message = `
+        WARNING: You should only reset upgrades that have failed and are not running.
+
+        This will NOT cancel currently running builds and should only be used as a last resort.
+      `;
+
+      this.dialog.confirm({
+        message,
+        didConfirm: (result) => {
           if (result) {
             if (this.get("multiUpgrade")) {
               return Repo.resetAll(
@@ -129,8 +134,8 @@ export default Controller.extend({
               this.reset();
             });
           }
-        }
-      );
+        },
+      });
     },
   },
 });
