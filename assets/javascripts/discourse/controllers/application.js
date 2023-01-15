@@ -1,6 +1,6 @@
-import Discourse from "manager-client/discourse";
 import Controller from "@ember/controller";
 import { computed } from "@ember/object";
+import getURL from "discourse-common/lib/get-url";
 
 export default Controller.extend({
   showBanner: computed("banner", "bannerDismissed", "banner.[]", function() {
@@ -20,16 +20,8 @@ export default Controller.extend({
     this.set("banner", banner);
   },
 
-  logoUrl: computed(function() {
-    return Discourse.logoUrl;
-  }),
-
-  returnToSiteUrl: computed(function() {
-    return Discourse.getAppURL("/");
-  }),
-
   backupsUrl: computed(function() {
-    return Discourse.getAppURL("/admin/backups");
+    return getURL("/admin/backups");
   }),
 
   actions: {

@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 /* global MessageBus, bootbox */
-import Repo from "manager-client/models/repo";
+import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 import Controller from "@ember/controller";
 import { equal } from "@ember/object/computed";
 import { computed } from "@ember/object";

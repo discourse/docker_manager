@@ -1,7 +1,7 @@
-import Discourse from "manager-client/discourse";
 import Component from "@ember/component";
 import { computed } from "@ember/object";
 import { inject as service } from "@ember/service";
+import { getURLWithCDN } from "discourse-common/lib/get-url";
 
 export default Component.extend({
   router: service(),
@@ -28,11 +28,11 @@ export default Component.extend({
 
   officialRepoImageSrc: computed("repo.official", function () {
     if (this.get("repo.fork")) {
-      return Discourse.getAppURL(
+      return getURLWithCDN(
         "/plugins/docker_manager/images/font-awesome-exclamation-circle.png"
       );
     } else if (this.get("repo.official")) {
-      return Discourse.getAppURL(
+      return getURLWithCDN(
         "/plugins/docker_manager/images/font-awesome-check-circle.png"
       );
     }
