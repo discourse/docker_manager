@@ -1,4 +1,4 @@
-import Repo from "manager-client/models/repo";
+import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 import Route from "@ember/routing/route";
 import EmberObject from "@ember/object";
 import { Promise } from "rsvp";

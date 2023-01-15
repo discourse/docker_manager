@@ -1,13 +1,11 @@
 import EmberObject from "@ember/object";
-import Discourse from "manager-client/discourse";
-import jQuery from "jquery";
+import { ajax } from "discourse/lib/ajax";
 
 const ProcessList = EmberObject.extend({
   output: null,
 
   refresh() {
-    return jQuery
-      .ajax(Discourse.getAppURL("/admin/docker/ps"), {
+    return ajax("/admin/docker/ps", {
         dataType: "text",
       })
       .then((result) => {

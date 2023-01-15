@@ -2,7 +2,7 @@ import { module, test } from "qunit";
 import { setupRenderingTest } from "ember-qunit";
 import { render, find } from "@ember/test-helpers";
 import hbs from "htmlbars-inline-precompile";
-import Repo from "manager-client/models/repo";
+import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 
 const repoObject = Repo.create({
   unloaded: false,
