@@ -96,7 +96,7 @@ module("Integration | Component | repo-status", function(hooks) {
 
     assert
       .dom("button.upgrade-button")
-      .exists("upgrade button is visibile when plugin is out-of-date");
+      .exists("upgrade button is visible when plugin is out-of-date");
 
     assert.equal(
       find("button.upgrade-button").disabled,
@@ -115,6 +115,6 @@ module("Integration | Component | repo-status", function(hooks) {
     this.set("repo.pretty_version", "v2.2.0.beta6 +101");
     assert
       .dom("button.upgrade-button")
-      .doesNotExist("upgrade button is not visibile when plugin is up-to-date");
+      .doesNotExist("upgrade button is not visible when plugin is up-to-date");
   });
 });
