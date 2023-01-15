@@ -17,7 +17,7 @@ const Repo = EmberObject.extend({
   checkingStatus: or("unloaded", "checking"),
   upToDate: computed("upgrading", "version", "latest.version", function () {
     return (
-      !this.get("upgrading") &
+      !this.get("upgrading") &&
       (this.get("version") === this.get("latest.version"))
     );
   }),
