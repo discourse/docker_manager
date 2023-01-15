@@ -31,13 +31,13 @@ export default Route.extend({
         controller.set("managerRepo", repo);
       }
 
-      // Special case: If the branch is "master" warn user
+      // Special case: If the branch is "main" warn user
       if (
         repo.get("id") === "discourse" &&
-        repo.get("branch") === "origin/master"
+        repo.get("branch") === "origin/main"
       ) {
         applicationController.appendBannerHtml(
-          "<b>WARNING:</b> Your Discourse is tracking the 'master' branch which may be unstable, <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'>we recommend tracking the 'tests-passed' branch</a>."
+          "<b>WARNING:</b> Your Discourse is tracking the 'main' branch which may be unstable, <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'>we recommend tracking the 'tests-passed' branch</a>."
         );
       }
     });
