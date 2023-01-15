@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 DockerManager::Engine.routes.draw do
-  get "admin/docker", to: redirect("/admin/upgrade"), constraints: AdminConstraint.new
-  get "admin/upgrade" => "admin#index", constraints: AdminConstraint.new
-  get "admin/docker/repos" => "admin#repos", constraints: AdminConstraint.new
-  get "admin/docker/latest" => "admin#latest", constraints: AdminConstraint.new
-  get "admin/docker/progress" => "admin#progress", constraints: AdminConstraint.new
-  get "admin/docker/ps" => "admin#ps", constraints: AdminConstraint.new
-  post "admin/docker/upgrade" => "admin#upgrade", constraints: AdminConstraint.new
-  delete "admin/docker/upgrade" => "admin#reset_upgrade", constraints: AdminConstraint.new
-  get 'admin/docker/csrf' => 'admin#csrf', constraints: AdminConstraint.new
+  scope "/admin", constraints: AdminConstraint.new do
+    get "/docker", to: redirect("/admin/upgrade")
+    get "/upgrade" => "admin#index"
+    get "/docker/repos" => "admin#repos"
+    get "/docker/latest" => "admin#latest"
+    get "/docker/progress" => "admin#progress"
+    get "/docker/ps" => "admin#ps"
+    get "/docker/csrf" => "admin#csrf"
+
+    post "/docker/upgrade" => "admin#upgrade"
+    delete "/docker/upgrade" => "admin#reset_upgrade"
+  end
 end
