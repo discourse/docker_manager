@@ -1,4 +1,0 @@
-#!/bin/bash
-
-(cd manager-client && ember serve --proxy "http://localhost:${1:-3000}")
-
