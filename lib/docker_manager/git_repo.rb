@@ -133,10 +133,7 @@ class DockerManager::GitRepo
   end
 
   def tracking_branch
-    branch = nil
-    if defined?(Discourse.find_compatible_git_resource)
-      branch = Discourse.find_compatible_git_resource(path)
-    end
+    branch = Discourse.find_compatible_git_resource(path)
     return branch if branch.present?
 
     head = upstream_branch
