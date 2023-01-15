@@ -28,7 +28,7 @@ class DockerManager::GitRepo
   end
 
   def valid?
-    File.directory?("#{path}/.git")
+    File.exist?("#{path}/.git")
   end
 
   def latest_local_commit
