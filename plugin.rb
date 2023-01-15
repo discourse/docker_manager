@@ -9,7 +9,9 @@
 
 module ::DockerManager
   # should be automatic, but something is weird
-  load File.expand_path(File.dirname(__FILE__)) + '/app/helpers/application_helper.rb'
+  load File.expand_path(File.dirname(__FILE__)) +
+         "/app/helpers/application_helper.rb"
+
   class Engine < ::Rails::Engine
     engine_name "docker_manager"
     isolate_namespace DockerManager

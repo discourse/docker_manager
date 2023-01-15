@@ -75,20 +75,26 @@ class DockerManager::GitRepo
 
   def self.find_all
     repos = [
-      DockerManager::GitRepo.new(Rails.root.to_s, 'discourse'),
-      DockerManager::GitRepo.new("#{Rails.root}/plugins/docker_manager", "docker_manager")
+      DockerManager::GitRepo.new(Rails.root.to_s, "discourse"),
+      DockerManager::GitRepo.new(
+        "#{Rails.root}/plugins/docker_manager",
+        "docker_manager"
+      )
     ]
-    p = Proc.new { |x|
-      next if x.name == "docker_manager"
-      repos << DockerManager::GitRepo.new(File.dirname(x.path), x.name)
-    }
+
+    p =
+      Proc.new do |x|
+        next if x.name == "docker_manager"
+        repos << DockerManager::GitRepo.new(File.dirname(x.path), x.name)
+      end
+
     if Discourse.respond_to?(:visible_plugins)
       Discourse.visible_plugins.each(&p)
     else
       Discourse.plugins.each(&p)
     end
-    repos
 
+    repos
   end
 
   def self.find(path)
@@ -96,7 +102,10 @@ class DockerManager::GitRepo
   end
 
   def upstream_branch
-    @upstream_branch ||= run("for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)")
+    @upstream_branch ||=
+      run(
+        "for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)"
+      )
   end
 
   def has_local_main?
@@ -109,9 +118,7 @@ class DockerManager::GitRepo
     result = run(command)
     return unless result.present?
 
-    if result =~ /-(\d+)-/
-      result = result.gsub(/-(\d+)-.*/, " +#{$1}")
-    end
+    result = result.gsub(/-(\d+)-.*/, " +#{$1}") if result =~ /-(\d+)-/
     result
   end
 
@@ -125,7 +132,11 @@ class DockerManager::GitRepo
   end
 
   def has_origin_main?
-    run("branch -a").match?(/remotes\/origin\/main$/) rescue false
+    begin
+      run("branch -a").match?(%r{remotes/origin/main$})
+    rescue StandardError
+      false
+    end
   end
 
   def tracking_branch
@@ -150,5 +161,4 @@ class DockerManager::GitRepo
   rescue => e
     p e
   end
-
 end
