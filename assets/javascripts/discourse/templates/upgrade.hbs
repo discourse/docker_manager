@@ -25,15 +25,10 @@
       </div>
     {{/if}}
 
-    <ul class="nav nav-tabs">
-      {{#link-to "upgrade.index" tagName="li" class="nav-item"}}
-        {{#link-to "upgrade.index" class="nav-link"}}Versions{{/link-to}}
-      {{/link-to}}
-
-      {{#link-to "upgrade.processes" tagName="li" class="nav-item"}}
-        {{#link-to "upgrade.processes" class="nav-link"}}Processes{{/link-to}}
-      {{/link-to}}
-    </ul>
+    <div class="nav nav-tabs">
+      {{#link-to "upgrade.index" class="nav-link"}}Versions{{/link-to}}
+      {{#link-to "upgrade.processes" class="nav-link"}}Processes{{/link-to}}
+    </div>
 
     {{outlet}}
   </div>
