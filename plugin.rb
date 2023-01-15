@@ -18,11 +18,6 @@ module ::DockerManager
   end
 end
 
-assets = Rails.configuration.assets
-
-assets.precompile += ['docker-manager-app.js', 'docker-manager-app.css', 'docker-manager-vendor.js', 'docker-manager-vendor.css', 'images/docker-manager.png']
-assets.skip_minification += ['docker-manager-app.js', 'docker-manager-vendor.js']
-
 after_initialize do
   Discourse::Application.routes.append do
     mount ::DockerManager::Engine, at: "/"
