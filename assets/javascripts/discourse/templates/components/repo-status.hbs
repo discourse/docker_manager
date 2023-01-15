@@ -55,13 +55,14 @@
           Currently Upgrading...
         </button>
       {{else}}
-        <button
+        <LinkTo
+          @route="upgrade.show"
+          @model={{this.repo}}
+          disabled={{this.upgradeDisabled}}
           class="upgrade-button btn"
-          {{action "upgrade"}}
-          disabled={{upgradeDisabled}}
         >
           Upgrade
-        </button>
+        </LinkTo>
       {{/if}}
     </div>
   {{/if}}
