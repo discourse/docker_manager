@@ -6,6 +6,8 @@
 # authors: Robin Ward, Sam Saffron
 # url: https://github.com/discourse/docker_manager
 
+register_asset "stylesheets/common/docker-manager.scss"
+
 module ::DockerManager
   # should be automatic, but something is weird
   load File.expand_path(File.dirname(__FILE__)) +
