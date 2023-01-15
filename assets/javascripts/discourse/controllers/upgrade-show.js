@@ -1,4 +1,3 @@
-/* global MessageBus, bootbox */
 import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 import Controller from "@ember/controller";
 import { equal } from "@ember/object/computed";
@@ -79,13 +78,13 @@ export default Controller.extend({
   }),
 
   startBus() {
-    MessageBus.subscribe("/docker/upgrade", (msg) => {
+    this.messageBus.subscribe("/docker/upgrade", (msg) => {
       this.messageReceived(msg);
     });
   },
 
   stopBus() {
-    MessageBus.unsubscribe("/docker/upgrade");
+    this.messageBus.unsubscribe("/docker/upgrade");
   },
 
   reset() {
