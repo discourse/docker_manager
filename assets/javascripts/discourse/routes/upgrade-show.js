@@ -54,6 +54,6 @@ export default Route.extend({
   },
 
   deactivate() {
-    this.controllerFor("upgrade").stopBus();
+    this.controllerFor("upgrade.show").stopBus();
   },
 });
