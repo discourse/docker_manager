@@ -26,19 +26,15 @@ export default Component.extend({
     }
   ),
 
-  officialRepoImageSrc: computed("repo.official", function () {
+  officialRepoBadge: computed("repo.official", function () {
     if (this.get("repo.fork")) {
-      return getURLWithCDN(
-        "/plugins/docker_manager/images/font-awesome-exclamation-circle.png"
-      );
+      return "exclamation-circle";
     } else if (this.get("repo.official")) {
-      return getURLWithCDN(
-        "/plugins/docker_manager/images/font-awesome-check-circle.png"
-      );
+      return "check-circle";
     }
   }),
 
-  officialRepoImageTitle: computed("repo.official", function () {
+  officialRepoBadgeTitle: computed("repo.official", function () {
     if (this.get("repo.fork")) {
       return "Forked Official Plugin";
     } else if (this.get("repo.official")) {

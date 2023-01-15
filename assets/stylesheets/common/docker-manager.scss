@@ -11,7 +11,7 @@
   }
 
   .check-circle {
-    height: 15px;
+    color: var(--success);
   }
 
   table#repos {
@@ -46,8 +46,8 @@
 
     ul {
       list-style: none;
+      margin: 0 0 10px 0;
       padding: 0;
-      margin-bottom: 10px;
     }
 
     li.new-commits {

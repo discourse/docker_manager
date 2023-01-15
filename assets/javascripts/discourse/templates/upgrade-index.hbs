@@ -12,11 +12,11 @@
 </button>
 
 <table class="table" id="repos">
-  <tr>
+  <thead>
     <th></th>
     <th style="width: 50%">Repository</th>
     <th>Status</th>
-  </tr>
+  </thead>
   <tbody>
     {{#each model as |repo|}}
       {{repo-status repo=repo upgradingRepo=upgrading managerRepo=managerRepo}}

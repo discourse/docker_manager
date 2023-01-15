@@ -1,11 +1,11 @@
 <td>
-  {{#if officialRepoImageSrc}}
-    <img
+  {{#if this.officialRepoBadge}}
+    {{d-icon
+      this.officialRepoBadge
       class="check-circle"
-      src={{officialRepoImageSrc}}
-      alt={{officialRepoImageTitle}}
-      title={{officialRepoImageTitle}}
-    />
+      alt=this.officialRepoBadgeTitle
+      title=this.officialRepoBadgeTitle
+    }}
   {{/if}}
 </td>
 
