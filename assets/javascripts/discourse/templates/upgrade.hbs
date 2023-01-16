@@ -1,26 +1,35 @@
+<div class="admin-controls">
+  <nav>
+    <ul class="nav nav-pills">
+      <li>
+        <LinkTo @route="upgrade.index">
+          Versions
+        </LinkTo>
+      </li>
+
+      <li>
+        <LinkTo @route="upgrade.processes">
+          Processes
+        </LinkTo>
+      </li>
+    </ul>
+  </nav>
+</div>
+
 <div class="docker-manager">
-  <h1>Upgrade</h1>
-
-  <div>
-    {{#if showBanner}}
-      <div id="banner">
-        <div id="banner-content">
-          <div class="close" {{action "dismiss"}}>
-            <i class="fa fa-times" title="Dismiss this banner."></i>
-          </div>
-
-          {{#each banner as |row|}}
-            <p>{{{row}}}</p>
-          {{/each}}
+  {{#if showBanner}}
+    <div id="banner">
+      <div id="banner-content">
+        <div class="close" {{action "dismiss"}}>
+          <i class="fa fa-times" title="Dismiss this banner."></i>
         </div>
+
+        {{#each banner as |row|}}
+          <p>{{{row}}}</p>
+        {{/each}}
       </div>
-    {{/if}}
-
-    <div class="nav nav-tabs">
-      {{#link-to "upgrade.index" class="nav-link"}}Versions{{/link-to}}
-      {{#link-to "upgrade.processes" class="nav-link"}}Processes{{/link-to}}
     </div>
+  {{/if}}
 
-    {{outlet}}
-  </div>
+  {{outlet}}
 </div>
