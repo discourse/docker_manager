@@ -18,8 +18,12 @@
     <th>Status</th>
   </thead>
   <tbody>
-    {{#each model as |repo|}}
-      {{repo-status repo=repo upgradingRepo=upgrading managerRepo=managerRepo}}
+    {{#each this.model as |repo|}}
+      <RepoStatus
+        @repo={{repo}}
+        @upgradingRepo={{this.upgrading}}
+        @managerRepo={{this.managerRepo}}
+      />
     {{/each}}
   </tbody>
 </table>
