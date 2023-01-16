@@ -11,16 +11,16 @@
   </td>
 
   <td>
-    <a href="{{repo.url}}">{{repo.name}}</a>
-    <span class="current commit-hash" title={{repo.version}}>
-      {{repo.prettyVersion}}
+    <a href="{{@repo.url}}">{{@repo.name}}</a>
+    <span class="current commit-hash" title={{@repo.version}}>
+      {{@repo.prettyVersion}}
     </span>
   </td>
 
   <td>
-    {{#if repo.checkingStatus}}
+    {{#if @repo.checkingStatus}}
       Checking for new version...
-    {{else if repo.upToDate}}
+    {{else if @repo.upToDate}}
       Up to date
     {{else}}
       <div class="new-version">
@@ -29,42 +29,40 @@
         <ul>
           <li>
             Remote Version:
-            <span class="new commit-hash" title={{repo.latestVersion}}>
-              {{repo.prettyLatestVersion}}
+            <span class="new commit-hash" title={{@repo.latestVersion}}>
+              {{@repo.prettyLatestVersion}}
             </span>
           </li>
           <li>
             Last Updated:
-            {{#if repo.latest.date}}
-              {{format-date repo.latest.date}}
+            {{#if @repo.latest.date}}
+              {{format-date @repo.latest.date}}
             {{else}}
               &mdash;
             {{/if}}
           </li>
           <li class="new-commits">
             {{new-commits
-              repo.latest.commits_behind
-              repo.version
-              repo.latest.version
-              repo.url
+              @repo.latest.commits_behind
+              @repo.version
+              @repo.latest.version
+              @repo.url
             }}
           </li>
         </ul>
 
-        {{#if repo.upgrading}}
-          <button class="btn" {{action "upgrade"}}>
+        <LinkTo
+          @route="upgrade.show"
+          @model={{this.repo}}
+          disabled={{this.upgradeDisabled}}
+          class="upgrade-button btn"
+        >
+          {{#if @repo.upgrading}}
             Currently Upgrading...
-          </button>
-        {{else}}
-          <LinkTo
-            @route="upgrade.show"
-            @model={{this.repo}}
-            disabled={{this.upgradeDisabled}}
-            class="upgrade-button btn"
-          >
+          {{else}}
             Upgrade
-          </LinkTo>
-        {{/if}}
+          {{/if}}
+        </LinkTo>
       </div>
     {{/if}}
   </td>
