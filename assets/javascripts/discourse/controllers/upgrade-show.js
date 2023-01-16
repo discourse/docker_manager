@@ -2,8 +2,11 @@ import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 import Controller from "@ember/controller";
 import { equal } from "@ember/object/computed";
 import { computed } from "@ember/object";
+import { inject as service } from "@ember/service";
 
 export default Controller.extend({
+  dialog: service(),
+
   output: null,
 
   init() {
@@ -118,22 +121,20 @@ export default Controller.extend({
 
       this.dialog.confirm({
         message,
-        didConfirm: (result) => {
-          if (result) {
-            if (this.get("multiUpgrade")) {
-              return Repo.resetAll(
-                this.get("model").filter((repo) => !repo.get("upToDate"))
-              ).finally(() => {
-                this.reset();
-                this.updateAttribute("upgrading", false);
-              });
-            }
-
-            const repo = this.get("model")[0];
-            repo.resetUpgrade().then(() => {
+        didConfirm: () => {
+          if (this.get("multiUpgrade")) {
+            return Repo.resetAll(
+              this.get("model").filter((repo) => !repo.get("upToDate"))
+            ).finally(() => {
               this.reset();
+              this.updateAttribute("upgrading", false);
             });
           }
+
+          const repo = this.get("model")[0];
+          repo.resetUpgrade().then(() => {
+            this.reset();
+          });
         },
       });
     },
