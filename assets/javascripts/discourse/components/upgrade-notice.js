@@ -1,10 +1,6 @@
-import getURL from "discourse-common/lib/get-url";
-import Component from "@ember/component";
+import Component from "@glimmer/component";
+import { inject as service } from "@ember/service";
 
-export default class extends Component {
-  tagName = "";
-
-  get href() {
-    return getURL("/admin/upgrade");
-  }
+export default class UpgradeNotice extends Component {
+  @service currentUser;
 }
