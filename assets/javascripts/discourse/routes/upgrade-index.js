@@ -36,9 +36,12 @@ export default Route.extend({
         repo.get("id") === "discourse" &&
         repo.get("branch") === "origin/main"
       ) {
-        upgradeController.appendBannerHtml(
-          "<b>WARNING:</b> Your Discourse is tracking the 'main' branch which may be unstable, <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'>we recommend tracking the 'tests-passed' branch</a>."
-        );
+        upgradeController.appendBannerHtml(`
+          <b>WARNING:</b>
+          Your Discourse is tracking the 'main' branch which may be unstable,
+          <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'>
+            we recommend tracking the 'tests-passed' branch</a>.
+        `);
       }
     });
 
