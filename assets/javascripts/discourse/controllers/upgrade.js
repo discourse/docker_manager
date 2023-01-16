@@ -1,27 +1,27 @@
 import Controller from "@ember/controller";
-import { computed } from "@ember/object";
+import { tracked } from "@glimmer/tracking";
+import { action } from "@ember/object";
 
-export default Controller.extend({
-  showBanner: computed("banner", "bannerDismissed", "banner.[]", function () {
-    if (this.get("bannerDismissed")) {
+export default class Upgrade extends Controller {
+  @tracked banner = [];
+  @tracked bannerDismissed = false;
+
+  get showBanner() {
+    if (this.bannerDismissed) {
       return false;
     }
 
-    const banner = this.get("banner");
-    return banner && banner.length > 0;
-  }),
+    return this.banner?.length > 0;
+  }
 
   appendBannerHtml(html) {
-    const banner = this.get("banner") || [];
-    if (banner.indexOf(html) === -1) {
-      banner.pushObject(html);
+    if (!this.banner.includes(html)) {
+      this.banner = [...this.banner, html];
     }
-    this.set("banner", banner);
-  },
+  }
 
-  actions: {
-    dismiss() {
-      this.set("bannerDismissed", true);
-    },
-  },
-});
+  @action
+  dismiss() {
+    this.bannerDismissed = true;
+  }
+}

@@ -17,15 +17,20 @@
 </div>
 
 <div class="docker-manager">
-  {{#if showBanner}}
+  {{#if this.showBanner}}
     <div id="banner">
       <div id="banner-content">
-        <div class="close" {{action "dismiss"}}>
-          <i class="fa fa-times" title="Dismiss this banner."></i>
+        <div class="floated-buttons">
+          <DButton
+            @icon="times"
+            @action={{this.dismiss}}
+            @class="btn btn-flat close"
+            @title="banner.close"
+          />
         </div>
 
-        {{#each banner as |row|}}
-          <p>{{{row}}}</p>
+        {{#each this.banner as |row|}}
+          <p>{{html-safe row}}</p>
         {{/each}}
       </div>
     </div>
