@@ -1,3 +1,14 @@
+.dashboard-stats .upgrade-header {
+  background: var(--danger-low);
+  margin-bottom: 2rem;
+  padding: 1rem;
+
+  a {
+    color: var(--danger);
+    font-weight: bold;
+  }
+}
+
 .docker-manager {
   .console-logs {
     background-color: black;
