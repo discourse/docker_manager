@@ -1,69 +1,71 @@
-<td>
-  {{#if this.officialRepoBadge}}
-    {{d-icon
-      this.officialRepoBadge
-      class="check-circle"
-      alt=this.officialRepoBadgeTitle
-      title=this.officialRepoBadgeTitle
-    }}
-  {{/if}}
-</td>
+<tr>
+  <td>
+    {{#if this.officialRepoBadge}}
+      {{d-icon
+        this.officialRepoBadge
+        class="check-circle"
+        alt=this.officialRepoBadgeTitle
+        title=this.officialRepoBadgeTitle
+      }}
+    {{/if}}
+  </td>
 
-<td>
-  <a href="{{repo.url}}">{{repo.name}}</a>
-  <span class="current commit-hash" title={{repo.version}}>
-    {{repo.prettyVersion}}
-  </span>
-</td>
+  <td>
+    <a href="{{repo.url}}">{{repo.name}}</a>
+    <span class="current commit-hash" title={{repo.version}}>
+      {{repo.prettyVersion}}
+    </span>
+  </td>
 
-<td>
-  {{#if repo.checkingStatus}}
-    Checking for new version...
-  {{else if repo.upToDate}}
-    Up to date
-  {{else}}
-    <div class="new-version">
-      <h4>New Version Available!</h4>
+  <td>
+    {{#if repo.checkingStatus}}
+      Checking for new version...
+    {{else if repo.upToDate}}
+      Up to date
+    {{else}}
+      <div class="new-version">
+        <h4>New Version Available!</h4>
 
-      <ul>
-        <li>
-          Remote Version:
-          <span class="new commit-hash" title={{repo.latestVersion}}>
-            {{repo.prettyLatestVersion}}
-          </span>
-        </li>
-        <li>
-          Last Updated:
-          {{#if repo.latest.date}}
-            {{format-date repo.latest.date}}
-          {{else}}
-            &mdash;
-          {{/if}}
-        </li>
-        <li class="new-commits">
-          {{new-commits
-            repo.latest.commits_behind
-            repo.version
-            repo.latest.version
-            repo.url
-          }}
-        </li>
-      </ul>
+        <ul>
+          <li>
+            Remote Version:
+            <span class="new commit-hash" title={{repo.latestVersion}}>
+              {{repo.prettyLatestVersion}}
+            </span>
+          </li>
+          <li>
+            Last Updated:
+            {{#if repo.latest.date}}
+              {{format-date repo.latest.date}}
+            {{else}}
+              &mdash;
+            {{/if}}
+          </li>
+          <li class="new-commits">
+            {{new-commits
+              repo.latest.commits_behind
+              repo.version
+              repo.latest.version
+              repo.url
+            }}
+          </li>
+        </ul>
 
-      {{#if repo.upgrading}}
-        <button class="btn" {{action "upgrade"}}>
-          Currently Upgrading...
-        </button>
-      {{else}}
-        <LinkTo
-          @route="upgrade.show"
-          @model={{this.repo}}
-          disabled={{this.upgradeDisabled}}
-          class="upgrade-button btn"
-        >
-          Upgrade
-        </LinkTo>
-      {{/if}}
-    </div>
-  {{/if}}
-</td>
+        {{#if repo.upgrading}}
+          <button class="btn" {{action "upgrade"}}>
+            Currently Upgrading...
+          </button>
+        {{else}}
+          <LinkTo
+            @route="upgrade.show"
+            @model={{this.repo}}
+            disabled={{this.upgradeDisabled}}
+            class="upgrade-button btn"
+          >
+            Upgrade
+          </LinkTo>
+        {{/if}}
+      </div>
+    {{/if}}
+  </td>
+</tr>

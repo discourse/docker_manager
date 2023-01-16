@@ -4,7 +4,7 @@ import { inject as service } from "@ember/service";
 
 export default Component.extend({
   router: service(),
-  tagName: "tr",
+  tagName: "",
 
   upgradeDisabled: computed(
     "upgradingRepo",

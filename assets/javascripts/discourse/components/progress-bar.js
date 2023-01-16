@@ -3,7 +3,7 @@ import { computed } from "@ember/object";
 import { htmlSafe } from "@ember/template";
 
 export default Component.extend({
-  classNameBindings: [":progress", ":progress-striped", "active"],
+  tagName: "",
 
   active: computed("percent", function () {
     return parseInt(this.get("percent"), 10) !== 100;

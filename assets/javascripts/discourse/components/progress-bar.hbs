@@ -1,5 +1,7 @@
-<div
-  class="progress-bar progress-bar-striped
-    {{if active 'progress-bar-animated'}}"
-  style={{barStyle}}
-></div>
+<div class="progress progress-striped {{if this.active 'active'}}">
+  <div
+    class="progress-bar progress-bar-striped
+      {{if this.active 'progress-bar-animated'}}"
+    style={{barStyle}}
+  ></div>
+</div>
