@@ -1,13 +1,13 @@
 .docker-manager {
-  div.logs {
-    margin-top: 20px;
-    overflow-x: scroll;
-    height: 400px;
-    white-space: pre;
-    font-family: monospace;
+  .console-logs {
     background-color: black;
     color: #ddd;
+    font-family: monospace;
+    height: 400px;
+    margin-top: 20px;
+    overflow-x: scroll;
     padding: 10px;
+    white-space: pre;
   }
 
   .check-circle {
