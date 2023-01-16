@@ -3,7 +3,7 @@ import { observer } from "@ember/object";
 import { scheduleOnce } from "@ember/runloop";
 
 export default Component.extend({
-  classNameBindings: [":logs"],
+  tagName: "",
 
   _outputChanged: observer("output", function () {
     scheduleOnce("afterRender", this, "_scrollBottom");

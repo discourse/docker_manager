@@ -1,14 +1,16 @@
 {{#if currentUser.admin}}
-  <th colspan="5">
-    {{#if versionCheck.upToDate}}
-      <a href="{{href}}" data-auto-route="true">
-        {{i18n "docker.link_to_upgrade"}}
-      </a>
-    {{else}}
-      {{i18n "docker.upgrade"}}
-      <a href="{{href}}" data-auto-route="true">
-        {{i18n "docker.perform_upgrade"}}
-      </a>
-    {{/if}}
-  </th>
+  <tr>
+    <th colspan="5">
+      {{#if versionCheck.upToDate}}
+        <a href="{{href}}" data-auto-route="true">
+          {{i18n "docker.link_to_upgrade"}}
+        </a>
+      {{else}}
+        {{i18n "docker.upgrade"}}
+        <a href="{{href}}" data-auto-route="true">
+          {{i18n "docker.perform_upgrade"}}
+        </a>
+      {{/if}}
+    </th>
+  </tr>
 {{/if}}
