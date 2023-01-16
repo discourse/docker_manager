@@ -18,7 +18,7 @@ export default Route.extend({
   },
 
   setupController(controller, model) {
-    const applicationController = this.controllerFor("application");
+    const upgradeController = this.controllerFor("upgrade");
     controller.setProperties({ model, upgrading: null });
 
     model.forEach((repo) => {
@@ -36,7 +36,7 @@ export default Route.extend({
         repo.get("id") === "discourse" &&
         repo.get("branch") === "origin/main"
       ) {
-        applicationController.appendBannerHtml(
+        upgradeController.appendBannerHtml(
           "<b>WARNING:</b> Your Discourse is tracking the 'main' branch which may be unstable, <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'>we recommend tracking the 'tests-passed' branch</a>."
         );
       }
