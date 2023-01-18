@@ -1,6 +1,6 @@
 <h3>Upgrade {{title}}</h3>
 
-{{progress-bar percent=percent}}
+<ProgressBar @percent={{this.percent}} />
 
 {{#if complete}}
   <p>Upgrade completed successfully!</p>
