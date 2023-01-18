@@ -1,21 +1,14 @@
-import EmberObject from "@ember/object";
 import { ajax } from "discourse/lib/ajax";
+import { tracked } from "@glimmer/tracking";
 
-const ProcessList = EmberObject.extend({
-  output: null,
+export default class ProcessList {
+  @tracked output = null;
 
-  refresh() {
-    return ajax("/admin/docker/ps", {
+  async refresh() {
+    const result = await ajax("/admin/docker/ps", {
       dataType: "text",
-    }).then((result) => {
-      this.set("output", result);
-      return this;
     });
-  },
-});
 
-export function find() {
-  return ProcessList.create().refresh();
+    this.output = result;
+  }
 }
-
-export default ProcessList;

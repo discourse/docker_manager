@@ -1,6 +1,11 @@
-import { find } from "discourse/plugins/docker_manager/discourse/models/process-list";
+import ProcessList from "discourse/plugins/docker_manager/discourse/models/process-list";
 import Route from "@ember/routing/route";
 
 export default Route.extend({
-  model: find,
+  async model() {
+    const processes = new ProcessList();
+    await processes.refresh();
+
+    return processes;
+  },
 });
