@@ -1,23 +1,18 @@
-import Component from "@ember/component";
-import { computed } from "@ember/object";
+import Component from "@glimmer/component";
 import { htmlSafe } from "@ember/template";
 
-export default Component.extend({
-  tagName: "",
+export default class ProgressBar extends Component {
+  get active() {
+    return parseInt(this.args.percent, 10) !== 100;
+  }
 
-  active: computed("percent", function () {
-    return parseInt(this.get("percent"), 10) !== 100;
-  }),
+  get barStyle() {
+    let percent = parseInt(this.args.percent, 10);
 
-  barStyle: computed("percent", function () {
-    let percent = parseInt(this.get("percent"), 10);
-    if (percent > 0) {
-      if (percent > 100) {
-        percent = 100;
-      }
-      return htmlSafe("width: " + this.get("percent") + "%");
+    if (percent > 100) {
+      percent = 100;
     }
 
-    return htmlSafe("");
-  }),
-});
+    return htmlSafe(`width: ${percent}%`);
+  }
+}

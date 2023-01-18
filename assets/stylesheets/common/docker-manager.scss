@@ -90,9 +90,20 @@
     }
   }
 
-  div.progress {
-    margin-top: 20px;
-    margin-bottom: 20px;
+  .progress-bar {
+    background: var(--primary-100);
+    border: 1px solid var(--primary-200);
+    height: 1.5rem;
+    margin: 1rem 0;
+
+    &-inner {
+      background: var(--tertiary-400);
+      height: 100%;
+    }
+
+    &.active &-inner {
+      background: var(--tertiary-800);
+    }
   }
 
   th {
