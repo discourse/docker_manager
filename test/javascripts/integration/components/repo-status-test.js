@@ -4,8 +4,7 @@ import { find, render } from "@ember/test-helpers";
 import hbs from "htmlbars-inline-precompile";
 import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 
-const repoObject = Repo.create({
-  unloaded: false,
+const repoObject = new Repo({
   branch: "origin/main",
   id: "discourse",
   name: "discourse",
@@ -23,8 +22,7 @@ const repoObject = Repo.create({
   },
 });
 
-const managerRepo = Repo.create({
-  unloaded: false,
+const managerRepo = new Repo({
   branch: "origin/main",
   id: "docker_manager",
   name: "docker_manager",

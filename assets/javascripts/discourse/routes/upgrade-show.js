@@ -1,6 +1,5 @@
 import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 import Route from "@ember/routing/route";
-import EmberObject from "@ember/object";
 import { Promise } from "rsvp";
 
 export default Route.extend({
@@ -15,16 +14,19 @@ export default Route.extend({
     if (Array.isArray(model)) {
       return Repo.findLatestAll().then((response) => {
         JSON.parse(response).repos.forEach((_repo) => {
-          const repo = model.find((repo) => repo.get("path") === _repo.path);
+          const repo = model.find((repo) => repo.path === _repo.path);
           if (!repo) {
             return;
           }
           delete _repo.path;
-          repo.set("latest", EmberObject.create(_repo));
+
+          for (const [key, value] of Object.entries(_repo)) {
+            repo.latest[key] = value;
+          }
         });
 
         return Repo.findAllProgress(
-          model.filter((repo) => !repo.get("upToDate"))
+          model.filter((repo) => !repo.upToDate)
         ).then((progress) => {
           this.set("progress", JSON.parse(progress).progress);
         });

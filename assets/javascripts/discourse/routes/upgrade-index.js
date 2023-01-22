@@ -22,20 +22,17 @@ export default Route.extend({
     controller.setProperties({ model, upgrading: null });
 
     model.forEach((repo) => {
-      if (repo.get("upgrading")) {
+      if (repo.upgrading) {
         controller.set("upgrading", repo);
       }
 
       // Special case: Upgrade docker manager first
-      if (repo.get("id") === "docker_manager") {
+      if (repo.id === "docker_manager") {
         controller.set("managerRepo", repo);
       }
 
       // Special case: If the branch is "main" warn user
-      if (
-        repo.get("id") === "discourse" &&
-        repo.get("branch") === "origin/main"
-      ) {
+      if (repo.id === "discourse" && repo.branch === "origin/main") {
         upgradeController.appendBannerHtml(`
           <b>WARNING:</b>
           Your Discourse is tracking the 'main' branch which may be unstable,
