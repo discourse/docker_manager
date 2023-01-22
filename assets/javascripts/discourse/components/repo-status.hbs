@@ -51,18 +51,12 @@
           </li>
         </ul>
 
-        <LinkTo
-          @route="upgrade.show"
-          @model={{@repo}}
-          disabled={{this.upgradeDisabled}}
-          class="upgrade-button btn"
-        >
-          {{#if @repo.upgrading}}
-            Currently Upgrading...
-          {{else}}
-            Upgrade
-          {{/if}}
-        </LinkTo>
+        <DButton
+          @action={{this.upgrade}}
+          @disabled={{this.upgradeDisabled}}
+          @class="upgrade-button"
+          @translatedLabel={{this.upgradeButtonLabel}}
+        />
       </div>
     {{/if}}
   </td>
