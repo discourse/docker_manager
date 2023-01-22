@@ -1,28 +1,24 @@
 import Controller from "@ember/controller";
-import { computed } from "@ember/object";
 import { inject as service } from "@ember/service";
+import { tracked } from "@glimmer/tracking";
+import { action } from "@ember/object";
 
-export default Controller.extend({
-  router: service(),
+export default class UpgradeIndex extends Controller {
+  @service router;
 
-  managerRepo: null,
-  upgrading: null,
+  @tracked managerRepo = null;
+  @tracked upgrading = null;
 
-  upgradeAllButtonDisabled: computed(
-    "managerRepo.upToDate",
-    "allUpToDate",
-    function () {
-      return !this.get("managerRepo.upToDate") || this.get("allUpToDate");
-    }
-  ),
+  get upgradeAllButtonDisabled() {
+    return !this.managerRepo.upToDate || this.allUpToDate;
+  }
 
-  allUpToDate: computed("model.@each.upToDate", function () {
-    return this.get("model").every((repo) => repo.upToDate);
-  }),
+  get allUpToDate() {
+    return this.model.every((repo) => repo.upToDate);
+  }
 
-  actions: {
-    upgradeAllButton() {
-      this.router.replaceWith("upgrade.show", "all");
-    },
-  },
-});
+  @action
+  upgradeAllButton() {
+    this.router.replaceWith("upgrade.show", "all");
+  }
+}
