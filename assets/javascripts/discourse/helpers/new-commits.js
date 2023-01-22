@@ -1,9 +1,12 @@
 import { helper as buildHelper } from "@ember/component/helper";
-import { isNone } from "@ember/utils";
 import { htmlSafe } from "@ember/template";
 
 export default buildHelper(function (params) {
   const [commitsBehind, oldSha, newSha, url] = params;
+
+  if (!commitsBehind) {
+    return "";
+  }
 
   if (parseInt(commitsBehind, 10) === 0) {
     return "";
@@ -13,7 +16,7 @@ export default buildHelper(function (params) {
     commitsBehind === 1 ? "" : "s"
   }`;
 
-  if (isNone(url)) {
+  if (!url) {
     return description;
   }
 

@@ -17,7 +17,7 @@ export default Controller.extend({
   ),
 
   allUpToDate: computed("model.@each.upToDate", function () {
-    return this.get("model").every((repo) => repo.get("upToDate"));
+    return this.get("model").every((repo) => repo.upToDate);
   }),
 
   actions: {

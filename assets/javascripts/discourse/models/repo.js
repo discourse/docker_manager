@@ -1,162 +1,176 @@
-import { default as EmberObject, computed } from "@ember/object";
-import { or } from "@ember/object/computed";
-import { isNone } from "@ember/utils";
-import { Promise } from "rsvp";
 import { ajax } from "discourse/lib/ajax";
+import { tracked } from "@glimmer/tracking";
+import { TrackedObject } from "@ember-compat/tracked-built-ins";
 
 let loaded = [];
 
 function concatVersions(repos) {
-  return repos.map((repo) => repo.get("version")).join(", ");
+  return repos.map((repo) => repo.version).join(", ");
 }
 
-const Repo = EmberObject.extend({
-  unloaded: true,
-  checking: false,
+export default class Repo {
+  @tracked unloaded = true;
+  @tracked checking = false;
+  @tracked lastCheckedAt = null;
+  @tracked latest = new TrackedObject({});
 
-  checkingStatus: or("unloaded", "checking"),
-  upToDate: computed("upgrading", "version", "latest.version", function () {
-    return (
-      !this.get("upgrading") &&
-      (this.get("version") === this.get("latest.version"))
-    );
-  }),
+  // model attributes
+  @tracked name = null;
+  @tracked path = null;
+  @tracked branch = null;
+  @tracked official = false;
+  @tracked fork = false;
+  @tracked id = null;
+  @tracked version = null;
+  @tracked pretty_version = null;
+  @tracked url = null;
+  @tracked upgrading = false;
 
-  prettyVersion: computed("version", "pretty_version", function () {
-    return this.get("pretty_version") || this.get("version")?.substring(0, 8);
-  }),
+  constructor(attributes) {
+    for (const [key, value] of Object.entries(attributes)) {
+      this[key] = value;
+    }
+  }
 
-  prettyLatestVersion: computed("latest.{version,pretty_version}", function () {
-    return (
-      this.get("latest.pretty_version") ||
-      this.get("latest.version")?.substring(0, 8)
-    );
-  }),
+  get checkingStatus() {
+    return this.unloaded || this.checking;
+  }
+
+  get upToDate() {
+    return !this.upgrading && this.version === this.latest?.version;
+  }
+
+  get prettyVersion() {
+    return this.pretty_version || this.version?.substring(0, 8);
+  }
+
+  get prettyLatestVersion() {
+    return this.latest?.pretty_version || this.latest?.version?.substring(0, 8);
+  }
 
   get shouldCheck() {
-    if (isNone(this.get("version"))) {
+    if (this.version === null) {
       return false;
     }
-    if (this.get("checking")) {
+
+    if (this.checking) {
       return false;
     }
 
     // Only check once every minute
-    const lastCheckedAt = this.get("lastCheckedAt");
-    if (lastCheckedAt) {
-      const ago = new Date().getTime() - lastCheckedAt;
+    if (this.lastCheckedAt) {
+      const ago = new Date().getTime() - this.lastCheckedAt;
       return ago > 60 * 1000;
     }
-    return true;
-  },
 
-  repoAjax(url, args) {
-    args = args || {};
-    args.data = this.getProperties("path", "version", "branch");
+    return true;
+  }
+
+  repoAjax(url, args = {}) {
+    args.data = {
+      path: this.path,
+      version: this.version,
+      branch: this.branch,
+    };
 
     return ajax(url, args);
-  },
+  }
 
-  findLatest() {
-    return new Promise((resolve) => {
-      if (!this.get("shouldCheck")) {
-        this.set("unloaded", false);
-        return resolve();
-      }
+  async findLatest() {
+    if (!this.shouldCheck) {
+      this.unloaded = false;
+      return;
+    }
 
-      this.set("checking", true);
-      this.repoAjax("/admin/docker/latest").then((result) => {
-        this.setProperties({
-          unloaded: false,
-          checking: false,
-          lastCheckedAt: new Date().getTime(),
-          latest: EmberObject.create(result.latest),
-        });
-        resolve();
-      });
-    });
-  },
+    this.checking = true;
 
-  findProgress() {
-    return this.repoAjax("/admin/docker/progress").then(
-      (result) => result.progress
-    );
-  },
+    const result = await this.repoAjax("/admin/docker/latest");
 
-  resetUpgrade() {
-    return this.repoAjax("/admin/docker/upgrade", {
+    this.unloaded = false;
+    this.checking = false;
+    this.lastCheckedAt = new Date().getTime();
+
+    for (const [key, value] of Object.entries(result.latest)) {
+      this.latest[key] = value;
+    }
+  }
+
+  async findProgress() {
+    const result = await this.repoAjax("/admin/docker/progress");
+    return result.progress;
+  }
+
+  async resetUpgrade() {
+    await this.repoAjax("/admin/docker/upgrade", {
       dataType: "text",
       type: "DELETE",
-    }).then(() => {
-      this.set("upgrading", false);
     });
-  },
 
-  startUpgrade() {
-    this.set("upgrading", true);
+    this.upgrading = false;
+  }
 
-    return this.repoAjax("/admin/docker/upgrade", {
-      dataType: "text",
-      type: "POST",
-    }).catch(() => {
-      this.set("upgrading", false);
-    });
-  },
-});
+  async startUpgrade() {
+    this.upgrading = true;
 
-Repo.reopenClass({
-  findAll() {
-    return new Promise((resolve) => {
-      if (loaded.length) {
-        return resolve(loaded);
-      }
-
-      ajax("/admin/docker/repos").then((result) => {
-        loaded = result.repos.map((r) => Repo.create(r));
-        resolve(loaded);
+    try {
+      await this.repoAjax("/admin/docker/upgrade", {
+        dataType: "text",
+        type: "POST",
       });
-    });
-  },
+    } catch (e) {
+      this.upgrading = false;
+    }
+  }
+}
 
-  findUpgrading() {
-    return this.findAll().then((result) => result.findBy("upgrading", true));
-  },
+Repo.findAll = async function () {
+  if (loaded.length) {
+    return loaded;
+  }
 
-  find(id) {
-    return this.findAll().then((result) => result.findBy("id", id));
-  },
+  const result = await ajax("/admin/docker/repos");
+  loaded = result.repos.map((r) => new Repo(r));
+  return loaded;
+};
 
-  upgradeAll() {
-    return ajax("/admin/docker/upgrade", {
-      dataType: "text",
-      type: "POST",
-      data: { path: "all" },
-    });
-  },
+Repo.findUpgrading = async function () {
+  const result = await Repo.findAll();
+  return result.findBy("upgrading", true);
+};
 
-  resetAll(repos) {
-    return ajax("/admin/docker/upgrade", {
-      dataType: "text",
-      type: "DELETE",
-      data: { path: "all", version: concatVersions(repos) },
-    });
-  },
+Repo.find = async function (id) {
+  const result = await Repo.findAll();
+  return result.findBy("id", id);
+};
 
-  findLatestAll() {
-    return ajax("/admin/docker/latest", {
-      dataType: "text",
-      type: "GET",
-      data: { path: "all" },
-    });
-  },
+Repo.upgradeAll = function () {
+  return ajax("/admin/docker/upgrade", {
+    dataType: "text",
+    type: "POST",
+    data: { path: "all" },
+  });
+};
 
-  findAllProgress(repos) {
-    return ajax("/admin/docker/progress", {
-      dataType: "text",
-      type: "GET",
-      data: { path: "all", version: concatVersions(repos) },
-    });
-  },
-});
+Repo.resetAll = function (repos) {
+  return ajax("/admin/docker/upgrade", {
+    dataType: "text",
+    type: "DELETE",
+    data: { path: "all", version: concatVersions(repos) },
+  });
+};
 
-export default Repo;
+Repo.findLatestAll = function () {
+  return ajax("/admin/docker/latest", {
+    dataType: "text",
+    type: "GET",
+    data: { path: "all" },
+  });
+};
+
+Repo.findAllProgress = function (repos) {
+  return ajax("/admin/docker/progress", {
+    dataType: "text",
+    type: "GET",
+    data: { path: "all", version: concatVersions(repos) },
+  });
+};

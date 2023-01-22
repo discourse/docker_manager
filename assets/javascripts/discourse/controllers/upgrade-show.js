@@ -1,66 +1,72 @@
 import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 import Controller from "@ember/controller";
-import { equal } from "@ember/object/computed";
-import { computed } from "@ember/object";
 import { inject as service } from "@ember/service";
+import { tracked } from "@glimmer/tracking";
+import { equal } from "@ember/object/computed";
+import { action } from "@ember/object";
 
-export default Controller.extend({
-  dialog: service(),
+export default class UpgradeShow extends Controller {
+  @service messageBus;
+  @service dialog;
 
-  output: null,
+  @tracked output = "";
+  @tracked status = null;
+  @tracked percent = 0;
 
-  init() {
-    this._super();
-    this.reset();
-  },
+  @equal("status", "complete") complete;
+  @equal("status", "failed") failed;
 
-  complete: equal("status", "complete"),
-  failed: equal("status", "failed"),
+  get multiUpgrade() {
+    return this.model.length !== 1;
+  }
 
-  multiUpgrade: computed("model.length", function () {
-    return this.get("model.length") !== 1;
-  }),
+  get title() {
+    return this.multiUpgrade ? "All" : this.model[0].name;
+  }
 
-  title: computed("model.@each.name", function () {
-    return this.get("multiUpgrade") ? "All" : this.get("model")[0].get("name");
-  }),
+  get isUpToDate() {
+    return this.model.every((repo) => repo.upToDate);
+  }
 
-  isUpToDate: computed("model.@each.upToDate", function () {
-    return this.get("model").every((repo) => repo.get("upToDate"));
-  }),
+  get upgrading() {
+    return this.model.some((repo) => repo.upgrading);
+  }
 
-  upgrading: computed("model.@each.upgrading", function () {
-    return this.get("model").some((repo) => repo.get("upgrading"));
-  }),
+  get repos() {
+    return this.isMultiple ? this.model : [this.model];
+  }
 
-  repos() {
-    const model = this.get("model");
-    return this.get("isMultiple") ? model : [model];
-  },
+  get upgradeButtonText() {
+    if (this.upgrading) {
+      return "Upgrading...";
+    } else {
+      return "Start Upgrading";
+    }
+  }
 
   updateAttribute(key, value, valueIsKey = false) {
-    this.get("model").forEach((repo) => {
-      value = valueIsKey ? repo.get(value) : value;
-      repo.set(key, value);
+    this.model.forEach((repo) => {
+      value = valueIsKey ? repo[value] : value;
+      repo[key] = value;
     });
-  },
+  }
 
   messageReceived(msg) {
     switch (msg.type) {
       case "log":
-        this.set("output", this.get("output") + msg.value + "\n");
+        this.output = this.output + msg.value + "\n";
         break;
       case "percent":
-        this.set("percent", msg.value);
+        this.percent = msg.value;
         break;
       case "status":
-        this.set("status", msg.value);
+        this.status = msg.value;
 
         if (msg.value === "complete") {
-          this.get("model")
-            .filter((repo) => repo.get("upgrading"))
+          this.model
+            .filter((repo) => repo.upgrading)
             .forEach((repo) => {
-              repo.set("version", repo.get("latest.version"));
+              repo.version = repo.latest?.version;
             });
         }
 
@@ -70,73 +76,68 @@ export default Controller.extend({
 
         break;
     }
-  },
-
-  upgradeButtonText: computed("upgrading", function () {
-    if (this.get("upgrading")) {
-      return "Upgrading...";
-    } else {
-      return "Start Upgrading";
-    }
-  }),
+  }
 
   startBus() {
     this.messageBus.subscribe("/docker/upgrade", (msg) => {
       this.messageReceived(msg);
     });
-  },
+  }
 
   stopBus() {
     this.messageBus.unsubscribe("/docker/upgrade");
-  },
+  }
 
   reset() {
-    this.setProperties({ output: "", status: null, percent: 0 });
-  },
+    this.output = "";
+    this.status = null;
+    this.percent = 0;
+  }
 
-  actions: {
-    start() {
-      this.reset();
+  @action
+  start() {
+    this.reset();
 
-      if (this.get("multiUpgrade")) {
-        this.get("model")
-          .filter((repo) => !repo.get("upToDate"))
-          .forEach((repo) => repo.set("upgrading", true));
-        return Repo.upgradeAll();
-      }
+    if (this.multiUpgrade) {
+      this.model
+        .filter((repo) => !repo.upToDate)
+        .forEach((repo) => (repo.upgrading = true));
 
-      const repo = this.get("model")[0];
-      if (repo.get("upgrading")) {
-        return;
-      }
-      repo.startUpgrade();
-    },
+      return Repo.upgradeAll();
+    }
 
-    resetUpgrade() {
-      const message = `
-        WARNING: You should only reset upgrades that have failed and are not running.
+    const repo = this.model[0];
+    if (repo.upgrading) {
+      return;
+    }
 
-        This will NOT cancel currently running builds and should only be used as a last resort.
-      `;
+    repo.startUpgrade();
+  }
 
-      this.dialog.confirm({
-        message,
-        didConfirm: () => {
-          if (this.get("multiUpgrade")) {
-            return Repo.resetAll(
-              this.get("model").filter((repo) => !repo.get("upToDate"))
-            ).finally(() => {
-              this.reset();
-              this.updateAttribute("upgrading", false);
-            });
-          }
+  @action
+  resetUpgrade() {
+    const message = `
+      WARNING: You should only reset upgrades that have failed and are not running.
+      This will NOT cancel currently running builds and should only be used as a last resort.
+    `;
 
-          const repo = this.get("model")[0];
-          repo.resetUpgrade().then(() => {
+    this.dialog.confirm({
+      message,
+      didConfirm: async () => {
+        if (this.multiUpgrade) {
+          try {
+            await Repo.resetAll(this.model.filter((repo) => !repo.upToDate));
+          } finally {
             this.reset();
-          });
-        },
-      });
-    },
-  },
-});
+            this.updateAttribute("upgrading", false);
+            return;
+          }
+        }
+
+        const repo = this.model[0];
+        await repo.resetUpgrade();
+        this.reset();
+      },
+    });
+  }
+}
