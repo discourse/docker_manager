@@ -13,14 +13,14 @@ export default Route.extend({
   afterModel(model) {
     if (Array.isArray(model)) {
       return Repo.findLatestAll().then((response) => {
-        JSON.parse(response).repos.forEach((_repo) => {
-          const repo = model.find((repo) => repo.path === _repo.path);
+        JSON.parse(response).repos.forEach((repoData) => {
+          const repo = model.find((_repo) => _repo.path === repoData.path);
           if (!repo) {
             return;
           }
-          delete _repo.path;
+          delete repoData.path;
 
-          for (const [key, value] of Object.entries(_repo)) {
+          for (const [key, value] of Object.entries(repoData)) {
             repo.latest[key] = value;
           }
         });
