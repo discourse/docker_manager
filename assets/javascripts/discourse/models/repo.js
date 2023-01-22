@@ -26,8 +26,18 @@ export default class Repo {
   @tracked url = null;
   @tracked upgrading = false;
 
-  constructor(attributes) {
+  constructor(attributes = {}) {
+    if (attributes.latest) {
+      for (const [key, value] of Object.entries(attributes.latest)) {
+        this.latest[key] = value;
+      }
+    }
+
     for (const [key, value] of Object.entries(attributes)) {
+      if (key === "latest") {
+        continue;
+      }
+
       this[key] = value;
     }
   }

@@ -1,10 +1,12 @@
 import { module, test } from "qunit";
 import { setupRenderingTest } from "ember-qunit";
-import { find, render } from "@ember/test-helpers";
+import { render, settled } from "@ember/test-helpers";
 import hbs from "htmlbars-inline-precompile";
 import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
+import { query } from "discourse/tests/helpers/qunit-helpers";
 
-const repoObject = new Repo({
+const repoProps = {
+  unloaded: false,
   branch: "origin/main",
   id: "discourse",
   name: "discourse",
@@ -20,9 +22,10 @@ const repoObject = new Repo({
     pretty_version: "v2.2.0.beta6 +101",
     version: "2b006c0",
   },
-});
+};
 
-const managerRepo = new Repo({
+const managerProps = {
+  unloaded: false,
   branch: "origin/main",
   id: "docker_manager",
   name: "docker_manager",
@@ -38,81 +41,102 @@ const managerRepo = new Repo({
     pretty_version: null,
     version: "0b1fb4b",
   },
-});
+};
 
-module("Integration | Component | repo-status", function (hooks) {
+module("Integration | Component | RepoStatus", function (hooks) {
   setupRenderingTest(hooks);
 
   test("it renders correctly", async function (assert) {
-    this.set("repo", repoObject);
-    this.set("managerRepo", managerRepo);
-    await render(hbs`{{repo-status repo=repo managerRepo=managerRepo}}`);
+    this.set("repo", new Repo(repoProps));
+    this.set("managerRepo", new Repo(managerProps));
 
-    assert.equal(
-      find("span.current.commit-hash").textContent.trim(),
-      "v2.2.0.beta6 +98",
-      "tag version is used when present"
-    );
-    assert.equal(
-      find("span.new.commit-hash").textContent.trim(),
-      "v2.2.0.beta6 +101",
-      "tag version is used when present"
+    await render(
+      hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
     );
 
-    assert.equal(
-      find("li.new-commits a").textContent.trim(),
-      "3 new commits",
-      "shows number of new commits"
-    );
-    assert.equal(
-      find("li.new-commits a").href.trim(),
+    assert
+      .dom("span.current.commit-hash")
+      .hasText("v2.2.0.beta6 +98", "tag version is used when present");
+    assert
+      .dom("span.new.commit-hash")
+      .hasText("v2.2.0.beta6 +101", "tag version is used when present");
+
+    assert
+      .dom("li.new-commits a")
+      .hasText("3 new commits", "shows number of new commits");
+    assert.strictEqual(
+      query("li.new-commits a").href.trim(),
       "https://github.com/discourse/discourse/compare/8f65e4f...2b006c0",
       "links to GitHub diff page"
     );
 
-    this.set("repo.pretty_version", null);
-    this.set("repo.latest.pretty_version", null);
+    this.repo.pretty_version = null;
+    this.repo.latest.pretty_version = null;
+    await settled();
 
-    assert.equal(
-      find("span.current.commit-hash").textContent.trim(),
+    assert.strictEqual(
+      query("span.current.commit-hash").textContent.trim(),
       "8f65e4f",
       "commit hash is used when tag version is absent"
     );
-    assert.equal(
-      find("span.new.commit-hash").textContent.trim(),
+    assert.strictEqual(
+      query("span.new.commit-hash").textContent.trim(),
       "2b006c0",
       "commit hash is used when tag version is absent"
     );
+  });
+
+  test("official check mark", async function (assert) {
+    this.set("repo", new Repo(repoProps));
+    this.set("managerRepo", new Repo(managerProps));
+
+    await render(
+      hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
+    );
 
     assert
-      .dom("img.check-circle")
+      .dom("svg.d-icon-check-circle")
       .doesNotExist("green check is absent when not official");
-    this.set("repo.official", true);
+
+    this.repo.official = true;
+    await settled();
+
     assert
-      .dom("img.check-circle")
+      .dom("svg.d-icon-check-circle")
       .exists("green check is present when official");
+  });
 
-    assert
-      .dom("button.upgrade-button")
-      .exists("upgrade button is visible when plugin is out-of-date");
+  test("upgrade button", async function (assert) {
+    this.set("repo", new Repo(repoProps));
+    this.set("managerRepo", new Repo(managerProps));
 
-    assert.equal(
-      find("button.upgrade-button").disabled,
-      false,
-      "upgrade button is not disabled when docker_manager repo is up-to-date"
-    );
-    this.set("managerRepo.upToDate", false);
-    assert.equal(
-      find("button.upgrade-button").disabled,
-      true,
-      "upgrade button is disabled when docker_manager repo is out-of-date"
+    await render(
+      hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
     );
 
-    this.set("repo.latest.commits_behind", 0);
-    this.set("repo.version", "2b006c0");
-    this.set("repo.pretty_version", "v2.2.0.beta6 +101");
     assert
-      .dom("button.upgrade-button")
+      .dom(".upgrade-button")
+      .exists("upgrade button is visible when plugin is out-of-date")
+      .isNotDisabled(
+        "upgrade button is not disabled when docker_manager repo is out-of-date"
+      );
+
+    this.managerRepo.version = "022aa3a";
+    await settled();
+
+    assert
+      .dom(".upgrade-button")
+      .isDisabled(
+        "upgrade button is disabled when docker_manager repo is not up-to-date"
+      );
+
+    this.repo.latest.commits_behind = 0;
+    this.repo.version = "2b006c0";
+    this.repo.pretty_version = "v2.2.0.beta6 +101";
+    await settled();
+
+    assert
+      .dom(".upgrade-button")
       .doesNotExist("upgrade button is not visible when plugin is up-to-date");
   });
 });

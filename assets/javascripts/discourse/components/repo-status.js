@@ -1,5 +1,6 @@
 import Component from "@glimmer/component";
 import { inject as service } from "@ember/service";
+import { action } from "@ember/object";
 
 export default class RepoStatus extends Component {
   @service router;
@@ -33,5 +34,18 @@ export default class RepoStatus extends Component {
     } else if (this.args.repo.official) {
       return "Official Plugin";
     }
+  }
+
+  get upgradeButtonLabel() {
+    if (this.args.repo.upgrading) {
+      return "Currently Upgrading…";
+    } else {
+      return "Upgrade";
+    }
+  }
+
+  @action
+  upgrade() {
+    this.router.transitionTo("upgrade.show", this.args.repo);
   }
 }
