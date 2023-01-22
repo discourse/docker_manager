@@ -1,34 +1,34 @@
 import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 import Route from "@ember/routing/route";
 
-export default Route.extend({
+export default class UpgradeIndex extends Route {
   model() {
     return Repo.findAll();
-  },
+  }
 
-  loadRepos(list) {
+  async loadRepos(list) {
     if (list.length === 0) {
       return;
     }
-    this.loadRepo(list.shift()).then(() => this.loadRepos(list));
-  },
 
-  loadRepo(repo) {
-    return repo.findLatest();
-  },
+    await list.shift().findLatest();
+
+    this.loadRepos(list);
+  }
 
   setupController(controller, model) {
     const upgradeController = this.controllerFor("upgrade");
-    controller.setProperties({ model, upgrading: null });
+    controller.model = model;
+    controller.upgrading = null;
 
     model.forEach((repo) => {
       if (repo.upgrading) {
-        controller.set("upgrading", repo);
+        controller.upgrading = repo;
       }
 
       // Special case: Upgrade docker manager first
       if (repo.id === "docker_manager") {
-        controller.set("managerRepo", repo);
+        controller.managerRepo = repo;
       }
 
       // Special case: If the branch is "main" warn user
@@ -43,5 +43,5 @@ export default Route.extend({
     });
 
     this.loadRepos(model.slice(0));
-  },
-});
+  }
+}

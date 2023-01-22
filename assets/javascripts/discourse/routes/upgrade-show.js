@@ -1,61 +1,59 @@
 import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 import Route from "@ember/routing/route";
-import { Promise } from "rsvp";
+import { tracked } from "@glimmer/tracking";
 
-export default Route.extend({
+export default class UpgradeShow extends Route {
+  @tracked progress;
+
   model(params) {
     if (params.id === "all") {
       return Repo.findAll();
     }
+
     return Repo.find(params.id);
-  },
+  }
 
-  afterModel(model) {
+  async afterModel(model) {
     if (Array.isArray(model)) {
-      return Repo.findLatestAll().then((response) => {
-        JSON.parse(response).repos.forEach((repoData) => {
-          const repo = model.find((_repo) => _repo.path === repoData.path);
-          if (!repo) {
-            return;
-          }
-          delete repoData.path;
+      const response = await Repo.findLatestAll();
 
-          for (const [key, value] of Object.entries(repoData)) {
-            repo.latest[key] = value;
-          }
-        });
+      for (const repoData of JSON.parse(response).repos) {
+        const repo = model.find((_repo) => _repo.path === repoData.path);
+        if (!repo) {
+          return;
+        }
 
-        return Repo.findAllProgress(
-          model.filter((repo) => !repo.upToDate)
-        ).then((progress) => {
-          this.set("progress", JSON.parse(progress).progress);
-        });
-      });
+        delete repoData.path;
+
+        for (const [key, value] of Object.entries(repoData)) {
+          repo.latest[key] = value;
+        }
+      }
+
+      const progress = await Repo.findAllProgress(
+        model.filter((repo) => !repo.upToDate)
+      );
+
+      this.progress = JSON.parse(progress).progress;
+      return;
     }
 
-    return Repo.findUpgrading().then((u) => {
-      if (u && u !== model) {
-        return Promise.reject("wat");
-      }
-      return model.findLatest().then(() => {
-        return model.findProgress().then((progress) => {
-          this.set("progress", progress);
-        });
-      });
-    });
-  },
+    await Repo.findUpgrading();
+    await model.findLatest();
+
+    const progress = await model.findProgress();
+    this.progress = progress;
+  }
 
   setupController(controller, model) {
     controller.reset();
-    controller.setProperties({
-      model: Array.isArray(model) ? model : [model],
-      output: this.get("progress.logs"),
-      percent: this.get("progress.percentage"),
-    });
+    controller.model = Array.isArray(model) ? model : [model];
+    controller.output = this.progress.logs;
+    controller.percent = this.progress.percentage;
     controller.startBus();
-  },
+  }
 
   deactivate() {
     this.controllerFor("upgrade.show").stopBus();
-  },
-});
+  }
+}
