@@ -17,7 +17,6 @@ export default class UpgradeIndex extends Route {
   }
 
   setupController(controller, model) {
-    const upgradeController = this.controllerFor("upgrade");
     controller.model = model;
     controller.upgrading = null;
 
@@ -33,7 +32,7 @@ export default class UpgradeIndex extends Route {
 
       // Special case: If the branch is "main" warn user
       if (repo.id === "discourse" && repo.branch === "origin/main") {
-        upgradeController.appendBannerHtml(`
+        this.controllerFor("upgrade").appendBannerHtml(`
           <b>WARNING:</b>
           Your Discourse is tracking the 'main' branch which may be unstable,
           <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'>
