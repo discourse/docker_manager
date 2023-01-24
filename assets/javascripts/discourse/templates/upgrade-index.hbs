@@ -1,4 +1,4 @@
-<h1>Upgrade</h1>
+<h1>{{i18n "admin.docker.upgrade_title"}}</h1>
 
 <button
   disabled={{upgradeAllButtonDisabled}}
@@ -7,17 +7,17 @@
   {{action "upgradeAllButton"}}
 >
   {{#if allUpToDate}}
-    All Up-to-date
+    {{i18n "admin.docker.all_up_to_date"}}
   {{else}}
-    Upgrade All
+    {{i18n "admin.docker.upgrade_all"}}
   {{/if}}
 </button>
 
 <table class="table" id="repos">
   <thead>
     <th></th>
-    <th style="width: 50%">Repository</th>
-    <th>Status</th>
+    <th style="width: 50%">{{i18n "admin.docker.repository"}}</th>
+    <th>{{i18n "admin.docker.status"}}</th>
   </thead>
   <tbody>
     {{#each this.model as |repo|}}

@@ -19,22 +19,22 @@
 
   <td>
     {{#if @repo.checkingStatus}}
-      Checking for new version...
+      {{i18n "admin.docker.checking"}}
     {{else if @repo.upToDate}}
-      Up to date
+      {{i18n "admin.docker.up_to_date"}}
     {{else}}
       <div class="new-version">
-        <h4>New Version Available!</h4>
+        <h4>{{i18n "admin.docker.new_version_available"}}</h4>
 
         <ul>
           <li>
-            Remote Version:
+            {{i18n "admin.docker.latest_version"}}
             <span class="new commit-hash" title={{@repo.latestVersion}}>
               {{@repo.prettyLatestVersion}}
             </span>
           </li>
           <li>
-            Last Updated:
+            {{i18n "admin.docker.last_updated"}}
             {{#if @repo.latest.date}}
               {{format-date @repo.latest.date}}
             {{else}}
