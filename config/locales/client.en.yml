@@ -1,12 +1,37 @@
 en:
   js:
     admin:
+      docker:
+        all_up_to_date: "All Up-to-date"
+        checking: "Checking for new version…"
+        commits:
+          one: "%{count} new commit"
+          other: "%{count} new commits"
+        everything_up_to_date: "Everything is up-to-date"
+        forked_plugin: "Forked Official Plugin"
+        last_updated: "Last Updated:"
+        latest_version: "Latest Version:"
+        link_to_upgrade: "Perform upgrades here"
+        new_version_available: "New Version Available!"
+        official_plugin: "Official Plugin"
+        outdated_notice: "Your Discourse installation is out of date"
+        perform_upgrade: "Click here to upgrade."
+        repo_newest_version: "%{name} is at the newest version."
+        repository: "Repository"
+        reset_upgrade: "Reset Upgrade"
+        reset_warning: "WARNING: You should only reset upgrades that have failed and are not running. This will NOT cancel currently running builds and should only be used as a last resort."
+        start_upgrading: "Start Upgrading"
+        status: "Status"
+        up_to_date: "Up to date"
+        upgrade_action: "Upgrade"
+        upgrade_all: "Upgrade All"
+        upgrade_error: "Sorry, there was an error upgrading Discourse. Please check the logs below."
+        upgrade_repo: "Upgrade %{name}"
+        upgrade_successful: "Upgrade completed successfully!"
+        upgrade_title: "Upgrade"
+        upgrading: "Upgrading…"
+
       logs:
         staff_actions:
           actions:
-            discourse_upgrade: "Upgrade to the Latest Version"
-
-    docker:
-      upgrade: "Your Discourse installation is out of date."
-      perform_upgrade: "Click here to upgrade."
-      link_to_upgrade: "Perform upgrades here."
+            discourse_upgrade: "Upgrade to the latest version"

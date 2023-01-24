@@ -1,6 +1,7 @@
 import Component from "@glimmer/component";
 import { inject as service } from "@ember/service";
 import { action } from "@ember/object";
+import I18n from "I18n";
 
 export default class RepoStatus extends Component {
   @service router;
@@ -30,17 +31,17 @@ export default class RepoStatus extends Component {
 
   get officialRepoBadgeTitle() {
     if (this.args.repo.fork) {
-      return "Forked Official Plugin";
+      return I18n.t("admin.docker.forked_plugin");
     } else if (this.args.repo.official) {
-      return "Official Plugin";
+      return I18n.t("admin.docker.official_plugin");
     }
   }
 
   get upgradeButtonLabel() {
     if (this.args.repo.upgrading) {
-      return "Currently Upgrading…";
+      return I18n.t("admin.docker.upgrading");
     } else {
-      return "Upgrade";
+      return I18n.t("admin.docker.upgrade_action");
     }
   }
 

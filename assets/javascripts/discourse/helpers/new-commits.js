@@ -1,5 +1,6 @@
 import { helper as buildHelper } from "@ember/component/helper";
 import { htmlSafe } from "@ember/template";
+import I18n from "I18n";
 
 export default buildHelper(function (params) {
   const [commitsBehind, oldSha, newSha, url] = params;
@@ -12,9 +13,9 @@ export default buildHelper(function (params) {
     return "";
   }
 
-  let description = `${commitsBehind} new commit${
-    commitsBehind === 1 ? "" : "s"
-  }`;
+  let description = I18n.t("admin.docker.commits", {
+    count: commitsBehind,
+  });
 
   if (!url) {
     return description;

@@ -4,6 +4,7 @@ import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { equal } from "@ember/object/computed";
 import { action } from "@ember/object";
+import I18n from "I18n";
 
 export default class UpgradeShow extends Controller {
   @service messageBus;
@@ -34,14 +35,6 @@ export default class UpgradeShow extends Controller {
 
   get repos() {
     return this.isMultiple ? this.model : [this.model];
-  }
-
-  get upgradeButtonText() {
-    if (this.upgrading) {
-      return "Upgrading...";
-    } else {
-      return "Start Upgrading";
-    }
   }
 
   updateAttribute(key, value, valueIsKey = false) {
@@ -116,10 +109,7 @@ export default class UpgradeShow extends Controller {
 
   @action
   resetUpgrade() {
-    const message = `
-      WARNING: You should only reset upgrades that have failed and are not running.
-      This will NOT cancel currently running builds and should only be used as a last resort.
-    `;
+    const message = I18n.t("admin.docker.reset_warning");
 
     this.dialog.confirm({
       message,

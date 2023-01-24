@@ -1,27 +1,31 @@
-<h3>Upgrade {{this.title}}</h3>
+<h3>{{i18n "admin.docker.upgrade_repo" name=this.title}}</h3>
 
 <ProgressBar @percent={{this.percent}} />
 
 {{#if this.complete}}
-  <p>Upgrade completed successfully!</p>
+  <p>{{i18n "admin.docker.upgrade_successful"}}</p>
 {{else if this.failed}}
-  <p>Sorry, there was an error upgrading Discourse. Please check the logs below.</p>
+  <p>{{i18n "admin.docker.upgrade_error"}}</p>
 {{/if}}
 
 {{#if this.isUpToDate}}
   {{#unless this.multiUpgrade}}
-    <p>{{this.title}} is at the newest version.</p>
+    <p>{{i18n "admin.docker.repo_newest_version" name=this.title}}</p>
   {{else}}
-    <p>Everything is up-to-date.</p>
+    <p>{{i18n "admin.docker.everything_up_to_date"}}</p>
   {{/unless}}
 {{else}}
   <button {{on "click" this.start}} disabled={{this.upgrading}} class="btn">
-    {{upgradeButtonText}}
+    {{#if this.upgrading}}
+      {{i18n "admin.docker.upgrading"}}
+    {{else}}
+      {{i18n "admin.docker.start_upgrading"}}
+    {{/if}}
   </button>
 
   {{#if this.upgrading}}
     <button {{on "click" this.resetUpgrade}} class="btn unlock">
-      Reset Upgrade
+      {{i18n "admin.docker.reset_upgrade"}}
     </button>
   {{/if}}
 {{/if}}
