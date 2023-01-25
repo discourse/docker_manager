@@ -152,6 +152,8 @@ module DockerManager
       render plain: ps_output
     end
 
+    private
+
     def self.all_repos?(path)
       path == "all"
     end
@@ -171,8 +173,6 @@ module DockerManager
         end
       end
     end
-
-    private
 
     def respond_progress(logs: nil, percentage: nil)
       render json: { progress: { logs: logs, percentage: percentage } }
