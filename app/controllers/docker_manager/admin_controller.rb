@@ -5,8 +5,6 @@ require_dependency "docker_manager/upgrader"
 
 module DockerManager
   class AdminController < Admin::AdminController
-    helper DockerManager::ApplicationHelper
-
     def index
       return if Rails.env.development?
 
@@ -94,7 +92,7 @@ module DockerManager
           }
         end
 
-      if all_repos?
+      if params[:path] == "all"
         return(
           render json: { repos: DockerManager::GitRepo.find_all.map(&proc) }
         )
@@ -109,6 +107,7 @@ module DockerManager
     def upgrade
       repo = find_repos(params[:path])
       raise Discourse::NotFound unless repo.present?
+
       script_path =
         File.expand_path(
           File.join(__dir__, "../../../scripts/docker_manager_upgrade.rb")
@@ -130,6 +129,7 @@ module DockerManager
       ].each { |p| env_vars[p] = ENV[p] if !ENV[p].nil? }
       pid = spawn(env_vars, "bundle exec rails runner #{script_path}")
       Process.detach(pid)
+
       render plain: "OK"
     end
 
@@ -139,6 +139,7 @@ module DockerManager
 
       upgrader = Upgrader.new(current_user.id, repo, repo_version(repo))
       upgrader.reset!
+
       render plain: "OK"
     end
 
@@ -149,22 +150,16 @@ module DockerManager
       else
         ps_output = `ps aux --sort -rss`
       end
+
       render plain: ps_output
     end
 
     private
 
-    def self.all_repos?(path)
-      path == "all"
-    end
+    def find_repos(path, upgrading: false)
+      return DockerManager::GitRepo.find(path) unless path == "all"
 
-    def self.find_repos(path, upgrading: false, all: false)
-      return DockerManager::GitRepo.find(path) unless all_repos?(path)
-
-      repos = DockerManager::GitRepo.find_all
-      return repos if all
-
-      repos.select do |repo|
+      DockerManager::GitRepo.find_all.select do |repo|
         if upgrading
           repo.upgrading?
         else
@@ -178,24 +173,12 @@ module DockerManager
       render json: { progress: { logs: logs, percentage: percentage } }
     end
 
-    def all_repos?
-      self.class.all_repos?(params[:path])
-    end
-
-    def find_repos(path, upgrading: false, all: false)
-      self.class.find_repos(path, upgrading: upgrading, all: all)
-    end
-
     def repo_version(repo)
       if repo.is_a?(Array) && params[:version].blank?
-        concat_repos_versions(repo)
+        repo.map(&:latest_local_commit).join(", ")
       else
         params[:version]
       end
-    end
-
-    def concat_repos_versions(repos)
-      repos.map(&:latest_local_commit).join(", ")
     end
 
     def discourse_upgrade_required?(min_stable_version, min_beta_version)
