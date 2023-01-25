@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "rails_helper"
 require "docker_manager/git_repo"
 
 RSpec.describe DockerManager::GitRepo do
