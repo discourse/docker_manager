@@ -2,7 +2,6 @@ import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
-import { equal } from "@ember/object/computed";
 import { action } from "@ember/object";
 import I18n from "I18n";
 
@@ -14,8 +13,13 @@ export default class UpgradeShow extends Controller {
   @tracked status = null;
   @tracked percent = 0;
 
-  @equal("status", "complete") complete;
-  @equal("status", "failed") failed;
+  get complete() {
+    return this.status === "complete";
+  }
+
+  get failed() {
+    return this.status === "failed";
+  }
 
   get multiUpgrade() {
     return this.model.length !== 1;
