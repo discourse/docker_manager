@@ -264,7 +264,7 @@ class DockerManager::Upgrader
   end
 
   def unicorn_launcher_pid
-    `ps aux  | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`.strip.to_i
+    `ps aux | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`.strip.to_i
   end
 
   def unicorn_master_pid
