@@ -6,32 +6,6 @@ require_dependency "docker_manager/upgrader"
 module DockerManager
   class AdminController < Admin::AdminController
     def index
-      return if Rails.env.development?
-
-      version =
-        begin
-          File.read("/VERSION")
-        rescue StandardError
-          "1.0.0"
-        end
-
-      version = Gem::Version.new(version)
-      expected_version = Gem::Version.new("2.0.20221221-0050")
-      ruby_version = Gem::Version.new(RUBY_VERSION)
-      expected_ruby_version = Gem::Version.new("3.1.3")
-      min_stable_version = Gem::Version.new("3.0.0")
-      min_beta_version = Gem::Version.new("3.1.0.beta1")
-
-      upgrade_image = version < expected_version
-      upgrade_ruby = ruby_version < expected_ruby_version
-      upgrade_discourse =
-        discourse_upgrade_required?(min_stable_version, min_beta_version)
-
-      if upgrade_image || upgrade_ruby || upgrade_discourse
-        render "upgrade_required", layout: false
-      else
-        render
-      end
     end
 
     def repos
@@ -62,10 +36,38 @@ module DockerManager
             result[:version] = r.upgrade_version
           end
         end
+
         result
       end
 
-      render json: { repos: repos }
+      response = { repos: repos }
+
+      if !Rails.env.development?
+        version =
+          begin
+            File.read("/VERSION")
+          rescue StandardError
+            "1.0.0"
+          end
+
+        version = Gem::Version.new(version)
+        expected_version = Gem::Version.new("2.0.20221221-0050")
+        ruby_version = Gem::Version.new(RUBY_VERSION)
+        expected_ruby_version = Gem::Version.new("3.1.3")
+        min_stable_version = Gem::Version.new("3.0.0")
+        min_beta_version = Gem::Version.new("3.1.0.beta1")
+
+        upgrade_image = version < expected_version
+        upgrade_ruby = ruby_version < expected_ruby_version
+        upgrade_discourse =
+          discourse_upgrade_required?(min_stable_version, min_beta_version)
+
+        if upgrade_image || upgrade_ruby || upgrade_discourse
+          response[:upgrade_required] = true
+        end
+      end
+
+      render json: response
     end
 
     def progress

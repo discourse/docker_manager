@@ -2,12 +2,17 @@ import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
+import { needsImageUpgrade } from "discourse/plugins/docker_manager/discourse/models/repo";
 
 export default class UpgradeIndex extends Controller {
   @service router;
 
   @tracked managerRepo = null;
   @tracked upgrading = null;
+
+  get outdated() {
+    return needsImageUpgrade;
+  }
 
   get upgradeAllButtonDisabled() {
     return !this.managerRepo.upToDate || this.allUpToDate;
@@ -19,6 +24,6 @@ export default class UpgradeIndex extends Controller {
 
   @action
   upgradeAllButton() {
-    this.router.replaceWith("upgrade.show", "all");
+    this.router.transitionTo("upgrade.show", "all");
   }
 }

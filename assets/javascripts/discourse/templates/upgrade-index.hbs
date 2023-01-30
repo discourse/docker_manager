@@ -1,31 +1,50 @@
 <h1>{{i18n "admin.docker.upgrade_title"}}</h1>
 
-<button
-  disabled={{upgradeAllButtonDisabled}}
-  id="upgrade-all"
-  class="btn"
-  {{action "upgradeAllButton"}}
->
-  {{#if allUpToDate}}
-    {{i18n "admin.docker.all_up_to_date"}}
-  {{else}}
-    {{i18n "admin.docker.upgrade_all"}}
-  {{/if}}
-</button>
+{{#if this.outdated}}
+  <h2>{{i18n "admin.docker.outdated_image_header"}}</h2>
+  <p>{{i18n "admin.docker.outdated_image_info"}}</p>
 
-<table class="table" id="repos">
-  <thead>
-    <th></th>
-    <th style="width: 50%">{{i18n "admin.docker.repository"}}</th>
-    <th>{{i18n "admin.docker.status"}}</th>
-  </thead>
-  <tbody>
-    {{#each this.model as |repo|}}
-      <RepoStatus
-        @repo={{repo}}
-        @upgradingRepo={{this.upgrading}}
-        @managerRepo={{this.managerRepo}}
-      />
-    {{/each}}
-  </tbody>
-</table>
+  {{! prettier-ignore }}
+  <pre>
+    cd /var/discourse
+    git pull
+    ./launcher rebuild app
+  </pre>
+  <p>
+    <a
+      href="https://meta.discourse.org/t/how-do-i-update-my-docker-image-to-latest/23325"
+    >
+      {{i18n "admin.docker.outdated_image_link"}}
+    </a>
+  </p>
+{{else}}
+  <button
+    disabled={{upgradeAllButtonDisabled}}
+    id="upgrade-all"
+    class="btn"
+    {{action "upgradeAllButton"}}
+  >
+    {{#if allUpToDate}}
+      {{i18n "admin.docker.all_up_to_date"}}
+    {{else}}
+      {{i18n "admin.docker.upgrade_all"}}
+    {{/if}}
+  </button>
+
+  <table class="table" id="repos">
+    <thead>
+      <th></th>
+      <th style="width: 50%">{{i18n "admin.docker.repository"}}</th>
+      <th>{{i18n "admin.docker.status"}}</th>
+    </thead>
+    <tbody>
+      {{#each this.model as |repo|}}
+        <RepoStatus
+          @repo={{repo}}
+          @upgradingRepo={{this.upgrading}}
+          @managerRepo={{this.managerRepo}}
+        />
+      {{/each}}
+    </tbody>
+  </table>
+{{/if}}
