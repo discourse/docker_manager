@@ -21,20 +21,18 @@ module DockerManager
         result[:fork] = true if result[:official] &&
           !r.url.starts_with?("https://github.com/discourse/")
 
-        if r.valid?
-          result[:id] = r
-            .name
-            .downcase
-            .gsub(/[^a-z]/, "_")
-            .gsub(/_+/, "_")
-            .sub(/_$/, "")
-          result[:version] = r.latest_local_commit
-          result[:pretty_version] = r.latest_local_tag_version.presence
-          result[:url] = r.url
-          if r.upgrading?
-            result[:upgrading] = true
-            result[:version] = r.upgrade_version
-          end
+        result[:id] = r
+          .name
+          .downcase
+          .gsub(/[^a-z]/, "_")
+          .gsub(/_+/, "_")
+          .sub(/_$/, "")
+        result[:version] = r.latest_local_commit
+        result[:pretty_version] = r.latest_local_tag_version.presence
+        result[:url] = r.url
+        if r.upgrading?
+          result[:upgrading] = true
+          result[:version] = r.upgrade_version
         end
 
         result

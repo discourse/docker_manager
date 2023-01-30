@@ -84,7 +84,8 @@ class DockerManager::GitRepo
 
     Discourse.visible_plugins.each do |p|
       next if p.name == "docker_manager"
-      repos << DockerManager::GitRepo.new(File.dirname(p.path), p.name)
+      repo = DockerManager::GitRepo.new(File.dirname(p.path), p.name)
+      repos << repo if repo.valid?
     end
 
     repos
