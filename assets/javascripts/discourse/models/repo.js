@@ -3,6 +3,7 @@ import { tracked } from "@glimmer/tracking";
 import { TrackedObject } from "@ember-compat/tracked-built-ins";
 
 let loaded = [];
+export let needsImageUpgrade = false;
 
 function concatVersions(repos) {
   return repos.map((repo) => repo.version).join(", ");
@@ -140,6 +141,8 @@ Repo.findAll = async function () {
 
   const result = await ajax("/admin/docker/repos");
   loaded = result.repos.map((r) => new Repo(r));
+  needsImageUpgrade = result.upgrade_required;
+
   return loaded;
 };
 
