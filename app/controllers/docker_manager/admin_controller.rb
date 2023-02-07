@@ -169,7 +169,7 @@ module DockerManager
       end
     end
 
-    def respond_progress(logs: nil, percentage: nil)
+    def respond_progress(logs: "", percentage: 0)
       render json: { progress: { logs: logs, percentage: percentage } }
     end
 
