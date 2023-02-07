@@ -8,7 +8,8 @@ export default class RepoStatus extends Component {
 
   get upgradeDisabled() {
     if (this.args.upgradingRepo) {
-      return true;
+      // Allow to visit the upgrade page while it's running
+      return false;
     }
 
     if (!this.args.managerRepo) {
