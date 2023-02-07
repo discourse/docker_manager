@@ -4,6 +4,7 @@ import { inject as service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
 import I18n from "I18n";
+import { bind } from "discourse-common/utils/decorators";
 
 export default class UpgradeShow extends Controller {
   @service messageBus;
@@ -48,6 +49,7 @@ export default class UpgradeShow extends Controller {
     });
   }
 
+  @bind
   messageReceived(msg) {
     switch (msg.type) {
       case "log":
@@ -76,13 +78,11 @@ export default class UpgradeShow extends Controller {
   }
 
   startBus() {
-    this.messageBus.subscribe("/docker/upgrade", (msg) => {
-      this.messageReceived(msg);
-    });
+    this.messageBus.subscribe("/docker/upgrade", this.messageReceived);
   }
 
   stopBus() {
-    this.messageBus.unsubscribe("/docker/upgrade");
+    this.messageBus.unsubscribe("/docker/upgrade", this.messageReceived);
   }
 
   reset() {
