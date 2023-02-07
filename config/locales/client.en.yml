@@ -30,6 +30,7 @@ en:
         upgrade_action: "Upgrade"
         upgrade_all: "Upgrade All"
         upgrade_error: "Sorry, there was an error upgrading Discourse. Please check the logs below."
+        upgrade_everything: "Upgrade everything"
         upgrade_repo: "Upgrade %{name}"
         upgrade_successful: "Upgrade completed successfully!"
         upgrade_title: "Upgrade"
