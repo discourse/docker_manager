@@ -1,4 +1,4 @@
-<h1>{{i18n "admin.docker.upgrade_repo" name=this.title}}</h1>
+<h1>{{this.title}}</h1>
 
 <ProgressBar @percent={{this.percent}} />
 
@@ -9,11 +9,11 @@
 {{/if}}
 
 {{#if this.isUpToDate}}
-  {{#unless this.multiUpgrade}}
-    <p>{{i18n "admin.docker.repo_newest_version" name=this.title}}</p>
-  {{else}}
+  {{#if this.multiUpgrade}}
     <p>{{i18n "admin.docker.everything_up_to_date"}}</p>
-  {{/unless}}
+  {{else}}
+    <p>{{i18n "admin.docker.repo_newest_version" name=this.model.name}}</p>
+  {{/if}}
 {{else}}
   <button {{on "click" this.start}} disabled={{this.upgrading}} class="btn">
     {{#if this.upgrading}}
