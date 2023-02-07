@@ -69,7 +69,7 @@ module DockerManager
     end
 
     def progress
-      repo = find_repos(params[:path], upgrading: true)
+      repo = AdminController.find_repos(params[:path], upgrading: true)
       return respond_progress if repo.blank?
 
       upgrader = Upgrader.new(current_user.id, repo, repo_version(repo))
@@ -105,7 +105,7 @@ module DockerManager
     end
 
     def upgrade
-      repo = find_repos(params[:path])
+      repo = AdminController.find_repos(params[:path])
       raise Discourse::NotFound unless repo.present?
 
       script_path =
@@ -134,7 +134,7 @@ module DockerManager
     end
 
     def reset_upgrade
-      repo = find_repos(params[:path], upgrading: true)
+      repo = AdminController.find_repos(params[:path], upgrading: true)
       raise Discourse::NotFound unless repo.present?
 
       upgrader = Upgrader.new(current_user.id, repo, repo_version(repo))
@@ -154,7 +154,7 @@ module DockerManager
       render plain: ps_output
     end
 
-    def find_repos(path, upgrading: false)
+    def self.find_repos(path, upgrading: false)
       return DockerManager::GitRepo.find(path) unless path == "all"
 
       DockerManager::GitRepo.find_all.select do |repo|
