@@ -154,8 +154,6 @@ module DockerManager
       render plain: ps_output
     end
 
-    private
-
     def find_repos(path, upgrading: false)
       return DockerManager::GitRepo.find(path) unless path == "all"
 
@@ -168,6 +166,8 @@ module DockerManager
         end
       end
     end
+
+    private
 
     def respond_progress(logs: "", percentage: 0)
       render json: { progress: { logs: logs, percentage: percentage } }
