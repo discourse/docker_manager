@@ -19,7 +19,7 @@
   </p>
 {{else}}
   <button
-    disabled={{upgradeAllButtonDisabled}}
+    disabled={{this.upgradeAllButtonDisabled}}
     id="upgrade-all"
     class="btn"
     {{action "upgradeAllButton"}}
@@ -41,7 +41,7 @@
       {{#each this.model as |repo|}}
         <RepoStatus
           @repo={{repo}}
-          @upgradingRepo={{this.upgrading}}
+          @upgradingRepo={{repo.upgrading}}
           @managerRepo={{this.managerRepo}}
         />
       {{/each}}
