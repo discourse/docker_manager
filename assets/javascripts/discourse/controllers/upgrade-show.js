@@ -42,13 +42,6 @@ export default class UpgradeShow extends Controller {
     return this.isMultiple ? this.model : [this.model];
   }
 
-  updateAttribute(key, value, valueIsKey = false) {
-    this.model.forEach((repo) => {
-      value = valueIsKey ? repo[value] : value;
-      repo[key] = value;
-    });
-  }
-
   @bind
   messageReceived(msg) {
     switch (msg.type) {
@@ -70,7 +63,9 @@ export default class UpgradeShow extends Controller {
         }
 
         if (msg.value === "complete" || msg.value === "failed") {
-          this.updateAttribute("upgrading", false);
+          for (const repo of this.model) {
+            repo.upgrading = false;
+          }
         }
 
         break;
@@ -123,7 +118,11 @@ export default class UpgradeShow extends Controller {
             await Repo.resetAll(this.model.filter((repo) => !repo.upToDate));
           } finally {
             this.reset();
-            this.updateAttribute("upgrading", false);
+
+            for (const repo of this.model) {
+              repo.upgrading = false;
+            }
+
             return;
           }
         }
