@@ -64,6 +64,8 @@ export default class UpgradeShow extends Controller {
             .forEach((repo) => {
               repo.version = repo.latest?.version;
             });
+
+          this.session.requiresRefresh = true;
         }
 
         if (msg.value === "complete" || msg.value === "failed") {
