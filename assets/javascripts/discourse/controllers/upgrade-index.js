@@ -8,7 +8,6 @@ export default class UpgradeIndex extends Controller {
   @service router;
 
   @tracked managerRepo = null;
-  @tracked upgrading = null;
 
   get outdated() {
     return needsImageUpgrade;

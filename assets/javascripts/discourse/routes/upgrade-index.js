@@ -19,13 +19,8 @@ export default class UpgradeIndex extends Route {
 
   setupController(controller, model) {
     controller.model = model;
-    controller.upgrading = null;
 
     model.forEach((repo) => {
-      if (repo.upgrading) {
-        controller.upgrading = repo;
-      }
-
       // Special case: Upgrade docker manager first
       if (repo.id === "docker_manager") {
         controller.managerRepo = repo;
