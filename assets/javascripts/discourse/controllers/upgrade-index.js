@@ -1,15 +1,19 @@
 import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
-import { tracked } from "@glimmer/tracking";
+import { cached } from "@glimmer/tracking";
 import { action } from "@ember/object";
 import { needsImageUpgrade } from "discourse/plugins/docker_manager/discourse/models/repo";
 
 export default class UpgradeIndex extends Controller {
   @service router;
 
-  @tracked managerRepo = null;
+  @cached
+  get managerRepo() {
+    return this.model.find((repo) => repo.id === "docker_manager");
+  }
 
   get outdated() {
+    // TODO: move to service?
     return needsImageUpgrade;
   }
 

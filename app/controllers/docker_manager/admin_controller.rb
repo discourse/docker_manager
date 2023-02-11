@@ -74,8 +74,9 @@ module DockerManager
 
       upgrader = Upgrader.new(current_user.id, repo, repo_version(repo))
       respond_progress(
-        logs: upgrader.find_logs,
-        percentage: upgrader.last_percentage
+        logs: upgrader.find_logs || "",
+        percentage: upgrader.last_percentage || 0,
+        repos: Array.wrap(repo).map(&:name)
       )
     end
 
@@ -169,8 +170,14 @@ module DockerManager
 
     private
 
-    def respond_progress(logs: "", percentage: 0)
-      render json: { progress: { logs: logs, percentage: percentage } }
+    def respond_progress(logs: "", percentage: 0, repos: nil)
+      render json: {
+               progress: {
+                 logs: logs,
+                 percentage: percentage,
+                 repos: repos
+               }
+             }
     end
 
     def repo_version(repo)

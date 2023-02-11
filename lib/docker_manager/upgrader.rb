@@ -51,7 +51,7 @@ class DockerManager::Upgrader
 
     if num_workers_spun_down.positive?
       log "Stopping #{workers - min_workers} Unicorn worker(s), to free up memory"
-      (num_workers_spun_down).times { Process.kill("TTOU", unicorn_master_pid) }
+      num_workers_spun_down.times { Process.kill("TTOU", unicorn_master_pid) }
     end
 
     if ENV["UNICORN_SIDEKIQS"].to_i > 0
@@ -62,7 +62,7 @@ class DockerManager::Upgrader
       Process.kill("CONT", unicorn_master_pid)
     end
 
-    # HEAD@{upstream} is just a fancy way how to say origin/master (in normal case)
+    # HEAD@{upstream} is just a fancy way how to say origin/main (in normal case)
     # see http://stackoverflow.com/a/12699604/84283
     @repos.each_with_index do |repo, index|
       # We automatically handle renames from `master` -> `main`
@@ -149,7 +149,7 @@ class DockerManager::Upgrader
 
     if num_workers_spun_down.positive? && !reloaded
       log "Spinning up #{num_workers_spun_down} Unicorn worker(s) that were stopped initially"
-      (num_workers_spun_down).times { Process.kill("TTIN", unicorn_master_pid) }
+      num_workers_spun_down.times { Process.kill("TTIN", unicorn_master_pid) }
     end
 
     raise ex
@@ -160,7 +160,7 @@ class DockerManager::Upgrader
   def publish(type, value)
     MessageBus.publish(
       "/docker/upgrade",
-      { type: type, value: value },
+      { type: type, value: value, repos: @repos.map(&:name) },
       user_ids: [@user_id]
     )
   end

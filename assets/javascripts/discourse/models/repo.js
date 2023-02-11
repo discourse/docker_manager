@@ -172,18 +172,20 @@ Repo.resetAll = function (repos) {
   });
 };
 
-Repo.findLatestAll = function () {
-  return ajax("/admin/docker/latest", {
-    dataType: "text",
+Repo.findLatestAll = async function () {
+  const result = await ajax("/admin/docker/latest", {
+    dataType: "json",
     type: "GET",
     data: { path: "all" },
   });
+  return result.repos;
 };
 
-Repo.findAllProgress = function (repos) {
-  return ajax("/admin/docker/progress", {
-    dataType: "text",
+Repo.findAllProgress = async function (repos) {
+  const result = await ajax("/admin/docker/progress", {
+    dataType: "json",
     type: "GET",
     data: { path: "all", version: concatVersions(repos) },
   });
+  return result.progress;
 };

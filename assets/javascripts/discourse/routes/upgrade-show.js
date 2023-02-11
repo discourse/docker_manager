@@ -1,9 +1,9 @@
 import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 import Route from "@ember/routing/route";
-import { tracked } from "@glimmer/tracking";
+import { inject as service } from "@ember/service";
 
 export default class UpgradeShow extends Route {
-  @tracked progress;
+  @service upgradeStore;
 
   model(params) {
     if (params.id === "all") {
@@ -15,9 +15,9 @@ export default class UpgradeShow extends Route {
 
   async afterModel(model) {
     if (Array.isArray(model)) {
-      const response = await Repo.findLatestAll();
+      const repos = await Repo.findLatestAll();
 
-      for (const repoData of JSON.parse(response).repos) {
+      for (const repoData of repos) {
         const repo = model.find((_repo) => _repo.path === repoData.path);
         if (!repo) {
           return;
@@ -34,7 +34,12 @@ export default class UpgradeShow extends Route {
         model.filter((repo) => !repo.upToDate)
       );
 
-      this.progress = JSON.parse(progress).progress;
+      this.upgradeStore.reset({
+        consoleOutput: progress.logs,
+        progressPercentage: progress.percentage,
+        // repos,
+      });
+
       return;
     }
 
@@ -42,18 +47,10 @@ export default class UpgradeShow extends Route {
     await model.findLatest();
 
     const progress = await model.findProgress();
-    this.progress = progress;
-  }
-
-  setupController(controller, model) {
-    controller.reset();
-    controller.model = Array.isArray(model) ? model : [model];
-    controller.output = this.progress.logs;
-    controller.percent = this.progress.percentage;
-    controller.startBus();
-  }
-
-  deactivate() {
-    this.controllerFor("upgrade.show").stopBus();
+    this.upgradeStore.reset({
+      consoleOutput: progress.logs,
+      progressPercentage: progress.percentage,
+      // repos,
+    });
   }
 }
