@@ -1,13 +1,15 @@
 {{#if this.currentUser.admin}}
-  {{#if @versionCheck.upToDate}}
-    <LinkTo @route="upgrade">
-      {{i18n "admin.docker.link_to_upgrade"}}
-    </LinkTo>
-  {{else}}
-    {{i18n "admin.docker.outdated_notice"}}
+  <div class="upgrades-banner">
+    {{#if @versionCheck.upToDate}}
+      <LinkTo @route="upgrade">
+        {{i18n "admin.docker.link_to_upgrade"}}
+      </LinkTo>
+    {{else}}
+      {{i18n "admin.docker.outdated_notice"}}
 
-    <LinkTo @route="upgrade">
-      {{i18n "admin.docker.perform_upgrade"}}
-    </LinkTo>
-  {{/if}}
+      <LinkTo @route="upgrade">
+        {{i18n "admin.docker.perform_upgrade"}}
+      </LinkTo>
+    {{/if}}
+  </div>
 {{/if}}
