@@ -1,10 +1,17 @@
-.dashboard-stats .upgrade-header {
-  background: var(--danger-low);
+.dashboard-stats .upgrades-banner {
+  background: var(--tertiary-low);
   margin-bottom: 2rem;
   padding: 1rem;
 
+  &.upgrade-needed {
+    background: var(--danger-low);
+
+    a {
+      color: var(--danger);
+    }
+  }
+
   a {
-    color: var(--danger);
     font-weight: bold;
   }
 }
