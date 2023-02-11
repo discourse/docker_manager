@@ -1,10 +1,8 @@
-import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 import Route from "@ember/routing/route";
-import I18n from "I18n";
 
 export default class UpgradeIndex extends Route {
   model() {
-    return Repo.findAll();
+    return this.modelFor("upgrade");
   }
 
   async loadRepos(list) {
@@ -12,28 +10,13 @@ export default class UpgradeIndex extends Route {
       return;
     }
 
-    await list.shift().findLatest();
-
-    this.loadRepos(list);
+    for (const repo of list) {
+      await repo.findLatest();
+    }
   }
 
   setupController(controller, model) {
-    controller.model = model;
-
-    model.forEach((repo) => {
-      // Special case: Upgrade docker manager first
-      if (repo.id === "docker_manager") {
-        controller.managerRepo = repo;
-      }
-
-      // Special case: If the branch is "main" warn user
-      if (repo.id === "discourse" && repo.branch === "origin/main") {
-        this.controllerFor("upgrade").appendBannerHtml(
-          I18n.t("admin.docker.main_branch_warning")
-        );
-      }
-    });
-
-    this.loadRepos(model.slice(0));
+    super.setupController(...arguments);
+    this.loadRepos(model);
   }
 }
