@@ -5,17 +5,20 @@ import I18n from "I18n";
 
 export default class RepoStatus extends Component {
   @service router;
+  @service upgradeStore;
 
   get upgradeDisabled() {
+    // Allow to see the currently running upgrade
     if (this.args.upgradingRepo) {
-      // Allow to visit the upgrade page while it's running
       return false;
     }
 
-    if (!this.args.managerRepo) {
-      return false;
+    // Disable other buttons when an upgrade is running
+    if (this.upgradeStore.running) {
+      return true;
     }
 
+    // docker_manager has to be upgraded before other plugins
     return (
       !this.args.managerRepo.upToDate &&
       this.args.managerRepo !== this.args.repo

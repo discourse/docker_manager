@@ -37,7 +37,8 @@ export default class UpgradeShow extends Route {
       this.upgradeStore.reset({
         consoleOutput: progress.logs,
         progressPercentage: progress.percentage,
-        // repos,
+        upgradeStatus: progress.status,
+        repos,
       });
 
       return;
@@ -50,7 +51,8 @@ export default class UpgradeShow extends Route {
     this.upgradeStore.reset({
       consoleOutput: progress.logs,
       progressPercentage: progress.percentage,
-      // repos,
+      upgradeStatus: progress.status,
+      repos: [model.id],
     });
   }
 }
