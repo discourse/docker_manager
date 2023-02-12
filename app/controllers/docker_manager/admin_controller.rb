@@ -76,6 +76,7 @@ module DockerManager
       respond_progress(
         logs: upgrader.find_logs || "",
         percentage: upgrader.last_percentage || 0,
+        status: upgrader.last_status || nil,
         repos: Array.wrap(repo).map(&:name)
       )
     end
@@ -170,14 +171,15 @@ module DockerManager
 
     private
 
-    def respond_progress(logs: "", percentage: 0, repos: nil)
-      render json: {
-               progress: {
-                 logs: logs,
-                 percentage: percentage,
-                 repos: repos
-               }
-             }
+    def respond_progress(logs: "", percentage: 0, status: nil, repos: nil)
+      progress = {
+        logs: logs,
+        percentage: percentage,
+        status: status,
+        repos: repos
+      }
+
+      render json: { progress: progress }
     end
 
     def repo_version(repo)

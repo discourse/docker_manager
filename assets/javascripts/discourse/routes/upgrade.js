@@ -25,7 +25,6 @@ export default class Upgrade extends Route {
 
     if (discourse?.branch === "origin/main") {
       // Special case: If the branch is "main" warn user
-      // TODO: move the new service?
       controller.appendBannerHtml(I18n.t("admin.docker.main_branch_warning"));
     }
   }

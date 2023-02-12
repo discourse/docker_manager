@@ -11,6 +11,7 @@ class DockerManager::Upgrader
     @repos.each(&:stop_upgrading)
     clear_logs
     percent(0)
+    status(nil)
   end
 
   def min_workers
@@ -21,6 +22,7 @@ class DockerManager::Upgrader
     @repos.each { |repo| return unless repo.start_upgrading }
 
     percent(0)
+    status("running")
 
     clear_logs
 
@@ -134,9 +136,9 @@ class DockerManager::Upgrader
     log_version_upgrade
     percent(100)
     log("DONE")
-    publish("status", "complete")
+    status("complete")
   rescue => ex
-    publish("status", "failed")
+    status("failed")
 
     [
       "Docker Manager: FAILED TO UPGRADE",
@@ -242,9 +244,23 @@ class DockerManager::Upgrader
   end
 
   def log(message)
-    Discourse.redis.append logs_key, message + "\n"
+    Discourse.redis.append(logs_key, message + "\n")
     Discourse.redis.expire(logs_key, 30.minutes)
-    publish "log", message
+    publish("log", message)
+  end
+
+  def status_key
+    "status:#{@repos.map(&:path).join(", ")}:#{@from_version}"
+  end
+
+  def last_status
+    Discourse.redis.get(status_key)
+  end
+
+  def status(val)
+    Discourse.redis.set(status_key, val)
+    Discourse.redis.expire(status_key, 30.minutes)
+    publish("status", val)
   end
 
   def log_version_upgrade

@@ -13,7 +13,6 @@ export default class UpgradeIndex extends Controller {
   }
 
   get outdated() {
-    // TODO: move to service?
     return needsImageUpgrade;
   }
 

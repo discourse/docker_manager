@@ -6,10 +6,6 @@ export default class UpgradeIndex extends Route {
   }
 
   async loadRepos(list) {
-    if (list.length === 0) {
-      return;
-    }
-
     for (const repo of list) {
       await repo.findLatest();
     }
