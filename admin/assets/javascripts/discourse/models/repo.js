@@ -10,6 +10,10 @@ function concatVersions(repos) {
 }
 
 export default class Repo {
+  static create() {
+    return new Repo(...arguments);
+  }
+
   static async findAll() {
     if (loaded.length) {
       return loaded;

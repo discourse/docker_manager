@@ -2,8 +2,8 @@ import { module, test } from "qunit";
 import { setupRenderingTest } from "ember-qunit";
 import { render, settled } from "@ember/test-helpers";
 import hbs from "htmlbars-inline-precompile";
-import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
 import { query } from "discourse/tests/helpers/qunit-helpers";
+import { getOwner } from "discourse-common/lib/get-owner";
 
 const repoProps = {
   unloaded: false,
@@ -47,8 +47,9 @@ module("Integration | Component | RepoStatus", function (hooks) {
   setupRenderingTest(hooks);
 
   test("it renders correctly", async function (assert) {
-    this.set("repo", new Repo(repoProps));
-    this.set("managerRepo", new Repo(managerProps));
+    const store = getOwner(this).lookup("service:store");
+    this.set("repo", store.createRecord("repo", repoProps));
+    this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
       hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
@@ -87,8 +88,9 @@ module("Integration | Component | RepoStatus", function (hooks) {
   });
 
   test("official check mark", async function (assert) {
-    this.set("repo", new Repo(repoProps));
-    this.set("managerRepo", new Repo(managerProps));
+    const store = getOwner(this).lookup("service:store");
+    this.set("repo", store.createRecord("repo", repoProps));
+    this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
       hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
@@ -107,8 +109,9 @@ module("Integration | Component | RepoStatus", function (hooks) {
   });
 
   test("upgrade button", async function (assert) {
-    this.set("repo", new Repo(repoProps));
-    this.set("managerRepo", new Repo(managerProps));
+    const store = getOwner(this).lookup("service:store");
+    this.set("repo", store.createRecord("repo", repoProps));
+    this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
       hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
