@@ -2,7 +2,7 @@ import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { cached } from "@glimmer/tracking";
 import { action } from "@ember/object";
-import { needsImageUpgrade } from "discourse/plugins/docker_manager/discourse/models/repo";
+import { needsImageUpgrade } from "../models/repo";
 
 export default class UpgradeIndex extends Controller {
   @service router;

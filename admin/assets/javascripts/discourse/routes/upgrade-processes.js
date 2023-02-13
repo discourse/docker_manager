@@ -1,4 +1,4 @@
-import ProcessList from "discourse/plugins/docker_manager/discourse/models/process-list";
+import ProcessList from "../models/process-list";
 import Route from "@ember/routing/route";
 
 export default class UpgradeProcesses extends Route {
