@@ -1,4 +1,4 @@
-import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
+import Repo from "../models/repo";
 import Controller from "@ember/controller";
 import { inject as service } from "@ember/service";
 import { action } from "@ember/object";

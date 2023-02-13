@@ -1,7 +1,7 @@
 import Route from "@ember/routing/route";
 import { bind } from "discourse-common/utils/decorators";
 import { inject as service } from "@ember/service";
-import Repo from "discourse/plugins/docker_manager/discourse/models/repo";
+import Repo from "../models/repo";
 import I18n from "I18n";
 
 export default class Upgrade extends Route {
