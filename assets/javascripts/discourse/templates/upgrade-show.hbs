@@ -15,7 +15,11 @@
     <p>{{i18n "admin.docker.repo_newest_version" name=this.model.name}}</p>
   {{/if}}
 {{else}}
-  <button {{on "click" this.start}} disabled={{this.upgrading}} class="btn">
+  <button
+    {{on "click" this.start}}
+    disabled={{this.upgrading}}
+    class="btn start-upgrade"
+  >
     {{#if this.upgrading}}
       {{i18n "admin.docker.upgrading"}}
     {{else}}
