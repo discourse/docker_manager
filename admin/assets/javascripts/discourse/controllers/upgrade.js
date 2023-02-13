@@ -1,9 +1,10 @@
 import Controller from "@ember/controller";
 import { tracked } from "@glimmer/tracking";
 import { action } from "@ember/object";
+import { TrackedArray } from "@ember-compat/tracked-built-ins";
 
 export default class Upgrade extends Controller {
-  @tracked banner = [];
+  @tracked banner = new TrackedArray([]);
   @tracked bannerDismissed = false;
 
   get showBanner() {
@@ -16,7 +17,7 @@ export default class Upgrade extends Controller {
 
   appendBannerHtml(html) {
     if (!this.banner.includes(html)) {
-      this.banner = [...this.banner, html];
+      this.banner.push(html);
     }
   }
 
