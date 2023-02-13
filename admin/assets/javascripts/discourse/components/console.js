@@ -3,9 +3,8 @@ import { bind } from "discourse-common/utils/decorators";
 
 export default class Console extends Component {
   @bind
-  scrollToBottom() {
+  scrollToBottom(element) {
     if (this.args.followOutput) {
-      const element = document.querySelector(".console-logs");
       element.scrollTop = element.scrollHeight;
     }
   }
