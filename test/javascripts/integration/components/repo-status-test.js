@@ -52,7 +52,7 @@ module("Integration | Component | RepoStatus", function (hooks) {
     this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
-      hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
+      hbs`<DockerManager::RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
     );
 
     assert
@@ -93,7 +93,7 @@ module("Integration | Component | RepoStatus", function (hooks) {
     this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
-      hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
+      hbs`<DockerManager::RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
     );
 
     assert
@@ -114,7 +114,7 @@ module("Integration | Component | RepoStatus", function (hooks) {
     this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
-      hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
+      hbs`<DockerManager::RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
     );
 
     assert

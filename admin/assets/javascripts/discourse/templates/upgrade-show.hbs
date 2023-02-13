@@ -1,6 +1,6 @@
 <h1>{{this.title}}</h1>
 
-<ProgressBar @percent={{this.upgradeStore.progressPercentage}} />
+<DockerManager::ProgressBar @percent={{this.upgradeStore.progressPercentage}} />
 
 {{#if this.complete}}
   <p>{{i18n "admin.docker.upgrade_successful"}}</p>
@@ -35,4 +35,4 @@
   {{/if}}
 {{/if}}
 
-<Console @output={{this.upgradeStore.consoleOutput}} @followOutput={{true}} />
+<DockerManager::Console @output={{this.upgradeStore.consoleOutput}} @followOutput={{true}} />
