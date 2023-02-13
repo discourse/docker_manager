@@ -19,6 +19,7 @@
     {{on "click" this.start}}
     disabled={{this.upgrading}}
     class="btn start-upgrade"
+    type="button"
   >
     {{#if this.upgrading}}
       {{i18n "admin.docker.upgrading"}}
@@ -28,7 +29,7 @@
   </button>
 
   {{#if this.upgrading}}
-    <button {{on "click" this.resetUpgrade}} class="btn unlock">
+    <button {{on "click" this.resetUpgrade}} class="btn unlock" type="button">
       {{i18n "admin.docker.reset_upgrade"}}
     </button>
   {{/if}}
