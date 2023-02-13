@@ -21,7 +21,7 @@ en:
         outdated_image_header: "You are running an old version of the Discourse image"
         outdated_image_info: "Upgrades via the web UI are disabled until you run the latest image. To do so log in to your server using SSH and run:"
         outdated_image_link: "More info on our support site"
-        outdated_notice: "Your Discourse installation is out of date"
+        outdated_notice: "Your Discourse installation is out of date."
         perform_upgrade: "Click here to upgrade."
         repo_newest_version: "%{name} is at the newest version."
         repository: "Repository"
