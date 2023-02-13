@@ -10,6 +10,62 @@ function concatVersions(repos) {
 }
 
 export default class Repo {
+  static async findAll() {
+    if (loaded.length) {
+      return loaded;
+    }
+
+    const result = await ajax("/admin/docker/repos");
+    loaded = result.repos.map((r) => new Repo(r));
+    needsImageUpgrade = result.upgrade_required;
+
+    return loaded;
+  }
+
+  static async findUpgrading() {
+    const result = await Repo.findAll();
+    return result.findBy("upgrading", true);
+  }
+
+  static async find(id) {
+    const result = await Repo.findAll();
+    return result.findBy("id", id);
+  }
+
+  static upgradeAll() {
+    return ajax("/admin/docker/upgrade", {
+      dataType: "text",
+      type: "POST",
+      data: { path: "all" },
+    });
+  }
+
+  static resetAll(repos) {
+    return ajax("/admin/docker/upgrade", {
+      dataType: "text",
+      type: "DELETE",
+      data: { path: "all", version: concatVersions(repos) },
+    });
+  }
+
+  static async findLatestAll() {
+    const result = await ajax("/admin/docker/latest", {
+      dataType: "json",
+      type: "GET",
+      data: { path: "all" },
+    });
+    return result.repos;
+  }
+
+  static async findAllProgress(repos) {
+    const result = await ajax("/admin/docker/progress", {
+      dataType: "json",
+      type: "GET",
+      data: { path: "all", version: concatVersions(repos) },
+    });
+    return result.progress;
+  }
+
   @tracked unloaded = true;
   @tracked checking = false;
   @tracked lastCheckedAt = null;
@@ -133,59 +189,3 @@ export default class Repo {
     }
   }
 }
-
-Repo.findAll = async function () {
-  if (loaded.length) {
-    return loaded;
-  }
-
-  const result = await ajax("/admin/docker/repos");
-  loaded = result.repos.map((r) => new Repo(r));
-  needsImageUpgrade = result.upgrade_required;
-
-  return loaded;
-};
-
-Repo.findUpgrading = async function () {
-  const result = await Repo.findAll();
-  return result.findBy("upgrading", true);
-};
-
-Repo.find = async function (id) {
-  const result = await Repo.findAll();
-  return result.findBy("id", id);
-};
-
-Repo.upgradeAll = function () {
-  return ajax("/admin/docker/upgrade", {
-    dataType: "text",
-    type: "POST",
-    data: { path: "all" },
-  });
-};
-
-Repo.resetAll = function (repos) {
-  return ajax("/admin/docker/upgrade", {
-    dataType: "text",
-    type: "DELETE",
-    data: { path: "all", version: concatVersions(repos) },
-  });
-};
-
-Repo.findLatestAll = async function () {
-  const result = await ajax("/admin/docker/latest", {
-    dataType: "json",
-    type: "GET",
-    data: { path: "all" },
-  });
-  return result.repos;
-};
-
-Repo.findAllProgress = async function (repos) {
-  const result = await ajax("/admin/docker/progress", {
-    dataType: "json",
-    type: "GET",
-    data: { path: "all", version: concatVersions(repos) },
-  });
-  return result.progress;
-};
