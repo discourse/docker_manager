@@ -40,7 +40,7 @@
     </thead>
     <tbody>
       {{#each this.model as |repo|}}
-        <RepoStatus
+        <DockerManager::RepoStatus
           @repo={{repo}}
           @upgradingRepo={{repo.upgrading}}
           @managerRepo={{this.managerRepo}}
