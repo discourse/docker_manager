@@ -23,7 +23,7 @@
     id="upgrade-all"
     class="btn"
     type="button"
-    {{action "upgradeAllButton"}}
+    {{on "click" this.upgradeAllButton}}
   >
     {{#if allUpToDate}}
       {{i18n "admin.docker.all_up_to_date"}}
