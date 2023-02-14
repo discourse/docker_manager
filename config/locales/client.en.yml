@@ -36,6 +36,7 @@ en:
         upgrade_everything: "Upgrade everything"
         upgrade_repo: "Upgrade %{name}"
         upgrade_successful: "Upgrade completed successfully!"
+        upgrade_tab: "Upgrade"
         upgrade_title: "Upgrade"
         upgrading: "Upgrading…"
 
