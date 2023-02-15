@@ -15,24 +15,29 @@
     <p>{{i18n "admin.docker.repo_newest_version" name=this.model.name}}</p>
   {{/if}}
 {{else}}
-  <button
-    {{on "click" this.start}}
-    disabled={{this.upgrading}}
-    class="btn start-upgrade"
-    type="button"
-  >
-    {{#if this.upgrading}}
-      {{i18n "admin.docker.upgrading"}}
-    {{else}}
-      {{i18n "admin.docker.start_upgrading"}}
-    {{/if}}
-  </button>
-
-  {{#if this.upgrading}}
-    <button {{on "click" this.resetUpgrade}} class="btn unlock" type="button">
-      {{i18n "admin.docker.reset_upgrade"}}
+  <div class="upgrade-actions">
+    <button
+      {{on "click" this.start}}
+      disabled={{this.upgrading}}
+      class="btn start-upgrade"
+      type="button"
+    >
+      {{#if this.upgrading}}
+        {{i18n "admin.docker.upgrading"}}
+      {{else}}
+        {{i18n "admin.docker.start_upgrading"}}
+      {{/if}}
     </button>
-  {{/if}}
+
+    {{#if this.upgrading}}
+      <button {{on "click" this.resetUpgrade}} class="btn unlock" type="button">
+        {{i18n "admin.docker.reset_upgrade"}}
+      </button>
+    {{/if}}
+  </div>
 {{/if}}
 
-<DockerManager::Console @output={{this.upgradeStore.consoleOutput}} @followOutput={{true}} />
+<DockerManager::Console
+  @output={{this.upgradeStore.consoleOutput}}
+  @followOutput={{true}}
+/>
