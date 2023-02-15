@@ -121,20 +121,20 @@
         var(--tertiary-600)
       );
 
-      animation: progress-bar-stripes 1.5s linear infinite;
+      background: var(--tertiary-600);
       background-image: var(--stripes);
       background-size: 2rem 2rem;
       height: 100%;
+    }
+
+    &.active .progress-bar-inner {
+      animation: progress-bar-stripes 1.5s linear infinite;
       transition: width 0.6s ease;
 
       @media screen and (prefers-reduced-motion: reduce) {
         animation: none;
         transition: none;
       }
-    }
-
-    &.active &-inner {
-      background: var(--tertiary-800);
     }
 
     @keyframes progress-bar-stripes {
