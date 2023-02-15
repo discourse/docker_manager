@@ -23,13 +23,13 @@
   }
 
   .console-logs {
-    background-color: black;
-    color: #ddd;
+    background-color: var(--secondary-very-high);
+    color: var(--primary-900);
     font-family: monospace;
     height: 400px;
-    margin-top: 20px;
+    margin-top: 1rem;
     overflow-x: scroll;
-    padding: 10px;
+    padding: 1rem;
     white-space: pre;
   }
 
@@ -38,7 +38,7 @@
   }
 
   table#repos {
-    margin-top: 10px;
+    margin-top: 1rem;
 
     td:first-child {
       width: 3%;
@@ -49,11 +49,6 @@
       border-top: none;
     }
 
-    td,
-    th {
-      padding: 8px 15px 8px 0px;
-    }
-
     button {
       padding-left: 15%;
       padding-right: 15%;
@@ -62,14 +57,14 @@
 
   .new-version {
     h4 {
-      margin: 0 0 10px 0;
+      font-size: 1rem;
       font-weight: bold;
-      font-size: 14px;
+      margin: 0 0 1rem 0;
     }
 
     ul {
       list-style: none;
-      margin: 0 0 10px 0;
+      margin: 0 0 1rem 0;
       padding: 0;
     }
 
@@ -82,11 +77,18 @@
     color: #959595;
   }
 
-  button.unlock {
-    float: right;
-    background-color: red;
-    &:hover {
-      background-color: #a00;
+  .upgrade-actions {
+    display: flex;
+    justify-content: space-between;
+
+    button.unlock {
+      background-color: var(--danger);
+      color: var(--secondary);
+
+      &:hover,
+      &:focus {
+        background-color: var(--danger-hover);
+      }
     }
   }
 
@@ -108,8 +110,7 @@
     margin-bottom: 1rem;
 
     &-inner {
-      animation: progress-bar-stripes 1.5s linear infinite;
-      background-image: linear-gradient(
+      --stripes: linear-gradient(
         135deg,
         var(--tertiary-400) 25%,
         var(--tertiary-600) 25%,
@@ -119,6 +120,9 @@
         var(--tertiary-600) 75%,
         var(--tertiary-600)
       );
+
+      animation: progress-bar-stripes 1.5s linear infinite;
+      background-image: var(--stripes);
       background-size: 2rem 2rem;
       height: 100%;
       transition: width 0.6s ease;
@@ -142,14 +146,5 @@
         background-position: 2rem 0;
       }
     }
-  }
-
-  th {
-    border-top: none;
-  }
-
-  ul.nav-tabs {
-    width: 100%;
-    margin-bottom: 15px;
   }
 }
