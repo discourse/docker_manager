@@ -150,6 +150,6 @@ class DockerManager::GitRepo
   def run(cmd)
     @memoize[cmd] ||= `cd #{path} && git #{cmd}`.strip
   rescue => e
-    p e
+    puts e.inspect
   end
 end

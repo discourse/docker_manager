@@ -44,6 +44,8 @@ class DockerManager::Upgrader
       raise "No unicorn master or launcher"
     end
 
+    percent(5)
+
     log("Cycling Unicorn, to free up memory")
     reload_unicorn(launcher_pid)
 
