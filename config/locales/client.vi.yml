@@ -6,6 +6,10 @@
 
 vi:
   js:
-    docker:
-      upgrade: "Có bản cập nhật mới cho Discourse."
-      perform_upgrade: "Nhấn vào đây để cập nhật"
+    admin:
+      docker:
+        last_updated: "Cập nhật lần cuối:"
+        official_plugin: "Plugin chính thức"
+        outdated_notice: "Có bản cập nhật mới cho Discourse."
+        perform_upgrade: "Nhấn vào đây để cập nhật"
+        status: "Trạng thái"

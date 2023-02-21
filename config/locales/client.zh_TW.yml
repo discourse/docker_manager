@@ -7,10 +7,9 @@
 zh_TW:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "升級至最新版本"
-    docker:
-      upgrade: "您的 Discourse 版本已過期。"
-      perform_upgrade: "點此進行升級。"
+      docker:
+        last_updated: "最近更新時間："
+        official_plugin: "官方套件"
+        outdated_notice: "您的 Discourse 版本已過期。"
+        perform_upgrade: "點此進行升級。"
+        status: "狀態"

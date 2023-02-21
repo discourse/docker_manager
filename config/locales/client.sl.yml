@@ -7,11 +7,9 @@
 sl:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Nadgradite na zadnjo različico"
-    docker:
-      upgrade: "Vaša Discourse namestitev je zastarela."
-      perform_upgrade: "Kliknite tukaj za nadgradnjo."
-      link_to_upgrade: "Tu izvedite nadgradnje."
+      docker:
+        last_updated: "Zadnja posodobitev:"
+        link_to_upgrade: "Tu izvedite nadgradnje"
+        outdated_notice: "Vaša Discourse namestitev je zastarela."
+        perform_upgrade: "Kliknite tukaj za nadgradnjo."
+        status: "Stanje"

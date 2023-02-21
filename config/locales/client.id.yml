@@ -7,11 +7,9 @@
 id:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Tingkatkan ke Versi Terbaru"
-    docker:
-      upgrade: "Instalasi Discourse Anda usang."
-      perform_upgrade: "Klik di sini untuk melakukan peningkatan."
-      link_to_upgrade: "Lakukan peningkatan di sini."
+      docker:
+        last_updated: "Terakhir Diperbarui:"
+        link_to_upgrade: "Lakukan peningkatan di sini"
+        outdated_notice: "Instalasi Discourse Anda usang."
+        perform_upgrade: "Klik di sini untuk melakukan peningkatan."
+        status: "Status"

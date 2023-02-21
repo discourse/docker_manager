@@ -7,10 +7,7 @@
 sw:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Boresha kwenda Toleo jipya"
-    docker:
-      upgrade: "Toleo lako la Discourse limepitwa na wakati."
-      perform_upgrade: "Bonyeza hapa kupata toleo jipya."
+      docker:
+        official_plugin: "Programu-jalizi Rasmi"
+        outdated_notice: "Toleo lako la Discourse limepitwa na wakati."
+        perform_upgrade: "Bonyeza hapa kupata toleo jipya."

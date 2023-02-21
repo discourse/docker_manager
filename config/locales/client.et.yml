@@ -7,10 +7,8 @@
 et:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Värskenda uusimale versioonile"
-    docker:
-      upgrade: "Sinu Discourse' installatsioon on aegunud"
-      perform_upgrade: "Kliki siia, et uuendada."
+      docker:
+        last_updated: "Viimati uuendatud:"
+        outdated_notice: "Sinu Discourse' installatsioon on aegunud"
+        perform_upgrade: "Kliki siia, et uuendada."
+        status: "Staatus"

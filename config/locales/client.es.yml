@@ -7,11 +7,10 @@
 es:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Actualizar a la última versión"
-    docker:
-      upgrade: "Tu versión de Discourse está desactualizada."
-      perform_upgrade: "Haz clic aquí para actualizar."
-      link_to_upgrade: "Actualiza desde aquí."
+      docker:
+        last_updated: "Última actualización:"
+        link_to_upgrade: "Actualiza desde aquí"
+        official_plugin: "Plugin oficial"
+        outdated_notice: "Tu versión de Discourse está desactualizada."
+        perform_upgrade: "Haz clic aquí para actualizar."
+        status: "Estado"

@@ -7,10 +7,9 @@
 nb_NO:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Oppgrader til siste versjon"
-    docker:
-      upgrade: "Din Discourse-installasjon kjører ikke siste versjon."
-      perform_upgrade: "Trykk her for å oppgradere."
+      docker:
+        last_updated: "Sist oppdatert:"
+        official_plugin: "Offisiell Plugin"
+        outdated_notice: "Din Discourse-installasjon kjører ikke siste versjon."
+        perform_upgrade: "Trykk her for å oppgradere."
+        status: "Status"

@@ -7,11 +7,10 @@
 sv:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Uppgradera till den senaste versionen"
-    docker:
-      upgrade: "Din Discourse-installation är föråldrad."
-      perform_upgrade: "Klicka här för att uppgradera."
-      link_to_upgrade: "Utför uppgraderingar här."
+      docker:
+        last_updated: "Senast uppdaterad:"
+        link_to_upgrade: "Utför uppgraderingar här"
+        official_plugin: "Officiellt tillägg"
+        outdated_notice: "Din Discourse-installation är föråldrad."
+        perform_upgrade: "Klicka här för att uppgradera."
+        status: "Status"

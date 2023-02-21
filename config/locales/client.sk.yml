@@ -7,10 +7,6 @@
 sk:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Aktualizuj na poslednú verziu"
-    docker:
-      upgrade: " Vaša Discourse inštalácia je neaktuálna."
-      perform_upgrade: "Aktualizuj kliknutím sem"
+      docker:
+        outdated_notice: " Vaša Discourse inštalácia je neaktuálna."
+        perform_upgrade: "Aktualizuj kliknutím sem"

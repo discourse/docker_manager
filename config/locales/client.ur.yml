@@ -7,10 +7,9 @@
 ur:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "تازہ ترین ورژن تک اَپگریڈ کریں"
-    docker:
-      upgrade: "آپ کی ڈسکورس انسٹالیشن پرانی ہو چکی ہے۔"
-      perform_upgrade: "اَپگریڈ کرنے کیلئے یہاں کلک کریں۔"
+      docker:
+        last_updated: "آخری دفہ اپ ڈیٹ:"
+        official_plugin: "آفیشل پلَگ اِن"
+        outdated_notice: "آپ کی ڈسکورس انسٹالیشن پرانی ہو چکی ہے۔"
+        perform_upgrade: "اَپگریڈ کرنے کیلئے یہاں کلک کریں۔"
+        status: "سٹیٹس"

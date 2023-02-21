@@ -7,10 +7,7 @@
 cs:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Aktualizovat na poslední verzi"
-    docker:
-      upgrade: "Vaše instalace Discourse je zastaralá."
-      perform_upgrade: "Klikněte zde pro aktualizaci."
+      docker:
+        outdated_notice: "Vaše instalace Discourse je zastaralá."
+        perform_upgrade: "Klikněte zde pro aktualizaci."
+        status: "Stav"

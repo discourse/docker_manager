@@ -7,11 +7,47 @@
 he:
   js:
     admin:
+      docker:
+        all_up_to_date: "הכול עדכני"
+        checking: "מתבצע איתור לגרסה חדשה…"
+        commits:
+          one: "הגשה %{count} חדשה"
+          two: "%{count} הגשות חדשות"
+          many: "%{count} הגשות חדשות"
+          other: "%{count} הגשות חדשות"
+        everything_up_to_date: "הכול מעודכן"
+        forked_plugin: "התפצלות מהתוסף הרשמי"
+        last_updated: "עדכון אחרון:"
+        latest_version: "הגרסה העדכנית ביותר:"
+        link_to_upgrade: "ביצוע שדרוגים דרך כאן"
+        main_branch_warning: "<b>אזהרה:</b> עותק ה־Discourse שלך עוקב אחר הענף ‚main’ (ראשי) שעלול להיות רעוע, <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'> אנו ממליצים לעקוב אחר הענף‚'tests-passed’</a> (לאחר בדיקות)."
+        navigation:
+          processes: תהליכים
+          versions: גרסאות
+        new_version_available: "גרסה חדשה זמינה!"
+        official_plugin: "תוסף רשמי"
+        outdated_image_header: "הגרסה שפועלת אצלך של הדמות של Discourse מיושנת"
+        outdated_image_info: "שדרוגים דרך הדפדפן מושבתים עד להרצת הדמות העדכנית ביותר. כדי לעשות זאת יש להיכנס לשרת שלך דרך SSH ולהריץ את הפקודה:"
+        outdated_image_link: "מידע נוסף באתר התמיכה שלנו"
+        outdated_notice: "התקנת ה־Discourse שלך אינה עדכנית."
+        perform_upgrade: "יש ללחוץ כאן כדי לשדרג."
+        repo_newest_version: "%{name} בגרסה העדכנית ביותר."
+        repository: "מאגר"
+        reset_upgrade: "איפוס שדרוג"
+        reset_warning: "אזהרה: יש לאפס שדרוגים רק אם נכשלו ואינם פעילים. פעולה זו לא תבטל בניות שמתרחשות כרגע ורצוי להשתמש בה רק כמוצא אחרון."
+        start_upgrading: "התחלת השדרוג"
+        status: "מצב"
+        up_to_date: "עדכני"
+        upgrade_action: "שדרוג"
+        upgrade_all: "שדרוג של הכול"
+        upgrade_error: "מחילה, אירעה שגיאה בשדרוג Discourse. נא לעיין ביומני התיעוד שלהלן."
+        upgrade_everything: "שדרוג של הכול"
+        upgrade_repo: "שדרוג %{name}"
+        upgrade_successful: "השדרוג הושלם בהצלחה!"
+        upgrade_tab: "שדרוג"
+        upgrade_title: "שדרוג"
+        upgrading: "מתבצע שדרוג…"
       logs:
         staff_actions:
           actions:
             discourse_upgrade: "שדרוג לגרסה העדכנית ביותר"
-    docker:
-      upgrade: "התקנת ה־Discourse שלך אינה עדכנית."
-      perform_upgrade: "יש ללחוץ כאן כדי לשדרג."
-      link_to_upgrade: "ביצוע שדרוגים דרך כאן."
