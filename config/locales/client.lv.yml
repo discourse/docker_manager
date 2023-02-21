@@ -6,6 +6,9 @@
 
 lv:
   js:
-    docker:
-      upgrade: "Tava Discourse instalācija ir novecojusi. "
-      perform_upgrade: "Spied šeit, lai uzlabotu."
+    admin:
+      docker:
+        last_updated: "Pēdējoreiz atjaunots:"
+        outdated_notice: "Tava Discourse instalācija ir novecojusi. "
+        perform_upgrade: "Spied šeit, lai uzlabotu."
+        status: "Statuss"

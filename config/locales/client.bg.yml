@@ -7,10 +7,8 @@
 bg:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Обновете до последната версия"
-    docker:
-      upgrade: "Твоята Discourse инсталация не е обновена."
-      perform_upgrade: "Щракни тук за обновяване."
+      docker:
+        last_updated: "Последно обновление:"
+        outdated_notice: "Твоята Discourse инсталация не е обновена."
+        perform_upgrade: "Щракни тук за обновяване."
+        status: "Статус"

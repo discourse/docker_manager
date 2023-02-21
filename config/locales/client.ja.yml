@@ -7,11 +7,9 @@
 ja:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "最新バージョンへのアップグレード"
-    docker:
-      upgrade: "インストールされている Discourse は古いバージョンです。"
-      perform_upgrade: "ここをクリックしてアップグレードしてください。"
-      link_to_upgrade: "ここでアップグレードを実行します。"
+      docker:
+        last_updated: "最終更新:"
+        official_plugin: "公式プラグイン"
+        outdated_notice: "インストールされている Discourse は古いバージョンです。"
+        perform_upgrade: "ここをクリックしてアップグレードしてください。"
+        status: "ステータス"

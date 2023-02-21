@@ -7,11 +7,9 @@
 zh_CN:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "升级到最新版本"
-    docker:
-      upgrade: "您的 Discourse 安装已过期。"
-      perform_upgrade: "点击此处升级。"
-      link_to_upgrade: "在此处执行升级。"
+      docker:
+        last_updated: "最近更新："
+        official_plugin: "官方插件"
+        outdated_notice: "您的 Discourse 安装已过期。"
+        perform_upgrade: "点击此处升级。"
+        status: "状态"

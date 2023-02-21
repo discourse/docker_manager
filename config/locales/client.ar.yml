@@ -7,11 +7,10 @@
 ar:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "الترقية إلى الإصدار الأخير"
-    docker:
-      upgrade: "إصدار Discourse قديم."
-      perform_upgrade: "انقر هنا للترقية."
-      link_to_upgrade: "يمكنك إجراء الترقيات من هنا."
+      docker:
+        last_updated: "آخر تحديث:"
+        link_to_upgrade: "يمكنك إجراء الترقيات من هنا"
+        official_plugin: "المكوِّن الإضافي الرسمي"
+        outdated_notice: "إصدار Discourse قديم."
+        perform_upgrade: "انقر هنا للترقية."
+        status: "الحالة"

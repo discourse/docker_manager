@@ -7,11 +7,10 @@
 hr:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Nadogradite na najnoviju verziju"
-    docker:
-      upgrade: "Vaša inačica Discourse-a nije ažuriana."
-      perform_upgrade: "Klikni ovjde za nadogradnju."
-      link_to_upgrade: "Izvršite nadogradnje ovdje."
+      docker:
+        last_updated: "Zadnji put ažurirano:"
+        link_to_upgrade: "Izvršite nadogradnje ovdje"
+        official_plugin: "Službeni dodatak"
+        outdated_notice: "Vaša inačica Discourse-a nije ažuriana."
+        perform_upgrade: "Klikni ovjde za nadogradnju."
+        status: "Statust"

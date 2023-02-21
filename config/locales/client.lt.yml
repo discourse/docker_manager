@@ -7,10 +7,9 @@
 lt:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Atnaujinti į naujausią versiją"
-    docker:
-      upgrade: "Prašome atnaujinti Diskurse instaliacija, jūs naudojate senąja versija."
-      perform_upgrade: "Spauskite čia, kad atnaujintumėte."
+      docker:
+        last_updated: "Paskutinį kartą atnaujinta:"
+        official_plugin: "Oficialus papildinys"
+        outdated_notice: "Prašome atnaujinti Diskurse instaliacija, jūs naudojate senąja versija."
+        perform_upgrade: "Spauskite čia, kad atnaujintumėte."
+        status: "Statusas"

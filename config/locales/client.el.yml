@@ -7,11 +7,10 @@
 el:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Αναβάθμιση στην πιο πρόσφατη έκδοση"
-    docker:
-      upgrade: "Η εγκατάσταση του Discourse σας δεν είναι ενημερωμένη."
-      perform_upgrade: "Κάντε κλικ εδώ για αναβάθμιση."
-      link_to_upgrade: "Εκτελέστε τις αναβαθμίσεις τωρα."
+      docker:
+        last_updated: "Τελευταία ενημέρωση:"
+        link_to_upgrade: "Εκτελέστε τις αναβαθμίσεις τωρα"
+        official_plugin: "Επίσημο πρόσθετο"
+        outdated_notice: "Η εγκατάσταση του Discourse σας δεν είναι ενημερωμένη."
+        perform_upgrade: "Κάντε κλικ εδώ για αναβάθμιση."
+        status: "Κατάσταση"

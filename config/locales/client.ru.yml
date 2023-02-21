@@ -7,11 +7,10 @@
 ru:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Обновление до последней версии"
-    docker:
-      upgrade: "У вас установлена устаревшая версия форума."
-      perform_upgrade: "Нажмите сюда, чтобы обновить."
-      link_to_upgrade: "Нажмите здесь для обновления."
+      docker:
+        last_updated: "Последнее обновление:"
+        link_to_upgrade: "Нажмите здесь для обновления"
+        official_plugin: "Официальный плагин"
+        outdated_notice: "У вас установлена устаревшая версия форума."
+        perform_upgrade: "Нажмите сюда, чтобы обновить."
+        status: "Статус"

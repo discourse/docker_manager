@@ -7,11 +7,10 @@
 fi:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Päivitä uusimpaan versioon"
-    docker:
-      upgrade: "Discourse-asennuksesi ei ole ajan tasalla."
-      perform_upgrade: "Klikkaa tästä päivittääksesi."
-      link_to_upgrade: "Päivitä täällä."
+      docker:
+        last_updated: "Viimeksi päivitetty:"
+        link_to_upgrade: "Päivitä täällä"
+        official_plugin: "Virallinen lisäosa"
+        outdated_notice: "Discourse-asennuksesi ei ole ajan tasalla."
+        perform_upgrade: "Klikkaa tästä päivittääksesi."
+        status: "Tila"

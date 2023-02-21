@@ -7,11 +7,10 @@
 nl:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Upgraden naar de nieuwste versie"
-    docker:
-      upgrade: "Je Discourse-installatie is verouderd."
-      perform_upgrade: "Klik hier om te upgraden."
-      link_to_upgrade: "Voer hier upgrades uit."
+      docker:
+        last_updated: "Laatst bijgewerkt:"
+        link_to_upgrade: "Voer hier upgrades uit"
+        official_plugin: "Officiële plug-in"
+        outdated_notice: "Je Discourse-installatie is verouderd."
+        perform_upgrade: "Klik hier om te upgraden."
+        status: "Status"

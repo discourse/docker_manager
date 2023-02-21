@@ -7,11 +7,29 @@
 fa_IR:
   js:
     admin:
+      docker:
+        checking: "در حال بررسی نسخه جدید…"
+        everything_up_to_date: "همه چیز به‌روز است"
+        last_updated: "آخرین به‌روزرسانی:"
+        latest_version: "آخرین نسخه:"
+        link_to_upgrade: "در اینجا ارتقا انجام می‌شود"
+        navigation:
+          versions: 'نسخه‌ها:'
+        new_version_available: "نسخه جدید در دسترس است!"
+        official_plugin: "پلاگین رسمی"
+        outdated_notice: "Discourse نصب شده شما به روز نیست."
+        perform_upgrade: "برای به‌روزرسانی اینجا کلیک کنید."
+        repository: "مخزن"
+        reset_upgrade: "بازنشانی ارتقاء"
+        status: "وضعیت"
+        upgrade_action: "ارتقاء"
+        upgrade_all: "ارتقاء همه"
+        upgrade_repo: "ارتقاء %{name}"
+        upgrade_successful: "ارتقاء با موفقیت به پایان رسید!"
+        upgrade_tab: "ارتقاء"
+        upgrade_title: "ارتقاء"
+        upgrading: "در حال ارتقاء…"
       logs:
         staff_actions:
           actions:
-            discourse_upgrade: "ارتقا به آخرین به‌روزرسانی"
-    docker:
-      upgrade: "Discourse نصب شده شما به روز نیست."
-      perform_upgrade: "برای به‌روزرسانی اینجا کلیک کنید."
-      link_to_upgrade: "در اینجا ارتقا انجام می‌شود."
+            discourse_upgrade: "ارتقاء به آخرین نسخه"

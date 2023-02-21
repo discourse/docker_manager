@@ -7,10 +7,9 @@
 ca:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Actualitza a la versió més recent."
-    docker:
-      upgrade: "La instal·lació de Discourse no està actualitzada."
-      perform_upgrade: "Feu clic aquí per a actualitzar"
+      docker:
+        last_updated: "Última actualització:"
+        official_plugin: "Connector (plugin) oficial"
+        outdated_notice: "La instal·lació de Discourse no està actualitzada."
+        perform_upgrade: "Feu clic aquí per a actualitzar"
+        status: "Estat"

@@ -7,10 +7,6 @@
 sq:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Përditëso në versionin e fundit"
-    docker:
-      upgrade: "Platforma juaj Discourse ka përtëritje."
-      perform_upgrade: "Kliko këtu për ta përtëritur."
+      docker:
+        outdated_notice: "Platforma juaj Discourse ka përtëritje."
+        perform_upgrade: "Kliko këtu për ta përtëritur."

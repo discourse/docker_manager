@@ -7,11 +7,10 @@
 hu:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Frissítés a legújabb verzióra"
-    docker:
-      upgrade: "Az installált Discourse elavult."
-      perform_upgrade: "Kattints ide a frissítéshez."
-      link_to_upgrade: "Frissítések végrehajtása itt."
+      docker:
+        last_updated: "Legutóbb frissítve:"
+        link_to_upgrade: "Frissítések végrehajtása itt"
+        official_plugin: "Hivatalos plugin"
+        outdated_notice: "Az installált Discourse elavult."
+        perform_upgrade: "Kattints ide a frissítéshez."
+        status: "Állapot"

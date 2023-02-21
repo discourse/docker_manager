@@ -7,11 +7,9 @@
 ro:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Actualizează la cea mai recentă versiune"
-    docker:
-      upgrade: "Versiunea Discourse nu este la zi."
-      perform_upgrade: "Apasă aici pentru actualizare."
-      link_to_upgrade: "Efectuează upgrade-uri aici."
+      docker:
+        last_updated: "Ultima actualizare:"
+        link_to_upgrade: "Efectuează upgrade-uri aici"
+        outdated_notice: "Versiunea Discourse nu este la zi."
+        perform_upgrade: "Apasă aici pentru actualizare."
+        status: "Status"

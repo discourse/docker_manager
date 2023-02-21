@@ -7,10 +7,6 @@
 sr:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Nadogradi na poslednju verziju"
-    docker:
-      upgrade: "Tvoja Discourse instalacija nije sinhronizovana sa zadnjim zakrpama."
-      perform_upgrade: "Klikni ovde za nadogradnju."
+      docker:
+        outdated_notice: "Tvoja Discourse instalacija nije sinhronizovana sa zadnjim zakrpama."
+        perform_upgrade: "Klikni ovde za nadogradnju."

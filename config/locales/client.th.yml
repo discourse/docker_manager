@@ -7,10 +7,8 @@
 th:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "อัพเกรดเป็นรุ่นล่าสุด"
-    docker:
-      upgrade: "Discourse ที่คุณติดตั้งล้าสมัย"
-      perform_upgrade: "คลิกที่นี่เพื่ออัพเกรด"
+      docker:
+        last_updated: "อัปเดตล่าสุด:"
+        outdated_notice: "Discourse ที่คุณติดตั้งล้าสมัย"
+        perform_upgrade: "คลิกที่นี่เพื่ออัพเกรด"
+        status: "สถานะ"

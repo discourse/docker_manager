@@ -7,10 +7,9 @@
 hy:
   js:
     admin:
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "Թարմացնել մինչև Վերջին Տարբերակ"
-    docker:
-      upgrade: "Ձեր Discourse-ը ժամկետանց է"
-      perform_upgrade: "Սեղմեք այստեղ` թարմացման համար:"
+      docker:
+        last_updated: "Վերջին թարմացումը. "
+        official_plugin: "Պաշտոնական Հավելում"
+        outdated_notice: "Ձեր Discourse-ը ժամկետանց է"
+        perform_upgrade: "Սեղմեք այստեղ` թարմացման համար:"
+        status: "Ստատուս"
