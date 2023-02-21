@@ -157,7 +157,7 @@ module DockerManager
     end
 
     def self.find_repos(path, upgrading: false)
-      return DockerManager::GitRepo.find(path) unless path == "all"
+      return DockerManager::GitRepo.find(path) if path != "all"
 
       DockerManager::GitRepo.find_all.select do |repo|
         if upgrading
