@@ -9,7 +9,6 @@ hu:
     admin:
       docker:
         last_updated: "Legutóbb frissítve:"
-        link_to_upgrade: "Frissítések végrehajtása itt"
         official_plugin: "Hivatalos plugin"
         outdated_notice: "Az installált Discourse elavult."
         perform_upgrade: "Kattints ide a frissítéshez."

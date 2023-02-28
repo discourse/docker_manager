@@ -19,7 +19,6 @@ he:
         forked_plugin: "התפצלות מהתוסף הרשמי"
         last_updated: "עדכון אחרון:"
         latest_version: "הגרסה העדכנית ביותר:"
-        link_to_upgrade: "ביצוע שדרוגים דרך כאן"
         main_branch_warning: "<b>אזהרה:</b> עותק ה־Discourse שלך עוקב אחר הענף ‚main’ (ראשי) שעלול להיות רעוע, <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'> אנו ממליצים לעקוב אחר הענף‚'tests-passed’</a> (לאחר בדיקות)."
         navigation:
           processes: תהליכים

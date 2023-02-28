@@ -9,7 +9,6 @@ ro:
     admin:
       docker:
         last_updated: "Ultima actualizare:"
-        link_to_upgrade: "Efectuează upgrade-uri aici"
         outdated_notice: "Versiunea Discourse nu este la zi."
         perform_upgrade: "Apasă aici pentru actualizare."
         status: "Status"

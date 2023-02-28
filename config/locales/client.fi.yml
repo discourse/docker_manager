@@ -9,7 +9,6 @@ fi:
     admin:
       docker:
         last_updated: "Viimeksi päivitetty:"
-        link_to_upgrade: "Päivitä täällä"
         official_plugin: "Virallinen lisäosa"
         outdated_notice: "Discourse-asennuksesi ei ole ajan tasalla."
         perform_upgrade: "Klikkaa tästä päivittääksesi."

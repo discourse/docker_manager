@@ -9,7 +9,6 @@ ru:
     admin:
       docker:
         last_updated: "Последнее обновление:"
-        link_to_upgrade: "Нажмите здесь для обновления"
         official_plugin: "Официальный плагин"
         outdated_notice: "У вас установлена устаревшая версия форума."
         perform_upgrade: "Нажмите сюда, чтобы обновить."

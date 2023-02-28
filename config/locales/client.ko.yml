@@ -9,7 +9,6 @@ ko:
     admin:
       docker:
         last_updated: "마지막 업데이트 :"
-        link_to_upgrade: "여기에서 업그레이드를 수행하십시오"
         official_plugin: "공식 플러그인"
         outdated_notice: "설치된 Discourse가 최신 버전이 아닙니다."
         perform_upgrade: "업그레이드 하려면 클릭"
