@@ -8,9 +8,44 @@ pl_PL:
   js:
     admin:
       docker:
+        all_up_to_date: "Wszystko aktualne"
+        checking: "Sprawdzanie nowej wersji…"
+        commits:
+          one: "%{count} nowy commit"
+          few: "%{count} nowe commity"
+          many: "%{count} nowych commitów"
+          other: "%{count} nowych commitów"
+        everything_up_to_date: "Wszystko jest aktualne"
         last_updated: "Ostatnio zaktualizowany:"
-        link_to_upgrade: "Wykonaj aktualizacje tutaj"
+        latest_version: "Najnowsza wersja:"
+        main_branch_warning: "<b>UWAGA:</b> Twój Discourse śledzi gałąź 'main', która może być niestabilna, <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'>zalecamy śledzenie gałęzi 'tests-passed'</a>."
+        navigation:
+          processes: Procesy
+          versions: Wersje
+        new_version_available: "Nowa wersja dostępna!"
         official_plugin: "Oficjalna wtyczka"
+        outdated_image_header: "Używasz starej wersji obrazu Discourse'a"
+        outdated_image_info: "Uaktualnienia za pośrednictwem internetowego interfejsu użytkownika są wyłączone do momentu uruchomienia najnowszego obrazu. Aby to zrobić, zaloguj się na swój serwer za pomocą SSH i uruchom:"
+        outdated_image_link: "Więcej informacji na naszej stronie wsparcia"
         outdated_notice: "Twoja instancja Discourse wymaga aktualizacji. "
         perform_upgrade: "Kliknij tu, aby zaktualizować."
+        repo_newest_version: "%{name} jest w najnowszej wersji."
+        repository: "Repozytorium"
+        reset_upgrade: "Zresetuj aktualizację"
+        reset_warning: "OSTRZEŻENIE: Należy resetować tylko te aktualizacje, które się nie powiodły i nie są uruchomione. To NIE spowoduje anulowania aktualnie uruchomionych kompilacji i powinno być używane tylko w ostateczności."
+        start_upgrading: "Rozpocznij aktualizację"
         status: "Status"
+        up_to_date: "Aktualny"
+        upgrade_action: "Aktualizuj"
+        upgrade_all: "Zaktualizuj wszystko"
+        upgrade_error: "Przepraszamy, wystąpił błąd podczas aktualizacji Discourse. Sprawdź poniższe logi."
+        upgrade_everything: "Zaktualizuj wszystko"
+        upgrade_repo: "Zaktualizuj %{name}"
+        upgrade_successful: "Aktualizacja zakończona pomyślnie!"
+        upgrade_tab: "Aktualizacja"
+        upgrade_title: "Aktualizacja"
+        upgrading: "Aktualizacja…"
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "Zaktualizuj do najnowszej wersji"

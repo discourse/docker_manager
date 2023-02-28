@@ -9,7 +9,6 @@ tr_TR:
     admin:
       docker:
         last_updated: "Son Güncelleme:"
-        link_to_upgrade: "Burada yükseltmeleri yapın"
         official_plugin: "Resmi Eklenti"
         outdated_notice: "Discourse yüklemeniz güncel değil."
         perform_upgrade: "Güncellemek için buraya tıklayın."

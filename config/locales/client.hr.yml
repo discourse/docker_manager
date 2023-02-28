@@ -9,7 +9,6 @@ hr:
     admin:
       docker:
         last_updated: "Zadnji put ažurirano:"
-        link_to_upgrade: "Izvršite nadogradnje ovdje"
         official_plugin: "Službeni dodatak"
         outdated_notice: "Vaša inačica Discourse-a nije ažuriana."
         perform_upgrade: "Klikni ovjde za nadogradnju."

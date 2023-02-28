@@ -9,7 +9,6 @@ bs_BA:
     admin:
       docker:
         last_updated: "Zadnji put ažurirano:"
-        link_to_upgrade: "Izvrši ovdje nadogradnje"
         official_plugin: "Officionalni Plugin"
         outdated_notice: "Vaša Discourse instalacije je zastarijela."
         perform_upgrade: "Klikni ovjde za nadogradnju."

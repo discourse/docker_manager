@@ -9,7 +9,6 @@ gl:
     admin:
       docker:
         last_updated: "Última actualización:"
-        link_to_upgrade: "Executar actualizacións aquí"
         official_plugin: "Complemento oficial"
         outdated_notice: "A instalación do Discourse non está actualizada."
         perform_upgrade: "Preme aquí para actualizar."

@@ -9,7 +9,6 @@ de:
     admin:
       docker:
         last_updated: "Zuletzt aktualisiert:"
-        link_to_upgrade: "Führe hier Upgrades durch"
         official_plugin: "Offizielles Plug-in"
         outdated_notice: "Deine Installation von Discourse ist veraltet."
         perform_upgrade: "Klicke hier, um ein Upgrade durchzuführen."
