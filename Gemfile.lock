@@ -1,9 +1,3 @@
-GIT
-  remote: https://github.com/discourse/translations-manager.git
-  revision: a8b225f7fabd3250ba88a4a2eff797693df51192
-  specs:
-    translations-manager (0.6)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -43,7 +37,6 @@ PLATFORMS
 
 DEPENDENCIES
   rubocop-discourse
-  translations-manager!
 
 BUNDLED WITH
-   2.1.4
+   2.4.7
