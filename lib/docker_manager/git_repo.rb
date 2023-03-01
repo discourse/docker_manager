@@ -76,10 +76,7 @@ class DockerManager::GitRepo
   def self.find_all
     repos = [
       DockerManager::GitRepo.new(Rails.root.to_s, "discourse"),
-      DockerManager::GitRepo.new(
-        "#{Rails.root}/plugins/docker_manager",
-        "docker_manager"
-      )
+      DockerManager::GitRepo.new("#{Rails.root}/plugins/docker_manager", "docker_manager"),
     ]
 
     Discourse.visible_plugins.each do |p|
@@ -97,9 +94,7 @@ class DockerManager::GitRepo
 
   def upstream_branch
     @upstream_branch ||=
-      run(
-        "for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)"
-      )
+      run("for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)")
   end
 
   def has_local_main?

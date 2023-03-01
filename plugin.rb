@@ -15,8 +15,4 @@ module ::DockerManager
   end
 end
 
-after_initialize do
-  Discourse::Application.routes.append do
-    mount ::DockerManager::Engine, at: "/"
-  end
-end
+after_initialize { Discourse::Application.routes.append { mount ::DockerManager::Engine, at: "/" } }

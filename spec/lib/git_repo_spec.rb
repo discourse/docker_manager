@@ -22,10 +22,7 @@ RSpec.describe DockerManager::GitRepo do
 
   describe "#branch" do
     it "returns origin/master if a repo hasn't been renamed" do
-      described_class
-        .any_instance
-        .stubs(:upstream_branch)
-        .returns("origin/master")
+      described_class.any_instance.stubs(:upstream_branch).returns("origin/master")
       described_class.any_instance.stubs(:has_origin_main?).returns(false)
       repo = described_class.new("dummy", "dummy")
 
@@ -33,10 +30,7 @@ RSpec.describe DockerManager::GitRepo do
     end
 
     it "returns origin/main if a repo has been renamed but still tracks master" do
-      described_class
-        .any_instance
-        .stubs(:upstream_branch)
-        .returns("origin/master")
+      described_class.any_instance.stubs(:upstream_branch).returns("origin/master")
       described_class.any_instance.stubs(:has_origin_main?).returns(true)
       repo = described_class.new("dummy", "dummy")
 
@@ -44,10 +38,7 @@ RSpec.describe DockerManager::GitRepo do
     end
 
     it "returns origin/main if a repo points at origin/main" do
-      described_class
-        .any_instance
-        .stubs(:upstream_branch)
-        .returns("origin/main")
+      described_class.any_instance.stubs(:upstream_branch).returns("origin/main")
       described_class.any_instance.stubs(:has_origin_main?).returns(true)
       repo = described_class.new("dummy", "dummy")
 
