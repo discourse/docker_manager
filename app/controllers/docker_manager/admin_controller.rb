@@ -15,18 +15,13 @@ module DockerManager
           name: r.name,
           path: r.path,
           branch: r.branch,
-          official: Plugin::Metadata::OFFICIAL_PLUGINS.include?(r.name)
+          official: Plugin::Metadata::OFFICIAL_PLUGINS.include?(r.name),
         }
 
         result[:fork] = true if result[:official] &&
           !r.url.starts_with?("https://github.com/discourse/")
 
-        result[:id] = r
-          .name
-          .downcase
-          .gsub(/[^a-z]/, "_")
-          .gsub(/_+/, "_")
-          .sub(/_$/, "")
+        result[:id] = r.name.downcase.gsub(/[^a-z]/, "_").gsub(/_+/, "_").sub(/_$/, "")
         result[:version] = r.latest_local_commit
         result[:pretty_version] = r.latest_local_tag_version.presence
         result[:url] = r.url
@@ -57,12 +52,9 @@ module DockerManager
 
         upgrade_image = version < expected_version
         upgrade_ruby = ruby_version < expected_ruby_version
-        upgrade_discourse =
-          discourse_upgrade_required?(min_stable_version, min_beta_version)
+        upgrade_discourse = discourse_upgrade_required?(min_stable_version, min_beta_version)
 
-        if upgrade_image || upgrade_ruby || upgrade_discourse
-          response[:upgrade_required] = true
-        end
+        response[:upgrade_required] = true if upgrade_image || upgrade_ruby || upgrade_discourse
       end
 
       render json: response
@@ -77,7 +69,7 @@ module DockerManager
         logs: upgrader.find_logs || "",
         percentage: upgrader.last_percentage || 0,
         status: upgrader.last_status || nil,
-        repos: Array.wrap(repo).map(&:name)
+        repos: Array.wrap(repo).map(&:name),
       )
     end
 
@@ -90,14 +82,12 @@ module DockerManager
             version: repo.latest_origin_commit,
             pretty_version: repo.latest_origin_tag_version.presence,
             commits_behind: repo.commits_behind,
-            date: repo.latest_origin_commit_date
+            date: repo.latest_origin_commit_date,
           }
         end
 
       if params[:path] == "all"
-        return(
-          render json: { repos: DockerManager::GitRepo.find_all.map(&proc) }
-        )
+        return(render json: { repos: DockerManager::GitRepo.find_all.map(&proc) })
       end
 
       repo = DockerManager::GitRepo.find(params[:path])
@@ -111,24 +101,17 @@ module DockerManager
       raise Discourse::NotFound unless repo.present?
 
       script_path =
-        File.expand_path(
-          File.join(__dir__, "../../../scripts/docker_manager_upgrade.rb")
-        )
+        File.expand_path(File.join(__dir__, "../../../scripts/docker_manager_upgrade.rb"))
 
       env_vars = {
         "UPGRADE_USER_ID" => current_user.id.to_s,
         "UPGRADE_PATH" => params[:path].to_s,
         "UPGRADE_REPO_VERSION" => repo_version(repo).to_s,
-        "RAILS_ENV" => Rails.env
+        "RAILS_ENV" => Rails.env,
       }
-      %w[
-        http_proxy
-        https_proxy
-        no_proxy
-        HTTP_PROXY
-        HTTPS_PROXY
-        NO_PROXY
-      ].each { |p| env_vars[p] = ENV[p] if !ENV[p].nil? }
+      %w[http_proxy https_proxy no_proxy HTTP_PROXY HTTPS_PROXY NO_PROXY].each do |p|
+        env_vars[p] = ENV[p] if !ENV[p].nil?
+      end
       pid = spawn(env_vars, "bundle exec rails runner #{script_path}")
       Process.detach(pid)
 
@@ -163,8 +146,7 @@ module DockerManager
         if upgrading
           repo.upgrading?
         else
-          !repo.upgrading? &&
-            (repo.latest_local_commit != repo.latest_origin_commit)
+          !repo.upgrading? && (repo.latest_local_commit != repo.latest_origin_commit)
         end
       end
     end
@@ -172,12 +154,7 @@ module DockerManager
     private
 
     def respond_progress(logs: "", percentage: 0, status: nil, repos: nil)
-      progress = {
-        logs: logs,
-        percentage: percentage,
-        status: status,
-        repos: repos
-      }
+      progress = { logs: logs, percentage: percentage, status: status, repos: repos }
 
       render json: { progress: progress }
     end

@@ -84,9 +84,7 @@ class DockerManager::Upgrader
         run "cd #{repo.path} && git branch -u origin/main main"
         run("cd #{repo.path} && git reset --hard HEAD@{upstream}")
       else
-        run(
-          "cd #{repo.path} && git fetch --tags --force && git reset --hard HEAD@{upstream}"
-        )
+        run("cd #{repo.path} && git fetch --tags --force && git reset --hard HEAD@{upstream}")
       end
 
       percent(20 * (index + 1) / @repos.size)
@@ -106,8 +104,7 @@ class DockerManager::Upgrader
     run("bundle exec rake themes:update assets:precompile")
 
     using_s3_assets =
-      ENV["DISCOURSE_USE_S3"] && ENV["DISCOURSE_S3_BUCKET"] &&
-        ENV["DISCOURSE_S3_CDN_URL"]
+      ENV["DISCOURSE_USE_S3"] && ENV["DISCOURSE_S3_BUCKET"] && ENV["DISCOURSE_S3_CDN_URL"]
 
     run("bundle exec rake s3:upload_assets") if using_s3_assets
 
@@ -136,11 +133,7 @@ class DockerManager::Upgrader
   rescue => ex
     status("failed")
 
-    [
-      "Docker Manager: FAILED TO UPGRADE",
-      ex.inspect,
-      ex.backtrace.join("\n")
-    ].each do |message|
+    ["Docker Manager: FAILED TO UPGRADE", ex.inspect, ex.backtrace.join("\n")].each do |message|
       STDERR.puts(message)
       log(message)
     end
@@ -159,7 +152,7 @@ class DockerManager::Upgrader
     MessageBus.publish(
       "/docker/upgrade",
       { type: type, value: value, repos: @repos.map(&:name) },
-      user_ids: [@user_id]
+      user_ids: [@user_id],
     )
   end
 
@@ -194,10 +187,7 @@ class DockerManager::Upgrader
     clear_env["TERM"] = "dumb" # claim we have a terminal
 
     retval = nil
-    Open3.popen2e(
-      clear_env,
-      "cd #{Rails.root} && #{cmd} 2>&1"
-    ) do |_in, out, wait_thread|
+    Open3.popen2e(clear_env, "cd #{Rails.root} && #{cmd} 2>&1") do |_in, out, wait_thread|
       out.each do |line|
         line.rstrip! # the client adds newlines, so remove the one we're given
         log(line)
@@ -263,7 +253,7 @@ class DockerManager::Upgrader
     StaffActionLogger.new(User.find(@user_id)).log_custom(
       "discourse_upgrade",
       from_version: @from_version,
-      repository: @repos.map(&:path).join(", ")
+      repository: @repos.map(&:path).join(", "),
     )
   end
 
@@ -284,9 +274,7 @@ class DockerManager::Upgrader
   end
 
   def unicorn_workers(master_pid)
-    `ps -f --ppid #{master_pid} | grep worker | awk '{ print $2 }'`.split(
-      "\n"
-    ).map(&:to_i)
+    `ps -f --ppid #{master_pid} | grep worker | awk '{ print $2 }'`.split("\n").map(&:to_i)
   end
 
   def local_web_url
