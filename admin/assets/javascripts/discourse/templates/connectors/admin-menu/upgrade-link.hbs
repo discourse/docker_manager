@@ -1,1 +1,3 @@
-<NavItem @route="upgrade" @label="admin.docker.upgrade_tab" />
+{{#if this.currentUser.admin}}
+  <NavItem @route="upgrade" @label="admin.docker.upgrade_tab" />
+{{/if}}
