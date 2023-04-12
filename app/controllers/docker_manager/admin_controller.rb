@@ -10,11 +10,13 @@ module DockerManager
 
     def repos
       repos = DockerManager::GitRepo.find_all
+      core_repo = repos.find { |r| r.name == "discourse" }
+
       repos.map! do |r|
         result = {
           name: r.name,
           path: r.path,
-          branch: r.branch,
+          branch: r.tracking_ref,
           official: Plugin::Metadata::OFFICIAL_PLUGINS.include?(r.name),
         }
 
@@ -54,7 +56,8 @@ module DockerManager
         upgrade_ruby = ruby_version < expected_ruby_version
         upgrade_discourse = discourse_upgrade_required?(min_stable_version, min_beta_version)
 
-        response[:upgrade_required] = true if upgrade_image || upgrade_ruby || upgrade_discourse
+        response[:upgrade_required] = true if upgrade_image || upgrade_ruby || upgrade_discourse ||
+          !core_repo.upstream_branch_exist?
       end
 
       render json: response

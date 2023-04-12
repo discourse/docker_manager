@@ -1,14 +1,31 @@
 # frozen_string_literal: true
 
-# like Grit just very very minimal
 class DockerManager::GitRepo
-  attr_reader :path, :name, :branch
+  attr_reader :path, :name
+
+  def self.find_all
+    repos = [
+      DockerManager::GitRepo.new(Rails.root.to_s, "discourse"),
+      DockerManager::GitRepo.new("#{Rails.root}/plugins/docker_manager", "docker_manager"),
+    ]
+
+    Discourse.visible_plugins.each do |p|
+      next if p.name == "docker_manager"
+      repo = DockerManager::GitRepo.new(File.dirname(p.path), p.name)
+      repos << repo if repo.valid?
+    end
+
+    repos
+  end
+
+  def self.find(path)
+    find_all.detect { |r| r.path == path }
+  end
 
   def initialize(path, name = nil)
     @path = path
     @name = name
     @memoize = {}
-    @branch = tracking_branch
   end
 
   def start_upgrading
@@ -36,76 +53,80 @@ class DockerManager::GitRepo
   end
 
   def latest_origin_commit
-    run "rev-parse #{tracking_branch}"
+    run "rev-parse #{tracking_ref}^{}"
   end
 
   def latest_local_tag_version
-    prettify_tag_version("describe HEAD 2>/dev/null")
+    prettify_tag_version("describe --exclude 'beta' HEAD 2>/dev/null")
   end
 
   def latest_origin_tag_version
-    prettify_tag_version("describe #{tracking_branch} 2>/dev/null")
-  end
-
-  def latest_origin_commit_date
-    commit_date(latest_origin_commit)
+    prettify_tag_version(
+      "describe --exclude 'beta' --exclude 'latest-release' #{tracking_ref} 2>/dev/null",
+    )
   end
 
   def latest_local_commit_date
     commit_date(latest_local_commit)
   end
 
+  def latest_origin_commit_date
+    commit_date(latest_origin_commit)
+  end
+
   def commits_behind
-    run("rev-list --count HEAD..#{tracking_branch}").to_i
+    run("rev-list --count HEAD..#{tracking_ref}").to_i
   end
 
   def url
-    url = run "config --get remote.origin.url"
-    if url =~ /^git/
-      # hack so it works with git urls
-      url = "https://github.com/#{url.split(":")[1]}"
-    end
-
+    url = run("config --get remote.origin.url")
+    url = "https://github.com/#{url}" if url&.delete_prefix!("git@github.com:")
     url
   end
 
   def update_remote!
-    `cd #{path} && git remote update`
-  end
-
-  def self.find_all
-    repos = [
-      DockerManager::GitRepo.new(Rails.root.to_s, "discourse"),
-      DockerManager::GitRepo.new("#{Rails.root}/plugins/docker_manager", "docker_manager"),
-    ]
-
-    Discourse.visible_plugins.each do |p|
-      next if p.name == "docker_manager"
-      repo = DockerManager::GitRepo.new(File.dirname(p.path), p.name)
-      repos << repo if repo.valid?
+    if shallow_clone?
+      git("fetch --depth=1 origin")
+    else
+      git("fetch --tags --prune --prune-tags --force origin")
     end
-
-    repos
-  end
-
-  def self.find(path)
-    find_all.detect { |r| r.path == path }
-  end
-
-  def upstream_branch
-    @upstream_branch ||=
-      run("for-each-ref --format='%(upstream:short)' $(git symbolic-ref -q HEAD)")
   end
 
   def has_local_main?
     run("show-ref refs/heads/main").present?
   end
 
+  def tracking_ref
+    tracking_branch.presence || tracking_tag
+  end
+
+  def upstream_branch
+    head_ref = run("symbolic-ref -q HEAD")
+    return if head_ref.blank?
+    run("for-each-ref --format='%(upstream:short)' #{head_ref}")
+  end
+
+  def upstream_branch_exist?
+    branch_name = upstream_branch
+    return false if branch_name.blank?
+
+    if shallow_clone?
+      branch_name = branch_name.delete_prefix("origin/")
+      run("ls-remote --heads origin #{branch_name}").present?
+    else
+      run("show-branch remotes/#{branch_name}").include?(branch_name)
+    end
+  end
+
   protected
+
+  def shallow_clone?
+    run("rev-parse --is-shallow-repository") == "true"
+  end
 
   def prettify_tag_version(command)
     result = run(command)
-    return unless result.present?
+    return if result.blank?
 
     result = result.gsub(/-(\d+)-.*/, " +#{$1}") if result =~ /-(\d+)-/
     result
@@ -116,16 +137,12 @@ class DockerManager::GitRepo
   end
 
   def commit_date(commit)
-    unix_timestamp = run(+'show -s --format="%ct" ' << commit).to_i
+    unix_timestamp = run("show -s --format='%ct' #{commit}").to_i
     Time.at(unix_timestamp).to_datetime
   end
 
   def has_origin_main?
-    begin
-      run("branch -a").match?(%r{remotes/origin/main$})
-    rescue StandardError
-      false
-    end
+    run("branch -a")&.match?(%r{remotes/origin/main$})
   end
 
   def tracking_branch
@@ -142,9 +159,17 @@ class DockerManager::GitRepo
     head
   end
 
+  def tracking_tag
+    run("config user.discourse-version")
+  end
+
   def run(cmd)
-    @memoize[cmd] ||= `cd #{path} && git #{cmd}`.strip
+    @memoize[cmd] ||= git(cmd)
   rescue => e
     puts e.inspect
+  end
+
+  def git(cmd)
+    `cd #{path} && git #{cmd}`.strip
   end
 end
