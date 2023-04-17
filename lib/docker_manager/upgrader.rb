@@ -84,7 +84,9 @@ class DockerManager::Upgrader
         run "cd #{repo.path} && git branch -u origin/main main"
         run("cd #{repo.path} && git reset --hard HEAD@{upstream}")
       else
-        run("cd #{repo.path} && git fetch --tags --force && git reset --hard HEAD@{upstream}")
+        run("cd #{repo.path} && git fetch --tags --prune-tags --prune --force")
+        run("cd #{repo.path} && git reset --hard")
+        run("cd #{repo.path} && git checkout #{repo.tracking_ref}")
       end
 
       percent(20 * (index + 1) / @repos.size)
