@@ -11,6 +11,7 @@ module DockerManager
     def repos
       repos = DockerManager::GitRepo.find_all
       core_repo = repos.find { |r| r.name == "discourse" }
+      core_repo.update_remote! if Rails.env == "production"
 
       repos.map! do |r|
         result = {
@@ -55,9 +56,10 @@ module DockerManager
         upgrade_image = version < expected_version
         upgrade_ruby = ruby_version < expected_ruby_version
         upgrade_discourse = discourse_upgrade_required?(min_stable_version, min_beta_version)
+        missing_core_branch = !core_repo.detached_head? && !core_repo.upstream_branch_exist?
 
         response[:upgrade_required] = true if upgrade_image || upgrade_ruby || upgrade_discourse ||
-          !core_repo.upstream_branch_exist?
+          missing_core_branch
       end
 
       render json: response
