@@ -490,6 +490,68 @@ RSpec.describe DockerManager::GitRepo do
         end
       end
 
+      context "when tracking deleted branch" do
+        before do
+          @before_local_repo_clone << -> {
+            @remote_git_repo.delete_tags("beta")
+            @remote_git_repo.create_branches("beta")
+          }
+          @after_local_repo_clone << -> {
+            @local_repo.checkout("beta")
+            @remote_git_repo.delete_branches("beta")
+            @remote_git_repo.in_working_directory do |git|
+              git.call("tag -m 'latest beta release' -a beta latest-release^{}")
+              git.call("push origin beta")
+            end
+          }
+        end
+
+        describe "#latest_local_commit" do
+          it "returns the correct commit hash" do
+            expect(subject.latest_local_commit).to eq("16a1d8111ff1eb6e8fc1d1b973b4fd92cacbebcc")
+          end
+        end
+
+        describe "#latest_origin_commit" do
+          it "returns the correct commit hash" do
+            expect(subject.latest_origin_commit).to be_nil
+          end
+        end
+
+        describe "#latest_local_commit_date" do
+          it "returns the correct commit date" do
+            expect(subject.latest_local_commit_date).to eq("2023-03-06T22:48:29Z")
+          end
+        end
+
+        describe "#latest_origin_commit_date" do
+          it "returns the correct commit date" do
+            expect(subject.latest_origin_commit_date).to be_nil
+          end
+        end
+
+        describe "#latest_local_tag_version" do
+          it "returns the correct version" do
+            skip_for_shallow_clone
+            expect(subject.latest_local_tag_version).to eq("latest-release +1")
+          end
+        end
+
+        describe "#latest_origin_tag_version" do
+          it "returns the correct version and ignores the `beta` and `latest-release` tags" do
+            skip_for_shallow_clone
+            expect(subject.latest_origin_tag_version).to be_nil
+          end
+        end
+
+        describe "#commits_behind" do
+          it "returns the correct number of commits" do
+            skip_for_shallow_clone
+            expect(subject.commits_behind).to eq(0)
+          end
+        end
+      end
+
       describe "#url" do
         before do
           @skip_update_remote = true
@@ -537,18 +599,18 @@ RSpec.describe DockerManager::GitRepo do
       include_examples "common tests"
     end
 
-    # context "with shallow clone" do
-    #   let!(:clone_method) { GitHelpers::CLONE_SHALLOW }
-    #   let(:fetch_commit_count) { 1 }
-    #
-    #   include_examples "common tests"
-    # end
-    #
-    # context "with partial (treeless) clone" do
-    #   let!(:clone_method) { GitHelpers::CLONE_TREELESS }
-    #   let(:fetch_commit_count) { 3 }
-    #
-    #   include_examples "common tests"
-    # end
+    context "with shallow clone" do
+      let!(:clone_method) { GitHelpers::CLONE_SHALLOW }
+      let(:fetch_commit_count) { 1 }
+
+      include_examples "common tests"
+    end
+
+    context "with partial (treeless) clone" do
+      let!(:clone_method) { GitHelpers::CLONE_TREELESS }
+      let(:fetch_commit_count) { 3 }
+
+      include_examples "common tests"
+    end
   end
 end

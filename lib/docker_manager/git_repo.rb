@@ -86,9 +86,9 @@ class DockerManager::GitRepo
 
   def update_remote!
     if shallow_clone?
-      git("fetch --depth=1 origin")
+      run("fetch --depth=1 origin")
     else
-      git("fetch --tags --prune --prune-tags --force origin")
+      run("fetch --tags --prune --prune-tags --force origin")
     end
   end
 
@@ -107,15 +107,7 @@ class DockerManager::GitRepo
   end
 
   def upstream_branch_exist?
-    branch_name = upstream_branch
-    return false if branch_name.blank?
-
-    if shallow_clone?
-      branch_name = branch_name.delete_prefix("origin/")
-      run("ls-remote --heads origin #{branch_name}").present?
-    else
-      run("show-branch remotes/#{branch_name}").include?(branch_name)
-    end
+    origin_branch_exist?(upstream_branch)
   end
 
   protected
@@ -137,12 +129,20 @@ class DockerManager::GitRepo
   end
 
   def commit_date(commit)
+    return nil if commit.blank?
     unix_timestamp = run("show -s --format='%ct' #{commit}").to_i
     Time.at(unix_timestamp).to_datetime
   end
 
-  def has_origin_main?
-    run("branch -a")&.match?(%r{remotes/origin/main$})
+  def origin_branch_exist?(branch_name)
+    return false if branch_name.blank?
+
+    if shallow_clone?
+      branch_name = branch_name.delete_prefix("origin/")
+      run("ls-remote --heads origin #{branch_name}").present?
+    else
+      (run("show-branch remotes/#{branch_name}") || "").include?(branch_name)
+    end
   end
 
   def tracking_branch
@@ -153,7 +153,8 @@ class DockerManager::GitRepo
 
     # We prefer `origin/main` to `origin/master`
     if head == "origin/master"
-      return "origin/main" if has_origin_main?
+      main_branch = "origin/main"
+      return main_branch if origin_branch_exist?(main_branch)
     end
 
     head
@@ -164,12 +165,11 @@ class DockerManager::GitRepo
   end
 
   def run(cmd)
-    @memoize[cmd] ||= git(cmd)
+    @memoize[cmd] ||= begin
+      output, status = Open3.capture2("git #{cmd}", chdir: path)
+      status == 0 ? output.strip : nil
+    end
   rescue => e
     puts e.inspect
-  end
-
-  def git(cmd)
-    `cd #{path} && git #{cmd}`.strip
   end
 end
