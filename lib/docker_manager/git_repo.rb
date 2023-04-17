@@ -110,6 +110,10 @@ class DockerManager::GitRepo
     origin_branch_exist?(upstream_branch)
   end
 
+  def detached_head?
+    run("branch --show-current").blank?
+  end
+
   protected
 
   def shallow_clone?

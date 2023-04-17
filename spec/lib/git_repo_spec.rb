@@ -165,6 +165,12 @@ RSpec.describe DockerManager::GitRepo do
           end
         end
 
+        describe "#detached_head?" do
+          it "returns false" do
+            expect(subject.detached_head?).to eq(false)
+          end
+        end
+
         context "when local clone and origin are the same" do
           describe "#latest_local_commit" do
             it "returns the correct commit hash" do
@@ -367,6 +373,13 @@ RSpec.describe DockerManager::GitRepo do
           it "returns false because we aren't tracking a branch" do
             skip_for_shallow_clone
             expect(subject.upstream_branch_exist?).to eq(false)
+          end
+        end
+
+        describe "#detached_head?" do
+          it "returns true" do
+            skip_for_shallow_clone
+            expect(subject.detached_head?).to eq(true)
           end
         end
 
