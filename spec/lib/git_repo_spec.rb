@@ -514,6 +514,7 @@ RSpec.describe DockerManager::GitRepo do
 
         describe "#latest_origin_commit" do
           it "returns the correct commit hash" do
+            skip_for_shallow_clone
             expect(subject.latest_origin_commit).to be_nil
           end
         end
@@ -526,6 +527,7 @@ RSpec.describe DockerManager::GitRepo do
 
         describe "#latest_origin_commit_date" do
           it "returns the correct commit date" do
+            skip_for_shallow_clone
             expect(subject.latest_origin_commit_date).to be_nil
           end
         end
@@ -539,14 +541,12 @@ RSpec.describe DockerManager::GitRepo do
 
         describe "#latest_origin_tag_version" do
           it "returns the correct version and ignores the `beta` and `latest-release` tags" do
-            skip_for_shallow_clone
             expect(subject.latest_origin_tag_version).to be_nil
           end
         end
 
         describe "#commits_behind" do
           it "returns the correct number of commits" do
-            skip_for_shallow_clone
             expect(subject.commits_behind).to eq(0)
           end
         end
