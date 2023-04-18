@@ -85,8 +85,13 @@ class DockerManager::Upgrader
         run("cd #{repo.path} && git reset --hard HEAD@{upstream}")
       else
         run("cd #{repo.path} && git fetch --tags --prune-tags --prune --force")
-        run("cd #{repo.path} && git reset --hard")
-        run("cd #{repo.path} && git checkout #{repo.tracking_ref}")
+
+        if repo.detached_head?
+          run("cd #{repo.path} && git reset --hard")
+          run("cd #{repo.path} && git -c advice.detachedHead=false checkout #{repo.tracking_ref}")
+        else
+          run("cd #{repo.path} && git reset --hard HEAD@{upstream}")
+        end
       end
 
       percent(20 * (index + 1) / @repos.size)
