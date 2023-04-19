@@ -25,7 +25,11 @@ export default class Upgrade extends Route {
 
     if (discourse?.branch === "origin/main") {
       // Special case: If the branch is "main" warn user
-      controller.appendBannerHtml(I18n.t("admin.docker.main_branch_warning"));
+      controller.appendBannerHtml(
+        I18n.t("admin.docker.main_branch_warning", {
+          url: "https://meta.discourse.org/t/17014",
+        })
+      );
     }
   }
 

@@ -84,13 +84,20 @@ class DockerManager::Upgrader
         run "cd #{repo.path} && git branch -u origin/main main"
         run("cd #{repo.path} && git reset --hard HEAD@{upstream}")
       else
-        run("cd #{repo.path} && git fetch --tags --force && git reset --hard HEAD@{upstream}")
+        run("cd #{repo.path} && git fetch --tags --prune-tags --prune --force")
+
+        if repo.detached_head?
+          run("cd #{repo.path} && git reset --hard")
+          run("cd #{repo.path} && git -c advice.detachedHead=false checkout #{repo.tracking_ref}")
+        else
+          run("cd #{repo.path} && git reset --hard HEAD@{upstream}")
+        end
       end
 
       percent(20 * (index + 1) / @repos.size)
     end
 
-    run("bundle install --deployment --jobs 4 --without test development")
+    run("bundle install --retry 3 --jobs 4")
     run("yarn install --production")
     begin
       run("LOAD_PLUGINS=0 bundle exec rake plugin:pull_compatible_all")

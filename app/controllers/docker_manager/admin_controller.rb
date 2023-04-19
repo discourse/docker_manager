@@ -10,11 +10,14 @@ module DockerManager
 
     def repos
       repos = DockerManager::GitRepo.find_all
+      core_repo = repos.find { |r| r.name == "discourse" }
+      core_repo.update_remote! if Rails.env.production?
+
       repos.map! do |r|
         result = {
           name: r.name,
           path: r.path,
-          branch: r.branch,
+          branch: r.tracking_ref,
           official: Plugin::Metadata::OFFICIAL_PLUGINS.include?(r.name),
         }
 
@@ -53,8 +56,10 @@ module DockerManager
         upgrade_image = version < expected_version
         upgrade_ruby = ruby_version < expected_ruby_version
         upgrade_discourse = discourse_upgrade_required?(min_stable_version, min_beta_version)
+        missing_core_branch = !core_repo.detached_head? && !core_repo.upstream_branch_exist?
 
-        response[:upgrade_required] = true if upgrade_image || upgrade_ruby || upgrade_discourse
+        response[:upgrade_required] = true if upgrade_image || upgrade_ruby || upgrade_discourse ||
+          missing_core_branch
       end
 
       render json: response
@@ -76,7 +81,7 @@ module DockerManager
     def latest
       proc =
         Proc.new do |repo|
-          repo.update_remote! if Rails.env == "production"
+          repo.update_remote! if Rails.env.production?
           {
             path: repo.path,
             version: repo.latest_origin_commit,
