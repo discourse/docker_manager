@@ -11,7 +11,7 @@ module DockerManager
     def repos
       repos = DockerManager::GitRepo.find_all
       core_repo = repos.find { |r| r.name == "discourse" }
-      core_repo.update_remote! if Rails.env == "production"
+      core_repo.update_remote! if Rails.env.production?
 
       repos.map! do |r|
         result = {
@@ -81,7 +81,7 @@ module DockerManager
     def latest
       proc =
         Proc.new do |repo|
-          repo.update_remote! if Rails.env == "production"
+          repo.update_remote! if Rails.env.production?
           {
             path: repo.path,
             version: repo.latest_origin_commit,

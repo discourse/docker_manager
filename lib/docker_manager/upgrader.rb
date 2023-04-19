@@ -97,8 +97,6 @@ class DockerManager::Upgrader
       percent(20 * (index + 1) / @repos.size)
     end
 
-    run("bundle config --local deployment true")
-    run("bundle config --local without 'development test'")
     run("bundle install --retry 3 --jobs 4")
     run("yarn install --production")
     begin

@@ -80,7 +80,7 @@ class DockerManager::GitRepo
 
   def url
     url = run("config --get remote.origin.url")
-    url = "https://github.com/#{url}" if url&.delete_prefix!("git@github.com:")
+    url.sub!(/\Agit@github\.com:/, "https://github.com/")
     url
   end
 
