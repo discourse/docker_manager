@@ -1,1 +1,4 @@
-3.1.0.beta1: 96211d622e15793574d94633f5ce4403f36b65ff
+# Do you need to make fixes for Discourse v3.1.0.beta1 and below?
+# Push to the `old-version-up-to-v3.1.0.beta1` branch, update the commit hash for "3.1.0.beta1"
+# in the line below and push this file to the `main` branch.
+3.1.0.beta1: 1b2d7eb0369155b6442b09adfb17b8942c04b093
