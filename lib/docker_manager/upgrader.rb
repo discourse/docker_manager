@@ -70,8 +70,8 @@ class DockerManager::Upgrader
     # see http://stackoverflow.com/a/12699604/84283
     @repos.each_with_index do |repo, index|
       # We automatically handle renames from `master` -> `main`
-      if repo.upstream_branch == "origin/master" && repo.branch == "origin/main"
-        log "Branch has changed to #{repo.branch}"
+      if repo.upstream_branch == "origin/master" && repo.tracking_ref == "origin/main"
+        log "Branch has changed to #{repo.tracking_ref}"
 
         # Just in case `main` exists locally but is not used. Perhaps it was fetched?
         if repo.has_local_main?
