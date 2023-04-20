@@ -152,6 +152,32 @@ RSpec.describe DockerManager::GitRepo do
           it "returns the correct branch name" do
             expect(subject.upstream_branch).to eq("origin/tests-passed")
           end
+
+          context "with `master` as initial branch" do
+            let(:initial_branch) { "master" }
+
+            before { @after_local_repo_clone << -> { @local_repo.checkout("master") } }
+
+            it "returns `origin/master` if a repo hasn't been renamed" do
+              expect(subject.upstream_branch).to eq("origin/master")
+            end
+
+            it "returns `origin/master` if a repo has been renamed but still tracks `master`" do
+              @after_local_repo_clone << -> {
+                @remote_git_repo.rename_branch(old_name: "master", new_name: "main")
+              }
+
+              expect(subject.upstream_branch).to eq("origin/master")
+            end
+          end
+
+          context "with `main` as current local branch" do
+            before { @after_local_repo_clone << -> { @local_repo.checkout("main") } }
+
+            it "returns `origin/main` if a repo points at `origin/main`" do
+              expect(subject.upstream_branch).to eq("origin/main")
+            end
+          end
         end
 
         describe "#upstream_branch_exist?" do
