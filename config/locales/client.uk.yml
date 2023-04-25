@@ -14,7 +14,6 @@ uk:
         forked_plugin: "Форк офіційного втулка"
         last_updated: "Останнє оновлення:"
         latest_version: "Остання версія:"
-        main_branch_warning: "<b>ПОПЕРЕДЖЕННЯ:</b> Ваш Discourse відстежує гілку 'main', яка може бути нестабільною, <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'> ми рекомендуємо відстежувати гілку 'tests-passed'</a>."
         official_plugin: "Офіційний плагін"
         outdated_notice: "Your Discourse installation is out of date."
         perform_upgrade: "Click here to upgrade."
