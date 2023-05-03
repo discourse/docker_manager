@@ -157,12 +157,10 @@ module GitHelpers
 
     def git(command, env: "", raise_exception: true)
       env = build_env if command.start_with?("commit") && env.blank?
-      result = `#{env} git #{command}`.strip
+      stdout, stderr, status = Open3.capture3("#{env} git #{command}".strip)
 
-      if $?.success? || !raise_exception
-        result = result.presence
-        puts result if result
-        result
+      if status.success? || !raise_exception
+        stdout.presence
       else
         raise RuntimeError
       end
@@ -185,8 +183,8 @@ module GitHelpers
     def git(*commands)
       Dir.chdir(@path) do
         commands.map do |command|
-          result = `git #{command}`.strip
-          $?.success? ? result : (raise RuntimeError)
+          stdout, stderr, status = Open3.capture3("git #{command}".strip)
+          status.success? ? stdout : (raise RuntimeError)
         end
       end
     end
