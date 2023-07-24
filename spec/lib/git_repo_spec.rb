@@ -651,5 +651,32 @@ RSpec.describe DockerManager::GitRepo do
 
       include_examples "common tests"
     end
+
+    context "with modern discourse-compatibility file" do
+      let!(:clone_method) { GitHelpers::CLONE_SHALLOW }
+
+      before do
+        @before_local_repo_clone << -> {
+          @remote_git_repo.commit(
+            filename: ".discourse-compatibility",
+            commits: [{ content: "<= 1000.0.0: twoPointFiveBranch", date: "2023-03-06T20:31:17Z" }],
+          )
+        }
+      end
+
+      it "works" do
+        DockerManager::FallbackCompatibilityParser.expects(:find_compatible_resource).never
+        expect(subject.tracking_ref).to eq("twoPointFiveBranch")
+      end
+
+      it "works even in old core" do
+        Discourse
+          .stubs(:find_compatible_resource)
+          .with { |version_list| version_list.include?("<=") }
+          .raises(ArgumentError)
+
+        expect(subject.tracking_ref).to eq("twoPointFiveBranch")
+      end
+    end
   end
 end
