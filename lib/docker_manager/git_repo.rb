@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "fallback_compatibility_parser"
+
 # like Grit just very very minimal
 class DockerManager::GitRepo
   attr_reader :path, :name, :branch
@@ -129,10 +131,13 @@ class DockerManager::GitRepo
   end
 
   def tracking_branch
-    branch = nil
-    if defined?(Discourse.find_compatible_git_resource)
-      branch = Discourse.find_compatible_git_resource(path)
-    end
+    branch =
+      begin
+        Discourse.find_compatible_git_resource(path)
+      rescue ArgumentError
+        DockerManager::FallbackCompatibilityParser.find_compatible_git_resource(path)
+      end
+
     return branch if branch.present?
 
     head = upstream_branch
