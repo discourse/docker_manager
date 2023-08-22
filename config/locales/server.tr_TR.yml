@@ -5,3 +5,5 @@
 # https://translate.discourse.org/
 
 tr_TR:
+  docker_manager:
+    title: "Discourse yükseltme yöneticisi"

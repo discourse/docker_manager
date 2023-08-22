@@ -8,8 +8,43 @@ de:
   js:
     admin:
       docker:
+        all_up_to_date: "Alles auf dem neuesten Stand"
+        checking: "Es wird nach einer neuen Version gesucht …"
+        commits:
+          one: "%{count} neuer Commit"
+          other: "%{count} neue Commits"
+        everything_up_to_date: "Alles ist auf dem neuesten Stand"
+        forked_plugin: "Fork von offiziellem Plug-in"
         last_updated: "Zuletzt aktualisiert:"
+        latest_version: "Neueste Version:"
+        main_branch_warning: "<b>WARNUNG:</b> Dein Discourse befindet sich auf dem Branch „main“, der instabil sein kann. <a href='%{url}'>Wir empfehlen, auf den Branch „tests-passed“ zu wechseln</a>."
+        navigation:
+          processes: Prozesse
+          versions: Versionen
+        new_version_available: "Neue Version verfügbar!"
         official_plugin: "Offizielles Plug-in"
+        outdated_image_header: "Du verwendest eine alte Version des Discourse-Image"
+        outdated_image_info: "Upgrades über die Web-UI sind deaktiviert, bis du das neueste Image verwendest. Melde dich dazu per SSH bei deinem Server an und führe Folgendes aus:"
+        outdated_image_link: "Weitere Informationen findest du auf unserer Support-Website"
         outdated_notice: "Deine Installation von Discourse ist veraltet."
         perform_upgrade: "Klicke hier, um ein Upgrade durchzuführen."
+        repo_newest_version: "%{name} ist die neueste Version."
+        repository: "Repository"
+        reset_upgrade: "Upgrade zurücksetzen"
+        reset_warning: "WARNUNG: Du solltest nur Upgrades zurücksetzen, die fehlgeschlagen sind und nicht ausgeführt werden. Laufende Builds werden dadurch NICHT abgebrochen und dies sollte nur als letzter Ausweg verwendet werden."
+        start_upgrading: "Upgrade starten"
         status: "Status"
+        up_to_date: "Auf dem neuesten Stand"
+        upgrade_action: "Upgraden"
+        upgrade_all: "Alles upgraden"
+        upgrade_error: "Leider ist beim Upgrade von Discourse ein Fehler aufgetreten. Bitte überprüfe die Protokolle unten."
+        upgrade_everything: "Alles upgraden"
+        upgrade_repo: "%{name} upgraden"
+        upgrade_successful: "Upgrade erfolgreich abgeschlossen!"
+        upgrade_tab: "Upgrade"
+        upgrade_title: "Upgrade"
+        upgrading: "Upgrade läuft …"
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "Upgrade auf die neueste Version"

@@ -8,8 +8,43 @@ pt_BR:
   js:
     admin:
       docker:
+        all_up_to_date: "Tudo atualizado"
+        checking: "Verificando nova versão…"
+        commits:
+          one: "%{count} confirmação nova"
+          other: "%{count} confirmação(ões) nova(s)"
+        everything_up_to_date: "Tudo está atualizado"
+        forked_plugin: "Plugin oficial bifurcado"
         last_updated: "Última atualização:"
-        official_plugin: "Plug-in oficial"
+        latest_version: "Versão mais recente:"
+        main_branch_warning: "<b>AVISO:</b> Seu Discourse está acompanhando a ramificação \"principal\", que pode ser instável, <a href='%{url}'> recomendamos acompanhar a ramificação \"tests-passed\"</a>."
+        navigation:
+          processes: Processos
+          versions: Versões
+        new_version_available: "Nova versão disponível!"
+        official_plugin: "Plugin oficial"
+        outdated_image_header: "Você está executando uma versão antiga da imagem do Discourse"
+        outdated_image_info: "Atualizações através da IU da web estão desativadas até a execução da imagem mais recente. Para fazer isso, faça login no seu servidor com o SSH e execute:"
+        outdated_image_link: "Mais informações no nosso site de suporte"
         outdated_notice: "Sua instalação do Discourse está desatualizada."
         perform_upgrade: "Clique aqui para atualizar."
+        repo_newest_version: "%{name} é a versão mais recente."
+        repository: "Repositório"
+        reset_upgrade: "Redefinir atualização"
+        reset_warning: "AVISO: você deve redefinir apenas atualizações fracassadas e que não estão sendo executadas. Isso NÃO cancelará as versões em execução atualmente e deverá ser usado apenas como último recurso."
+        start_upgrading: "Iniciar atualização"
         status: "Status"
+        up_to_date: "Atualizado"
+        upgrade_action: "Atualizar"
+        upgrade_all: "Atualizar tudo"
+        upgrade_error: "Desculpe, mas houve um erro ao atualizar o Discourse. Confira os registros abaixo."
+        upgrade_everything: "Atualizar tudo"
+        upgrade_repo: "Atualizar %{name}"
+        upgrade_successful: "Atualização concluída com sucesso!"
+        upgrade_tab: "Atualizar"
+        upgrade_title: "Atualizar"
+        upgrading: "Atualizando…"
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "Atualizar para a versão mais recente"

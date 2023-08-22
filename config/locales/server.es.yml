@@ -5,3 +5,5 @@
 # https://translate.discourse.org/
 
 es:
+  docker_manager:
+    title: "Gestor de mejoras de Discourse"
