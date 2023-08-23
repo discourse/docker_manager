@@ -8,8 +8,47 @@ ar:
   js:
     admin:
       docker:
+        all_up_to_date: "لديك أحدث إصدار"
+        checking: "جارٍ البحث عن إصدار جديد…"
+        commits:
+          zero: "%{count} مساهمة جديدة"
+          one: "مساهمة جديدة واحدة (%{count})"
+          two: "مساهمتان جديدتان (%{count})"
+          few: "%{count} مساهمات جديدة"
+          many: "%{count} مساهمة جديدة"
+          other: "%{count} مساهمة جديدة"
+        everything_up_to_date: "لديك أحدث إصدار"
+        forked_plugin: "نسخة المستودع من المكوِّن الإضافي الرسمي"
         last_updated: "آخر تحديث:"
+        latest_version: "أحدث إصدار:"
+        main_branch_warning: "<b>تحذير:</b> يتتبَّع Discourse لديك فرع 'main' الذي قد يكون غير مستقر، <a href='%{url}'>نوصي بتتبُّع الفرع 'tests-passed'</a>."
+        navigation:
+          processes: العمليات
+          versions: الإصدارات
+        new_version_available: "يتوفَّر إصدار جديد!"
         official_plugin: "المكوِّن الإضافي الرسمي"
+        outdated_image_header: "أنت تستخدم نسخة قديمة من صورة Discourse"
+        outdated_image_info: "يتم إيقاف الترقيات عبر واجهة مستخدم الويب حتى تستخدم أحدث صورة. لإجراء ذلك، سجِّل الدخول إلى خادمك باستخدام SSH وتشغيل:"
+        outdated_image_link: "المزيد من المعلومات على موقع الدعم لدينا"
         outdated_notice: "إصدار Discourse قديم."
         perform_upgrade: "انقر هنا للترقية."
+        repo_newest_version: "%{name} محدَّث إلى آخر إصدار."
+        repository: "المستودع"
+        reset_upgrade: "إعادة تعيين الترقية"
+        reset_warning: "تحذير: يجب عليك إعادة تعيين الترقيات التي فشلت ولا تعمل فقط. لن يؤدي ذلك إلى إلغاء الإصدارات قيد التشغيل حاليًا ويجب استخدامه كحل أخير فقط."
+        start_upgrading: "بدء الترقية"
         status: "الحالة"
+        up_to_date: "أحدث إصدار"
+        upgrade_action: "ترقية"
+        upgrade_all: "ترقية الكل"
+        upgrade_error: "عذرًا، حدث خطأ في أثناء ترقية Discourse. يُرجى التحقق من السجلات أدناه."
+        upgrade_everything: "ترقية كل شيء"
+        upgrade_repo: "ترقية %{name}"
+        upgrade_successful: "تمت الترقية بنجاح!"
+        upgrade_tab: "ترقية"
+        upgrade_title: "ترقية"
+        upgrading: "جارٍ الترقية…"
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "الترقية إلى الإصدار الأخير"

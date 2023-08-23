@@ -5,3 +5,5 @@
 # https://translate.discourse.org/
 
 fr:
+  docker_manager:
+    title: "Gestionnaire de mise à niveau Discourse"

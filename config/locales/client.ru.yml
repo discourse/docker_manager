@@ -8,8 +8,45 @@ ru:
   js:
     admin:
       docker:
+        all_up_to_date: "Обновлений нет"
+        checking: "Проверка наличия новой версии…"
+        commits:
+          one: "%{count} новый коммит"
+          few: "%{count} новых коммита"
+          many: "%{count} новых коммитов"
+          other: "%{count} нового коммита"
+        everything_up_to_date: "Всё в актуальном состоянии"
+        forked_plugin: "Форк официального плагина"
         last_updated: "Последнее обновление:"
+        latest_version: "Последняя версия:"
+        main_branch_warning: "<b>ВНИМАНИЕ!</b> Ваша версия Discourse отслеживает ветку «main», которая может быть нестабильной. <a href='%{url}'>Мы рекомендуем отслеживать ветку «tests-passed»</a>."
+        navigation:
+          processes: Процессы
+          versions: Версии
+        new_version_available: "Есть новая версия!"
         official_plugin: "Официальный плагин"
-        outdated_notice: "У вас установлена устаревшая версия форума."
+        outdated_image_header: "Вы используете старую версию образа Discourse"
+        outdated_image_info: "Обновления через веб-интерфейс будут отключены, пока вы не запустите актуальный образ. Для этого войдите на свой сервер через SSH и выполните следующую команду:"
+        outdated_image_link: "Подробнее — на сайте поддержки"
+        outdated_notice: "У вас установлена устаревшая версия Discourse."
         perform_upgrade: "Нажмите сюда, чтобы обновить."
+        repo_newest_version: "Установлена актуальная версия %{name}."
+        repository: "Репозиторий"
+        reset_upgrade: "Сбросить обновление"
+        reset_warning: "ВНИМАНИЕ! Сбрасывать следует только те обновления, которые не удалось завершить и которые не запущены. Запущенные сборки НЕ БУДУТ отменены. Эту функцию следует использовать только в крайнем случае."
+        start_upgrading: "Начать обновление"
         status: "Статус"
+        up_to_date: "Обновлено"
+        upgrade_action: "Обновить"
+        upgrade_all: "Обновить всё"
+        upgrade_error: "При обновлении Discourse произошла ошибка. Смотрите журналы ниже."
+        upgrade_everything: "Обновить всё"
+        upgrade_repo: "Обновить %{name}"
+        upgrade_successful: "Обновление выполнено!"
+        upgrade_tab: "Обновление"
+        upgrade_title: "Обновление"
+        upgrading: "Идет обновление…"
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "Обновление до актуальной версии"
