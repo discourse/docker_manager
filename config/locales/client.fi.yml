@@ -8,8 +8,43 @@ fi:
   js:
     admin:
       docker:
+        all_up_to_date: "Kaikki ajan tasalla"
+        checking: "Tarkistetaan uutta versiota…"
+        commits:
+          one: "%{count} uusi solmu"
+          other: "%{count} uutta solmua"
+        everything_up_to_date: "Kaikki on ajan tasalla"
+        forked_plugin: "Virallisen lisäosan haarauma"
         last_updated: "Viimeksi päivitetty:"
+        latest_version: "Uusin versio:"
+        main_branch_warning: "<b>VAROITUS:</b> Discoursesi seuraa \"main\"-haaraa, joka saattaa olla epävakaa, <a href='%{url}'> suosittelemme \"tests-passed\"-haaran seurantaa</a>."
+        navigation:
+          processes: Prosessit
+          versions: Versiot
+        new_version_available: "Uusi versio saatavilla!"
         official_plugin: "Virallinen lisäosa"
+        outdated_image_header: "Käytät Discourse-kuvan vanhaa versiota"
+        outdated_image_info: "Päivitykset verkkokäyttöliittymän kautta ovat poissa käytöstä, kunnes suoritat uusimman kuvan. Kirjaudu sisään palvelimellesi SSH:lla ja suorita:"
+        outdated_image_link: "Lisätietoja saat tukisivustoltamme"
         outdated_notice: "Discourse-asennuksesi ei ole ajan tasalla."
         perform_upgrade: "Klikkaa tästä päivittääksesi."
+        repo_newest_version: "%{name} on uusimmassa versiossa."
+        repository: "Tietovarasto"
+        reset_upgrade: "Palauta päivitys"
+        reset_warning: "VAROITUS: Sinun tulisi palauttaa vain päivitykset, jotka ovat epäonnistuneet ja eivät ole käynnissä. Tämä EI peruuta tällä hetkellä käytössä olevia koonteja, ja sitä tulisi käyttää vain viimeisenä keinona."
+        start_upgrading: "Aloita päivitys"
         status: "Tila"
+        up_to_date: "Ajan tasalla"
+        upgrade_action: "Päivitä"
+        upgrade_all: "Päivitä kaikki"
+        upgrade_error: "Discoursen päivittämisessä tapahtui virhe. Tarkista alla olevat lokit."
+        upgrade_everything: "Päivitä kaikki"
+        upgrade_repo: "Päivitä %{name}"
+        upgrade_successful: "Päivitys onnistui!"
+        upgrade_tab: "Päivitä"
+        upgrade_title: "Päivitä"
+        upgrading: "Päivitetään…"
+      logs:
+        staff_actions:
+          actions:
+            discourse_upgrade: "Päivitys uusimpaan versioon"

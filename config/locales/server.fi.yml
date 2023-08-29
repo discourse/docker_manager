@@ -5,3 +5,5 @@
 # https://translate.discourse.org/
 
 fi:
+  docker_manager:
+    title: "Discoursen päivitysten hallinta"
