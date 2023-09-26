@@ -5,3 +5,5 @@
 # https://translate.discourse.org/
 
 gl:
+  docker_manager:
+    title: "Xestor de actualizacións de Discourse"
