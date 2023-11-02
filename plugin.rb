@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # name: docker_manager
-# about: Provides basic monitoring and upgrade facilities to sites using discourse_docker. 
+# about: Provides basic monitoring and upgrade facilities to sites using discourse_docker.
 # meta_topic_id: 12655
 # version: 1.0.0
 # authors: Robin Ward, Sam Saffron
