@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 # name: docker_manager
-# about: Docker manager for Discourse image
+# about: Provides basic monitoring and upgrade facilities to sites using discourse_docker.
+# meta_topic_id: 12655
 # version: 1.0.0
 # authors: Robin Ward, Sam Saffron
 # url: https://github.com/discourse/docker_manager
