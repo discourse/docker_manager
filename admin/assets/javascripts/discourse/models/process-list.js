@@ -1,5 +1,5 @@
-import { ajax } from "discourse/lib/ajax";
 import { tracked } from "@glimmer/tracking";
+import { ajax } from "discourse/lib/ajax";
 
 export default class ProcessList {
   @tracked output = null;

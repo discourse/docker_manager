@@ -1,7 +1,7 @@
-import { module, test } from "qunit";
-import { setupRenderingTest } from "ember-qunit";
 import { render, settled } from "@ember/test-helpers";
+import { setupRenderingTest } from "ember-qunit";
 import hbs from "htmlbars-inline-precompile";
+import { module, test } from "qunit";
 import { query } from "discourse/tests/helpers/qunit-helpers";
 import { getOwner } from "discourse-common/lib/get-owner";
 

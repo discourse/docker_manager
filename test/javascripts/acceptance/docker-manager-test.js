@@ -1,7 +1,7 @@
-import { acceptance } from "discourse/tests/helpers/qunit-helpers";
 import { click, currentURL, visit } from "@ember/test-helpers";
 import { test } from "qunit";
 import pretender, { response } from "discourse/tests/helpers/create-pretender";
+import { acceptance } from "discourse/tests/helpers/qunit-helpers";
 
 acceptance("docker_manager", function (needs) {
   needs.user({ admin: true });

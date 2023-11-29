@@ -5,14 +5,14 @@ require_relative "../support/git_helpers"
 
 RSpec.describe DockerManager::GitRepo do
   describe ".find_all" do
-    subject { described_class.find_all }
+    subject(:all_repos) { described_class.find_all }
 
     it "returns a list of repos" do
-      expect(subject).to be_present
+      expect(all_repos).to be_present
     end
 
     it "contains the `docker_manager` and `discourse` repos" do
-      expect(subject.map(&:name)).to include("discourse", "docker_manager")
+      expect(all_repos.map(&:name)).to include("discourse", "docker_manager")
     end
   end
 
@@ -36,6 +36,13 @@ RSpec.describe DockerManager::GitRepo do
       pending("Doesn't work on shallow clones") if shallow_clone?
     end
 
+    subject(:repo) do
+      prepare_repos
+      repo = described_class.new(@local_repo.path)
+      repo.update_remote! unless @skip_update_remote
+      repo
+    end
+
     let!(:initial_branch) { "main" }
 
     before do
@@ -44,6 +51,7 @@ RSpec.describe DockerManager::GitRepo do
       @before_local_repo_clone = []
       @after_local_repo_clone = []
     end
+
     after { @remote_git_repo.destroy }
 
     def prepare_repos
@@ -71,13 +79,6 @@ RSpec.describe DockerManager::GitRepo do
       @remote_git_repo.in_remote_repo { |git| git.call("log --pretty=oneline") }
     end
 
-    subject do
-      prepare_repos
-      repo = described_class.new(@local_repo.path)
-      repo.update_remote! unless @skip_update_remote
-      repo
-    end
-
     def add_new_commits
       @remote_git_repo.commit(
         filename: "foo.txt",
@@ -103,7 +104,7 @@ RSpec.describe DockerManager::GitRepo do
             let(:initial_branch) { "main" }
 
             it "detects the branch" do
-              expect(subject.has_local_main?).to eq(true)
+              expect(repo.has_local_main?).to eq(true)
             end
           end
 
@@ -111,14 +112,14 @@ RSpec.describe DockerManager::GitRepo do
             let(:initial_branch) { "master" }
 
             it "doesn't detect the branch" do
-              expect(subject.has_local_main?).to eq(false)
+              expect(repo.has_local_main?).to eq(false)
             end
           end
         end
 
         describe "#tracking_ref" do
           it "returns the correct remote branch" do
-            expect(subject.tracking_ref).to eq("origin/tests-passed")
+            expect(repo.tracking_ref).to eq("origin/tests-passed")
           end
 
           context "with `master` as initial branch" do
@@ -127,15 +128,15 @@ RSpec.describe DockerManager::GitRepo do
             before { @after_local_repo_clone << -> { @local_repo.checkout("master") } }
 
             it "returns `origin/master` if a repo hasn't been renamed" do
-              expect(subject.tracking_ref).to eq("origin/master")
+              expect(repo.tracking_ref).to eq("origin/master")
             end
 
             it "returns `origin/main` if a repo has been renamed but still tracks `master`" do
-              @after_local_repo_clone << -> {
+              @after_local_repo_clone << -> do
                 @remote_git_repo.rename_branch(old_name: "master", new_name: "main")
-              }
+              end
 
-              expect(subject.tracking_ref).to eq("origin/main")
+              expect(repo.tracking_ref).to eq("origin/main")
             end
           end
 
@@ -143,14 +144,14 @@ RSpec.describe DockerManager::GitRepo do
             before { @after_local_repo_clone << -> { @local_repo.checkout("main") } }
 
             it "returns `origin/main` if a repo points at `origin/main`" do
-              expect(subject.tracking_ref).to eq("origin/main")
+              expect(repo.tracking_ref).to eq("origin/main")
             end
           end
         end
 
         describe "#upstream_branch" do
           it "returns the correct branch name" do
-            expect(subject.upstream_branch).to eq("origin/tests-passed")
+            expect(repo.upstream_branch).to eq("origin/tests-passed")
           end
 
           context "with `master` as initial branch" do
@@ -159,15 +160,15 @@ RSpec.describe DockerManager::GitRepo do
             before { @after_local_repo_clone << -> { @local_repo.checkout("master") } }
 
             it "returns `origin/master` if a repo hasn't been renamed" do
-              expect(subject.upstream_branch).to eq("origin/master")
+              expect(repo.upstream_branch).to eq("origin/master")
             end
 
             it "returns `origin/master` if a repo has been renamed but still tracks `master`" do
-              @after_local_repo_clone << -> {
+              @after_local_repo_clone << -> do
                 @remote_git_repo.rename_branch(old_name: "master", new_name: "main")
-              }
+              end
 
-              expect(subject.upstream_branch).to eq("origin/master")
+              expect(repo.upstream_branch).to eq("origin/master")
             end
           end
 
@@ -175,69 +176,69 @@ RSpec.describe DockerManager::GitRepo do
             before { @after_local_repo_clone << -> { @local_repo.checkout("main") } }
 
             it "returns `origin/main` if a repo points at `origin/main`" do
-              expect(subject.upstream_branch).to eq("origin/main")
+              expect(repo.upstream_branch).to eq("origin/main")
             end
           end
         end
 
         describe "#upstream_branch_exist?" do
           it "returns true when upstream branch exist" do
-            expect(subject.upstream_branch_exist?).to eq(true)
+            expect(repo.upstream_branch_exist?).to eq(true)
           end
 
           it "returns false when upstream branch doesn't exist" do
             @after_local_repo_clone << -> { @remote_git_repo.delete_branches("tests-passed") }
-            expect(subject.upstream_branch_exist?).to eq(false)
+            expect(repo.upstream_branch_exist?).to eq(false)
           end
         end
 
         describe "#detached_head?" do
           it "returns false" do
-            expect(subject.detached_head?).to eq(false)
+            expect(repo.detached_head?).to eq(false)
           end
         end
 
         context "when local clone and origin are the same" do
           describe "#latest_local_commit" do
             it "returns the correct commit hash" do
-              expect(subject.latest_local_commit).to eq("16a1d8111ff1eb6e8fc1d1b973b4fd92cacbebcc")
+              expect(repo.latest_local_commit).to eq("16a1d8111ff1eb6e8fc1d1b973b4fd92cacbebcc")
             end
           end
 
           describe "#latest_origin_commit" do
             it "returns the correct commit hash" do
-              expect(subject.latest_origin_commit).to eq("16a1d8111ff1eb6e8fc1d1b973b4fd92cacbebcc")
+              expect(repo.latest_origin_commit).to eq("16a1d8111ff1eb6e8fc1d1b973b4fd92cacbebcc")
             end
           end
 
           describe "#latest_local_commit_date" do
             it "returns the correct commit date" do
-              expect(subject.latest_local_commit_date).to eq("2023-03-06T22:48:29Z")
+              expect(repo.latest_local_commit_date).to eq("2023-03-06T22:48:29Z")
             end
           end
 
           describe "#latest_origin_commit_date" do
             it "returns the correct commit date" do
-              expect(subject.latest_origin_commit_date).to eq("2023-03-06T22:48:29Z")
+              expect(repo.latest_origin_commit_date).to eq("2023-03-06T22:48:29Z")
             end
           end
 
           context "with no tags" do
             before do
-              @before_local_repo_clone << -> {
+              @before_local_repo_clone << -> do
                 @remote_git_repo.delete_tags("beta", "latest-release", "v3.1.0.beta1")
-              }
+              end
             end
 
             describe "#latest_local_tag_version" do
               it "returns nil as version" do
-                expect(subject.latest_local_tag_version).to be_nil
+                expect(repo.latest_local_tag_version).to be_nil
               end
             end
 
             describe "#latest_origin_tag_version" do
               it "returns nil as version" do
-                expect(subject.latest_origin_tag_version).to be_nil
+                expect(repo.latest_origin_tag_version).to be_nil
               end
             end
           end
@@ -247,13 +248,13 @@ RSpec.describe DockerManager::GitRepo do
 
             describe "#latest_local_tag_version" do
               it "returns the correct version and ignores the `beta` tag" do
-                expect(subject.latest_local_tag_version).to eq("latest-release +1")
+                expect(repo.latest_local_tag_version).to eq("latest-release +1")
               end
             end
 
             describe "#latest_origin_tag_version" do
               it "returns the correct version and ignores the `beta` and `latest-release` tags" do
-                expect(subject.latest_origin_tag_version).to eq("v3.1.0.beta1 +1")
+                expect(repo.latest_origin_tag_version).to eq("v3.1.0.beta1 +1")
               end
             end
           end
@@ -266,27 +267,27 @@ RSpec.describe DockerManager::GitRepo do
 
             describe "#latest_local_tag_version" do
               it "returns the correct version and ignores the `beta` tag" do
-                expect(subject.latest_local_tag_version).to eq("v3.1.0.beta1 +1")
+                expect(repo.latest_local_tag_version).to eq("v3.1.0.beta1 +1")
               end
             end
 
             describe "#latest_origin_tag_version" do
               it "returns the correct version and ignores the `beta` tag" do
-                expect(subject.latest_origin_tag_version).to eq("v3.1.0.beta1 +1")
+                expect(repo.latest_origin_tag_version).to eq("v3.1.0.beta1 +1")
               end
             end
           end
 
           describe "#commits_behind" do
             it "returns 0 because local and origin are the same" do
-              expect(subject.commits_behind).to eq(0)
+              expect(repo.commits_behind).to eq(0)
             end
           end
 
           describe "#update_remote!" do
             it "fetches the correct amount of new commits" do
               prepare_repos
-              expect { subject.update_remote! }.to not_change { @local_repo.commit_count }
+              expect { repo.update_remote! }.to not_change { @local_repo.commit_count }
             end
           end
         end
@@ -296,53 +297,53 @@ RSpec.describe DockerManager::GitRepo do
 
           describe "#latest_local_commit" do
             it "returns the correct commit hash" do
-              expect(subject.latest_local_commit).to eq("16a1d8111ff1eb6e8fc1d1b973b4fd92cacbebcc")
+              expect(repo.latest_local_commit).to eq("16a1d8111ff1eb6e8fc1d1b973b4fd92cacbebcc")
             end
           end
 
           describe "#latest_origin_commit" do
             it "returns the correct commit hash" do
-              expect(subject.latest_origin_commit).to eq("44b4ef6472e902d767335c4b19d47fd7a079d7c3")
+              expect(repo.latest_origin_commit).to eq("44b4ef6472e902d767335c4b19d47fd7a079d7c3")
             end
           end
 
           describe "#latest_local_commit_date" do
             it "returns the correct commit date" do
-              expect(subject.latest_local_commit_date).to eq("2023-03-06T22:48:29Z")
+              expect(repo.latest_local_commit_date).to eq("2023-03-06T22:48:29Z")
             end
           end
 
           describe "#latest_origin_commit_date" do
             it "returns the correct commit date" do
-              expect(subject.latest_origin_commit_date).to eq("2023-03-07T15:22:23Z")
+              expect(repo.latest_origin_commit_date).to eq("2023-03-07T15:22:23Z")
             end
           end
 
           describe "#latest_local_tag_version" do
             it "returns the correct version" do
               skip_for_shallow_clone
-              expect(subject.latest_local_tag_version).to eq("v3.1.0.beta1 +1")
+              expect(repo.latest_local_tag_version).to eq("v3.1.0.beta1 +1")
             end
           end
 
           describe "#latest_origin_tag_version" do
             it "returns the correct version and ignores the `beta` and `latest-release` tags" do
               skip_for_shallow_clone
-              expect(subject.latest_origin_tag_version).to eq("v3.1.0.beta2 +1")
+              expect(repo.latest_origin_tag_version).to eq("v3.1.0.beta2 +1")
             end
           end
 
           describe "#commits_behind" do
             it "returns the correct number of commits" do
               skip_for_shallow_clone
-              expect(subject.commits_behind).to eq(3)
+              expect(repo.commits_behind).to eq(3)
             end
           end
 
           describe "#update_remote!" do
             it "fetches the correct amount of new commits" do
               prepare_repos
-              expect { subject.update_remote! }.to change { @local_repo.commit_count }.by(
+              expect { repo.update_remote! }.to change { @local_repo.commit_count }.by(
                 fetch_commit_count,
               )
             end
@@ -352,7 +353,7 @@ RSpec.describe DockerManager::GitRepo do
 
       context "when tracking `beta` tag" do
         before do
-          @after_local_repo_clone << -> {
+          @after_local_repo_clone << -> do
             unless shallow_clone?
               @local_repo.checkout("beta")
               # Mimics the behavior of `web.template.yml` where we store the value of the `$version` variable
@@ -360,7 +361,7 @@ RSpec.describe DockerManager::GitRepo do
               # See https://github.com/discourse/discourse_docker/blob/main/templates/web.template.yml
               @local_repo.git("config user.discourse-version beta")
             end
-          }
+          end
         end
 
         describe "#has_local_main?" do
@@ -368,7 +369,7 @@ RSpec.describe DockerManager::GitRepo do
             let(:initial_branch) { "main" }
 
             it "detects the branch" do
-              expect(subject.has_local_main?).to eq(true)
+              expect(repo.has_local_main?).to eq(true)
             end
           end
 
@@ -376,7 +377,7 @@ RSpec.describe DockerManager::GitRepo do
             let(:initial_branch) { "master" }
 
             it "doesn't detect the branch" do
-              expect(subject.has_local_main?).to eq(false)
+              expect(repo.has_local_main?).to eq(false)
             end
           end
         end
@@ -384,28 +385,28 @@ RSpec.describe DockerManager::GitRepo do
         describe "#tracking_ref" do
           it "returns the correct remote branch" do
             skip_for_shallow_clone
-            expect(subject.tracking_ref).to eq("beta")
+            expect(repo.tracking_ref).to eq("beta")
           end
         end
 
         describe "#upstream_branch" do
           it "doesn't return a branch name" do
             skip_for_shallow_clone
-            expect(subject.upstream_branch).to be_nil
+            expect(repo.upstream_branch).to be_nil
           end
         end
 
         describe "#upstream_branch_exist?" do
           it "returns false because we aren't tracking a branch" do
             skip_for_shallow_clone
-            expect(subject.upstream_branch_exist?).to eq(false)
+            expect(repo.upstream_branch_exist?).to eq(false)
           end
         end
 
         describe "#detached_head?" do
           it "returns true" do
             skip_for_shallow_clone
-            expect(subject.detached_head?).to eq(true)
+            expect(repo.detached_head?).to eq(true)
           end
         end
 
@@ -413,55 +414,55 @@ RSpec.describe DockerManager::GitRepo do
           describe "#latest_local_commit" do
             it "returns the correct commit hash" do
               skip_for_shallow_clone
-              expect(subject.latest_local_commit).to eq("e43b6978c22ea3aeafbcf96c6e4fff5af0b7da29")
+              expect(repo.latest_local_commit).to eq("e43b6978c22ea3aeafbcf96c6e4fff5af0b7da29")
             end
           end
 
           describe "#latest_origin_commit" do
             it "returns the correct commit hash" do
               skip_for_shallow_clone
-              expect(subject.latest_origin_commit).to eq("e43b6978c22ea3aeafbcf96c6e4fff5af0b7da29")
+              expect(repo.latest_origin_commit).to eq("e43b6978c22ea3aeafbcf96c6e4fff5af0b7da29")
             end
           end
 
           describe "#latest_local_commit_date" do
             it "returns the correct commit date" do
               skip_for_shallow_clone
-              expect(subject.latest_local_commit_date).to eq("2023-03-06T21:08:52Z")
+              expect(repo.latest_local_commit_date).to eq("2023-03-06T21:08:52Z")
             end
           end
 
           describe "#latest_origin_commit_date" do
             it "returns the correct commit date" do
               skip_for_shallow_clone
-              expect(subject.latest_origin_commit_date).to eq("2023-03-06T21:08:52Z")
+              expect(repo.latest_origin_commit_date).to eq("2023-03-06T21:08:52Z")
             end
           end
 
           describe "#latest_local_tag_version" do
             it "returns the correct version and ignores the `beta` tag" do
               skip_for_shallow_clone
-              expect(subject.latest_local_tag_version).to eq("latest-release")
+              expect(repo.latest_local_tag_version).to eq("latest-release")
             end
           end
 
           describe "#latest_origin_tag_version" do
             it "returns the correct version and ignores the `beta` and `latest-release` tags" do
               skip_for_shallow_clone
-              expect(subject.latest_origin_tag_version).to eq("v3.1.0.beta1")
+              expect(repo.latest_origin_tag_version).to eq("v3.1.0.beta1")
             end
           end
 
           describe "#commits_behind" do
             it "returns 0 because local and origin are the same" do
-              expect(subject.commits_behind).to eq(0)
+              expect(repo.commits_behind).to eq(0)
             end
           end
 
           describe "#update_remote!" do
             it "fetches the correct amount of new commits" do
               prepare_repos
-              expect { subject.update_remote! }.to not_change { @local_repo.commit_count }
+              expect { repo.update_remote! }.to not_change { @local_repo.commit_count }
             end
           end
         end
@@ -472,56 +473,56 @@ RSpec.describe DockerManager::GitRepo do
           describe "#latest_local_commit" do
             it "returns the correct commit hash" do
               skip_for_shallow_clone
-              expect(subject.latest_local_commit).to eq("e43b6978c22ea3aeafbcf96c6e4fff5af0b7da29")
+              expect(repo.latest_local_commit).to eq("e43b6978c22ea3aeafbcf96c6e4fff5af0b7da29")
             end
           end
 
           describe "#latest_origin_commit" do
             it "returns the correct commit hash" do
               skip_for_shallow_clone
-              expect(subject.latest_origin_commit).to eq("bebd76be58db951fac6abc8d4d0746951fcd1082")
+              expect(repo.latest_origin_commit).to eq("bebd76be58db951fac6abc8d4d0746951fcd1082")
             end
           end
 
           describe "#latest_local_commit_date" do
             it "returns the correct commit date" do
               skip_for_shallow_clone
-              expect(subject.latest_local_commit_date).to eq("2023-03-06T21:08:52Z")
+              expect(repo.latest_local_commit_date).to eq("2023-03-06T21:08:52Z")
             end
           end
 
           describe "#latest_origin_commit_date" do
             it "returns the correct commit date" do
               skip_for_shallow_clone
-              expect(subject.latest_origin_commit_date).to eq("2023-03-07T12:58:29Z")
+              expect(repo.latest_origin_commit_date).to eq("2023-03-07T12:58:29Z")
             end
           end
 
           describe "#latest_local_tag_version" do
             it "returns the correct version" do
               skip_for_shallow_clone
-              expect(subject.latest_local_tag_version).to eq("v3.1.0.beta1")
+              expect(repo.latest_local_tag_version).to eq("v3.1.0.beta1")
             end
           end
 
           describe "#latest_origin_tag_version" do
             it "returns the correct version" do
               skip_for_shallow_clone
-              expect(subject.latest_origin_tag_version).to eq("v3.1.0.beta2")
+              expect(repo.latest_origin_tag_version).to eq("v3.1.0.beta2")
             end
           end
 
           describe "#commits_behind" do
             it "returns the correct number of commits" do
               skip_for_shallow_clone
-              expect(subject.commits_behind).to eq(3)
+              expect(repo.commits_behind).to eq(3)
             end
           end
 
           describe "#update_remote!" do
             it "fetches the correct amount of new commits" do
               prepare_repos
-              expect { subject.update_remote! }.to change { @local_repo.commit_count }.by(
+              expect { repo.update_remote! }.to change { @local_repo.commit_count }.by(
                 fetch_commit_count,
               )
             end
@@ -531,62 +532,62 @@ RSpec.describe DockerManager::GitRepo do
 
       context "when tracking deleted branch" do
         before do
-          @before_local_repo_clone << -> {
+          @before_local_repo_clone << -> do
             @remote_git_repo.delete_tags("beta")
             @remote_git_repo.create_branches("beta")
-          }
-          @after_local_repo_clone << -> {
+          end
+          @after_local_repo_clone << -> do
             @local_repo.checkout("beta")
             @remote_git_repo.delete_branches("beta")
             @remote_git_repo.in_working_directory do |git|
               git.call("tag -m 'latest beta release' -a beta latest-release^{}")
               git.call("push origin beta")
             end
-          }
+          end
         end
 
         describe "#latest_local_commit" do
           it "returns the correct commit hash" do
-            expect(subject.latest_local_commit).to eq("16a1d8111ff1eb6e8fc1d1b973b4fd92cacbebcc")
+            expect(repo.latest_local_commit).to eq("16a1d8111ff1eb6e8fc1d1b973b4fd92cacbebcc")
           end
         end
 
         describe "#latest_origin_commit" do
           it "returns the correct commit hash" do
             skip_for_shallow_clone
-            expect(subject.latest_origin_commit).to be_nil
+            expect(repo.latest_origin_commit).to be_nil
           end
         end
 
         describe "#latest_local_commit_date" do
           it "returns the correct commit date" do
-            expect(subject.latest_local_commit_date).to eq("2023-03-06T22:48:29Z")
+            expect(repo.latest_local_commit_date).to eq("2023-03-06T22:48:29Z")
           end
         end
 
         describe "#latest_origin_commit_date" do
           it "returns the correct commit date" do
             skip_for_shallow_clone
-            expect(subject.latest_origin_commit_date).to be_nil
+            expect(repo.latest_origin_commit_date).to be_nil
           end
         end
 
         describe "#latest_local_tag_version" do
           it "returns the correct version" do
             skip_for_shallow_clone
-            expect(subject.latest_local_tag_version).to eq("latest-release +1")
+            expect(repo.latest_local_tag_version).to eq("latest-release +1")
           end
         end
 
         describe "#latest_origin_tag_version" do
           it "returns the correct version and ignores the `beta` and `latest-release` tags" do
-            expect(subject.latest_origin_tag_version).to be_nil
+            expect(repo.latest_origin_tag_version).to be_nil
           end
         end
 
         describe "#commits_behind" do
           it "returns the correct number of commits" do
-            expect(subject.commits_behind).to eq(0)
+            expect(repo.commits_behind).to eq(0)
           end
         end
       end
@@ -601,7 +602,7 @@ RSpec.describe DockerManager::GitRepo do
           let(:remote_url) { "https://github.com/discourse/example.git" }
 
           it "returns the unmodified URL" do
-            expect(subject.url).to eq("https://github.com/discourse/example.git")
+            expect(repo.url).to eq("https://github.com/discourse/example.git")
           end
         end
 
@@ -609,7 +610,7 @@ RSpec.describe DockerManager::GitRepo do
           let(:remote_url) { "git@github.com:discourse/example.git" }
 
           it "returns a HTTPS URL" do
-            expect(subject.url).to eq("https://github.com/discourse/example.git")
+            expect(repo.url).to eq("https://github.com/discourse/example.git")
           end
         end
 
@@ -617,7 +618,7 @@ RSpec.describe DockerManager::GitRepo do
           let(:remote_url) { "https://example.com/discourse.git" }
 
           it "returns the unmodified URL" do
-            expect(subject.url).to eq("https://example.com/discourse.git")
+            expect(repo.url).to eq("https://example.com/discourse.git")
           end
         end
 
@@ -625,7 +626,7 @@ RSpec.describe DockerManager::GitRepo do
           let(:remote_url) { "git@example.com:discourse.git" }
 
           it "returns the unmodified URL" do
-            expect(subject.url).to eq("git@example.com:discourse.git")
+            expect(repo.url).to eq("git@example.com:discourse.git")
           end
         end
       end
@@ -656,17 +657,17 @@ RSpec.describe DockerManager::GitRepo do
       let!(:clone_method) { GitHelpers::CLONE_SHALLOW }
 
       before do
-        @before_local_repo_clone << -> {
+        @before_local_repo_clone << -> do
           @remote_git_repo.commit(
             filename: ".discourse-compatibility",
             commits: [{ content: "<= 1000.0.0: twoPointFiveBranch", date: "2023-03-06T20:31:17Z" }],
           )
-        }
+        end
       end
 
       it "works" do
         DockerManager::FallbackCompatibilityParser.expects(:find_compatible_resource).never
-        expect(subject.tracking_ref).to eq("twoPointFiveBranch")
+        expect(repo.tracking_ref).to eq("twoPointFiveBranch")
       end
 
       it "works even in old core" do
@@ -675,7 +676,7 @@ RSpec.describe DockerManager::GitRepo do
           .with { |version_list| version_list.include?("<=") }
           .raises(ArgumentError)
 
-        expect(subject.tracking_ref).to eq("twoPointFiveBranch")
+        expect(repo.tracking_ref).to eq("twoPointFiveBranch")
       end
     end
   end

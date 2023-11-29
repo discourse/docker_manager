@@ -1,6 +1,6 @@
-import { ajax } from "discourse/lib/ajax";
 import { tracked } from "@glimmer/tracking";
 import { TrackedObject } from "@ember-compat/tracked-built-ins";
+import { ajax } from "discourse/lib/ajax";
 
 let loaded = [];
 export let needsImageUpgrade = false;
