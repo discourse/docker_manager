@@ -1,9 +1,9 @@
-import Repo from "../models/repo";
 import Controller from "@ember/controller";
-import { inject as service } from "@ember/service";
 import { action } from "@ember/object";
-import I18n from "I18n";
+import { inject as service } from "@ember/service";
 import { makeArray } from "discourse-common/lib/helpers";
+import I18n from "I18n";
+import Repo from "../models/repo";
 
 export default class UpgradeShow extends Controller {
   @service messageBus;
@@ -73,9 +73,9 @@ export default class UpgradeShow extends Controller {
             for (const repo of this.model) {
               repo.upgrading = false;
             }
-
-            return;
           }
+
+          return;
         }
 
         await this.model.resetUpgrade();

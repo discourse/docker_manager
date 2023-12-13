@@ -1,8 +1,8 @@
 import Route from "@ember/routing/route";
-import { bind } from "discourse-common/utils/decorators";
 import { inject as service } from "@ember/service";
-import Repo from "../models/repo";
+import { bind } from "discourse-common/utils/decorators";
 import I18n from "I18n";
+import Repo from "../models/repo";
 
 export default class Upgrade extends Route {
   @service messageBus;
