@@ -180,6 +180,7 @@ class DockerManager::Upgrader
       http_proxy
       https_proxy
       no_proxy
+      EMBER_VERSION
     ]
 
     clear_env =
