@@ -19,7 +19,7 @@ class DockerManager::Upgrader
   end
 
   def upgrade
-    @repos.each { |repo| return unless repo.start_upgrading }
+    return if @repos.any? { |repo| !repo.start_upgrading }
 
     percent(0)
     status("running")
