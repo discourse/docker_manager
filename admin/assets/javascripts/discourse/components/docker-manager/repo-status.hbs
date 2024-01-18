@@ -3,8 +3,8 @@
     {{#if this.officialRepoBadge}}
       {{d-icon
         this.officialRepoBadge
-        class="check-circle"
         translatedTitle=this.officialRepoBadgeTitle
+        class="check-circle"
       }}
     {{/if}}
   </td>
@@ -53,8 +53,8 @@
         <DButton
           @action={{this.upgrade}}
           @disabled={{this.upgradeDisabled}}
-          @class="upgrade-button"
           @translatedLabel={{this.upgradeButtonLabel}}
+          class="upgrade-button"
         />
       </div>
     {{/if}}
