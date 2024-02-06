@@ -43,7 +43,7 @@ ru:
         upgrade_everything: "Обновить всё"
         upgrade_repo: "Обновить %{name}"
         upgrade_successful: "Обновление выполнено!"
-        upgrade_tab: "Обновление"
+        upgrade_tab: "Обновить"
         upgrade_title: "Обновление"
         upgrading: "Идет обновление…"
       logs:
