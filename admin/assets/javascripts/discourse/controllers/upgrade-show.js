@@ -24,9 +24,9 @@ export default class UpgradeShow extends Controller {
 
   get title() {
     if (this.multiUpgrade) {
-      return I18n.t("admin.docker.upgrade_everything");
+      return I18n.t("admin.docker.update_everything");
     } else {
-      return I18n.t("admin.docker.upgrade_repo", { name: this.model.name });
+      return I18n.t("admin.docker.update_repo", { name: this.model.name });
     }
   }
 

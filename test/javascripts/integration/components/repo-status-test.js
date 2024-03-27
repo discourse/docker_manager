@@ -108,7 +108,7 @@ module("Integration | Component | RepoStatus", function (hooks) {
       .exists("green check is present when official");
   });
 
-  test("upgrade button", async function (assert) {
+  test("update button", async function (assert) {
     const store = getOwner(this).lookup("service:store");
     this.set("repo", store.createRecord("repo", repoProps));
     this.set("managerRepo", store.createRecord("repo", managerProps));
@@ -119,9 +119,9 @@ module("Integration | Component | RepoStatus", function (hooks) {
 
     assert
       .dom(".upgrade-button")
-      .exists("upgrade button is visible when plugin is out-of-date")
+      .exists("update button is visible when plugin is out-of-date")
       .isNotDisabled(
-        "upgrade button is not disabled when docker_manager repo is out-of-date"
+        "update button is not disabled when docker_manager repo is out-of-date"
       );
 
     this.managerRepo.version = "022aa3a";
@@ -130,7 +130,7 @@ module("Integration | Component | RepoStatus", function (hooks) {
     assert
       .dom(".upgrade-button")
       .isDisabled(
-        "upgrade button is disabled when docker_manager repo is not up-to-date"
+        "update button is disabled when docker_manager repo is not up-to-date"
       );
 
     this.repo.latest.commits_behind = 0;
@@ -140,6 +140,6 @@ module("Integration | Component | RepoStatus", function (hooks) {
 
     assert
       .dom(".upgrade-button")
-      .doesNotExist("upgrade button is not visible when plugin is up-to-date");
+      .doesNotExist("update button is not visible when plugin is up-to-date");
   });
 });

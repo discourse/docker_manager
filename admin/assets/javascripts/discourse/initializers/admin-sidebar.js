@@ -8,7 +8,7 @@ export default {
       api.addAdminSidebarSectionLink("root", {
         name: "admin_upgrade",
         route: "upgrade.index",
-        label: "admin.docker.upgrade_tab",
+        label: "admin.docker.update_tab",
         icon: "rocket",
       });
     });
