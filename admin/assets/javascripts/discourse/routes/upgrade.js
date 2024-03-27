@@ -46,7 +46,7 @@ export default class Upgrade extends Route {
       case "status":
         this.upgradeStore.upgradeStatus = msg.value;
         // Get the resolved model
-        const model = this.modelFor("upgrade");
+        const model = this.modelFor("update");
 
         if (msg.value === "complete") {
           for (const repo of model) {

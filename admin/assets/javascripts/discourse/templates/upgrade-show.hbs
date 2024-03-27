@@ -3,9 +3,9 @@
 <DockerManager::ProgressBar @percent={{this.upgradeStore.progressPercentage}} />
 
 {{#if this.complete}}
-  <p>{{i18n "admin.docker.upgrade_successful"}}</p>
+  <p>{{i18n "admin.docker._successful"}}</p>
 {{else if this.failed}}
-  <p>{{i18n "admin.docker.upgrade_error"}}</p>
+  <p>{{i18n "admin.docker._error"}}</p>
 {{/if}}
 
 {{#if this.isUpToDate}}
@@ -23,15 +23,15 @@
       type="button"
     >
       {{#if this.upgrading}}
-        {{i18n "admin.docker.upgrading"}}
+        {{i18n "admin.docker.updating"}}
       {{else}}
-        {{i18n "admin.docker.start_upgrading"}}
+        {{i18n "admin.docker.start_updating"}}
       {{/if}}
     </button>
 
     {{#if this.upgrading}}
       <button {{on "click" this.resetUpgrade}} class="btn unlock" type="button">
-        {{i18n "admin.docker.reset_upgrade"}}
+        {{i18n "admin.docker.reset_"}}
       </button>
     {{/if}}
   </div>
