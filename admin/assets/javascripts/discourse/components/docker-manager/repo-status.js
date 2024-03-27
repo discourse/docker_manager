@@ -51,6 +51,6 @@ export default class RepoStatus extends Component {
 
   @action
   upgrade() {
-    this.router.transitionTo("update.show", this.args.repo);
+    this.router.transitionTo("upgrade.show", this.args.repo);
   }
 }
