@@ -10,5 +10,4 @@ id:
       docker:
         last_updated: "Terakhir Diperbarui:"
         outdated_notice: "Instalasi Discourse Anda usang."
-        perform_upgrade: "Klik di sini untuk melakukan peningkatan."
         status: "Status"

@@ -11,5 +11,7 @@ hu:
         last_updated: "Legutóbb frissítve:"
         official_plugin: "Hivatalos plugin"
         outdated_notice: "Az installált Discourse elavult."
-        perform_upgrade: "Kattints ide a frissítéshez."
         status: "Állapot"
+        update_action: "Frissítés"
+        update_tab: "Frissítés"
+        update_title: "Frissítés"

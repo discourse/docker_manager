@@ -11,5 +11,7 @@ lt:
         last_updated: "Paskutinį kartą atnaujinta:"
         official_plugin: "Oficialus papildinys"
         outdated_notice: "Prašome atnaujinti Diskurse instaliacija, jūs naudojate senąja versija."
-        perform_upgrade: "Spauskite čia, kad atnaujintumėte."
         status: "Statusas"
+        update_action: "Atnaujinti"
+        update_tab: "Atnaujinti"
+        update_title: "Atnaujinti"

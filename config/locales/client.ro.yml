@@ -10,5 +10,4 @@ ro:
       docker:
         last_updated: "Ultima actualizare:"
         outdated_notice: "Versiunea Discourse nu este la zi."
-        perform_upgrade: "Apasă aici pentru actualizare."
         status: "Status"

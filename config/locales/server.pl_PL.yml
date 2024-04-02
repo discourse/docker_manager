@@ -5,5 +5,3 @@
 # https://translate.discourse.org/
 
 pl_PL:
-  docker_manager:
-    title: "Menedżer aktualizacji Discourse"

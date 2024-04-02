@@ -9,4 +9,4 @@ sk:
     admin:
       docker:
         outdated_notice: " Vaša Discourse inštalácia je neaktuálna."
-        perform_upgrade: "Aktualizuj kliknutím sem"
+        updating: "Aktualizujem..."

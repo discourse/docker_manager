@@ -11,5 +11,7 @@ hr:
         last_updated: "Zadnji put ažurirano:"
         official_plugin: "Službeni dodatak"
         outdated_notice: "Vaša inačica Discourse-a nije ažuriana."
-        perform_upgrade: "Klikni ovjde za nadogradnju."
         status: "Statust"
+        update_action: "Ažuriraj"
+        update_tab: "Ažuriraj"
+        update_title: "Ažuriraj"

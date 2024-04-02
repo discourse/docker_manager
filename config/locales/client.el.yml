@@ -11,5 +11,7 @@ el:
         last_updated: "Τελευταία ενημέρωση:"
         official_plugin: "Επίσημο πρόσθετο"
         outdated_notice: "Η εγκατάσταση του Discourse σας δεν είναι ενημερωμένη."
-        perform_upgrade: "Κάντε κλικ εδώ για αναβάθμιση."
         status: "Κατάσταση"
+        update_action: "Ενημέρωση"
+        update_tab: "Ενημέρωση"
+        update_title: "Ενημέρωση"

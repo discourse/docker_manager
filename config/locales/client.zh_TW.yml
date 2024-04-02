@@ -11,5 +11,7 @@ zh_TW:
         last_updated: "最近更新時間："
         official_plugin: "官方套件"
         outdated_notice: "您的 Discourse 版本已過期。"
-        perform_upgrade: "點此進行升級。"
         status: "狀態"
+        update_action: "更新"
+        update_tab: "更新"
+        update_title: "更新"

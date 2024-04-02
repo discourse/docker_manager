@@ -9,5 +9,8 @@ cs:
     admin:
       docker:
         outdated_notice: "Vaše instalace Discourse je zastaralá."
-        perform_upgrade: "Klikněte zde pro aktualizaci."
         status: "Stav"
+        update_action: "Aktualizace"
+        update_tab: "Aktualizace"
+        update_title: "Aktualizace"
+        updating: "Aktualizace…"

@@ -9,4 +9,3 @@ sq:
     admin:
       docker:
         outdated_notice: "Platforma juaj Discourse ka përtëritje."
-        perform_upgrade: "Kliko këtu për ta përtëritur."

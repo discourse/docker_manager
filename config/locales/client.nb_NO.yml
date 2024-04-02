@@ -11,5 +11,7 @@ nb_NO:
         last_updated: "Sist oppdatert:"
         official_plugin: "Offisiell Plugin"
         outdated_notice: "Din Discourse-installasjon kjører ikke siste versjon."
-        perform_upgrade: "Trykk her for å oppgradere."
         status: "Status"
+        update_action: "Oppdater"
+        update_tab: "Oppdater"
+        update_title: "Oppdater"
