@@ -8,17 +8,17 @@ export default class RepoStatus extends Component {
   @service upgradeStore;
 
   get upgradeDisabled() {
-    // Allow to see the currently running upgrade
+    // Allow to see the currently running update
     if (this.args.upgradingRepo) {
       return false;
     }
 
-    // Disable other buttons when an upgrade is running
+    // Disable other buttons when an update is running
     if (this.upgradeStore.running) {
       return true;
     }
 
-    // docker_manager has to be upgraded before other plugins
+    // docker_manager has to be updated before other plugins
     return (
       !this.args.managerRepo.upToDate &&
       this.args.managerRepo !== this.args.repo
@@ -43,9 +43,9 @@ export default class RepoStatus extends Component {
 
   get upgradeButtonLabel() {
     if (this.args.repo.upgrading) {
-      return I18n.t("admin.docker.upgrading");
+      return I18n.t("admin.docker.updating");
     } else {
-      return I18n.t("admin.docker.upgrade_action");
+      return I18n.t("admin.docker.update_action");
     }
   }
 
