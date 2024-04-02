@@ -10,5 +10,4 @@ sl:
       docker:
         last_updated: "Zadnja posodobitev:"
         outdated_notice: "Vaša Discourse namestitev je zastarela."
-        perform_upgrade: "Kliknite tukaj za nadgradnjo."
         status: "Stanje"

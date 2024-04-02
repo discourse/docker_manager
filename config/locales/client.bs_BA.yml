@@ -11,5 +11,4 @@ bs_BA:
         last_updated: "Zadnji put ažurirano:"
         official_plugin: "Officionalni Plugin"
         outdated_notice: "Vaša Discourse instalacije je zastarijela."
-        perform_upgrade: "Klikni ovjde za nadogradnju."
         status: "Status"

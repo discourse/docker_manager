@@ -9,4 +9,3 @@ sr:
     admin:
       docker:
         outdated_notice: "Tvoja Discourse instalacija nije sinhronizovana sa zadnjim zakrpama."
-        perform_upgrade: "Klikni ovde za nadogradnju."

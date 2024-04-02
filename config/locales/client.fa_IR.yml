@@ -17,18 +17,8 @@ fa_IR:
         new_version_available: "نسخه جدید در دسترس است!"
         official_plugin: "پلاگین رسمی"
         outdated_notice: "Discourse نصب شده شما به روز نیست."
-        perform_upgrade: "برای به‌روزرسانی اینجا کلیک کنید."
         repository: "مخزن"
-        reset_upgrade: "بازنشانی ارتقاء"
         status: "وضعیت"
-        upgrade_action: "ارتقاء"
-        upgrade_all: "ارتقاء همه"
-        upgrade_repo: "ارتقاء %{name}"
-        upgrade_successful: "ارتقاء با موفقیت به پایان رسید!"
-        upgrade_tab: "ارتقاء"
-        upgrade_title: "ارتقاء"
-        upgrading: "در حال ارتقاء…"
-      logs:
-        staff_actions:
-          actions:
-            discourse_upgrade: "ارتقاء به آخرین نسخه"
+        update_action: "به روز رسانی"
+        update_tab: "به روز رسانی"
+        update_title: "به روز رسانی"

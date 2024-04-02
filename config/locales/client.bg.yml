@@ -10,5 +10,7 @@ bg:
       docker:
         last_updated: "Последно обновление:"
         outdated_notice: "Твоята Discourse инсталация не е обновена."
-        perform_upgrade: "Щракни тук за обновяване."
         status: "Статус"
+        update_action: "Актуализация"
+        update_tab: "Актуализация"
+        update_title: "Актуализация"

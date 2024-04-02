@@ -9,4 +9,3 @@ en_GB:
     admin:
       docker:
         outdated_notice: "Your Discourse installation is out of date."
-        perform_update: "Click here to update."

@@ -10,5 +10,7 @@ pt:
       docker:
         last_updated: "Última Atualização:"
         outdated_notice: "A sua instalação do Discourse está desatualizada."
-        perform_upgrade: "Clique aqui para atualizar."
         status: "Estado"
+        update_action: "Atualização"
+        update_tab: "Atualização"
+        update_title: "Atualização"

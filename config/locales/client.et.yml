@@ -10,5 +10,4 @@ et:
       docker:
         last_updated: "Viimati uuendatud:"
         outdated_notice: "Sinu Discourse' installatsioon on aegunud"
-        perform_upgrade: "Kliki siia, et uuendada."
         status: "Staatus"

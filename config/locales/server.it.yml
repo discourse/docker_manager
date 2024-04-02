@@ -5,5 +5,3 @@
 # https://translate.discourse.org/
 
 it:
-  docker_manager:
-    title: "Gestore aggiornamenti Discourse"

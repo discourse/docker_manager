@@ -9,4 +9,7 @@ te:
     admin:
       docker:
         outdated_notice: "మీ డిస్కోర్సు ప్రతిష్టాపన కాలాతీతమైంది."
-        perform_upgrade: "ఉన్నతీకరించడానికి ఇక్కడ నొక్కండి"
+        update_action: "నవీకరించండి"
+        update_tab: "నవీకరించండి"
+        update_title: "నవీకరించండి"
+        updating: "నవీకరిస్తోంది…"
