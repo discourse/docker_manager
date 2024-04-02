@@ -62,7 +62,7 @@ acceptance("docker_manager", function (needs) {
     });
 
     await click(".upgrades-banner a");
-    assert.strictEqual(currentURL(), "/admin/upgrade");
+    assert.strictEqual(currentURL(), "/admin/update");
 
     assert.dom(".docker-manager table#repos tbody tr").exists({ count: 2 });
     assert.dom(".new.commit-hash").hasText("v3.1.0.beta2 +241");

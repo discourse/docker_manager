@@ -13,11 +13,11 @@ export default class Upgrade extends Route {
   }
 
   activate() {
-    this.messageBus.subscribe("/docker/upgrade", this.onUpgradeMessage);
+    this.messageBus.subscribe("/docker/update", this.onUpgradeMessage);
   }
 
   deactivate() {
-    this.messageBus.unsubscribe("/docker/upgrade", this.onUpgradeMessage);
+    this.messageBus.unsubscribe("/docker/update", this.onUpgradeMessage);
   }
 
   setupController(controller, model) {
@@ -46,7 +46,7 @@ export default class Upgrade extends Route {
       case "status":
         this.upgradeStore.upgradeStatus = msg.value;
         // Get the resolved model
-        const model = this.modelFor("upgrade");
+        const model = this.modelFor("update");
 
         if (msg.value === "complete") {
           for (const repo of model) {

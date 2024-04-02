@@ -157,7 +157,7 @@ class DockerManager::Upgrader
 
   def publish(type, value)
     MessageBus.publish(
-      "/docker/upgrade",
+      "/docker/update",
       { type: type, value: value, repos: @repos.map(&:name) },
       user_ids: [@user_id],
     )
@@ -257,9 +257,9 @@ class DockerManager::Upgrader
     publish("status", val)
   end
 
-  def log_version_upgrade
+  def log_version_update
     StaffActionLogger.new(User.find(@user_id)).log_custom(
-      "discourse_upgrade",
+      "discourse_update",
       from_version: @from_version,
       repository: @repos.map(&:path).join(", "),
     )

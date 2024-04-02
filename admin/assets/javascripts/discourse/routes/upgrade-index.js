@@ -2,7 +2,7 @@ import Route from "@ember/routing/route";
 
 export default class UpgradeIndex extends Route {
   model() {
-    return this.modelFor("upgrade");
+    return this.modelFor("update");
   }
 
   async loadRepos(list) {
