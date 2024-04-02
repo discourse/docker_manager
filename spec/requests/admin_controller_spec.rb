@@ -25,6 +25,16 @@ RSpec.describe DockerManager::AdminController do
       get "/admin/update"
       expect(response.status).to eq(200)
     end
+
+    it "should redirect to the new route" do
+      sign_in(Fabricate(:admin))
+
+      get "/admin/upgrade"
+      expect(response.status).to eq(301)
+
+      uri = URI.parse(response.headers["Location"])
+      expect(uri.path).to eq("/admin/update")
+    end
   end
 
   describe "#repos" do

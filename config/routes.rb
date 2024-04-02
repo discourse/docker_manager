@@ -2,8 +2,8 @@
 
 DockerManager::Engine.routes.draw do
   scope "/admin", constraints: AdminConstraint.new do
-    get "/upgrade", to: redirect("/update")
-    get "/upgrade/:id", to: redirect("/update/%{id}")
+    get "/upgrade", to: redirect("/admin/update")
+    get "/upgrade/:id", to: redirect("/admin/update/%{id}")
     get "/update" => "admin#index"
     get "/update/:id" => "admin#index"
     get "/docker/repos" => "admin#repos"
