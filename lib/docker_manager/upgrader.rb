@@ -257,7 +257,7 @@ class DockerManager::Upgrader
     publish("status", val)
   end
 
-  def log_version_update
+  def log_version_upgrade
     StaffActionLogger.new(User.find(@user_id)).log_custom(
       "discourse_update",
       from_version: @from_version,
