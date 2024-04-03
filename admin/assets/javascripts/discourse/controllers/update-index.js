@@ -26,6 +26,6 @@ export default class UpgradeIndex extends Controller {
 
   @action
   upgradeAllButton() {
-    this.router.transitionTo("upgrade.show", "all");
+    this.router.transitionTo("update.show", "all");
   }
 }

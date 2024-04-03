@@ -3,7 +3,7 @@
 RSpec.describe DockerManager::AdminController do
   describe "anonymous user" do
     it "should be a 404" do
-      get "/admin/upgrade"
+      get "/admin/update"
 
       expect(response.status).to eq(404)
     end
@@ -13,7 +13,7 @@ RSpec.describe DockerManager::AdminController do
     it "should 404" do
       sign_in(Fabricate(:user))
 
-      get "/admin/upgrade"
+      get "/admin/update"
       expect(response.status).to eq(404)
     end
   end
@@ -22,8 +22,18 @@ RSpec.describe DockerManager::AdminController do
     it "should return the right response" do
       sign_in(Fabricate(:admin))
 
-      get "/admin/upgrade"
+      get "/admin/update"
       expect(response.status).to eq(200)
+    end
+
+    it "should redirect to the new route" do
+      sign_in(Fabricate(:admin))
+
+      get "/admin/upgrade"
+      expect(response.status).to eq(301)
+
+      uri = URI.parse(response.headers["Location"])
+      expect(uri.path).to eq("/admin/update")
     end
   end
 

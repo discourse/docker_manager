@@ -7,7 +7,7 @@ export default {
     withPluginApi("1.24.0", (api) => {
       api.addAdminSidebarSectionLink("root", {
         name: "admin_upgrade",
-        route: "upgrade.index",
+        route: "update.index",
         label: "admin.docker.update_tab",
         icon: "rocket",
       });

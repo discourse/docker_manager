@@ -37,7 +37,7 @@ export default class Repo {
   }
 
   static upgradeAll() {
-    return ajax("/admin/docker/upgrade", {
+    return ajax("/admin/docker/update", {
       dataType: "text",
       type: "POST",
       data: { path: "all" },
@@ -45,7 +45,7 @@ export default class Repo {
   }
 
   static resetAll(repos) {
-    return ajax("/admin/docker/upgrade", {
+    return ajax("/admin/docker/update", {
       dataType: "text",
       type: "DELETE",
       data: { path: "all", version: concatVersions(repos) },
@@ -172,7 +172,7 @@ export default class Repo {
   }
 
   async resetUpgrade() {
-    await this.repoAjax("/admin/docker/upgrade", {
+    await this.repoAjax("/admin/docker/update", {
       dataType: "text",
       type: "DELETE",
     });
@@ -184,7 +184,7 @@ export default class Repo {
     this.upgrading = true;
 
     try {
-      await this.repoAjax("/admin/docker/upgrade", {
+      await this.repoAjax("/admin/docker/update", {
         dataType: "text",
         type: "POST",
       });
