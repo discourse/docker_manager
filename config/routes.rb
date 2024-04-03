@@ -11,7 +11,7 @@ DockerManager::Engine.routes.draw do
     get "/docker/progress" => "admin#progress"
     get "/docker/ps" => "admin#ps"
 
-    post "/docker/update" => "admin#update"
-    delete "/docker/update" => "admin#reset_update"
+    post "/docker/update" => "admin#upgrade"
+    delete "/docker/update" => "admin#reset_upgrade"
   end
 end
