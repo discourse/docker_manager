@@ -24,7 +24,7 @@ en:
         perform_update: "Click here to update."
         repo_newest_version: "%{name} is at the newest version."
         repository: "Repository"
-        reset_update: "Reset update"
+        reset_update: "Reset Update"
         reset_warning: "WARNING: You should only reset updates that have failed and are not running. This will NOT cancel currently running builds and should only be used as a last resort."
         start_updating: "Start Updating"
         status: "Status"
