@@ -9,9 +9,6 @@ nb_NO:
     admin:
       docker:
         last_updated: "Sist oppdatert:"
-        official_plugin: "Offisiell Plugin"
         outdated_notice: "Din Discourse-installasjon kjører ikke siste versjon."
         status: "Status"
         update_action: "Oppdater"
-        update_tab: "Oppdater"
-        update_title: "Oppdater"

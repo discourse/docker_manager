@@ -5,3 +5,5 @@
 # https://translate.discourse.org/
 
 de:
+  docker_manager:
+    title: "Discourse-Update-Manager"

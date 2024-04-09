@@ -8,5 +8,6 @@ sk:
   js:
     admin:
       docker:
+        last_updated: "Posledná aktualizácia:"
         outdated_notice: " Vaša Discourse inštalácia je neaktuálna."
         updating: "Aktualizujem..."

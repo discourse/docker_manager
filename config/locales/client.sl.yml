@@ -8,6 +8,6 @@ sl:
   js:
     admin:
       docker:
-        last_updated: "Zadnja posodobitev:"
+        last_updated: "Zadnjič posodobljeno:"
         outdated_notice: "Vaša Discourse namestitev je zastarela."
         status: "Stanje"

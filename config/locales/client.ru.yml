@@ -8,7 +8,6 @@ ru:
   js:
     admin:
       docker:
-        all_up_to_date: "Обновлений нет"
         checking: "Проверка наличия новой версии…"
         commits:
           one: "%{count} новый коммит"
@@ -16,15 +15,11 @@ ru:
           many: "%{count} новых коммитов"
           other: "%{count} нового коммита"
         everything_up_to_date: "Всё в актуальном состоянии"
-        forked_plugin: "Форк официального плагина"
         last_updated: "Последнее обновление:"
-        latest_version: "Последняя версия:"
         main_branch_warning: "<b>ВНИМАНИЕ!</b> Ваша версия Discourse отслеживает ветку «main», которая может быть нестабильной. <a href='%{url}'>Мы рекомендуем отслеживать ветку «tests-passed»</a>."
         navigation:
           processes: Процессы
           versions: Версии
-        new_version_available: "Есть новая версия!"
-        official_plugin: "Официальный плагин"
         outdated_image_header: "Вы используете старую версию образа Discourse"
         outdated_image_link: "Подробнее — на сайте поддержки"
         outdated_notice: "У вас установлена устаревшая версия Discourse."
@@ -33,6 +28,4 @@ ru:
         status: "Статус"
         up_to_date: "Обновлено"
         update_action: "Обновить"
-        update_tab: "Обновить"
-        update_title: "Обновить"
         updating: "Обновление…"

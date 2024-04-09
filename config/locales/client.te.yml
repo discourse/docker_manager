@@ -8,8 +8,7 @@ te:
   js:
     admin:
       docker:
+        last_updated: "చివరిగా నవీకరించబడింది:"
         outdated_notice: "మీ డిస్కోర్సు ప్రతిష్టాపన కాలాతీతమైంది."
         update_action: "నవీకరించండి"
-        update_tab: "నవీకరించండి"
-        update_title: "నవీకరించండి"
         updating: "నవీకరిస్తోంది…"

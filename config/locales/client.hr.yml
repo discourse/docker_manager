@@ -8,10 +8,7 @@ hr:
   js:
     admin:
       docker:
-        last_updated: "Zadnji put ažurirano:"
-        official_plugin: "Službeni dodatak"
+        last_updated: "Posljednje ažuriranje:"
         outdated_notice: "Vaša inačica Discourse-a nije ažuriana."
         status: "Statust"
         update_action: "Ažuriraj"
-        update_tab: "Ažuriraj"
-        update_title: "Ažuriraj"

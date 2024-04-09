@@ -8,7 +8,5 @@ bs_BA:
   js:
     admin:
       docker:
-        last_updated: "Zadnji put ažurirano:"
-        official_plugin: "Officionalni Plugin"
         outdated_notice: "Vaša Discourse instalacije je zastarijela."
         status: "Status"

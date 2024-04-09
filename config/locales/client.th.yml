@@ -8,9 +8,6 @@ th:
   js:
     admin:
       docker:
-        last_updated: "อัปเดตล่าสุด:"
         outdated_notice: "Discourse ที่คุณติดตั้งล้าสมัย"
         status: "สถานะ"
         update_action: "อัปเดต"
-        update_tab: "อัปเดต"
-        update_title: "อัปเดต"

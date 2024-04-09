@@ -8,21 +8,16 @@ tr_TR:
   js:
     admin:
       docker:
-        all_up_to_date: "Tümü Güncel"
         checking: "Yeni sürüm kontrol ediliyor…"
         commits:
           one: "%{count} yeni işleme"
           other: "%{count} yeni işleme"
         everything_up_to_date: "Her şey güncel"
-        forked_plugin: "Çatallı Resmî Eklenti"
-        last_updated: "Son Güncelleme:"
-        latest_version: "En Son Sürüm:"
+        last_updated: "Son güncelleme:"
         main_branch_warning: "<b>UYARI:</b> Discourse'unuz stabil olmayabilecek 'main' dalını takip ediyor, <a href='%{url}'> 'tests-passed' dalını takip etmenizi öneririz</a>."
         navigation:
           processes: Süreçler
           versions: Sürümler
-        new_version_available: "Yeni Sürüm Çıktı!"
-        official_plugin: "Resmi Eklenti"
         outdated_image_header: "Discourse görüntüsünün eski bir sürümünü çalıştırıyorsunuz"
         outdated_image_link: "Destek sitemizde daha fazla bilgi mevcut"
         outdated_notice: "Discourse yüklemeniz güncel değil."
@@ -31,6 +26,4 @@ tr_TR:
         status: "Durum"
         up_to_date: "Güncel"
         update_action: "Güncelle"
-        update_tab: "Güncelle"
-        update_title: "Güncelle"
         updating: "Güncelleniyor…"

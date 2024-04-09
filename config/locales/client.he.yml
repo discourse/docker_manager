@@ -16,14 +16,14 @@ he:
           many: "%{count} הגשות חדשות"
           other: "%{count} הגשות חדשות"
         everything_up_to_date: "הכול מעודכן"
-        forked_plugin: "התפצלות מהתוסף הרשמי"
+        forked_plugin: "תוסף רשמי עם שינויים"
         last_updated: "עדכון אחרון:"
         latest_version: "הגרסה העדכנית ביותר:"
         main_branch_warning: "<b>אזהרה:</b> עותק ה־Discourse שלך עוקב אחר הענף ‚main’ (ראשי) שעלול להיות רעוע, <a href='%{url}'> אנו ממליצים לעקוב אחר הענף‚'tests-passed’</a> (לאחר בדיקות)."
         navigation:
           processes: תהליכים
           versions: גרסאות
-        new_version_available: "גרסה חדשה זמינה!"
+        new_version_available: "יש גרסה חדשה!"
         official_plugin: "תוסף רשמי"
         outdated_image_header: "הגרסה שפועלת אצלך של הדמות של Discourse מיושנת"
         outdated_image_info: "עדכונים דרך הדפדפן מושבתים עד להרצת הדמות העדכנית ביותר. כדי לעשות זאת יש להיכנס לשרת שלך דרך SSH ולהריץ את הפקודה:"
@@ -43,8 +43,8 @@ he:
         update_everything: "עדכון של הכול"
         update_repo: "עדכון %{name}"
         update_successful: "העדכון הושלם בהצלחה!"
-        update_tab: "עדכון"
-        update_title: "עדכון"
+        update_tab: "עדכון Discourse"
+        update_title: "עדכון Discourse"
         updating: "מתבצע עדכון…"
       logs:
         staff_actions:

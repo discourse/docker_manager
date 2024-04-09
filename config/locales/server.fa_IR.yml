@@ -5,3 +5,5 @@
 # https://translate.discourse.org/
 
 fa_IR:
+  docker_manager:
+    title: "مدیریت به‌روزرسانی دیسکورس"

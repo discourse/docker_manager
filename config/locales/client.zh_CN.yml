@@ -8,20 +8,15 @@ zh_CN:
   js:
     admin:
       docker:
-        all_up_to_date: "全部处于最新状态"
         checking: "正在检查新版本…"
         commits:
           other: "%{count} 个新提交"
         everything_up_to_date: "一切都处于最新状态"
-        forked_plugin: "复刻官方插件"
-        last_updated: "最后更新："
-        latest_version: "最新版本："
+        last_updated: "最近更新："
         main_branch_warning: "<b>警告</b>：您的 Discourse 正在跟踪可能不稳定的 'main' 分支，<a href='%{url}'>我们建议跟踪 'tests-passed' 分支</a>。"
         navigation:
           processes: 进程
           versions: 版本
-        new_version_available: "有可用的新版本！"
-        official_plugin: "官方插件"
         outdated_image_header: "您正在运行旧版本的 Discourse 镜像"
         outdated_image_link: "有关详情，请访问我们的支持网站"
         outdated_notice: "您的 Discourse 安装已过期。"
@@ -30,6 +25,4 @@ zh_CN:
         status: "状态"
         up_to_date: "最新"
         update_action: "更新"
-        update_tab: "更新"
-        update_title: "更新"
         updating: "正在更新…"

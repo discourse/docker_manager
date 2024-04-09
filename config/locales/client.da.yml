@@ -8,21 +8,15 @@ da:
   js:
     admin:
       docker:
-        all_up_to_date: "Alt opdateret"
         checking: "Søger efter ny version…"
         everything_up_to_date: "Alt er opdateret"
         last_updated: "Sidst opdateret:"
-        latest_version: "Seneste Version:"
         navigation:
           processes: Processer
           versions: Versioner
-        new_version_available: "Ny Version Tilgængelig!"
-        official_plugin: "Officielt plugin"
         outdated_image_link: "Mere info på vores supportside"
         outdated_notice: "Din Discourse-installation er forældet."
         status: "Status"
         up_to_date: "Opdateret"
         update_action: "Opdater"
-        update_tab: "Opdater"
-        update_title: "Opdater"
         updating: "Opdaterer…"
