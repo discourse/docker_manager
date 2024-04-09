@@ -9,9 +9,6 @@ el:
     admin:
       docker:
         last_updated: "Τελευταία ενημέρωση:"
-        official_plugin: "Επίσημο πρόσθετο"
         outdated_notice: "Η εγκατάσταση του Discourse σας δεν είναι ενημερωμένη."
         status: "Κατάσταση"
         update_action: "Ενημέρωση"
-        update_tab: "Ενημέρωση"
-        update_title: "Ενημέρωση"

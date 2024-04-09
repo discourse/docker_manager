@@ -8,7 +8,5 @@ hy:
   js:
     admin:
       docker:
-        last_updated: "Վերջին թարմացումը. "
-        official_plugin: "Պաշտոնական Հավելում"
         outdated_notice: "Ձեր Discourse-ը ժամկետանց է"
         status: "Ստատուս"

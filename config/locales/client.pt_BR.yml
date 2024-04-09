@@ -8,21 +8,16 @@ pt_BR:
   js:
     admin:
       docker:
-        all_up_to_date: "Tudo atualizado"
         checking: "Verificando nova versão…"
         commits:
           one: "%{count} confirmação nova"
           other: "%{count} confirmação(ões) nova(s)"
         everything_up_to_date: "Tudo está atualizado"
-        forked_plugin: "Plugin oficial bifurcado"
         last_updated: "Última atualização:"
-        latest_version: "Versão mais recente:"
         main_branch_warning: "<b>AVISO:</b> Seu Discourse está acompanhando a ramificação \"principal\", que pode ser instável, <a href='%{url}'> recomendamos acompanhar a ramificação \"tests-passed\"</a>."
         navigation:
           processes: Processos
           versions: Versões
-        new_version_available: "Nova versão disponível!"
-        official_plugin: "Plugin oficial"
         outdated_image_header: "Você está executando uma versão antiga da imagem do Discourse"
         outdated_image_link: "Mais informações no nosso site de suporte"
         outdated_notice: "Sua instalação do Discourse está desatualizada."
@@ -31,6 +26,4 @@ pt_BR:
         status: "Status"
         up_to_date: "Atualizado"
         update_action: "Atualizar"
-        update_tab: "Atualizar"
-        update_title: "Atualizar"
         updating: "Atualizando…"

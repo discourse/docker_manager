@@ -8,10 +8,7 @@ ko:
   js:
     admin:
       docker:
-        last_updated: "마지막 업데이트 :"
-        official_plugin: "공식 플러그인"
+        last_updated: "마지막 업데이트:"
         outdated_notice: "설치된 Discourse가 최신 버전이 아닙니다."
         status: "상태"
         update_action: "업데이트"
-        update_tab: "업데이트"
-        update_title: "업데이트"

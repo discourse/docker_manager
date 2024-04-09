@@ -8,9 +8,7 @@ bg:
   js:
     admin:
       docker:
-        last_updated: "Последно обновление:"
+        last_updated: "Последна актуализация:"
         outdated_notice: "Твоята Discourse инсталация не е обновена."
         status: "Статус"
         update_action: "Актуализация"
-        update_tab: "Актуализация"
-        update_title: "Актуализация"

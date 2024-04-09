@@ -8,6 +8,6 @@ id:
   js:
     admin:
       docker:
-        last_updated: "Terakhir Diperbarui:"
+        last_updated: "Terakhir diperbarui:"
         outdated_notice: "Instalasi Discourse Anda usang."
         status: "Status"

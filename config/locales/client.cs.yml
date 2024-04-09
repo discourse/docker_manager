@@ -8,9 +8,8 @@ cs:
   js:
     admin:
       docker:
+        last_updated: "Poslední aktualizace:"
         outdated_notice: "Vaše instalace Discourse je zastaralá."
         status: "Stav"
         update_action: "Aktualizace"
-        update_tab: "Aktualizace"
-        update_title: "Aktualizace"
         updating: "Aktualizace…"

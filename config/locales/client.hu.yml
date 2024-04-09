@@ -9,9 +9,6 @@ hu:
     admin:
       docker:
         last_updated: "Legutóbb frissítve:"
-        official_plugin: "Hivatalos plugin"
         outdated_notice: "Az installált Discourse elavult."
         status: "Állapot"
         update_action: "Frissítés"
-        update_tab: "Frissítés"
-        update_title: "Frissítés"

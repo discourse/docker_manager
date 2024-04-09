@@ -8,21 +8,16 @@ nl:
   js:
     admin:
       docker:
-        all_up_to_date: "Alles up-to-date"
         checking: "Controleren op nieuwe versie…"
         commits:
           one: "%{count} nieuwe commit"
           other: "%{count} nieuwe commits"
         everything_up_to_date: "Alles is up-to-date"
-        forked_plugin: "Fork van officiële plug-in"
         last_updated: "Laatst bijgewerkt:"
-        latest_version: "Nieuwste versie:"
         main_branch_warning: "<b>WAARSCHUWING:</b> Je Discourse volgt de 'main'-branch die mogelijk instabiel kan zijn. We raden aan om de branch <a href='%{url}'>'tests-passed'</a> te volgen."
         navigation:
           processes: Processen
           versions: Versies
-        new_version_available: "Nieuwe versie beschikbaar!"
-        official_plugin: "Officiële plug-in"
         outdated_image_header: "Je gebruikt een oude versie van de Discourse-image"
         outdated_image_link: "Meer info op onze ondersteuningssite"
         outdated_notice: "Je Discourse-installatie is verouderd."
@@ -31,6 +26,4 @@ nl:
         status: "Status"
         up_to_date: "Up-to-date"
         update_action: "Bijwerken"
-        update_tab: "Bijwerken"
-        update_title: "Bijwerken"
         updating: "Bijwerken…"

@@ -8,21 +8,16 @@ it:
   js:
     admin:
       docker:
-        all_up_to_date: "Tutto aggiornato"
         checking: "Verifica della nuova versione…"
         commits:
           one: "%{count} nuovo commit"
           other: "%{count} nuovi commit"
         everything_up_to_date: "Tutto è aggiornato"
-        forked_plugin: "Fork di un plugin ufficiale effettuato"
         last_updated: "Ultimo aggiornamento:"
-        latest_version: "Ultima versione:"
         main_branch_warning: "<b>AVVISO:</b> Il tuo Discourse sta monitorando il branch \"principale\", che potrebbe essere instabile, <a href='%{url}'> ti consigliamo di monitorare il branch \"test superati\"</a>."
         navigation:
           processes: Processi
           versions: Versioni
-        new_version_available: "Nuova versione disponibile!"
-        official_plugin: "Plugin Ufficiale"
         outdated_image_header: "Stai eseguendo una vecchia versione dell'immagine Discourse"
         outdated_image_link: "Maggiori informazioni sul nostro sito di assistenza"
         outdated_notice: "La tua installazione Discourse non è aggiornata."
@@ -31,6 +26,4 @@ it:
         status: "Stato"
         up_to_date: "Aggiornato"
         update_action: "Aggiorna"
-        update_tab: "Aggiorna"
-        update_title: "Aggiorna"
         updating: "Aggiornamento…"

@@ -8,16 +8,10 @@ uk:
   js:
     admin:
       docker:
-        all_up_to_date: "Все в актуальному стані"
         checking: "Перевірка нової версії…"
         everything_up_to_date: "Все в актуальному стані"
-        forked_plugin: "Форк офіційного втулка"
         last_updated: "Останнє оновлення:"
-        latest_version: "Остання версія:"
-        official_plugin: "Офіційний плагін"
         outdated_notice: "Your Discourse installation is out of date."
         status: "Статус"
         update_action: "Оновити"
-        update_tab: "Оновити"
-        update_title: "Оновити"
         updating: "Оновлення…"

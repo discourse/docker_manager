@@ -8,5 +8,4 @@ sw:
   js:
     admin:
       docker:
-        official_plugin: "Programu-jalizi Rasmi"
         outdated_notice: "Toleo lako la Discourse limepitwa na wakati."

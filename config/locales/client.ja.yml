@@ -8,20 +8,15 @@ ja:
   js:
     admin:
       docker:
-        all_up_to_date: "すべて最新"
         checking: "新しいバージョンを確認中…"
         commits:
           other: "%{count} 件の新規コミット"
         everything_up_to_date: "すべて最新です"
-        forked_plugin: "フォークされた公式プラグイン"
         last_updated: "最終更新:"
-        latest_version: "最新バージョン:"
         main_branch_warning: "<b>警告:</b> あなたの Discourse は不安定な可能性のある 'main' ブランチを追跡しています。<a href='%{url}'>'tests-passed' ブランチを追跡することをお勧めします</a>。"
         navigation:
           processes: プロセス
           versions: バージョン
-        new_version_available: "新しいバージョンがリリースされました！"
-        official_plugin: "公式プラグイン"
         outdated_image_header: "Discourse の古いバージョンのイメージを実行しています"
         outdated_image_link: "詳細はサポートサイトをご覧ください"
         outdated_notice: "インストールされている Discourse は古いバージョンです。"
@@ -30,6 +25,4 @@ ja:
         status: "ステータス"
         up_to_date: "最新"
         update_action: "更新"
-        update_tab: "更新"
-        update_title: "更新"
         updating: "更新中…"

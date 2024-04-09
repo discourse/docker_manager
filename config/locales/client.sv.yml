@@ -8,11 +8,8 @@ sv:
   js:
     admin:
       docker:
-        last_updated: "Senast uppdaterad:"
-        official_plugin: "Officiellt tillägg"
+        last_updated: "Senast uppdaterat:"
         outdated_notice: "Din Discourse-installation är föråldrad."
         status: "Status"
         update_action: "Uppdatera"
-        update_tab: "Uppdatera"
-        update_title: "Uppdatera"
         updating: "Uppdaterar…"

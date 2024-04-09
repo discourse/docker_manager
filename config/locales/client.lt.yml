@@ -9,9 +9,6 @@ lt:
     admin:
       docker:
         last_updated: "Paskutinį kartą atnaujinta:"
-        official_plugin: "Oficialus papildinys"
         outdated_notice: "Prašome atnaujinti Diskurse instaliacija, jūs naudojate senąja versija."
         status: "Statusas"
         update_action: "Atnaujinti"
-        update_tab: "Atnaujinti"
-        update_title: "Atnaujinti"

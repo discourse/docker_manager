@@ -8,17 +8,33 @@ fa_IR:
   js:
     admin:
       docker:
+        all_up_to_date: "همه به‌روز هست"
         checking: "در حال بررسی نسخه جدید…"
         everything_up_to_date: "همه چیز به‌روز است"
         last_updated: "آخرین به‌روزرسانی:"
         latest_version: "آخرین نسخه:"
         navigation:
+          processes: در حال پردازش
           versions: 'نسخه‌ها:'
         new_version_available: "نسخه جدید در دسترس است!"
-        official_plugin: "پلاگین رسمی"
-        outdated_notice: "Discourse نصب شده شما به روز نیست."
+        official_plugin: "افزونه رسمی"
+        outdated_image_link: "اطلاعات بیشتر در سایت پشتیبانی ما"
+        outdated_notice: "دیسکورس نصب شده شما به‌روز نیست."
+        perform_update: "برای به‌روزرسانی اینجا را کلیک کنید."
         repository: "مخزن"
+        reset_update: "بازنشانی به‌روزرسانی"
+        start_updating: "شروع به‌روزرسانی"
         status: "وضعیت"
-        update_action: "به روز رسانی"
-        update_tab: "به روز رسانی"
-        update_title: "به روز رسانی"
+        up_to_date: "به روز"
+        update_action: "به‌روزرسانی"
+        update_all: "به‌روزرسانی همه"
+        update_everything: "همه چیز را به‌روز کنید"
+        update_repo: "به‌روزرسانی %{name}"
+        update_successful: "به‌روزرسانی با موفقیت انجام شد!"
+        update_tab: "به‌روزرسانی دیسکورس"
+        update_title: "به‌روزرسانی دیسکورس"
+        updating: "در حال به‌روزرسانی…"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "به آخرین نسخه به‌روزرسانی کنید"

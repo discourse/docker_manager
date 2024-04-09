@@ -8,15 +8,12 @@ ca:
   js:
     admin:
       docker:
-        all_up_to_date: "Tot al dia"
         checking: "S'està comprovant la nova versió…"
         everything_up_to_date: "Tot està al dia"
-        last_updated: "Última actualització:"
+        last_updated: "Darrera actualització:"
         navigation:
           processes: Processos
           versions: Versions
-        new_version_available: "Nova versió disponible!"
-        official_plugin: "Connector (plugin) oficial"
         outdated_notice: "La instal·lació de Discourse no està actualitzada."
         repository: "Repositori"
         status: "Estat"

@@ -8,9 +8,7 @@ pt:
   js:
     admin:
       docker:
-        last_updated: "Última Atualização:"
+        last_updated: "Última atualização:"
         outdated_notice: "A sua instalação do Discourse está desatualizada."
         status: "Estado"
         update_action: "Atualização"
-        update_tab: "Atualização"
-        update_title: "Atualização"
