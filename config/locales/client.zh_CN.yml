@@ -8,21 +8,42 @@ zh_CN:
   js:
     admin:
       docker:
+        all_up_to_date: "全部处于最新状态"
         checking: "正在检查新版本…"
         commits:
           other: "%{count} 个新提交"
         everything_up_to_date: "一切都处于最新状态"
+        forked_plugin: "复刻的官方插件"
         last_updated: "最近更新："
+        latest_version: "最新版本："
         main_branch_warning: "<b>警告</b>：您的 Discourse 正在跟踪可能不稳定的 'main' 分支，<a href='%{url}'>我们建议跟踪 'tests-passed' 分支</a>。"
         navigation:
           processes: 进程
           versions: 版本
+        new_version_available: "有可用的新版本！"
+        official_plugin: "官方插件"
         outdated_image_header: "您正在运行旧版本的 Discourse 镜像"
+        outdated_image_info: "在运行最新镜像之前，将禁用通过网页进行的升级。为此，请使用 SSH 登录您的服务器并运行："
         outdated_image_link: "有关详情，请访问我们的支持网站"
         outdated_notice: "您的 Discourse 安装已过期。"
+        perform_update: "点击此处升级。"
         repo_newest_version: "%{name} 为最新版本。"
         repository: "仓库"
+        reset_update: "重置升级"
+        reset_warning: "警告：您应当仅重置失败且未运行的升级。这不会取消当前正在运行的构建，并且只能作为最后的手段使用。"
+        start_updating: "开始升级"
         status: "状态"
         up_to_date: "最新"
         update_action: "更新"
+        update_all: "全部升级"
+        update_error: "抱歉，升级 Discourse 时出错。请检查下方日志。"
+        update_everything: "全部升级"
+        update_repo: "升级 %{name}"
+        update_successful: "升级成功完成！"
+        update_tab: "升级 Discourse"
+        update_title: "升级 Discourse"
         updating: "正在更新…"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "升级到最新版本"
