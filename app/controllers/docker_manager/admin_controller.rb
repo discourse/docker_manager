@@ -22,7 +22,11 @@ module DockerManager
         }
 
         plugin = Discourse.visible_plugins.find { |p| p.path == "#{r.path}/plugin.rb" }
-        result[:plugin] = AdminPluginSerializer.new(plugin, scope: guardian, root: false) if plugin.present?
+        result[:plugin] = AdminPluginSerializer.new(
+          plugin,
+          scope: guardian,
+          root: false,
+        ) if plugin.present?
 
         result[:fork] = true if result[:official] &&
           !r.url.starts_with?("https://github.com/discourse/")
