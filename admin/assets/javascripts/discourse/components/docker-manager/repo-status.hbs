@@ -2,11 +2,7 @@
   <td>
     <div class="repo__name">
       {{#if @repo.linkUrl}}
-        <a
-          href={{@repo.linkUrl}}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+        <a href={{@repo.linkUrl}} rel="noopener noreferrer" target="_blank">
           {{@repo.nameTitleized}}
         </a>
       {{else}}
@@ -22,11 +18,7 @@
       <div class="repo__about">
         {{@repo.plugin.about}}
         {{#if @repo.linkUrl}}
-          <a
-            href={{@repo.linkUrl}}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <a href={{@repo.linkUrl}} rel="noopener noreferrer" target="_blank">
             {{i18n "admin.plugins.learn_more"}}
           </a>
         {{/if}}

@@ -118,11 +118,11 @@ export default class Repo {
     }
 
     let name = this.name
-        .split(/[-_]/)
-        .map((word) => {
-          return capitalize(word);
-        })
-        .join(" ");
+      .split(/[-_]/)
+      .map((word) => {
+        return capitalize(word);
+      })
+      .join(" ");
 
     // Cuts down on repetition.
     const discoursePrefix = "Discourse ";
