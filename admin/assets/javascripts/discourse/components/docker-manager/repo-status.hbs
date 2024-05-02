@@ -1,62 +1,80 @@
-<tr>
+<tr class="repo {{if @repo.hasNewVersion 'new-version'}}">
   <td>
-    {{#if this.officialRepoBadge}}
-      {{d-icon
-        this.officialRepoBadge
-        translatedTitle=this.officialRepoBadgeTitle
-        class="check-circle"
-      }}
+    <div class="repo__name">
+      {{#if @repo.linkUrl}}
+        <a
+          href={{@repo.linkUrl}}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {{@repo.nameTitleized}}
+        </a>
+      {{else}}
+        {{@repo.nameTitleized}}
+      {{/if}}
+    </div>
+    {{#if @repo.author}}
+      <div class="repo__author">
+        {{@repo.author}}
+      </div>
+    {{/if}}
+    {{#if @repo.plugin}}
+      <div class="repo__about">
+        {{@repo.plugin.about}}
+        {{#if @repo.linkUrl}}
+          <a
+            href={{@repo.linkUrl}}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {{i18n "admin.plugins.learn_more"}}
+          </a>
+        {{/if}}
+      </div>
+    {{/if}}
+    {{#if @repo.hasNewVersion}}
+      <div class="repo__new-version">
+        {{i18n "admin.docker.new_version_available"}}
+      </div>
     {{/if}}
   </td>
 
   <td>
-    <a href={{@repo.url}}>{{@repo.name}}</a>
     <span class="current commit-hash" title={{@repo.version}}>
       {{@repo.prettyVersion}}
     </span>
   </td>
 
+  <td>{{format-date @repo.latest.date leaveAgo="true"}}</td>
   <td>
+    <ul class="repo__latest-version">
+      <li>
+        <span class="new commit-hash" title={{@repo.latestVersion}}>
+          {{@repo.prettyLatestVersion}}
+        </span>
+      </li>
+      <li class="new-commits">
+        {{new-commits
+          @repo.latest.commits_behind
+          @repo.version
+          @repo.latest.version
+          @repo.url
+        }}
+      </li>
+    </ul>
+  </td>
+  <td class="repo__status">
     {{#if @repo.checkingStatus}}
       {{i18n "admin.docker.checking"}}
     {{else if @repo.upToDate}}
       {{i18n "admin.docker.up_to_date"}}
     {{else}}
-      <div class="new-version">
-        <h4>{{i18n "admin.docker.new_version_available"}}</h4>
-
-        <ul>
-          <li>
-            {{i18n "admin.docker.latest_version"}}
-            <span class="new commit-hash" title={{@repo.latestVersion}}>
-              {{@repo.prettyLatestVersion}}
-            </span>
-          </li>
-          <li>
-            {{i18n "admin.docker.last_updated"}}
-            {{#if @repo.latest.date}}
-              {{format-date @repo.latest.date}}
-            {{else}}
-              &mdash;
-            {{/if}}
-          </li>
-          <li class="new-commits">
-            {{new-commits
-              @repo.latest.commits_behind
-              @repo.version
-              @repo.latest.version
-              @repo.url
-            }}
-          </li>
-        </ul>
-
-        <DButton
-          @action={{this.upgrade}}
-          @disabled={{this.upgradeDisabled}}
-          @translatedLabel={{this.upgradeButtonLabel}}
-          class="upgrade-button"
-        />
-      </div>
+      <DButton
+        @action={{this.upgrade}}
+        @disabled={{this.upgradeDisabled}}
+        @translatedLabel={{this.upgradeButtonLabel}}
+        class="upgrade-button"
+      />
     {{/if}}
   </td>
 </tr>

@@ -92,10 +92,6 @@
     }
   }
 
-  #upgrade-all {
-    float: right;
-  }
-
   #banner {
     margin: 1rem 0;
 
@@ -146,5 +142,68 @@
         background-position: 2rem 0;
       }
     }
+  }
+
+  .repo__name {
+    font-weight: bold;
+  }
+
+  .repo__author {
+    font-size: var(--font-down-2);
+    padding: 0 0 .25em 0;
+  }
+
+  .repo__new-version {
+    font-size: var(--font-down-1);
+    font-weight: bold;
+    padding: .25em 0 0 0;
+  }
+
+  .repo__about {
+    padding: .25em 0 .25em 0;
+
+    a {
+      color: var(--primary-700);
+      text-decoration: underline;
+    }
+  }
+
+  ul.repo__latest-version {
+    list-style: none;
+    margin: 0;
+  }
+
+  tr.repo {
+    td {
+      padding: 1em 0;
+    }
+
+    &.new-version {
+      background-color: var(--tertiary-very-low);
+
+      td:first-child {
+        border-left: solid 3px var(--tertiary);
+      }
+    }
+
+    td.repo__status {
+      text-align: right;
+      padding-right: 0.5em;
+    }
+  }
+
+  .updates-heading {
+    display: flex;
+    justify-content: space-between;
+    margin: 2em 0;
+
+    h3 {
+      line-height: 40px;
+      margin-bottom: 0;
+    }
+  }
+
+  .admin-repos th:last-child {
+    text-align: center;
   }
 }
