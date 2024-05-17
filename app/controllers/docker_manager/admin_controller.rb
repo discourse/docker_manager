@@ -5,6 +5,8 @@ require_dependency "docker_manager/upgrader"
 
 module DockerManager
   class AdminController < Admin::AdminController
+    requires_plugin PLUGIN_NAME
+
     def index
     end
 
