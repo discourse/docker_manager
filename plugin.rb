@@ -12,8 +12,10 @@ hide_plugin
 register_asset "stylesheets/common/docker-manager.scss"
 
 module ::DockerManager
+  PLUGIN_NAME = "docker_manager"
+
   class Engine < ::Rails::Engine
-    engine_name "docker_manager"
+    engine_name PLUGIN_NAME
     isolate_namespace DockerManager
   end
 end
