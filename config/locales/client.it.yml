@@ -8,22 +8,43 @@ it:
   js:
     admin:
       docker:
+        all_up_to_date: "Tutto aggiornato"
         checking: "Verifica della nuova versione…"
         commits:
           one: "%{count} nuovo commit"
           other: "%{count} nuovi commit"
         everything_up_to_date: "Tutto è aggiornato"
+        forked_plugin: "Plugin ufficiale forkato"
         last_updated: "Ultimo aggiornamento:"
+        latest_version: "Ultima versione:"
         main_branch_warning: "<b>AVVISO:</b> Il tuo Discourse sta monitorando il branch \"principale\", che potrebbe essere instabile, <a href='%{url}'> ti consigliamo di monitorare il branch \"test superati\"</a>."
         navigation:
           processes: Processi
           versions: Versioni
+        new_version_available: "Nuova versione disponibile!"
+        official_plugin: "Plug-in ufficiale"
         outdated_image_header: "Stai eseguendo una vecchia versione dell'immagine Discourse"
+        outdated_image_info: "Gli aggiornamenti tramite l'interfaccia utente web sono disattivati finché non viene eseguita l'immagine più recente. Per farlo, accedi al tuo server usando SSH ed esegui:"
         outdated_image_link: "Maggiori informazioni sul nostro sito di assistenza"
         outdated_notice: "La tua installazione Discourse non è aggiornata."
+        perform_update: "Clicca qui per aggiornare."
         repo_newest_version: "%{name} è alla versione più recente."
         repository: "Repository"
+        reset_update: "Ripristina Aggiornamento"
+        reset_warning: "AVVISO: È necessario ripristinare solo gli aggiornamenti che sono falliti e non sono in esecuzione. Questo NON annullerà le build attualmente in esecuzione e dovrebbe essere usato solo come ultima risorsa."
+        start_updating: "Inizio Aggiornamento"
         status: "Stato"
         up_to_date: "Aggiornato"
         update_action: "Aggiorna"
+        update_all: "Aggiorna Tutto"
+        update_error: "Spiacente, si è verificato un errore nell'aggiornamento di Discourse. Controlla i log qui sotto."
+        update_everything: "Aggiorna tutto"
+        update_repo: "Aggiorna %{name}"
+        update_successful: "Aggiornamento completato con successo!"
+        update_tab: "Aggiorna Discourse"
+        update_title: "Aggiorna Discourse"
         updating: "Aggiornamento…"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "Aggiorna all'ultima versione"
