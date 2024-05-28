@@ -5,7 +5,7 @@
 # Should be removed just before the Discourse 3.2 release.
 module DockerManager::FallbackCompatibilityParser
   def self.find_compatible_resource(version_list, target_version = ::Discourse::VERSION::STRING)
-    return unless version_list.present?
+    return if version_list.blank?
 
     begin
       version_list = YAML.safe_load(version_list)

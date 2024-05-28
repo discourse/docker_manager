@@ -14,7 +14,7 @@ fork do
   raise "path is required" if path.blank?
 
   repo = DockerManager::AdminController.find_repos(path)
-  raise "No such repo" unless repo.present?
+  raise "No such repo" if repo.blank?
 
   DockerManager::Upgrader.new(user_id, repo, repo_version).upgrade
 end
