@@ -98,14 +98,14 @@ module DockerManager
       end
 
       repo = DockerManager::GitRepo.find(params[:path])
-      raise Discourse::NotFound unless repo.present?
+      raise Discourse::NotFound if repo.blank?
 
       render json: { latest: proc.call(repo) }
     end
 
     def upgrade
       repo = AdminController.find_repos(params[:path])
-      raise Discourse::NotFound unless repo.present?
+      raise Discourse::NotFound if repo.blank?
 
       script_path =
         File.expand_path(File.join(__dir__, "../../../scripts/docker_manager_upgrade.rb"))
@@ -127,7 +127,7 @@ module DockerManager
 
     def reset_upgrade
       repo = AdminController.find_repos(params[:path], upgrading: true)
-      raise Discourse::NotFound unless repo.present?
+      raise Discourse::NotFound if repo.blank?
 
       upgrader = Upgrader.new(current_user.id, repo, repo_version(repo))
       upgrader.reset!
