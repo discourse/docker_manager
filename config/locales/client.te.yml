@@ -10,5 +10,6 @@ te:
       docker:
         last_updated: "చివరిగా నవీకరించబడింది:"
         outdated_notice: "మీ డిస్కోర్సు ప్రతిష్టాపన కాలాతీతమైంది."
+        status: "స్థితి"
         update_action: "నవీకరించండి"
         updating: "నవీకరిస్తోంది…"

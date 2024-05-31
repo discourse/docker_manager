@@ -12,3 +12,4 @@ hu:
         outdated_notice: "Az installált Discourse elavult."
         status: "Állapot"
         update_action: "Frissítés"
+        updating: "Frissítés"
