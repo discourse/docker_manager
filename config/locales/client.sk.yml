@@ -10,4 +10,6 @@ sk:
       docker:
         last_updated: "Posledná aktualizácia:"
         outdated_notice: " Vaša Discourse inštalácia je neaktuálna."
+        status: "Stav"
+        update_action: "Aktualizovať"
         updating: "Aktualizujem..."

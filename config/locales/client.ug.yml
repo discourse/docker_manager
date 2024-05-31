@@ -4,8 +4,11 @@
 # To work with us on translations, join this project:
 # https://translate.discourse.org/
 
-be:
+ug:
   js:
     admin:
       docker:
-        status: "Статус"
+        last_updated: "ئاخىرقى يېڭىلانغان ۋاقىت:"
+        status: "ھالەت"
+        update_action: "يېڭىلا"
+        updating: "يېڭىلاۋاتىدۇ…"
