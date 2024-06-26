@@ -1,0 +1,20 @@
+# frozen_string_literal: true
+
+module PageObjects
+  module Pages
+    class AdminUpdate < PageObjects::Pages::Base
+      def visit
+        page.visit("/admin/update")
+        self
+      end
+
+      def displayed?
+        has_css?("h3", text: "Updates")
+      end
+
+      def has_repo?(repo)
+        has_css?("tr.repo .repo__name a[href='#{repo[:url]}']", text: repo[:name])
+      end
+    end
+  end
+end

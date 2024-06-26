@@ -45,7 +45,7 @@ module DockerManager
 
       response = { repos: repos }
 
-      if !Rails.env.development?
+      if !Rails.env.development? && !Rails.env.test?
         version =
           begin
             File.read("/VERSION")
