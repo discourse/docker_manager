@@ -32,18 +32,24 @@
   </td>
 
   <td>
-    <span class="current commit-hash" title={{@repo.version}}>
-      {{@repo.prettyVersion}}
-    </span>
+    {{commit-url
+      "current"
+      @repo.version
+      @repo.prettyVersion
+      @repo.url
+    }}
   </td>
 
   <td>{{format-date @repo.latest.date leaveAgo="true"}}</td>
   <td>
     <ul class="repo__latest-version">
       <li>
-        <span class="new commit-hash" title={{@repo.latestVersion}}>
-          {{@repo.prettyLatestVersion}}
-        </span>
+        {{commit-url
+          "new"
+          @repo.latest.version
+          @repo.prettyLatestVersion
+          @repo.url
+        }}
       </li>
       <li class="new-commits">
         {{new-commits
