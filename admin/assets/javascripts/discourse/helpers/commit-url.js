@@ -2,7 +2,7 @@ import { helper as buildHelper } from "@ember/component/helper";
 import { htmlSafe } from "@ember/template";
 
 export default buildHelper(function (params) {
-  const [_class, version, prettyVersion, url] = params;
+  const [cssClass, version, prettyVersion, url] = params;
 
   if (!prettyVersion) {
     return "";
