@@ -1,4 +1,5 @@
 import { cached, tracked } from "@glimmer/tracking";
+import { capitalize } from "@ember/string";
 import { TrackedObject } from "@ember-compat/tracked-built-ins";
 import { ajax } from "discourse/lib/ajax";
 import AdminPlugin from "admin/models/admin-plugin";
@@ -115,7 +116,7 @@ export default class Repo {
       return this.plugin.nameTitleized;
     }
 
-    return this.name;
+    return capitalize(this.name);
   }
 
   get linkUrl() {

@@ -30,22 +30,6 @@ export default class RepoStatus extends Component {
     );
   }
 
-  get officialRepoBadge() {
-    if (this.args.repo.fork) {
-      return "exclamation-circle";
-    } else if (this.args.repo.official) {
-      return "check-circle";
-    }
-  }
-
-  get officialRepoBadgeTitle() {
-    if (this.args.repo.fork) {
-      return I18n.t("admin.docker.forked_plugin");
-    } else if (this.args.repo.official) {
-      return I18n.t("admin.docker.official_plugin");
-    }
-  }
-
   get upgradeButtonLabel() {
     if (this.args.repo.upgrading) {
       return I18n.t("admin.docker.updating");
