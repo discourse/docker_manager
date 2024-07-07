@@ -12,7 +12,7 @@ export default buildHelper(function (params) {
     return prettyVersion;
   }
 
-  const _url = url.substr(0, url.search(/(\.git)?$/));
+  const repoUrl = url.substr(0, url.search(/(\.git)?$/));
   const description = `<a class='${_class} commit-hash' title='${version}' href='${_url}/commit/${version}'>${prettyVersion}</a>`;
 
   return new htmlSafe(description);
