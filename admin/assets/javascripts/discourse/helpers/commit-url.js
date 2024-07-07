@@ -1,9 +1,6 @@
-import { helper as buildHelper } from "@ember/component/helper";
 import { htmlSafe } from "@ember/template";
 
-export default buildHelper(function (params) {
-  const [cssClass, version, prettyVersion, url] = params;
-
+export default function commitUrl(cssClass, version, prettyVersion, url) {
   if (!prettyVersion) {
     return "";
   }
@@ -16,4 +13,4 @@ export default buildHelper(function (params) {
   const description = `<a class='${cssClass} commit-hash' title='${version}' href='${repoUrl}/commit/${version}'>${prettyVersion}</a>`;
 
   return new htmlSafe(description);
-});
+}

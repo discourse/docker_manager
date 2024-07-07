@@ -1,7 +1,7 @@
 <div class="updates-heading">
   <h3>{{i18n "admin.docker.update_title"}}</h3>
   {{#unless this.outdated}}
-    <button
+    <DButton
       disabled={{this.upgradeAllButtonDisabled}}
       id="upgrade-all"
       class="btn btn-primary"
@@ -13,7 +13,7 @@
       {{else}}
         {{i18n "admin.docker.update_all"}}
       {{/if}}
-    </button>
+    </DButton>
   {{/unless}}
 </div>
 
@@ -46,7 +46,7 @@
     </thead>
     <tbody>
       {{#each this.model as |repo|}}
-        <DockerManager::RepoStatus
+        <RepoStatus
           @repo={{repo}}
           @upgradingRepo={{repo.upgrading}}
           @managerRepo={{this.managerRepo}}
