@@ -1,12 +1,12 @@
 import Component from "@glimmer/component";
 import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
+import DButton from "discourse/components/d-button";
+import FormatDate from "discourse/helpers/format-date";
 import i18n from "discourse-common/helpers/i18n";
 import I18n from "I18n";
-import DButton from "discourse/components/d-button";
 import CommitUrl from "../helpers/commit-url";
 import NewCommits from "../helpers/new-commits";
-import FormatDate from "discourse/helpers/format-date";
 
 export default class RepoStatus extends Component {
   @service router;
@@ -80,7 +80,11 @@ export default class RepoStatus extends Component {
           <div class="repo__about">
             {{@repo.plugin.about}}
             {{#if @repo.linkUrl}}
-              <a href={{@repo.linkUrl}} rel="noopener noreferrer" target="_blank">
+              <a
+                href={{@repo.linkUrl}}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
                 {{i18n "admin.plugins.learn_more"}}
               </a>
             {{/if}}
@@ -94,12 +98,7 @@ export default class RepoStatus extends Component {
       </td>
 
       <td>
-        {{CommitUrl
-          "current"
-          @repo.version
-          @repo.prettyVersion
-          @repo.url
-        }}
+        {{CommitUrl "current" @repo.version @repo.prettyVersion @repo.url}}
       </td>
 
       <td>{{FormatDate @repo.latest.date leaveAgo="true"}}</td>
