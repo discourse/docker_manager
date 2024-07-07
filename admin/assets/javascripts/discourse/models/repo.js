@@ -117,20 +117,7 @@ export default class Repo {
       return this.plugin.nameTitleized;
     }
 
-    let name = this.name
-      .split(/[-_]/)
-      .map((word) => {
-        return capitalize(word);
-      })
-      .join(" ");
-
-    // Cuts down on repetition.
-    const discoursePrefix = "Discourse ";
-    if (name.startsWith(discoursePrefix)) {
-      name = name.slice(discoursePrefix.length);
-    }
-
-    return name;
+    return this.name;
   }
 
   get linkUrl() {
@@ -144,8 +131,6 @@ export default class Repo {
   get author() {
     if (this.plugin) {
       return this.plugin.author;
-    } else if (this.name === "docker_manager") {
-      return I18n.t("admin.plugins.author", { author: "Discourse" });
     }
 
     return null;
