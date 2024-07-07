@@ -23,6 +23,6 @@ RSpec.describe "Admin update", type: :system do
   end
 
   it "shows the docker_manager plugin repo" do
-    expect(au_page).to have_repo(name: "Docker_manager", url: "https://meta.discourse.org/t/12655")
+    expect(au_page).to have_repo(name: "Docker Manager", url: "https://meta.discourse.org/t/12655")
   end
 end
