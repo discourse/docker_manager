@@ -13,7 +13,7 @@ export default buildHelper(function (params) {
   }
 
   const repoUrl = url.substr(0, url.search(/(\.git)?$/));
-  const description = `<a class='${_class} commit-hash' title='${version}' href='${_url}/commit/${version}'>${prettyVersion}</a>`;
+  const description = `<a class='${cssClass} commit-hash' title='${version}' href='${repoUrl}/commit/${version}'>${prettyVersion}</a>`;
 
   return new htmlSafe(description);
 });
