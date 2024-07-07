@@ -21,7 +21,7 @@ module DockerManager
           official: Plugin::Metadata::OFFICIAL_PLUGINS.include?(r.name),
         }
 
-        plugin = Discourse.visible_plugins.find { |p| p.path == "#{r.path}/plugin.rb" }
+        plugin = Discourse.plugins.find { |p| p.path == "#{r.path}/plugin.rb" }
         result[:plugin] = AdminPluginSerializer.new(
           plugin,
           scope: guardian,
