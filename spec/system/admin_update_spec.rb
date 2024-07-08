@@ -16,10 +16,7 @@ RSpec.describe "Admin update", type: :system do
   end
 
   it "shows the core repo" do
-    expect(au_page).to have_repo(
-      name: "Discourse",
-      url: DockerManager::GitRepo.new(Rails.root.to_s, "discourse").url,
-    )
+    expect(au_page).to have_repo(name: "Discourse")
   end
 
   it "shows the docker_manager plugin repo" do

@@ -13,7 +13,8 @@ module PageObjects
       end
 
       def has_repo?(repo)
-        has_css?("tr.repo .repo__name a[href='#{repo[:url]}']", text: repo[:name])
+        has_css?("tr.repo .repo__name", text: repo[:name]) &&
+          (!repo[:url] || has_css?("tr.repo .repo__about a[href='#{repo[:url]}']"))
       end
     end
   end

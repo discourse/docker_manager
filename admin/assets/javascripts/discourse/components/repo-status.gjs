@@ -3,6 +3,7 @@ import { action } from "@ember/object";
 import { inject as service } from "@ember/service";
 import DButton from "discourse/components/d-button";
 import FormatDate from "discourse/helpers/format-date";
+import icon from "discourse-common/helpers/d-icon";
 import i18n from "discourse-common/helpers/i18n";
 import I18n from "I18n";
 import CommitUrl from "../helpers/commit-url";
@@ -47,13 +48,7 @@ export default class RepoStatus extends Component {
     <tr class="repo {{if @repo.hasNewVersion 'new-version'}}">
       <td>
         <div class="repo__name">
-          {{#if @repo.linkUrl}}
-            <a href={{@repo.linkUrl}} rel="noopener noreferrer" target="_blank">
-              {{@repo.nameTitleized}}
-            </a>
-          {{else}}
-            {{@repo.nameTitleized}}
-          {{/if}}
+          {{@repo.nameTitleized}}
         </div>
         {{#if @repo.author}}
           <div class="repo__author">
@@ -70,6 +65,7 @@ export default class RepoStatus extends Component {
                 target="_blank"
               >
                 {{i18n "admin.plugins.learn_more"}}
+                {{icon "external-link-alt"}}
               </a>
             {{/if}}
           </div>
