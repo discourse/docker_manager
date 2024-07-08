@@ -52,14 +52,14 @@ module("Integration | Component | RepoStatus", function (hooks) {
     this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
-      hbs`<DockerManager::RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
+      hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
     );
 
     assert
-      .dom("span.current.commit-hash")
+      .dom("a.current.commit-hash")
       .hasText("v2.2.0.beta6 +98", "tag version is used when present");
     assert
-      .dom("span.new.commit-hash")
+      .dom("a.new.commit-hash")
       .hasText("v2.2.0.beta6 +101", "tag version is used when present");
 
     assert
@@ -76,36 +76,32 @@ module("Integration | Component | RepoStatus", function (hooks) {
     await settled();
 
     assert.strictEqual(
-      query("span.current.commit-hash").textContent.trim(),
+      query("a.current.commit-hash").textContent.trim(),
       "8f65e4f",
       "commit hash is used when tag version is absent"
     );
     assert.strictEqual(
-      query("span.new.commit-hash").textContent.trim(),
+      query("a.new.commit-hash").textContent.trim(),
       "2b006c0",
       "commit hash is used when tag version is absent"
     );
   });
 
-  test("official check mark", async function (assert) {
+  test("official plugin", async function (assert) {
     const store = getOwner(this).lookup("service:store");
+    repoProps.plugin = { name: "discourse", isOfficial: true };
     this.set("repo", store.createRecord("repo", repoProps));
     this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
-      hbs`<DockerManager::RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
+      hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
     );
 
-    assert
-      .dom("svg.d-icon-check-circle")
-      .doesNotExist("green check is absent when not official");
-
-    this.repo.official = true;
-    await settled();
-
-    assert
-      .dom("svg.d-icon-check-circle")
-      .exists("green check is present when official");
+    assert.strictEqual(
+      query("div.repo__author").textContent.trim(),
+      "By Discourse",
+      "shows plugin author"
+    );
   });
 
   test("update button", async function (assert) {
@@ -114,7 +110,7 @@ module("Integration | Component | RepoStatus", function (hooks) {
     this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
-      hbs`<DockerManager::RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
+      hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
     );
 
     assert

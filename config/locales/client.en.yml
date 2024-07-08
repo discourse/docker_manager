@@ -36,8 +36,14 @@ en:
         update_repo: "Update %{name}"
         update_successful: "Update completed successfully!"
         update_tab: "Update Discourse"
-        update_title: "Update Discourse"
+        update_title: "Updates"
         updating: "Updating…"
+        repo:
+          name: "Name"
+          commit_hash: "Commit Hash"
+          last_updated: "Last Updated"
+          latest_version: "Latest Version"
+          status: "Status"
 
       logs:
         staff_actions:

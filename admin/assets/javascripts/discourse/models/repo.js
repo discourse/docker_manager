@@ -1,6 +1,8 @@
-import { tracked } from "@glimmer/tracking";
+import { cached, tracked } from "@glimmer/tracking";
+import { capitalize } from "@ember/string";
 import { TrackedObject } from "@ember-compat/tracked-built-ins";
 import { ajax } from "discourse/lib/ajax";
+import AdminPlugin from "admin/models/admin-plugin";
 
 let loaded = [];
 export let needsImageUpgrade = false;
@@ -74,6 +76,7 @@ export default class Repo {
   @tracked checking = false;
   @tracked lastCheckedAt = null;
   @tracked latest = new TrackedObject({});
+  @tracked plugin = null;
 
   // model attributes
   @tracked name = null;
@@ -94,13 +97,42 @@ export default class Repo {
       }
     }
 
+    if (attributes.plugin) {
+      this.plugin = AdminPlugin.create(attributes.plugin);
+    }
+
     for (const [key, value] of Object.entries(attributes)) {
-      if (key === "latest") {
+      if (["latest", "plugin"].includes(key)) {
         continue;
       }
 
       this[key] = value;
     }
+  }
+
+  @cached
+  get nameTitleized() {
+    if (this.plugin) {
+      return this.plugin.nameTitleized;
+    }
+
+    return capitalize(this.name);
+  }
+
+  get linkUrl() {
+    if (this.plugin) {
+      return this.plugin.linkUrl;
+    }
+
+    return this.url;
+  }
+
+  get author() {
+    if (this.plugin) {
+      return this.plugin.author;
+    }
+
+    return null;
   }
 
   get checkingStatus() {
@@ -109,6 +141,10 @@ export default class Repo {
 
   get upToDate() {
     return !this.upgrading && this.version === this.latest?.version;
+  }
+
+  get hasNewVersion() {
+    return !this.checkingStatus && !this.upToDate;
   }
 
   get prettyVersion() {

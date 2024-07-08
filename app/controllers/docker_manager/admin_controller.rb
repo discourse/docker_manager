@@ -23,6 +23,13 @@ module DockerManager
           official: Plugin::Metadata::OFFICIAL_PLUGINS.include?(r.name),
         }
 
+        plugin = Discourse.plugins.find { |p| p.path == "#{r.path}/plugin.rb" }
+        result[:plugin] = AdminPluginSerializer.new(
+          plugin,
+          scope: guardian,
+          root: false,
+        ) if plugin.present?
+
         result[:fork] = true if result[:official] &&
           !r.url.starts_with?("https://github.com/discourse/")
 
@@ -40,7 +47,7 @@ module DockerManager
 
       response = { repos: repos }
 
-      if !Rails.env.development?
+      if !Rails.env.development? && !Rails.env.test?
         version =
           begin
             File.read("/VERSION")

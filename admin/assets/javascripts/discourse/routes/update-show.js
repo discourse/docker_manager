@@ -4,6 +4,7 @@ import Repo from "../models/repo";
 
 export default class UpgradeShow extends Route {
   @service upgradeStore;
+  @service router;
 
   model(params) {
     if (params.id === "all") {
@@ -14,6 +15,11 @@ export default class UpgradeShow extends Route {
   }
 
   async afterModel(model) {
+    if (!model) {
+      this.router.replaceWith("/404");
+      return;
+    }
+
     if (Array.isArray(model)) {
       const repos = await Repo.findLatestAll();
 

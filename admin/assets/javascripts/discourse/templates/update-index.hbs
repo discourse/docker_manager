@@ -1,4 +1,21 @@
-<h1>{{i18n "admin.docker.update_title"}}</h1>
+<div class="updates-heading">
+  <h3>{{i18n "admin.docker.update_title"}}</h3>
+  {{#unless this.outdated}}
+    <DButton
+      disabled={{this.upgradeAllButtonDisabled}}
+      id="upgrade-all"
+      class="btn btn-primary"
+      type="button"
+      {{on "click" this.upgradeAllButton}}
+    >
+      {{#if this.allUpToDate}}
+        {{i18n "admin.docker.all_up_to_date"}}
+      {{else}}
+        {{i18n "admin.docker.update_all"}}
+      {{/if}}
+    </DButton>
+  {{/unless}}
+</div>
 
 {{#if this.outdated}}
   <h2>{{i18n "admin.docker.outdated_image_header"}}</h2>
@@ -18,29 +35,18 @@
     </a>
   </p>
 {{else}}
-  <button
-    disabled={{this.upgradeAllButtonDisabled}}
-    id="upgrade-all"
-    class="btn"
-    type="button"
-    {{on "click" this.upgradeAllButton}}
-  >
-    {{#if this.allUpToDate}}
-      {{i18n "admin.docker.all_up_to_date"}}
-    {{else}}
-      {{i18n "admin.docker.update_all"}}
-    {{/if}}
-  </button>
 
-  <table class="table" id="repos">
+  <table class="table admin-repos" id="repos">
     <thead>
-      <th></th>
-      <th style="width: 50%">{{i18n "admin.docker.repository"}}</th>
-      <th>{{i18n "admin.docker.status"}}</th>
+      <th style="width: 40%">{{i18n "admin.docker.repo.name"}}</th>
+      <th>{{i18n "admin.docker.repo.commit_hash"}}</th>
+      <th>{{i18n "admin.docker.repo.last_updated"}}</th>
+      <th>{{i18n "admin.docker.repo.latest_version"}}</th>
+      <th align="center">{{i18n "admin.docker.repo.status"}}</th>
     </thead>
     <tbody>
       {{#each this.model as |repo|}}
-        <DockerManager::RepoStatus
+        <RepoStatus
           @repo={{repo}}
           @upgradingRepo={{repo.upgrading}}
           @managerRepo={{this.managerRepo}}
