@@ -145,7 +145,7 @@ class DockerManager::Upgrader
       log(message)
     end
 
-    if num_workers_spun_down.positive? && !reloaded
+    if num_workers_spun_down.to_i.positive? && !reloaded
       log "Spinning up #{num_workers_spun_down} Unicorn worker(s) that were stopped initially"
       num_workers_spun_down.times { Process.kill("TTIN", unicorn_master_pid) }
     end
