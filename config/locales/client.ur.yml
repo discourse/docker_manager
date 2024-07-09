@@ -12,3 +12,7 @@ ur:
         outdated_notice: "آپ کی ڈسکورس انسٹالیشن پرانی ہو چکی ہے۔"
         status: "سٹیٹس"
         update_action: "اپ ڈیٹ"
+        repo:
+          name: "نام"
+          last_updated: "آخری دفہ اپ ڈیٹ"
+          status: "سٹیٹس"

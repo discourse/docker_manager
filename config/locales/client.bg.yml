@@ -12,3 +12,7 @@ bg:
         outdated_notice: "Твоята Discourse инсталация не е обновена."
         status: "Статус"
         update_action: "Актуализация"
+        repo:
+          name: "Име"
+          last_updated: "Последно обновление"
+          status: "Статус"

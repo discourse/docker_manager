@@ -18,3 +18,7 @@ ca:
         repository: "Repositori"
         status: "Estat"
         up_to_date: "Actualitzat"
+        repo:
+          name: "Nom"
+          last_updated: "Última actualització"
+          status: "Estat"

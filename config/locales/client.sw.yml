@@ -9,3 +9,5 @@ sw:
     admin:
       docker:
         outdated_notice: "Toleo lako la Discourse limepitwa na wakati."
+        repo:
+          name: "Jina"

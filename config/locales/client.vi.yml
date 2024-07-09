@@ -13,3 +13,7 @@ vi:
         status: "Trạng thái"
         update_action: "Cập nhật"
         updating: "Đang cập nhật…"
+        repo:
+          name: "Tên"
+          last_updated: "Cập nhật lần cuối"
+          status: "Trạng thái"

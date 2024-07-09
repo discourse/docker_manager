@@ -29,3 +29,8 @@ ru:
         up_to_date: "Обновлено"
         update_action: "Обновить"
         updating: "Обновление…"
+        repo:
+          name: "Название"
+          last_updated: "Последнее обновление"
+          latest_version: "Последняя версия"
+          status: "Статус"

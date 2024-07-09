@@ -13,3 +13,7 @@ sk:
         status: "Stav"
         update_action: "Aktualizovať"
         updating: "Aktualizujem..."
+        repo:
+          name: "Meno"
+          last_updated: "Naposledy aktualizovaný"
+          status: "Stav"

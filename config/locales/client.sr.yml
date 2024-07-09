@@ -9,3 +9,5 @@ sr:
     admin:
       docker:
         outdated_notice: "Tvoja Discourse instalacija nije sinhronizovana sa zadnjim zakrpama."
+        repo:
+          name: "Ime foruma"

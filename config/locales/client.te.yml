@@ -13,3 +13,6 @@ te:
         status: "స్థితి"
         update_action: "నవీకరించండి"
         updating: "నవీకరిస్తోంది…"
+        repo:
+          name: "పేరు"
+          status: "స్థితి"

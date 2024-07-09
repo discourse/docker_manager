@@ -11,3 +11,7 @@ lv:
         last_updated: "Pēdējoreiz atjaunots:"
         outdated_notice: "Tava Discourse instalācija ir novecojusi. "
         status: "Statuss"
+        repo:
+          name: "Vārds"
+          last_updated: "Pēdējoreiz atjaunots"
+          status: "Statuss"

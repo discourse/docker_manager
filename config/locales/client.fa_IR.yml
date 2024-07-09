@@ -32,8 +32,12 @@ fa_IR:
         update_repo: "به‌روزرسانی %{name}"
         update_successful: "به‌روزرسانی با موفقیت انجام شد!"
         update_tab: "به‌روزرسانی دیسکورس"
-        update_title: "به‌روزرسانی دیسکورس"
         updating: "در حال به‌روزرسانی…"
+        repo:
+          name: "نام"
+          last_updated: "آخرین به‌روزرسانی"
+          latest_version: "آخرین نسخه"
+          status: "وضعیت"
       logs:
         staff_actions:
           actions:

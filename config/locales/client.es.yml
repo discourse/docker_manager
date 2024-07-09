@@ -27,3 +27,8 @@ es:
         up_to_date: "Actualizado"
         update_action: "Actualizar"
         updating: "Actualizando…"
+        repo:
+          name: "Nombre"
+          last_updated: "Última actualización"
+          latest_version: "Ultima versión"
+          status: "Estado"

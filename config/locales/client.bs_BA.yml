@@ -10,3 +10,7 @@ bs_BA:
       docker:
         outdated_notice: "Vaša Discourse instalacije je zastarijela."
         status: "Status"
+        repo:
+          name: "Ime"
+          last_updated: "Zadnji put ažurirano"
+          status: "Status"

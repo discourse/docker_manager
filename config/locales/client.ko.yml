@@ -12,3 +12,6 @@ ko:
         outdated_notice: "설치된 Discourse가 최신 버전이 아닙니다."
         status: "상태"
         update_action: "업데이트"
+        repo:
+          name: "그룹명"
+          status: "상태"

@@ -13,3 +13,7 @@ sv:
         status: "Status"
         update_action: "Uppdatera"
         updating: "Uppdaterar…"
+        repo:
+          name: "Namn"
+          last_updated: "Senast uppdaterad"
+          status: "Status"

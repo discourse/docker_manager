@@ -12,3 +12,7 @@ hr:
         outdated_notice: "Vaša inačica Discourse-a nije ažuriana."
         status: "Statust"
         update_action: "Ažuriraj"
+        repo:
+          name: "Ime"
+          last_updated: "Zadnji put ažurirano"
+          status: "Statust"

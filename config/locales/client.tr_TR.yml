@@ -27,3 +27,8 @@ tr_TR:
         up_to_date: "Güncel"
         update_action: "Güncelle"
         updating: "Güncelleniyor…"
+        repo:
+          name: "Ad"
+          last_updated: "Son Güncelleme"
+          latest_version: "En Son Sürüm"
+          status: "Durum"

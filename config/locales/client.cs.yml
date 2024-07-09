@@ -13,3 +13,7 @@ cs:
         status: "Stav"
         update_action: "Aktualizace"
         updating: "Aktualizace…"
+        repo:
+          name: "Jméno"
+          last_updated: "Naposledy aktualizováno"
+          status: "Stav"

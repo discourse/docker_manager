@@ -25,3 +25,8 @@ gl:
         status: "Estado"
         up_to_date: "Actualizado"
         update_action: "Actualizar"
+        repo:
+          name: "Nome"
+          last_updated: "Última actualización"
+          latest_version: "Última versión"
+          status: "Estado"

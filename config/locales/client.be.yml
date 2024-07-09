@@ -9,3 +9,6 @@ be:
     admin:
       docker:
         status: "Статус"
+        repo:
+          name: "імя"
+          status: "Статус"

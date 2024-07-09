@@ -15,3 +15,8 @@ uk:
         status: "Статус"
         update_action: "Оновити"
         updating: "Оновлення…"
+        repo:
+          name: "Імʼя"
+          last_updated: "Останнє оновлення"
+          latest_version: "Остання версія"
+          status: "Статус"

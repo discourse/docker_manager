@@ -44,8 +44,12 @@ he:
         update_repo: "עדכון %{name}"
         update_successful: "העדכון הושלם בהצלחה!"
         update_tab: "עדכון Discourse"
-        update_title: "עדכון Discourse"
         updating: "מתבצע עדכון…"
+        repo:
+          name: "שם"
+          last_updated: "עדכון אחרון"
+          latest_version: "הגרסה העדכנית ביותר"
+          status: "מצב"
       logs:
         staff_actions:
           actions:
