@@ -13,3 +13,7 @@ hu:
         status: "Állapot"
         update_action: "Frissítés"
         updating: "Frissítés"
+        repo:
+          name: "Név"
+          last_updated: "Legutóbb frissítve"
+          status: "Állapot"

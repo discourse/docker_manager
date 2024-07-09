@@ -26,3 +26,8 @@ ja:
         up_to_date: "最新"
         update_action: "更新"
         updating: "更新中…"
+        repo:
+          name: "名前"
+          last_updated: "最終更新"
+          latest_version: "最新バージョン"
+          status: "ステータス"

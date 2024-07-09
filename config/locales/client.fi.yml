@@ -27,3 +27,8 @@ fi:
         up_to_date: "Ajan tasalla"
         update_action: "Päivitä"
         updating: "Päivitetään…"
+        repo:
+          name: "Nimi"
+          last_updated: "Viimeksi päivitetty"
+          latest_version: "Uusin versio"
+          status: "Tila"

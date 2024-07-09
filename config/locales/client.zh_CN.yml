@@ -41,8 +41,10 @@ zh_CN:
         update_repo: "升级 %{name}"
         update_successful: "升级成功完成！"
         update_tab: "升级 Discourse"
-        update_title: "升级 Discourse"
         updating: "正在更新…"
+        repo:
+          name: "名称"
+          status: "状态"
       logs:
         staff_actions:
           actions:

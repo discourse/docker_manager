@@ -27,3 +27,8 @@ fr:
         up_to_date: "À jour"
         update_action: "Mettre à jour"
         updating: "Mise à jour…"
+        repo:
+          name: "Nom"
+          last_updated: "Dernière mise à jour "
+          latest_version: "Dernière version "
+          status: "Statut"

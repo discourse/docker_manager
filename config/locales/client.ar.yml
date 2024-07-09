@@ -31,3 +31,8 @@ ar:
         up_to_date: "أحدث إصدار"
         update_action: "تحديث"
         updating: "جارٍ التحديث…"
+        repo:
+          name: "الاسم"
+          last_updated: "آخر تحديث"
+          latest_version: "أحدث إصدار"
+          status: "الحالة"

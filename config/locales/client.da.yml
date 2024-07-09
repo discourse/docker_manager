@@ -20,3 +20,8 @@ da:
         up_to_date: "Opdateret"
         update_action: "Opdater"
         updating: "Opdaterer…"
+        repo:
+          name: "Navn"
+          last_updated: "Sidst opdateret"
+          latest_version: "Seneste Version"
+          status: "Status"

@@ -11,3 +11,7 @@ ro:
         last_updated: "Ultima actualizare:"
         outdated_notice: "Versiunea Discourse nu este la zi."
         status: "Status"
+        repo:
+          name: "Nume"
+          last_updated: "Ultima actualizare"
+          status: "Stare"

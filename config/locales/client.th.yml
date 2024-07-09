@@ -11,3 +11,7 @@ th:
         outdated_notice: "Discourse ที่คุณติดตั้งล้าสมัย"
         status: "สถานะ"
         update_action: "อัปเดต"
+        repo:
+          name: "ชื่อ"
+          last_updated: "อัปเดตล่าสุด"
+          status: "สถานะ"

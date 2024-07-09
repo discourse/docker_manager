@@ -10,3 +10,7 @@ et:
       docker:
         outdated_notice: "Sinu Discourse' installatsioon on aegunud"
         status: "Staatus"
+        repo:
+          name: "Nimi"
+          last_updated: "Viimati uuendatud"
+          status: "Staatus"

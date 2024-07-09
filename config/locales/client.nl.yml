@@ -27,3 +27,8 @@ nl:
         up_to_date: "Up-to-date"
         update_action: "Bijwerken"
         updating: "Bijwerken…"
+        repo:
+          name: "Naam"
+          last_updated: "Laatst bijgewerkt"
+          latest_version: "Nieuwste versie"
+          status: "Status"

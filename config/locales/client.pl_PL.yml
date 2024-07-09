@@ -29,3 +29,8 @@ pl_PL:
         up_to_date: "Aktualny"
         update_action: "Aktualizuj"
         updating: "Aktualizowanie…"
+        repo:
+          name: "Nazwa"
+          last_updated: "Ostatnio zaktualizowany"
+          latest_version: "Najnowsza wersja"
+          status: "Status"

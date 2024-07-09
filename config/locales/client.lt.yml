@@ -12,3 +12,7 @@ lt:
         outdated_notice: "Prašome atnaujinti Diskurse instaliacija, jūs naudojate senąja versija."
         status: "Statusas"
         update_action: "Atnaujinti"
+        repo:
+          name: "Vardas"
+          last_updated: "Paskutinį kartą atnaujinta"
+          status: "Statusas"

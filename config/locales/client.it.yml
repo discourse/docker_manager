@@ -42,8 +42,12 @@ it:
         update_repo: "Aggiorna %{name}"
         update_successful: "Aggiornamento completato con successo!"
         update_tab: "Aggiorna Discourse"
-        update_title: "Aggiorna Discourse"
         updating: "Aggiornamento…"
+        repo:
+          name: "Nome"
+          last_updated: "Ultimo aggiornamento"
+          latest_version: "Ultima versione"
+          status: "Stato"
       logs:
         staff_actions:
           actions:

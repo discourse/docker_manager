@@ -12,3 +12,7 @@ pt:
         outdated_notice: "A sua instalação do Discourse está desatualizada."
         status: "Estado"
         update_action: "Atualização"
+        repo:
+          name: "Nome"
+          last_updated: "Última Atualização"
+          status: "Estado"

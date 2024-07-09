@@ -10,3 +10,6 @@ hy:
       docker:
         outdated_notice: "Ձեր Discourse-ը ժամկետանց է"
         status: "Ստատուս"
+        repo:
+          name: "Անուն"
+          status: "Ստատուս"

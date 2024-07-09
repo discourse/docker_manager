@@ -12,3 +12,7 @@ nb_NO:
         outdated_notice: "Din Discourse-installasjon kjører ikke siste versjon."
         status: "Status"
         update_action: "Oppdater"
+        repo:
+          name: "Navn"
+          last_updated: "Sist oppdatert"
+          status: "Status"

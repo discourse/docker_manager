@@ -12,3 +12,7 @@ el:
         outdated_notice: "Η εγκατάσταση του Discourse σας δεν είναι ενημερωμένη."
         status: "Κατάσταση"
         update_action: "Ενημέρωση"
+        repo:
+          name: "Όνομα"
+          last_updated: "Τελευταία ενημέρωση"
+          status: "Κατάσταση"

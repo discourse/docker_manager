@@ -9,3 +9,5 @@ sq:
     admin:
       docker:
         outdated_notice: "Platforma juaj Discourse ka përtëritje."
+        repo:
+          name: "Emri"

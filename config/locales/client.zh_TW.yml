@@ -12,3 +12,6 @@ zh_TW:
         outdated_notice: "您的 Discourse 版本已過期。"
         status: "狀態"
         update_action: "更新"
+        repo:
+          name: "名字"
+          status: "狀態"

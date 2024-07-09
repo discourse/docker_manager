@@ -12,3 +12,7 @@ ug:
         status: "ھالەت"
         update_action: "يېڭىلا"
         updating: "يېڭىلاۋاتىدۇ…"
+        repo:
+          name: "ئىسمى"
+          last_updated: "ئاخىرقى يېڭىلانغان ۋاقىت"
+          status: "ھالەت"
