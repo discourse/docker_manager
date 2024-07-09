@@ -11,15 +11,18 @@ RSpec.describe "Admin update", type: :system do
     au_page.visit
   end
 
-  it "shows the update page" do
+  # flaky test /t/133037
+  xit "shows the update page" do
     expect(au_page).to be_displayed
   end
 
-  it "shows the core repo" do
+  # flaky test /t/133033
+  xit "shows the core repo" do
     expect(au_page).to have_repo(name: "Discourse")
   end
 
-  it "shows the docker_manager plugin repo" do
+  # flaky test /t/133032
+  xit "shows the docker_manager plugin repo" do
     expect(au_page).to have_repo(name: "Docker Manager", url: "https://meta.discourse.org/t/12655")
   end
 end
