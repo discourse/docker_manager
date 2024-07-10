@@ -4,25 +4,16 @@ require_dependency "docker_manager/git_repo"
 
 RSpec.describe "Admin update", type: :system do
   fab!(:admin)
-  let(:au_page) { PageObjects::Pages::AdminUpdate.new }
+  let(:admin_update_page) { PageObjects::Pages::AdminUpdate.new }
 
-  before do
-    sign_in(admin)
-    au_page.visit
-  end
+  before { sign_in(admin) }
 
-  # flaky test /t/133037
-  xit "shows the update page" do
-    expect(au_page).to be_displayed
-  end
+  it "displays the admin update page with the right respositories" do
+    visit("/admin/update")
 
-  # flaky test /t/133033
-  xit "shows the core repo" do
-    expect(au_page).to have_repo(name: "Discourse")
-  end
-
-  # flaky test /t/133032
-  xit "shows the docker_manager plugin repo" do
-    expect(au_page).to have_repo(name: "Docker Manager", url: "https://meta.discourse.org/t/12655")
+    expect(page).to have_css("h3", exact_text: I18n.t("js.admin.docker.update_title"))
+    expect(page).to have_css("tr.repo .repo__name", exact_text: "Discourse")
+    expect(page).to have_css("tr.repo .repo__name", exact_text: "Docker Manager")
+    expect(page).to have_css("tr.repo .repo__about a[href='https://meta.discourse.org/t/12655']")
   end
 end
