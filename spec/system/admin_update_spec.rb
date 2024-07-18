@@ -8,14 +8,12 @@ RSpec.describe "Admin update", type: :system do
 
   before { sign_in(admin) }
 
-  xit "displays the admin update page with the right respositories" do
+  it "displays the admin update page with the right respositories" do
     visit("/admin/update")
 
     expect(page).to have_css("h3", exact_text: I18n.t("js.admin.docker.update_title"))
     expect(page).to have_css("tr.repo .repo__name", exact_text: "Discourse")
     expect(page).to have_css("tr.repo .repo__name", exact_text: "Docker Manager")
     expect(page).to have_css("tr.repo .repo__about a[href='https://meta.discourse.org/t/12655']")
-  ensure
-    puts page.html if ENV["CI"]
   end
 end
