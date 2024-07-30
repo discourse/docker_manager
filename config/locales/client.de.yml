@@ -46,7 +46,7 @@ de:
         updating: "Wird aktualisiert …"
         repo:
           name: "Name"
-          commit_hash: "Commit Hash"
+          commit_hash: "Commit-Hash"
           last_updated: "Zuletzt aktualisiert"
           latest_version: "Neueste Version"
           status: "Status"

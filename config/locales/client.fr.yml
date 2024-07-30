@@ -8,27 +8,49 @@ fr:
   js:
     admin:
       docker:
+        all_up_to_date: "Tout est à jour"
         checking: "Vérification de la nouvelle version…"
         commits:
           one: "%{count} nouveau commit"
           other: "%{count} nouveaux commits"
         everything_up_to_date: "Tout est à jour"
+        forked_plugin: "Extension officielle ramifiée"
         last_updated: "Dernière mise à jour :"
+        latest_version: "Dernière version :"
         main_branch_warning: "<b>ATTENTION :</b> Votre Discourse suit la branche « main » qui peut être instable, <a href='%{url}'> nous recommandons de suivre la branche « tests-passed »</a>."
         navigation:
           processes: Processus
           versions: Versions
+        new_version_available: "Nouvelle version disponible !"
+        official_plugin: "Extension officielle"
         outdated_image_header: "Vous utilisez une ancienne version de l'image Discourse"
+        outdated_image_info: "Les mises à jour via l'interface utilisateur Web sont désactivées jusqu'à ce que vous exécutiez la dernière image. Pour ce faire, connectez-vous à votre serveur via SSH et exécutez :"
         outdated_image_link: "Plus d'informations sur notre site d'assistance"
         outdated_notice: "Votre installation de Discourse n'est pas à jour."
+        perform_update: "Cliquez ici pour mettre à jour."
         repo_newest_version: "%{name} correspond à la version la plus récente."
         repository: "Référentiel"
+        reset_update: "Réinitialiser la mise à jour"
+        reset_warning: "AVERTISSEMENT : vous ne devez réinitialiser que les mises à jour qui ont échoué et qui ne sont pas en cours d'exécution. Cela n'annulera PAS les versions en cours d'exécution et ne doit être utilisé qu'en dernier recours."
+        start_updating: "Commencer la mise à jour"
         status: "Statut"
         up_to_date: "À jour"
         update_action: "Mettre à jour"
+        update_all: "Tout mettre à jour"
+        update_error: "Nous sommes désolés, une erreur s'est produite lors de la mise à jour de Discourse. Veuillez consulter les journaux ci-dessous."
+        update_everything: "Tout mettre à jour"
+        update_repo: "Mise à jour %{name}"
+        update_successful: "Mise à jour terminée avec succès !"
+        update_tab: "Mettre à jour Discourse"
+        update_title: "Mises à jour"
         updating: "Mise à jour…"
         repo:
           name: "Nom"
+          commit_hash: "Valider le hachage"
           last_updated: "Dernière mise à jour "
           latest_version: "Dernière version "
           status: "Statut"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "Mettre à jour vers la dernière version"

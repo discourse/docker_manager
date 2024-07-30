@@ -42,9 +42,11 @@ it:
         update_repo: "Aggiorna %{name}"
         update_successful: "Aggiornamento completato con successo!"
         update_tab: "Aggiorna Discourse"
+        update_title: "Aggiornamenti"
         updating: "Aggiornamento…"
         repo:
           name: "Nome"
+          commit_hash: "Commit Hash"
           last_updated: "Ultimo aggiornamento"
           latest_version: "Ultima versione"
           status: "Stato"

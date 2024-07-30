@@ -8,27 +8,49 @@ tr_TR:
   js:
     admin:
       docker:
+        all_up_to_date: "Tümü güncel"
         checking: "Yeni sürüm kontrol ediliyor…"
         commits:
           one: "%{count} yeni işleme"
           other: "%{count} yeni işleme"
         everything_up_to_date: "Her şey güncel"
+        forked_plugin: "Çatallı resmî eklenti"
         last_updated: "Son güncelleme:"
+        latest_version: "En son sürüm:"
         main_branch_warning: "<b>UYARI:</b> Discourse'unuz stabil olmayabilecek 'main' dalını takip ediyor, <a href='%{url}'> 'tests-passed' dalını takip etmenizi öneririz</a>."
         navigation:
           processes: Süreçler
           versions: Sürümler
+        new_version_available: "Yeni sürüm mevcut!"
+        official_plugin: "Resmî eklenti"
         outdated_image_header: "Discourse görüntüsünün eski bir sürümünü çalıştırıyorsunuz"
+        outdated_image_info: "En son görüntüyü çalıştırana kadar, web kullanıcı arayüzü üzerinden güncelleme devre dışı bırakılır. Bunu yapmak için SSH kullanarak sunucunuzda giriş yapın ve çalıştırın:"
         outdated_image_link: "Destek sitemizde daha fazla bilgi mevcut"
         outdated_notice: "Discourse yüklemeniz güncel değil."
+        perform_update: "Güncellemek için buraya tıklayın."
         repo_newest_version: "%{name} en yeni sürümde."
         repository: "Depo"
+        reset_update: "Güncellemeyi sıfırla"
+        reset_warning: "UYARI: Yalnızca başarısız olan ve çalışmayan güncellemeleri sıfırlamalısınız. Bu, hâlihazırda çalışan derlemeleri iptal ETMEZ ve yalnızca son çare olarak kullanılmalıdır."
+        start_updating: "Güncellemeye başla"
         status: "Durum"
         up_to_date: "Güncel"
         update_action: "Güncelle"
+        update_all: "Tümünü güncelle"
+        update_error: "Üzgünüz, Discourse'u güncellerken bir hata oluştu. Lütfen aşağıdaki günlükleri kontrol edin."
+        update_everything: "Her şeyi güncelle"
+        update_repo: "Güncelle: %{name}"
+        update_successful: "Güncelleme başarıyla tamamlandı!"
+        update_tab: "Discourse'u güncelle"
+        update_title: "Güncellemeler"
         updating: "Güncelleniyor…"
         repo:
           name: "Ad"
+          commit_hash: "Hash'i işle"
           last_updated: "Son Güncelleme"
           latest_version: "En Son Sürüm"
           status: "Durum"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "En son sürüme güncelleyin"

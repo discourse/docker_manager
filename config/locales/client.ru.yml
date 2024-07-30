@@ -8,6 +8,7 @@ ru:
   js:
     admin:
       docker:
+        all_up_to_date: "Обновлений нет"
         checking: "Проверка наличия новой версии…"
         commits:
           one: "%{count} новый коммит"
@@ -15,22 +16,43 @@ ru:
           many: "%{count} новых коммитов"
           other: "%{count} нового коммита"
         everything_up_to_date: "Всё в актуальном состоянии"
+        forked_plugin: "Форк официального плагина"
         last_updated: "Последнее обновление:"
+        latest_version: "Последняя версия:"
         main_branch_warning: "<b>ВНИМАНИЕ!</b> Ваша версия Discourse отслеживает ветку «main», которая может быть нестабильной. <a href='%{url}'>Мы рекомендуем отслеживать ветку «tests-passed»</a>."
         navigation:
           processes: Процессы
           versions: Версии
+        new_version_available: "Доступна новая версия!"
+        official_plugin: "Официальный плагин"
         outdated_image_header: "Вы используете старую версию образа Discourse"
+        outdated_image_info: "Обновления через веб-интерфейс будут отключены, пока вы не запустите актуальный образ. Для этого войдите на свой сервер через SSH и выполните следующую команду:"
         outdated_image_link: "Подробнее — на сайте поддержки"
         outdated_notice: "У вас установлена устаревшая версия Discourse."
+        perform_update: "Нажмите сюда, чтобы обновить."
         repo_newest_version: "Установлена актуальная версия %{name}."
         repository: "Репозиторий"
+        reset_update: "Сбросить обновление"
+        reset_warning: "ВНИМАНИЕ! Сбрасывать следует только те обновления, которые не удалось завершить и которые не запущены. Запущенные сборки НЕ БУДУТ отменены. Эту функцию следует использовать только в крайнем случае."
+        start_updating: "Начать обновление"
         status: "Статус"
         up_to_date: "Обновлено"
         update_action: "Обновить"
+        update_all: "Обновить все"
+        update_error: "При обновлении Discourse произошла ошибка. Смотрите журналы ниже."
+        update_everything: "Обновить все"
+        update_repo: "Обновить %{name}"
+        update_successful: "Обновление выполнено!"
+        update_tab: "Обновить Discourse"
+        update_title: "Обновления"
         updating: "Обновление…"
         repo:
           name: "Название"
+          commit_hash: "Хеш коммита"
           last_updated: "Последнее обновление"
           latest_version: "Последняя версия"
           status: "Статус"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "Обновить до последней версии"
