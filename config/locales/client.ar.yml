@@ -8,6 +8,7 @@ ar:
   js:
     admin:
       docker:
+        all_up_to_date: "تم تحديث كل شيء"
         checking: "جارٍ البحث عن إصدار جديد…"
         commits:
           zero: "%{count} مساهمة جديدة"
@@ -17,22 +18,43 @@ ar:
           many: "%{count} مساهمة جديدة"
           other: "%{count} مساهمة جديدة"
         everything_up_to_date: "لديك أحدث إصدار"
+        forked_plugin: "نسخة معدَّلة من المكوِّن الإضافي الرسمي"
         last_updated: "آخر تحديث:"
+        latest_version: "أحدث إصدار:"
         main_branch_warning: "<b>تحذير:</b> يتتبَّع Discourse لديك فرع 'main' الذي قد يكون غير مستقر، <a href='%{url}'>نوصي بتتبُّع الفرع 'tests-passed'</a>."
         navigation:
           processes: العمليات
           versions: الإصدارات
+        new_version_available: "يتوفَّر إصدار جديد!"
+        official_plugin: "المكوِّن الإضافي الرسمي"
         outdated_image_header: "أنت تستخدم نسخة قديمة من صورة Discourse"
+        outdated_image_info: "يتم إيقاف التحديثات عبر واجهة مستخدم الويب حتى تستخدم أحدث صورة. لإجراء ذلك، سجِّل الدخول إلى خادمك باستخدام SSH وتشغيل:"
         outdated_image_link: "المزيد من المعلومات على موقع الدعم لدينا"
         outdated_notice: "إصدار Discourse قديم."
+        perform_update: "انقر هنا للتحديث."
         repo_newest_version: "%{name} محدَّث إلى آخر إصدار."
         repository: "المستودع"
+        reset_update: "إعادة تعيين التحديث"
+        reset_warning: "تحذير: يجب عليك إعادة تعيين التحديثات التي فشلت ولا تعمل فقط. لن يؤدي ذلك إلى إلغاء الإصدارات قيد التشغيل حاليًا ويجب استخدامه كحل أخير فقط."
+        start_updating: "بدء التحديث"
         status: "الحالة"
         up_to_date: "أحدث إصدار"
         update_action: "تحديث"
+        update_all: "تحديث الكل"
+        update_error: "عذرًا، حدث خطأ في أثناء تحديث Discourse. يُرجى التحقق من السجلات أدناه."
+        update_everything: "تحديث كل شيء"
+        update_repo: "تحديث %{name}"
+        update_successful: "اكتمل التحديث بنجاح!"
+        update_tab: "تحديث Discourse"
+        update_title: "التحديثات"
         updating: "جارٍ التحديث…"
         repo:
           name: "الاسم"
+          commit_hash: "قيمة التجزئة للإصدار"
           last_updated: "آخر تحديث"
           latest_version: "أحدث إصدار"
           status: "الحالة"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "التحديث إلى الإصدار الأخير"
