@@ -1,3 +1,4 @@
+< 3.4.0.beta1-dev: 38cdefa55a251f28e1a4b146ae79fc485f72d294
 < 3.3.0.beta1-dev: 9523f7a88453ce1863071bcc2bc88130b60efee5
 # Do you need to make fixes for Discourse v3.1.0.beta1 and below?
 # Push to the `old-version-up-to-v3.1.0.beta1` branch, update the commit hash for "3.1.0.beta1"
