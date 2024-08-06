@@ -5,3 +5,5 @@
 # https://translate.discourse.org/
 
 ja:
+  docker_manager:
+    title: "Discourse 更新マネージャー"
