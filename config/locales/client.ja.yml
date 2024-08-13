@@ -8,26 +8,48 @@ ja:
   js:
     admin:
       docker:
+        all_up_to_date: "すべて最新"
         checking: "新しいバージョンを確認中…"
         commits:
           other: "%{count} 件の新規コミット"
         everything_up_to_date: "すべて最新です"
+        forked_plugin: "フォークされた公式プラグイン"
         last_updated: "最終更新:"
+        latest_version: "最新バージョン:"
         main_branch_warning: "<b>警告:</b> あなたの Discourse は不安定な可能性のある 'main' ブランチを追跡しています。<a href='%{url}'>'tests-passed' ブランチを追跡することをお勧めします</a>。"
         navigation:
           processes: プロセス
           versions: バージョン
+        new_version_available: "新しいバージョンがリリースされました！"
+        official_plugin: "公式プラグイン"
         outdated_image_header: "Discourse の古いバージョンのイメージを実行しています"
+        outdated_image_info: "Web UI 経由での更新は、最新のイメージを実行するまで無効化されます。最新のイメージを実行するには、SSH を使ってサーバーにログインし、以下を実行してください:"
         outdated_image_link: "詳細はサポートサイトをご覧ください"
         outdated_notice: "インストールされている Discourse は古いバージョンです。"
+        perform_update: "ここをクリックして更新してください。"
         repo_newest_version: "%{name} は最新バージョンです。"
         repository: "リポジトリ"
+        reset_update: "更新をリセット"
+        reset_warning: "警告: 失敗して実行されていない更新のみをリセットしてください。この操作では、現在実行中のビルドはキャンセルされません。また最終手段としてのみ使用してください。"
+        start_updating: "更新を開始"
         status: "ステータス"
         up_to_date: "最新"
         update_action: "更新"
+        update_all: "すべて更新"
+        update_error: "Discourse の更新中にエラーが発生しました。以下のログを確認してください。"
+        update_everything: "すべて更新"
+        update_repo: "%{name} を更新"
+        update_successful: "更新は正常に完了しました！"
+        update_tab: "Discourse の更新"
+        update_title: "更新"
         updating: "更新中…"
         repo:
           name: "名前"
+          commit_hash: "コミットハッシュ"
           last_updated: "最終更新"
           latest_version: "最新バージョン"
           status: "ステータス"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "最新バージョンに更新"
