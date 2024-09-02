@@ -98,7 +98,7 @@ class DockerManager::Upgrader
     end
 
     run("bundle install --retry 3 --jobs 4")
-    run("yarn install")
+    run("if [ -f yarn.lock ]; then yarn install; else pnpm install; fi")
     begin
       run("LOAD_PLUGINS=0 bundle exec rake plugin:pull_compatible_all")
     rescue RuntimeError
