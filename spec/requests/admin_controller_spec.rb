@@ -38,6 +38,12 @@ RSpec.describe DockerManager::AdminController do
   end
 
   describe "#repos" do
+    before do
+      # Return only the first 3 repos to reduce the number of calls to 'git' CLI
+      repos = DockerManager::GitRepo.find_all
+      DockerManager::GitRepo.stubs(:find_all).returns(repos[0...3])
+    end
+
     it "should return the right response" do
       sign_in(Fabricate(:admin))
 
