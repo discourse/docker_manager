@@ -23,12 +23,14 @@ module GitHelpers
         git "config receive.denyNonFastforwards true"
         git "config receive.denyCurrentBranch ignore"
         git "config uploadpack.allowFilter true"
+        git "config commit.gpgsign false"
       end
 
       @work_path = File.join(@root_path, "work")
       Dir.mkdir(@work_path)
       Dir.chdir(@work_path) do
         git "init . --initial-branch=#{initial_branch}"
+        git "config commit.gpgsign false"
         git "remote add origin #{@url}"
 
         File.write("README.md", "This is a git repo for testing docker_manager.")
