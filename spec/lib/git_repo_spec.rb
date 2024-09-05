@@ -38,7 +38,7 @@ RSpec.describe DockerManager::GitRepo do
 
     subject(:repo) do
       prepare_repos
-      repo = described_class.new(@local_repo.path)
+      repo = described_class.new(@local_git_repo.path)
       repo.update_remote! unless @skip_update_remote
       repo
     end
@@ -47,7 +47,7 @@ RSpec.describe DockerManager::GitRepo do
 
     before do
       @skip_update_remote = false
-      @local_repo = @remote_git_repo = nil
+      @local_git_repo = @remote_git_repo = nil
       @before_local_repo_clone = []
       @after_local_repo_clone = []
     end
@@ -55,7 +55,7 @@ RSpec.describe DockerManager::GitRepo do
     after { @remote_git_repo.destroy }
 
     def prepare_repos
-      return if @local_repo && @remote_git_repo
+      return if @local_git_repo && @remote_git_repo
 
       cache_key =
         Digest::SHA1.hexdigest(
@@ -79,18 +79,17 @@ RSpec.describe DockerManager::GitRepo do
 
           repo.create_branches("tests-passed")
 
-          @remote_git_repo = repo
-          @before_local_repo_clone.each { |callback| callback.call }
+          @before_local_repo_clone.each { |callback| callback.call(repo) }
         end
 
-      @local_repo = @remote_git_repo.create_local_clone(method: clone_method)
-      @after_local_repo_clone.each { |callback| callback.call }
+      @local_git_repo = @remote_git_repo.create_local_clone(method: clone_method)
+      @after_local_repo_clone.each { |callback| callback.call(@remote_git_repo, @local_git_repo) }
 
       @remote_git_repo.in_remote_repo { |git| git.call("log --pretty=oneline") }
     end
 
-    def add_new_commits
-      @remote_git_repo.commit(
+    def add_new_commits(remote_repo, local_repo)
+      remote_repo.commit(
         filename: "foo.txt",
         commits: [
           { content: "D", date: "2023-03-07T10:11:19Z" },
@@ -102,12 +101,16 @@ RSpec.describe DockerManager::GitRepo do
           { content: "F", date: "2023-03-07T15:22:23Z" },
         ],
       )
-      @remote_git_repo.rebase(source_branch: "main", target_branch: "tests-passed")
+      remote_repo.rebase(source_branch: "main", target_branch: "tests-passed")
     end
 
     shared_examples "common tests" do
       context "when tracking `tests-passed` branch" do
-        before { @after_local_repo_clone << -> { @local_repo.checkout("tests-passed") } }
+        before do
+          @after_local_repo_clone << ->(remote_repo, local_repo) do
+            local_repo.checkout("tests-passed")
+          end
+        end
 
         describe "#has_local_main?" do
           context "with existing `main` branch" do
@@ -135,15 +138,19 @@ RSpec.describe DockerManager::GitRepo do
           context "with `master` as initial branch" do
             let(:initial_branch) { "master" }
 
-            before { @after_local_repo_clone << -> { @local_repo.checkout("master") } }
+            before do
+              @after_local_repo_clone << ->(remote_repo, local_repo) do
+                local_repo.checkout("master")
+              end
+            end
 
             it "returns `origin/master` if a repo hasn't been renamed" do
               expect(repo.tracking_ref).to eq("origin/master")
             end
 
             it "returns `origin/main` if a repo has been renamed but still tracks `master`" do
-              @after_local_repo_clone << -> do
-                @remote_git_repo.rename_branch(old_name: "master", new_name: "main")
+              @after_local_repo_clone << ->(remote_repo, local_repo) do
+                remote_repo.rename_branch(old_name: "master", new_name: "main")
               end
 
               expect(repo.tracking_ref).to eq("origin/main")
@@ -151,7 +158,9 @@ RSpec.describe DockerManager::GitRepo do
           end
 
           context "with `main` as current local branch" do
-            before { @after_local_repo_clone << -> { @local_repo.checkout("main") } }
+            before do
+              @after_local_repo_clone << ->(remote_repo, local_repo) { local_repo.checkout("main") }
+            end
 
             it "returns `origin/main` if a repo points at `origin/main`" do
               expect(repo.tracking_ref).to eq("origin/main")
@@ -167,15 +176,19 @@ RSpec.describe DockerManager::GitRepo do
           context "with `master` as initial branch" do
             let(:initial_branch) { "master" }
 
-            before { @after_local_repo_clone << -> { @local_repo.checkout("master") } }
+            before do
+              @after_local_repo_clone << ->(remote_repo, local_repo) do
+                local_repo.checkout("master")
+              end
+            end
 
             it "returns `origin/master` if a repo hasn't been renamed" do
               expect(repo.upstream_branch).to eq("origin/master")
             end
 
             it "returns `origin/master` if a repo has been renamed but still tracks `master`" do
-              @after_local_repo_clone << -> do
-                @remote_git_repo.rename_branch(old_name: "master", new_name: "main")
+              @after_local_repo_clone << ->(remote_repo, local_repo) do
+                remote_repo.rename_branch(old_name: "master", new_name: "main")
               end
 
               expect(repo.upstream_branch).to eq("origin/master")
@@ -183,7 +196,9 @@ RSpec.describe DockerManager::GitRepo do
           end
 
           context "with `main` as current local branch" do
-            before { @after_local_repo_clone << -> { @local_repo.checkout("main") } }
+            before do
+              @after_local_repo_clone << ->(remote_repo, local_repo) { local_repo.checkout("main") }
+            end
 
             it "returns `origin/main` if a repo points at `origin/main`" do
               expect(repo.upstream_branch).to eq("origin/main")
@@ -197,7 +212,9 @@ RSpec.describe DockerManager::GitRepo do
           end
 
           it "returns false when upstream branch doesn't exist" do
-            @after_local_repo_clone << -> { @remote_git_repo.delete_branches("tests-passed") }
+            @after_local_repo_clone << ->(remote_repo, local_repo) do
+              remote_repo.delete_branches("tests-passed")
+            end
             expect(repo.upstream_branch_exist?).to eq(false)
           end
         end
@@ -235,8 +252,8 @@ RSpec.describe DockerManager::GitRepo do
 
           context "with no tags" do
             before do
-              @before_local_repo_clone << -> do
-                @remote_git_repo.delete_tags("beta", "latest-release", "v3.1.0.beta1")
+              @before_local_repo_clone << ->(repo) do
+                repo.delete_tags("beta", "latest-release", "v3.1.0.beta1")
               end
             end
 
@@ -272,7 +289,7 @@ RSpec.describe DockerManager::GitRepo do
           context "with `beta` and version tags on HEAD~1" do
             before do
               skip_for_shallow_clone
-              @before_local_repo_clone << -> { @remote_git_repo.delete_tags("latest-release") }
+              @before_local_repo_clone << ->(repo) { repo.delete_tags("latest-release") }
             end
 
             describe "#latest_local_tag_version" do
@@ -297,7 +314,7 @@ RSpec.describe DockerManager::GitRepo do
           describe "#update_remote!" do
             it "fetches the correct amount of new commits" do
               prepare_repos
-              expect { repo.update_remote! }.to not_change { @local_repo.commit_count }
+              expect { repo.update_remote! }.to not_change { @local_git_repo.commit_count }
             end
           end
         end
@@ -353,7 +370,7 @@ RSpec.describe DockerManager::GitRepo do
           describe "#update_remote!" do
             it "fetches the correct amount of new commits" do
               prepare_repos
-              expect { repo.update_remote! }.to change { @local_repo.commit_count }.by(
+              expect { repo.update_remote! }.to change { @local_git_repo.commit_count }.by(
                 fetch_commit_count,
               )
             end
@@ -363,13 +380,13 @@ RSpec.describe DockerManager::GitRepo do
 
       context "when tracking `beta` tag" do
         before do
-          @after_local_repo_clone << -> do
+          @after_local_repo_clone << ->(remote_repo, local_repo) do
             unless shallow_clone?
-              @local_repo.checkout("beta")
+              local_repo.checkout("beta")
               # Mimics the behavior of `web.template.yml` where we store the value of the `$version` variable
               # as a user-defined config value in git.
               # See https://github.com/discourse/discourse_docker/blob/main/templates/web.template.yml
-              @local_repo.git("config user.discourse-version beta")
+              local_repo.git("config user.discourse-version beta")
             end
           end
         end
@@ -472,7 +489,7 @@ RSpec.describe DockerManager::GitRepo do
           describe "#update_remote!" do
             it "fetches the correct amount of new commits" do
               prepare_repos
-              expect { repo.update_remote! }.to not_change { @local_repo.commit_count }
+              expect { repo.update_remote! }.to not_change { @local_git_repo.commit_count }
             end
           end
         end
@@ -532,7 +549,7 @@ RSpec.describe DockerManager::GitRepo do
           describe "#update_remote!" do
             it "fetches the correct amount of new commits" do
               prepare_repos
-              expect { repo.update_remote! }.to change { @local_repo.commit_count }.by(
+              expect { repo.update_remote! }.to change { @local_git_repo.commit_count }.by(
                 fetch_commit_count,
               )
             end
@@ -542,14 +559,14 @@ RSpec.describe DockerManager::GitRepo do
 
       context "when tracking deleted branch" do
         before do
-          @before_local_repo_clone << -> do
-            @remote_git_repo.delete_tags("beta")
-            @remote_git_repo.create_branches("beta")
+          @before_local_repo_clone << ->(repo) do
+            repo.delete_tags("beta")
+            repo.create_branches("beta")
           end
-          @after_local_repo_clone << -> do
-            @local_repo.checkout("beta")
-            @remote_git_repo.delete_branches("beta")
-            @remote_git_repo.in_working_directory do |git|
+          @after_local_repo_clone << ->(remote_repo, local_repo) do
+            local_repo.checkout("beta")
+            remote_repo.delete_branches("beta")
+            remote_repo.in_working_directory do |git|
               git.call("tag -m 'latest beta release' -a beta latest-release^{}")
               git.call("push origin beta")
             end
@@ -605,7 +622,9 @@ RSpec.describe DockerManager::GitRepo do
       describe "#url" do
         before do
           @skip_update_remote = true
-          @after_local_repo_clone << -> { @local_repo.git("remote set-url origin #{remote_url}") }
+          @after_local_repo_clone << ->(remote_repo, local_repo) do
+            local_repo.git("remote set-url origin #{remote_url}")
+          end
         end
 
         context "with GitHub HTTPS URL" do
@@ -667,8 +686,8 @@ RSpec.describe DockerManager::GitRepo do
       let!(:clone_method) { GitHelpers::CLONE_SHALLOW }
 
       before do
-        @before_local_repo_clone << -> do
-          @remote_git_repo.commit(
+        @before_local_repo_clone << ->(repo) do
+          repo.commit(
             filename: ".discourse-compatibility",
             commits: [{ content: "<= 1000.0.0: twoPointFiveBranch", date: "2023-03-06T20:31:17Z" }],
           )
