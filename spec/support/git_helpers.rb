@@ -21,7 +21,7 @@ module GitHelpers
       if !force
         @@caches[cache_key] ||= self.class.new(initial_branch:, cache_key:, force: true, &blk)
         FileUtils.cp_r(@@caches[cache_key].root_path + "/.", @root_path)
-        Dir.chdir(@work_path) { git "remote remove origin && git remote add origin #{@url}" }
+        Dir.chdir(@work_path) { git "remote set-url origin #{@url}" }
         return
       end
 
