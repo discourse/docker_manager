@@ -164,7 +164,7 @@ module GitHelpers
       if status.success? || !raise_exception
         stdout.presence
       else
-        raise RuntimeError
+        raise RuntimeError.new("stderr while running #{command}: #{stderr}")
       end
     end
 
