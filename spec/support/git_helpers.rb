@@ -10,21 +10,16 @@ module GitHelpers
 
     @@caches = {}
 
-    def initialize(initial_branch: "main", cache_key: nil, &blk)
+    def initialize(initial_branch: "main", cache_key: nil, force: false, &blk)
       @initial_branch = initial_branch
       @local_clone_count = 0
       @root_path = Dir.mktmpdir
-
-      @@caches[cache_key] ||= begin
-        @@caches[cache_key] = true
-        self.class.new(initial_branch: initial_branch, cache_key: cache_key, &blk)
-      end
-
       @remote_path = File.join(@root_path, "remote.git")
       @work_path = File.join(@root_path, "work")
       @url = "file://#{@remote_path}"
 
-      if @@caches[cache_key] != true
+      if !force
+        @@caches[cache_key] ||= self.class.new(initial_branch:, cache_key:, force: true, &blk)
         FileUtils.cp_r(@@caches[cache_key].root_path + "/.", @root_path)
         Dir.chdir(@work_path) { git "remote remove origin && git remote add origin #{@url}" }
         return

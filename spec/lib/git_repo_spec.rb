@@ -58,13 +58,12 @@ RSpec.describe DockerManager::GitRepo do
       return if @local_repo && @remote_git_repo
 
       cache_key =
-        "#{initial_branch}-" + @before_local_repo_clone.map(&:source_location).flatten.join(",")
+        Digest::SHA1.hexdigest(
+          "#{initial_branch}-" + @before_local_repo_clone.map(&:source_location).flatten.join(","),
+        )
 
       @remote_git_repo =
-        GitHelpers::RemoteGitRepo.new(
-          initial_branch: initial_branch,
-          cache_key: Digest::SHA1.hexdigest(cache_key),
-        ) do |repo|
+        GitHelpers::RemoteGitRepo.new(initial_branch:, cache_key:) do |repo|
           repo.commit(
             filename: "foo.txt",
             commits: [
