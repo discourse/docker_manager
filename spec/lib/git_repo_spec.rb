@@ -57,20 +57,23 @@ RSpec.describe DockerManager::GitRepo do
     def prepare_repos
       return if @local_repo && @remote_git_repo
 
-      @remote_git_repo = GitHelpers::RemoteGitRepo.new(initial_branch: initial_branch)
-      @remote_git_repo.commit(
-        filename: "foo.txt",
-        commits: [
-          { content: "A", date: "2023-03-06T20:31:17Z" },
-          {
-            content: "B",
-            date: "2023-03-06T21:08:52Z",
-            tags: %w[v3.1.0.beta1 beta latest-release],
-          },
-          { content: "C", date: "2023-03-06T22:48:29Z" },
-        ],
-      )
-      @remote_git_repo.create_branches("tests-passed")
+      @remote_git_repo =
+        GitHelpers::RemoteGitRepo.new(initial_branch: initial_branch) do |repo|
+          repo.commit(
+            filename: "foo.txt",
+            commits: [
+              { content: "A", date: "2023-03-06T20:31:17Z" },
+              {
+                content: "B",
+                date: "2023-03-06T21:08:52Z",
+                tags: %w[v3.1.0.beta1 beta latest-release],
+              },
+              { content: "C", date: "2023-03-06T22:48:29Z" },
+            ],
+          )
+
+          repo.create_branches("tests-passed")
+        end
 
       @before_local_repo_clone.each { |callback| callback.call }
       @local_repo = @remote_git_repo.create_local_clone(method: clone_method)

@@ -6,15 +6,29 @@ module GitHelpers
   CLONE_TREELESS = :treeless
 
   class RemoteGitRepo
-    attr_reader :url, :work_path, :remote_path
+    attr_reader :url, :root_path, :work_path, :remote_path
 
-    def initialize(initial_branch: "main")
+    @@caches = {}
+
+    def initialize(initial_branch: "main", &blk)
       @initial_branch = initial_branch
       @local_clone_count = 0
       @root_path = Dir.mktmpdir
 
+      @@caches[initial_branch] ||= begin
+        @@caches[initial_branch] = true
+        self.class.new(initial_branch: initial_branch, &blk)
+      end
+
       @remote_path = File.join(@root_path, "remote.git")
+      @work_path = File.join(@root_path, "work")
       @url = "file://#{@remote_path}"
+
+      if @@caches[initial_branch] != true
+        FileUtils.cp_r(@@caches[initial_branch].root_path + "/.", @root_path)
+        Dir.chdir(@work_path) { git "remote remove origin && git remote add origin #{@url}" }
+        return
+      end
 
       Dir.mkdir(@remote_path)
       Dir.chdir(@remote_path) do
@@ -26,7 +40,6 @@ module GitHelpers
         git "config commit.gpgsign false"
       end
 
-      @work_path = File.join(@root_path, "work")
       Dir.mkdir(@work_path)
       Dir.chdir(@work_path) do
         git "init . --initial-branch=#{initial_branch}"
@@ -40,6 +53,8 @@ module GitHelpers
         git "commit -m 'Initial commit'"
         git "push --set-upstream origin #{initial_branch}"
       end
+
+      yield(self) if block_given?
     end
 
     def destroy
