@@ -57,8 +57,14 @@ RSpec.describe DockerManager::GitRepo do
     def prepare_repos
       return if @local_repo && @remote_git_repo
 
+      cache_key =
+        "#{initial_branch}-" + @before_local_repo_clone.map(&:source_location).flatten.join(",")
+
       @remote_git_repo =
-        GitHelpers::RemoteGitRepo.new(initial_branch: initial_branch) do |repo|
+        GitHelpers::RemoteGitRepo.new(
+          initial_branch: initial_branch,
+          cache_key: Digest::SHA1.hexdigest(cache_key),
+        ) do |repo|
           repo.commit(
             filename: "foo.txt",
             commits: [
@@ -73,9 +79,11 @@ RSpec.describe DockerManager::GitRepo do
           )
 
           repo.create_branches("tests-passed")
+
+          @remote_git_repo = repo
+          @before_local_repo_clone.each { |callback| callback.call }
         end
 
-      @before_local_repo_clone.each { |callback| callback.call }
       @local_repo = @remote_git_repo.create_local_clone(method: clone_method)
       @after_local_repo_clone.each { |callback| callback.call }
 
