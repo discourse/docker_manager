@@ -6,15 +6,24 @@ module GitHelpers
   CLONE_TREELESS = :treeless
 
   class RemoteGitRepo
-    attr_reader :url, :work_path, :remote_path
+    attr_reader :url, :root_path, :work_path, :remote_path
 
-    def initialize(initial_branch: "main")
+    @@caches = {}
+
+    def initialize(initial_branch: "main", cache_key: nil, force: false, &blk)
       @initial_branch = initial_branch
       @local_clone_count = 0
       @root_path = Dir.mktmpdir
-
       @remote_path = File.join(@root_path, "remote.git")
+      @work_path = File.join(@root_path, "work")
       @url = "file://#{@remote_path}"
+
+      if !force
+        @@caches[cache_key] ||= self.class.new(initial_branch:, cache_key:, force: true, &blk)
+        FileUtils.cp_r(@@caches[cache_key].root_path + "/.", @root_path)
+        Dir.chdir(@work_path) { git "remote set-url origin #{@url}" }
+        return
+      end
 
       Dir.mkdir(@remote_path)
       Dir.chdir(@remote_path) do
@@ -23,12 +32,13 @@ module GitHelpers
         git "config receive.denyNonFastforwards true"
         git "config receive.denyCurrentBranch ignore"
         git "config uploadpack.allowFilter true"
+        git "config commit.gpgsign false"
       end
 
-      @work_path = File.join(@root_path, "work")
       Dir.mkdir(@work_path)
       Dir.chdir(@work_path) do
         git "init . --initial-branch=#{initial_branch}"
+        git "config commit.gpgsign false"
         git "remote add origin #{@url}"
 
         File.write("README.md", "This is a git repo for testing docker_manager.")
@@ -38,6 +48,8 @@ module GitHelpers
         git "commit -m 'Initial commit'"
         git "push --set-upstream origin #{initial_branch}"
       end
+
+      yield(self) if block_given?
     end
 
     def destroy
@@ -162,7 +174,7 @@ module GitHelpers
       if status.success? || !raise_exception
         stdout.presence
       else
-        raise RuntimeError
+        raise RuntimeError.new("stderr while running #{command}: #{stderr}")
       end
     end
 
