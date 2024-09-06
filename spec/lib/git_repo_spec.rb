@@ -32,10 +32,6 @@ RSpec.describe DockerManager::GitRepo do
       clone_method == GitHelpers::CLONE_SHALLOW
     end
 
-    def skip_for_shallow_clone
-      pending("Doesn't work on shallow clones") if shallow_clone?
-    end
-
     subject(:repo) do
       prepare_repos
       repo = described_class.new(@local_git_repo.path)
@@ -104,7 +100,7 @@ RSpec.describe DockerManager::GitRepo do
       remote_repo.rebase(source_branch: "main", target_branch: "tests-passed")
     end
 
-    shared_examples "common tests" do
+    shared_examples "common tests" do |shallow_clone|
       context "when tracking `tests-passed` branch" do
         before do
           @after_local_repo_clone << ->(remote_repo, local_repo) do
@@ -270,9 +266,7 @@ RSpec.describe DockerManager::GitRepo do
             end
           end
 
-          context "with `beta`, `latest-release` and version tags on HEAD~1" do
-            before { skip_for_shallow_clone }
-
+          context "with `beta`, `latest-release` and version tags on HEAD~1", if: !shallow_clone do
             describe "#latest_local_tag_version" do
               it "returns the correct version and ignores the `beta` tag" do
                 expect(repo.latest_local_tag_version).to eq("latest-release +1")
@@ -286,11 +280,8 @@ RSpec.describe DockerManager::GitRepo do
             end
           end
 
-          context "with `beta` and version tags on HEAD~1" do
-            before do
-              skip_for_shallow_clone
-              @before_local_repo_clone << ->(repo) { repo.delete_tags("latest-release") }
-            end
+          context "with `beta` and version tags on HEAD~1", if: !shallow_clone do
+            before { @before_local_repo_clone << ->(repo) { repo.delete_tags("latest-release") } }
 
             describe "#latest_local_tag_version" do
               it "returns the correct version and ignores the `beta` tag" do
@@ -347,22 +338,19 @@ RSpec.describe DockerManager::GitRepo do
           end
 
           describe "#latest_local_tag_version" do
-            it "returns the correct version" do
-              skip_for_shallow_clone
+            it "returns the correct version", if: !shallow_clone do
               expect(repo.latest_local_tag_version).to eq("v3.1.0.beta1 +1")
             end
           end
 
-          describe "#latest_origin_tag_version" do
+          describe "#latest_origin_tag_version", if: !shallow_clone do
             it "returns the correct version and ignores the `beta` and `latest-release` tags" do
-              skip_for_shallow_clone
               expect(repo.latest_origin_tag_version).to eq("v3.1.0.beta2 +1")
             end
           end
 
           describe "#commits_behind" do
-            it "returns the correct number of commits" do
-              skip_for_shallow_clone
+            it "returns the correct number of commits", if: !shallow_clone do
               expect(repo.commits_behind).to eq(3)
             end
           end
@@ -410,72 +398,63 @@ RSpec.describe DockerManager::GitRepo do
         end
 
         describe "#tracking_ref" do
-          it "returns the correct remote branch" do
-            skip_for_shallow_clone
+          it "returns the correct remote branch", if: !shallow_clone do
             expect(repo.tracking_ref).to eq("beta")
           end
         end
 
         describe "#upstream_branch" do
-          it "doesn't return a branch name" do
-            skip_for_shallow_clone
+          it "doesn't return a branch name", if: !shallow_clone do
             expect(repo.upstream_branch).to be_nil
           end
         end
 
         describe "#upstream_branch_exist?" do
-          it "returns false because we aren't tracking a branch" do
-            skip_for_shallow_clone
+          it "returns false because we aren't tracking a branch", if: !shallow_clone do
             expect(repo.upstream_branch_exist?).to eq(false)
           end
         end
 
         describe "#detached_head?" do
-          it "returns true" do
-            skip_for_shallow_clone
+          it "returns true", if: !shallow_clone do
             expect(repo.detached_head?).to eq(true)
           end
         end
 
         context "when local clone and origin are the same" do
           describe "#latest_local_commit" do
-            it "returns the correct commit hash" do
-              skip_for_shallow_clone
+            it "returns the correct commit hash", if: !shallow_clone do
               expect(repo.latest_local_commit).to eq("e43b6978c22ea3aeafbcf96c6e4fff5af0b7da29")
             end
           end
 
           describe "#latest_origin_commit" do
-            it "returns the correct commit hash" do
-              skip_for_shallow_clone
+            it "returns the correct commit hash", if: !shallow_clone do
               expect(repo.latest_origin_commit).to eq("e43b6978c22ea3aeafbcf96c6e4fff5af0b7da29")
             end
           end
 
           describe "#latest_local_commit_date" do
-            it "returns the correct commit date" do
-              skip_for_shallow_clone
+            it "returns the correct commit date", if: !shallow_clone do
               expect(repo.latest_local_commit_date).to eq("2023-03-06T21:08:52Z")
             end
           end
 
           describe "#latest_origin_commit_date" do
-            it "returns the correct commit date" do
-              skip_for_shallow_clone
+            it "returns the correct commit date", if: !shallow_clone do
               expect(repo.latest_origin_commit_date).to eq("2023-03-06T21:08:52Z")
             end
           end
 
           describe "#latest_local_tag_version" do
-            it "returns the correct version and ignores the `beta` tag" do
-              skip_for_shallow_clone
+            it "returns the correct version and ignores the `beta` tag", if: !shallow_clone do
               expect(repo.latest_local_tag_version).to eq("latest-release")
             end
           end
 
           describe "#latest_origin_tag_version" do
-            it "returns the correct version and ignores the `beta` and `latest-release` tags" do
-              skip_for_shallow_clone
+            it "returns the correct version and ignores the `beta` and `latest-release` tags",
+               if: !shallow_clone do
               expect(repo.latest_origin_tag_version).to eq("v3.1.0.beta1")
             end
           end
@@ -498,50 +477,43 @@ RSpec.describe DockerManager::GitRepo do
           before { @after_local_repo_clone << method(:add_new_commits) }
 
           describe "#latest_local_commit" do
-            it "returns the correct commit hash" do
-              skip_for_shallow_clone
+            it "returns the correct commit hash", if: !shallow_clone do
               expect(repo.latest_local_commit).to eq("e43b6978c22ea3aeafbcf96c6e4fff5af0b7da29")
             end
           end
 
           describe "#latest_origin_commit" do
-            it "returns the correct commit hash" do
-              skip_for_shallow_clone
+            it "returns the correct commit hash", if: !shallow_clone do
               expect(repo.latest_origin_commit).to eq("bebd76be58db951fac6abc8d4d0746951fcd1082")
             end
           end
 
           describe "#latest_local_commit_date" do
-            it "returns the correct commit date" do
-              skip_for_shallow_clone
+            it "returns the correct commit date", if: !shallow_clone do
               expect(repo.latest_local_commit_date).to eq("2023-03-06T21:08:52Z")
             end
           end
 
           describe "#latest_origin_commit_date" do
-            it "returns the correct commit date" do
-              skip_for_shallow_clone
+            it "returns the correct commit date", if: !shallow_clone do
               expect(repo.latest_origin_commit_date).to eq("2023-03-07T12:58:29Z")
             end
           end
 
           describe "#latest_local_tag_version" do
-            it "returns the correct version" do
-              skip_for_shallow_clone
+            it "returns the correct version", if: !shallow_clone do
               expect(repo.latest_local_tag_version).to eq("v3.1.0.beta1")
             end
           end
 
           describe "#latest_origin_tag_version" do
-            it "returns the correct version" do
-              skip_for_shallow_clone
+            it "returns the correct version", if: !shallow_clone do
               expect(repo.latest_origin_tag_version).to eq("v3.1.0.beta2")
             end
           end
 
           describe "#commits_behind" do
-            it "returns the correct number of commits" do
-              skip_for_shallow_clone
+            it "returns the correct number of commits", if: !shallow_clone do
               expect(repo.commits_behind).to eq(3)
             end
           end
@@ -580,8 +552,7 @@ RSpec.describe DockerManager::GitRepo do
         end
 
         describe "#latest_origin_commit" do
-          it "returns the correct commit hash" do
-            skip_for_shallow_clone
+          it "returns the correct commit hash", if: !shallow_clone do
             expect(repo.latest_origin_commit).to be_nil
           end
         end
@@ -593,15 +564,13 @@ RSpec.describe DockerManager::GitRepo do
         end
 
         describe "#latest_origin_commit_date" do
-          it "returns the correct commit date" do
-            skip_for_shallow_clone
+          it "returns the correct commit date", if: !shallow_clone do
             expect(repo.latest_origin_commit_date).to be_nil
           end
         end
 
         describe "#latest_local_tag_version" do
-          it "returns the correct version" do
-            skip_for_shallow_clone
+          it "returns the correct version", if: !shallow_clone do
             expect(repo.latest_local_tag_version).to eq("latest-release +1")
           end
         end
@@ -672,7 +641,7 @@ RSpec.describe DockerManager::GitRepo do
       let!(:clone_method) { GitHelpers::CLONE_SHALLOW }
       let(:fetch_commit_count) { 1 }
 
-      include_examples "common tests"
+      include_examples "common tests", true
     end
 
     context "with partial (treeless) clone" do
