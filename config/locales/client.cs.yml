@@ -8,12 +8,51 @@ cs:
   js:
     admin:
       docker:
+        all_up_to_date: "Vše aktuální"
+        checking: "Kontrola nové verze…"
+        commits:
+          one: "%{count} nový commit"
+          few: "%{count} nové commity"
+          many: "%{count} nových commitů"
+          other: "%{count} nových commitů"
+        everything_up_to_date: "Vše je aktuální"
+        forked_plugin: "Fork oficiálního pluginu"
         last_updated: "Poslední aktualizace:"
+        latest_version: "Poslední verze:"
+        main_branch_warning: "<b>VAROVÁNÍ:</b> Váš Discourse sleduje větev 'main', která může být nestabilní, <a href='%{url}'> doporučujeme sledovat větev 'tests-passed'.</a>"
+        navigation:
+          processes: Procesy
+          versions: Verze
+        new_version_available: "K dispozici je nová verze!"
+        official_plugin: "Oficiální plugin"
+        outdated_image_header: "Používáte starou verzi image Discourse"
+        outdated_image_info: "Aktualizace prostřednictvím webového uživatelského rozhraní jsou zakázány, dokud nespustíte nejnovější image. Za tímto účelem se přihlaste k serveru pomocí SSH a spusťte:"
+        outdated_image_link: "Více informací na naší stránce podpory"
         outdated_notice: "Vaše instalace Discourse je zastaralá."
+        perform_update: "Kliknutím sem aktualizujete."
+        repo_newest_version: "%{name} je aktuální."
+        repository: "Repozitář"
+        reset_update: "Resetovat aktualizaci"
+        reset_warning: "VAROVÁNÍ: Měli byste resetovat pouze aktualizace, které selhaly a neběží. Toto NEZRUŠÍ aktuálně běžící sestavení a mělo by být použito pouze jako poslední možnost."
+        start_updating: "Spustit aktualizaci"
         status: "Stav"
-        update_action: "Aktualizace"
+        up_to_date: "Aktuální"
+        update_action: "Aktualizovat"
+        update_all: "Aktualizovat vše"
+        update_error: "Omlouváme se, při aktualizaci Discourse došlo k chybě. Zkontrolujte prosím níže uvedené protokoly."
+        update_everything: "Aktualizovat vše"
+        update_repo: "Aktualizovat %{name}"
+        update_successful: "Aktualizace byla úspěšně dokončena!"
+        update_tab: "Aktualizace Discourse"
+        update_title: "Aktualizace"
         updating: "Aktualizace…"
         repo:
-          name: "Jméno"
+          name: "Název"
+          commit_hash: "Hash commitu"
           last_updated: "Naposledy aktualizováno"
+          latest_version: "Poslední verze"
           status: "Stav"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "Aktualizovat na poslední verzi"
