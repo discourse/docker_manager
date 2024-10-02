@@ -5,3 +5,5 @@
 # https://translate.discourse.org/
 
 cs:
+  docker_manager:
+    title: "Správce aktualizací Discourse"
