@@ -10,133 +10,125 @@ import CommitUrl from "../helpers/commit-url";
 import NewCommits from "../helpers/new-commits";
 
 export default class RepoStatus extends Component {
-  @service router;
-  @service upgradeStore;
+@service router;
+@service upgradeStore;
 
-  get upgradeDisabled() {
-    // Allow to see the currently running update
-    if (this.args.upgradingRepo) {
-      return false;
-    }
+get upgradeDisabled() {
+// Allow to see the currently running update
+if (this.args.upgradingRepo) {
+return false;
+}
 
-    // Disable other buttons when an update is running
-    if (this.upgradeStore.running) {
-      return true;
-    }
+// Disable other buttons when an update is running
+if (this.upgradeStore.running) {
+return true;
+}
 
-    // docker_manager has to be updated before other plugins
-    return (
-      !this.args.managerRepo.upToDate &&
-      this.args.managerRepo !== this.args.repo
-    );
-  }
+// docker_manager has to be updated before other plugins
+return (
+!this.args.managerRepo.upToDate &&
+this.args.managerRepo !== this.args.repo
+);
+}
 
-  get upgradeButtonLabel() {
-    if (this.args.repo.upgrading) {
-      return I18n.t("admin.docker.updating");
-    } else {
-      return I18n.t("admin.docker.update_action");
-    }
-  }
+get upgradeButtonLabel() {
+if (this.args.repo.upgrading) {
+return I18n.t("admin.docker.updating");
+} else {
+return I18n.t("admin.docker.update_action");
+}
+}
 
-  @action
-  upgrade() {
-    this.router.transitionTo("update.show", this.args.repo);
-  }
+@action
+upgrade() {
+this.router.transitionTo("update.show", this.args.repo);
+}
 
-  <template>
-    <tr class="d-admin-row__content repo {{if @repo.hasNewVersion 'has-update'}}">
-      <td class="d-admin-row__overview">
-        <div class="d-admin-row__overview-name">
-          {{@repo.nameTitleized}}
-        </div>
-        {{#if @repo.author}}
-          <div class="d-admin-row__overview-author">
-            {{@repo.author}}
-          </div>
+<template>
+  <tr class="d-admin-row__content repo {{if @repo.hasNewVersion 'has-update'}}">
+    <td class="d-admin-row__overview">
+      <div class="d-admin-row__overview-name">
+        {{@repo.nameTitleized}}
+      </div>
+      {{#if @repo.author}}
+      <div class="d-admin-row__overview-author">
+        {{@repo.author}}
+      </div>
+      {{/if}}
+      {{#if @repo.plugin}}
+      <div class="d-admin-row__overview-about">
+        {{@repo.plugin.about}}
+        {{#if @repo.linkUrl}}
+        <a href={{@repo.linkUrl}} rel="noopener noreferrer" target="_blank">
+          {{i18n "admin.plugins.learn_more"}}
+          {{icon "external-link-alt"}}
+        </a>
         {{/if}}
-        {{#if @repo.plugin}}
-          <div class="d-admin-row__overview-about">
-            {{@repo.plugin.about}}
-            {{#if @repo.linkUrl}}
-              <a
-                href={{@repo.linkUrl}}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                {{i18n "admin.plugins.learn_more"}}
-                {{icon "external-link-alt"}}
-              </a>
-            {{/if}}
-          </div>
-        {{/if}}
-        {{#if @repo.hasNewVersion}}
-          <div class="repo__new-version">
-            {{i18n "admin.docker.new_version_available"}}
-          </div>
-        {{/if}}
-      </td>
+      </div>
+      {{/if}}
+      {{#if @repo.hasNewVersion}}
+      <div class="repo__new-version">
+        {{i18n "admin.docker.new_version_available"}}
+      </div>
+      {{/if}}
+    </td>
 
-      <td class="d-admin-row__detail">
-        <div class="d-admin-row__mobile-label">
-          {{i18n "admin.docker.repo.commit_hash"}}
-        </div>
-        {{CommitUrl "current" @repo.version @repo.prettyVersion @repo.url}}
-      </td>
+    <td class="d-admin-row__detail">
+      <div class="d-admin-row__mobile-label">
+        {{i18n "admin.docker.repo.commit_hash"}}
+      </div>
+      {{CommitUrl "current" @repo.version @repo.prettyVersion @repo.url}}
+    </td>
 
-      <td class="d-admin-row__detail">
-        <div class="d-admin-row__mobile-label">
-          {{i18n "admin.docker.repo.last_updated"}}
-        </div>
-        {{FormatDate @repo.latest.date leaveAgo="true"}}
-      </td>
+    <td class="d-admin-row__detail">
+      <div class="d-admin-row__mobile-label">
+        {{i18n "admin.docker.repo.last_updated"}}
+      </div>
+      {{FormatDate @repo.latest.date leaveAgo="true"}}
+    </td>
 
-      <td class="d-admin-row__detail">
-        <div class="d-admin-row__mobile-label">
-          {{i18n "admin.docker.repo.latest_version"}}
+    <td class="d-admin-row__detail">
+      <div class="d-admin-row__mobile-label">
+        {{i18n "admin.docker.repo.latest_version"}}
+      </div>
+      <div class="repo__latest-version">
+        <div>
+          {{CommitUrl
+          "new"
+          @repo.latest.version
+          @repo.prettyLatestVersion
+          @repo.url
+          }}
         </div>
-        <div class="repo__latest-version">
-          <div>
-            {{CommitUrl
-              "new"
-              @repo.latest.version
-              @repo.prettyLatestVersion
-              @repo.url
-            }}
-          </div>
-          <div class="new-commits">
-            {{NewCommits
-              @repo.latest.commits_behind
-              @repo.version
-              @repo.latest.version
-              @repo.url
-            }}
-          </div>
+        <div class="new-commits">
+          {{NewCommits
+          @repo.latest.commits_behind
+          @repo.version
+          @repo.latest.version
+          @repo.url
+          }}
         </div>
-      </td>
+      </div>
+    </td>
 
-      <td class="d-admin-row__control">
-        {{#if @repo.checkingStatus}}
-          <div class="status-label --loading">
-            {{i18n "admin.docker.checking"}}
-          </div>
-        {{else if @repo.upToDate}}
-          <div role="status" class="status-label --success">
-            <div class="status-label-indicator">
-            </div>
-            <div class="status-label-text">
-              {{i18n "admin.docker.up_to_date"}}
-            </div>
-          </div>
-        {{else}}
-          <DButton
-            @action={{this.upgrade}}
-            @disabled={{this.upgradeDisabled}}
-            @translatedLabel={{this.upgradeButtonLabel}}
-            class="upgrade-button"
-          />
-        {{/if}}
-      </td>
-    </tr>
-  </template>
+    <td class="d-admin-row__control">
+      {{#if @repo.checkingStatus}}
+      <div class="status-label --loading">
+        {{i18n "admin.docker.checking"}}
+      </div>
+      {{else if @repo.upToDate}}
+      <div role="status" class="status-label --success">
+        <div class="status-label-indicator">
+        </div>
+        <div class="status-label-text">
+          {{i18n "admin.docker.up_to_date"}}
+        </div>
+      </div>
+      {{else}}
+      <DButton @action={{this.upgrade}} @disabled={{this.upgradeDisabled}} @translatedLabel={{this.upgradeButtonLabel}}
+        class="upgrade-button" />
+      {{/if}}
+    </td>
+  </tr>
+</template>
 }
