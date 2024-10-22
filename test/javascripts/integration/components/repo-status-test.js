@@ -63,10 +63,10 @@ module("Integration | Component | RepoStatus", function (hooks) {
       .hasText("v2.2.0.beta6 +101", "tag version is used when present");
 
     assert
-      .dom("li.new-commits a")
+      .dom("div.new-commits a")
       .hasText("3 new commits", "shows number of new commits");
     assert.strictEqual(
-      query("li.new-commits a").href.trim(),
+      query("div.new-commits a").href.trim(),
       "https://github.com/discourse/discourse/compare/8f65e4f...2b006c0",
       "links to GitHub diff page"
     );
@@ -98,7 +98,7 @@ module("Integration | Component | RepoStatus", function (hooks) {
     );
 
     assert.strictEqual(
-      query("div.repo__author").textContent.trim(),
+      query("div.d-admin-row__overview-author").textContent.trim(),
       "By Discourse",
       "shows plugin author"
     );
