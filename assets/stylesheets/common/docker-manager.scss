@@ -72,16 +72,14 @@
     margin-bottom: 1rem;
 
     &-inner {
-      --stripes: linear-gradient(
-        135deg,
-        var(--tertiary-400) 25%,
-        var(--tertiary-600) 25%,
-        var(--tertiary-600) 50%,
-        var(--tertiary-400) 50%,
-        var(--tertiary-400) 75%,
-        var(--tertiary-600) 75%,
-        var(--tertiary-600)
-      );
+      --stripes: linear-gradient(135deg,
+          var(--tertiary-400) 25%,
+          var(--tertiary-600) 25%,
+          var(--tertiary-600) 50%,
+          var(--tertiary-400) 50%,
+          var(--tertiary-400) 75%,
+          var(--tertiary-600) 75%,
+          var(--tertiary-600));
 
       background: var(--tertiary-600);
       background-image: var(--stripes);
