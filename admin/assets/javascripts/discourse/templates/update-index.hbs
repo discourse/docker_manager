@@ -36,13 +36,13 @@
   </p>
 {{else}}
 
-  <table class="table admin-repos" id="repos">
+  <table class="d-admin-table" id="repos">
     <thead>
-      <th style="width: 40%">{{i18n "admin.docker.repo.name"}}</th>
+      <th>{{i18n "admin.docker.repo.name"}}</th>
       <th>{{i18n "admin.docker.repo.commit_hash"}}</th>
       <th>{{i18n "admin.docker.repo.last_updated"}}</th>
       <th>{{i18n "admin.docker.repo.latest_version"}}</th>
-      <th align="center">{{i18n "admin.docker.repo.status"}}</th>
+      <th>{{i18n "admin.docker.repo.status"}}</th>
     </thead>
     <tbody>
       {{#each this.model as |repo|}}

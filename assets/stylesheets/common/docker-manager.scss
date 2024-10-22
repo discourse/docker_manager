@@ -33,48 +33,14 @@
     white-space: pre;
   }
 
-  .check-circle {
-    color: var(--success);
-  }
-
-  table#repos {
-    margin-top: 1rem;
-
-    td:first-child {
-      width: 3%;
-      padding-left: 8px;
-    }
-
-    th {
-      border-top: none;
-    }
-
-    button {
-      padding-left: 15%;
-      padding-right: 15%;
-    }
-  }
-
-  .new-version {
-    h4 {
-      font-size: 1rem;
-      font-weight: bold;
-      margin: 0 0 1rem 0;
-    }
-
-    ul {
-      list-style: none;
-      margin: 0 0 1rem 0;
-      padding: 0;
-    }
-
-    li.new-commits {
-      font-style: italic;
-    }
+  .repo__new-version {
+    font-size: var(--font-down-1);
+    font-weight: bold;
+    margin: var(--space-1) 0 var(--space-1) 0;
   }
 
   .commit-hash {
-    color: #959595;
+    color: var(--primary);
   }
 
   .upgrade-actions {
@@ -144,46 +110,71 @@
     }
   }
 
-  .repo__name {
-    font-weight: bold;
-  }
-
-  .repo__author {
-    font-size: var(--font-down-2);
-    padding: 0 0 0.25em 0;
-  }
-
-  .repo__new-version {
-    font-size: var(--font-down-1);
-    font-weight: bold;
-    padding: 0.25em 0 0 0;
-  }
-
-  .repo__about {
-    padding: 0.25em 0 0.25em 0;
-  }
-
-  ul.repo__latest-version {
-    list-style: none;
-    margin: 0;
+  .d-admin-table {
+    margin-bottom: var(--space-6);
   }
 
   tr.repo {
-    td {
-      padding: 1em 0;
-    }
+    td:first-child {
+      width: 45%;
 
-    &.new-version {
-      background-color: var(--tertiary-very-low);
-
-      td:first-child {
-        border-left: solid 3px var(--tertiary);
+      @include breakpoint("tablet") {
+        width: auto;
       }
     }
 
-    td.repo__status {
-      text-align: right;
-      padding-right: 0.5em;
+    td:last-child {
+      width: 12%; // set width to minimize layout shift
+
+      @include breakpoint("tablet") {
+        width: auto;
+      }
+    }
+
+    &.has-update {
+      background-color: var(--tertiary-very-low);
+      border-left: solid 3px var(--tertiary);
+    }
+
+    .repo__latest-version {
+      @include breakpoint("tablet") {
+        text-align: right;
+      }
+    }
+  }
+
+  .status-label {
+    --d-border-radius: 0.75rem;
+    --success-low: #f5fff5;
+
+    display: flex;
+    flex-wrap: nowrap;
+    width: fit-content;
+
+    &.--loading {
+      color: var(--primary-medium);
+    }
+
+    &.--success {
+      background-color: var(--success-low);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--d-border-radius);
+
+      .status-label-indicator {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: var(--success);
+        flex-shrink: 0;
+        margin-right: var(--space-1);
+        margin-top: 0.4rem;
+      }
+
+      .status-label-text {
+        color: var(--success);
+        font-size: var(--font-down-1);
+      }
     }
   }
 
@@ -196,9 +187,5 @@
       line-height: 40px;
       margin-bottom: 0;
     }
-  }
-
-  .admin-repos th:last-child {
-    text-align: center;
   }
 }

@@ -45,18 +45,20 @@ export default class RepoStatus extends Component {
   }
 
   <template>
-    <tr class="repo {{if @repo.hasNewVersion 'new-version'}}">
-      <td>
-        <div class="repo__name">
+    <tr
+      class="d-admin-row__content repo {{if @repo.hasNewVersion 'has-update'}}"
+    >
+      <td class="d-admin-row__overview">
+        <div class="d-admin-row__overview-name">
           {{@repo.nameTitleized}}
         </div>
         {{#if @repo.author}}
-          <div class="repo__author">
+          <div class="d-admin-row__overview-author">
             {{@repo.author}}
           </div>
         {{/if}}
         {{#if @repo.plugin}}
-          <div class="repo__about">
+          <div class="d-admin-row__overview-about">
             {{@repo.plugin.about}}
             {{#if @repo.linkUrl}}
               <a
@@ -77,36 +79,57 @@ export default class RepoStatus extends Component {
         {{/if}}
       </td>
 
-      <td>
+      <td class="d-admin-row__detail">
+        <div class="d-admin-row__mobile-label">
+          {{i18n "admin.docker.repo.commit_hash"}}
+        </div>
         {{CommitUrl "current" @repo.version @repo.prettyVersion @repo.url}}
       </td>
 
-      <td>{{FormatDate @repo.latest.date leaveAgo="true"}}</td>
-      <td>
-        <ul class="repo__latest-version">
-          <li>
+      <td class="d-admin-row__detail">
+        <div class="d-admin-row__mobile-label">
+          {{i18n "admin.docker.repo.last_updated"}}
+        </div>
+        {{FormatDate @repo.latest.date leaveAgo="true"}}
+      </td>
+
+      <td class="d-admin-row__detail">
+        <div class="d-admin-row__mobile-label">
+          {{i18n "admin.docker.repo.latest_version"}}
+        </div>
+        <div class="repo__latest-version">
+          <div>
             {{CommitUrl
               "new"
               @repo.latest.version
               @repo.prettyLatestVersion
               @repo.url
             }}
-          </li>
-          <li class="new-commits">
+          </div>
+          <div class="new-commits">
             {{NewCommits
               @repo.latest.commits_behind
               @repo.version
               @repo.latest.version
               @repo.url
             }}
-          </li>
-        </ul>
+          </div>
+        </div>
       </td>
-      <td class="repo__status">
+
+      <td class="d-admin-row__control">
         {{#if @repo.checkingStatus}}
-          {{i18n "admin.docker.checking"}}
+          <div class="status-label --loading">
+            {{i18n "admin.docker.checking"}}
+          </div>
         {{else if @repo.upToDate}}
-          {{i18n "admin.docker.up_to_date"}}
+          <div role="status" class="status-label --success">
+            <div class="status-label-indicator">
+            </div>
+            <div class="status-label-text">
+              {{i18n "admin.docker.up_to_date"}}
+            </div>
+          </div>
         {{else}}
           <DButton
             @action={{this.upgrade}}
