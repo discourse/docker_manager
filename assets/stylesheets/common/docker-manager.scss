@@ -72,14 +72,16 @@
     margin-bottom: 1rem;
 
     &-inner {
-      --stripes: linear-gradient(135deg,
-          var(--tertiary-400) 25%,
-          var(--tertiary-600) 25%,
-          var(--tertiary-600) 50%,
-          var(--tertiary-400) 50%,
-          var(--tertiary-400) 75%,
-          var(--tertiary-600) 75%,
-          var(--tertiary-600));
+      --stripes: linear-gradient(
+        135deg,
+        var(--tertiary-400) 25%,
+        var(--tertiary-600) 25%,
+        var(--tertiary-600) 50%,
+        var(--tertiary-400) 50%,
+        var(--tertiary-400) 75%,
+        var(--tertiary-600) 75%,
+        var(--tertiary-600)
+      );
 
       background: var(--tertiary-600);
       background-image: var(--stripes);
@@ -143,7 +145,7 @@
 
   .status-label {
     --d-border-radius: 0.75rem;
-    --success-low: #F5FFF5;
+    --success-low: #f5fff5;
 
     display: flex;
     flex-wrap: nowrap;
@@ -166,7 +168,7 @@
         background-color: var(--success);
         flex-shrink: 0;
         margin-right: var(--space-1);
-        margin-top: .4rem;
+        margin-top: 0.4rem;
       }
 
       .status-label-text {
