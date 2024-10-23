@@ -9,7 +9,7 @@ module DockerManager::FallbackCompatibilityParser
 
     begin
       version_list = YAML.safe_load(version_list)
-    rescue Psych::SyntaxError, Psych::DisallowedClass => e
+    rescue Psych::SyntaxError, Psych::DisallowedClass
     end
 
     raise Discourse::InvalidVersionListError unless version_list.is_a?(Hash)
@@ -18,7 +18,7 @@ module DockerManager::FallbackCompatibilityParser
       version_list
         .transform_keys do |v|
           Gem::Requirement.parse(v)
-        rescue Gem::Requirement::BadRequirementError => e
+        rescue Gem::Requirement::BadRequirementError
           raise Discourse::InvalidVersionListError, "Invalid version specifier: #{v}"
         end
         .sort_by do |parsed_requirement, _|
@@ -61,12 +61,12 @@ module DockerManager::FallbackCompatibilityParser
   # Find a compatible resource from a git repo
   def self.find_compatible_git_resource(path)
     return unless File.directory?("#{path}/.git")
-    compat_resource, std_error, s =
+    compat_resource, _, s =
       Open3.capture3(
         "git -C '#{path}' show HEAD@{upstream}:#{Discourse::VERSION_COMPATIBILITY_FILENAME}",
       )
     self.find_compatible_resource(compat_resource) if s.success?
-  rescue Discourse::InvalidVersionListError => e
+  rescue Discourse::InvalidVersionListError
     $stderr.puts "Invalid version list in #{path}"
   end
 end

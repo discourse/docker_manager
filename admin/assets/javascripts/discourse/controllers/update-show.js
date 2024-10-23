@@ -1,12 +1,11 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import { makeArray } from "discourse-common/lib/helpers";
-import I18n from "I18n";
+import I18n from "discourse-i18n";
 import Repo from "../models/repo";
 
 export default class UpgradeShow extends Controller {
-  @service messageBus;
   @service dialog;
   @service upgradeStore;
 

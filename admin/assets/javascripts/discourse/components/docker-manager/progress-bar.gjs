@@ -1,5 +1,6 @@
 import Component from "@glimmer/component";
 import { htmlSafe } from "@ember/template";
+import concatClass from "discourse/helpers/concat-class";
 
 export default class ProgressBar extends Component {
   get active() {
@@ -15,4 +16,10 @@ export default class ProgressBar extends Component {
 
     return htmlSafe(`width: ${percent}%`);
   }
+
+  <template>
+    <div class={{concatClass "progress-bar" (if this.active "active")}}>
+      <div class="progress-bar-inner" style={{this.barStyle}}></div>
+    </div>
+  </template>
 }

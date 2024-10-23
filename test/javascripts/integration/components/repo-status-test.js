@@ -1,9 +1,8 @@
-import { getOwner } from "@ember/application";
+import { getOwner } from "@ember/owner";
 import { render, settled } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import hbs from "htmlbars-inline-precompile";
 import { module, test } from "qunit";
-import { query } from "discourse/tests/helpers/qunit-helpers";
 
 const repoProps = {
   unloaded: false,
@@ -46,7 +45,7 @@ const managerProps = {
 module("Integration | Component | RepoStatus", function (hooks) {
   setupRenderingTest(hooks);
 
-  test("it renders correctly", async function (assert) {
+  test("renders correctly", async function (assert) {
     const store = getOwner(this).lookup("service:store");
     this.set("repo", store.createRecord("repo", repoProps));
     this.set("managerRepo", store.createRecord("repo", managerProps));
@@ -65,26 +64,24 @@ module("Integration | Component | RepoStatus", function (hooks) {
     assert
       .dom("div.new-commits a")
       .hasText("3 new commits", "shows number of new commits");
-    assert.strictEqual(
-      query("div.new-commits a").href.trim(),
-      "https://github.com/discourse/discourse/compare/8f65e4f...2b006c0",
-      "links to GitHub diff page"
-    );
+    assert
+      .dom("div.new-commits a")
+      .hasAttribute(
+        "href",
+        "https://github.com/discourse/discourse/compare/8f65e4f...2b006c0",
+        "links to GitHub diff page"
+      );
 
     this.repo.pretty_version = null;
     this.repo.latest.pretty_version = null;
     await settled();
 
-    assert.strictEqual(
-      query("a.current.commit-hash").textContent.trim(),
-      "8f65e4f",
-      "commit hash is used when tag version is absent"
-    );
-    assert.strictEqual(
-      query("a.new.commit-hash").textContent.trim(),
-      "2b006c0",
-      "commit hash is used when tag version is absent"
-    );
+    assert
+      .dom("a.current.commit-hash")
+      .hasText("8f65e4f", "commit hash is used when tag version is absent");
+    assert
+      .dom("a.new.commit-hash")
+      .hasText("2b006c0", "commit hash is used when tag version is absent");
   });
 
   test("official plugin", async function (assert) {
@@ -97,11 +94,9 @@ module("Integration | Component | RepoStatus", function (hooks) {
       hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
     );
 
-    assert.strictEqual(
-      query("div.d-admin-row__overview-author").textContent.trim(),
-      "By Discourse",
-      "shows plugin author"
-    );
+    assert
+      .dom("div.d-admin-row__overview-author")
+      .hasText("By Discourse", "shows plugin author");
   });
 
   test("update button", async function (assert) {
