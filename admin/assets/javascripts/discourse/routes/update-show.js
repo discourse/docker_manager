@@ -1,5 +1,5 @@
 import Route from "@ember/routing/route";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import Repo from "../models/repo";
 
 export default class UpgradeShow extends Route {

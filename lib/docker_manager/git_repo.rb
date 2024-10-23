@@ -178,7 +178,7 @@ class DockerManager::GitRepo
 
   def run(cmd)
     @memoize[cmd] ||= begin
-      stdout, stderr, status = Open3.capture3("git #{cmd}", chdir: path)
+      stdout, _, status = Open3.capture3("git #{cmd}", chdir: path)
       status == 0 ? stdout.strip : nil
     end
   rescue => e

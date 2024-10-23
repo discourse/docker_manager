@@ -1,13 +1,12 @@
 import Component from "@glimmer/component";
 import { action } from "@ember/object";
-import { inject as service } from "@ember/service";
+import { service } from "@ember/service";
 import DButton from "discourse/components/d-button";
-import FormatDate from "discourse/helpers/format-date";
+import formatDate from "discourse/helpers/format-date";
 import icon from "discourse-common/helpers/d-icon";
 import i18n from "discourse-common/helpers/i18n";
-import I18n from "I18n";
-import CommitUrl from "../helpers/commit-url";
-import NewCommits from "../helpers/new-commits";
+import commitUrl from "../helpers/commit-url";
+import newCommits from "../helpers/new-commits";
 
 export default class RepoStatus extends Component {
   @service router;
@@ -33,9 +32,9 @@ export default class RepoStatus extends Component {
 
   get upgradeButtonLabel() {
     if (this.args.repo.upgrading) {
-      return I18n.t("admin.docker.updating");
+      return i18n("admin.docker.updating");
     } else {
-      return I18n.t("admin.docker.update_action");
+      return i18n("admin.docker.update_action");
     }
   }
 
@@ -52,14 +51,17 @@ export default class RepoStatus extends Component {
         <div class="d-admin-row__overview-name">
           {{@repo.nameTitleized}}
         </div>
+
         {{#if @repo.author}}
           <div class="d-admin-row__overview-author">
             {{@repo.author}}
           </div>
         {{/if}}
+
         {{#if @repo.plugin}}
           <div class="d-admin-row__overview-about">
             {{@repo.plugin.about}}
+
             {{#if @repo.linkUrl}}
               <a
                 href={{@repo.linkUrl}}
@@ -72,6 +74,7 @@ export default class RepoStatus extends Component {
             {{/if}}
           </div>
         {{/if}}
+
         {{#if @repo.hasNewVersion}}
           <div class="repo__new-version">
             {{i18n "admin.docker.new_version_available"}}
@@ -83,14 +86,14 @@ export default class RepoStatus extends Component {
         <div class="d-admin-row__mobile-label">
           {{i18n "admin.docker.repo.commit_hash"}}
         </div>
-        {{CommitUrl "current" @repo.version @repo.prettyVersion @repo.url}}
+        {{commitUrl "current" @repo.version @repo.prettyVersion @repo.url}}
       </td>
 
       <td class="d-admin-row__detail">
         <div class="d-admin-row__mobile-label">
           {{i18n "admin.docker.repo.last_updated"}}
         </div>
-        {{FormatDate @repo.latest.date leaveAgo="true"}}
+        {{formatDate @repo.latest.date leaveAgo="true"}}
       </td>
 
       <td class="d-admin-row__detail">
@@ -99,7 +102,7 @@ export default class RepoStatus extends Component {
         </div>
         <div class="repo__latest-version">
           <div>
-            {{CommitUrl
+            {{commitUrl
               "new"
               @repo.latest.version
               @repo.prettyLatestVersion
@@ -107,7 +110,7 @@ export default class RepoStatus extends Component {
             }}
           </div>
           <div class="new-commits">
-            {{NewCommits
+            {{newCommits
               @repo.latest.commits_behind
               @repo.version
               @repo.latest.version

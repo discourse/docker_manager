@@ -1,10 +1,7 @@
-import { helper as buildHelper } from "@ember/component/helper";
 import { htmlSafe } from "@ember/template";
-import I18n from "I18n";
+import I18n from "discourse-i18n";
 
-export default buildHelper(function (params) {
-  const [commitsBehind, oldSha, newSha, url] = params;
-
+export default function newCommits(commitsBehind, oldSha, newSha, url) {
   if (!commitsBehind) {
     return "";
   }
@@ -13,7 +10,7 @@ export default buildHelper(function (params) {
     return "";
   }
 
-  let description = I18n.t("admin.docker.commits", {
+  const description = I18n.t("admin.docker.commits", {
     count: commitsBehind,
   });
 
@@ -22,7 +19,7 @@ export default buildHelper(function (params) {
   }
 
   const _url = url.substr(0, url.search(/(\.git)?$/));
-  description = `<a href='${_url}/compare/${oldSha}...${newSha}'>${description}</a>`;
-
-  return new htmlSafe(description);
-});
+  return htmlSafe(
+    `<a href='${_url}/compare/${oldSha}...${newSha}'>${description}</a>`
+  );
+}

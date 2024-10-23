@@ -8,7 +8,7 @@ RSpec.describe "Admin update", type: :system do
 
   before { sign_in(admin) }
 
-  xit "displays the admin update page with the right respositories" do
+  xit "displays the admin update page with the right repositories" do
     visit("/admin/update")
 
     expect(page).to have_css("h3", exact_text: I18n.t("js.admin.docker.update_title"))

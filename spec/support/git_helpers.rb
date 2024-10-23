@@ -195,7 +195,7 @@ module GitHelpers
     def git(*commands)
       Dir.chdir(@path) do
         commands.map do |command|
-          stdout, stderr, status = Open3.capture3("git #{command}".strip)
+          stdout, _, status = Open3.capture3("git #{command}".strip)
           status.success? ? stdout : (raise RuntimeError)
         end
       end

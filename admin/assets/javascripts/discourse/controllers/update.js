@@ -4,8 +4,8 @@ import { action } from "@ember/object";
 import { TrackedArray } from "@ember-compat/tracked-built-ins";
 
 export default class Upgrade extends Controller {
-  @tracked banner = new TrackedArray([]);
   @tracked bannerDismissed = false;
+  banner = new TrackedArray();
 
   get showBanner() {
     if (this.bannerDismissed) {
