@@ -120,7 +120,7 @@ export default class RepoStatus extends Component {
         </div>
       </td>
 
-      <td class="d-admin-row__control">
+      <td class="d-admin-row__controls">
         {{#if @repo.checkingStatus}}
           <div class="status-label --loading">
             {{i18n "admin.docker.checking"}}
