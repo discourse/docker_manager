@@ -3,6 +3,7 @@
 class DockerManager::Upgrader
   def initialize(user_id, repos, from_version)
     @user_id = user_id
+    @user = User.find(user_id)
     @repos = repos.is_a?(Array) ? repos : [repos]
     @from_version = from_version
   end
@@ -258,7 +259,8 @@ class DockerManager::Upgrader
   end
 
   def log_version_upgrade
-    StaffActionLogger.new(User.find(@user_id)).log_custom(
+    # Using cached user object to minimize database access after running migrations
+    StaffActionLogger.new(@user).log_custom(
       "discourse_update",
       from_version: @from_version,
       repository: @repos.map(&:path).join(", "),
