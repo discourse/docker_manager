@@ -224,7 +224,7 @@ export default class Repo {
         dataType: "text",
         type: "POST",
       });
-    } catch (e) {
+    } catch {
       this.upgrading = false;
     }
   }
