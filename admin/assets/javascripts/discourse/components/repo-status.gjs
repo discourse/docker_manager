@@ -69,7 +69,7 @@ export default class RepoStatus extends Component {
                 target="_blank"
               >
                 {{i18n "admin.plugins.learn_more"}}
-                {{icon "external-link-alt"}}
+                {{icon "up-right-from-square"}}
               </a>
             {{/if}}
           </div>
