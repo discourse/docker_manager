@@ -114,8 +114,8 @@
     margin-bottom: var(--space-6);
   }
 
-  tr.repo {
-    td:first-child {
+  .d-admin-row__content.repo {
+    .d-admin-row__overview {
       width: 45%;
 
       @include breakpoint("tablet") {
@@ -123,8 +123,9 @@
       }
     }
 
-    td:last-child {
+    .d-admin-row__controls {
       width: 12%; // set width to minimize layout shift
+      text-align: left;
 
       @include breakpoint("tablet") {
         width: auto;
@@ -144,36 +145,20 @@
   }
 
   .status-label {
-    --d-border-radius: 0.75rem;
-    --success-low: #f5fff5;
-
-    display: flex;
-    flex-wrap: nowrap;
-    width: fit-content;
-
     &.--loading {
+      background-color: transparent;
       color: var(--primary-medium);
     }
 
     &.--success {
       background-color: var(--success-low);
-      padding: 0.8rem var(--space-2);
-      border-radius: var(--d-border-radius);
 
       .status-label-indicator {
-        display: inline-block;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
         background-color: var(--success);
-        flex-shrink: 0;
-        margin-right: var(--space-1);
-        margin-top: 0.4rem;
       }
 
       .status-label-text {
-        color: var(--success);
-        font-size: var(--font-down-1);
+        color: var(--primary-very-high);
       }
     }
   }
