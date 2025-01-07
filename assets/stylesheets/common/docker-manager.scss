@@ -149,18 +149,6 @@
       background-color: transparent;
       color: var(--primary-medium);
     }
-
-    &.--success {
-      background-color: var(--success-low);
-
-      .status-label-indicator {
-        background-color: var(--success);
-      }
-
-      .status-label-text {
-        color: var(--primary-very-high);
-      }
-    }
   }
 
   .updates-heading {
