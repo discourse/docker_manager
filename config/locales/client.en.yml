@@ -37,6 +37,7 @@ en:
         update_successful: "Update completed successfully!"
         update_tab: "Update Discourse"
         update_title: "Updates"
+        update_description: "Update Discourse and view running processes."
         updating: "Updating…"
         repo:
           name: "Name"

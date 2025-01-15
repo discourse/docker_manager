@@ -1,22 +1,25 @@
-<div class="admin-controls">
-  <nav>
-    <ul class="nav nav-pills">
-      <li>
-        <LinkTo @route="update.index">
-          {{i18n "admin.docker.navigation.versions"}}
-        </LinkTo>
-      </li>
+<DPageHeader
+  @titleLabel={{i18n "admin.docker.update_title"}}
+  @descriptionLabel={{i18n "admin.docker.update_description"}}
+  @shouldDisplay={{true}}
+>
+  <:breadcrumbs>
+    <DBreadcrumbsItem @path="/admin" @label={{i18n "admin_title"}} />
+    <DBreadcrumbsItem
+      @path="/admin/update"
+      @label={{i18n "admin.docker.update_title"}}
+    />
+  </:breadcrumbs>
+  <:tabs>
+    <NavItem @route="update.index" @label="admin.docker.navigation.versions" />
+    <NavItem
+      @route="update.processes"
+      @label="admin.docker.navigation.processes"
+    />
+  </:tabs>
+</DPageHeader>
 
-      <li>
-        <LinkTo @route="update.processes">
-          {{i18n "admin.docker.navigation.processes"}}
-        </LinkTo>
-      </li>
-    </ul>
-  </nav>
-</div>
-
-<div class="docker-manager">
+<div class="docker-manager admin-container">
   {{#if this.showBanner}}
     <div id="banner">
       <div id="banner-content">
