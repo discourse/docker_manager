@@ -80,7 +80,7 @@ acceptance("docker_manager", function (needs) {
 
     await click(".upgrade-button");
 
-    assert.dom("h1").hasText("Updates");
+    assert.dom("h2").hasText("Update discourse");
     assert.dom("button.start-upgrade").exists();
   });
 });
