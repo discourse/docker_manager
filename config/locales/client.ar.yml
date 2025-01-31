@@ -47,6 +47,7 @@ ar:
         update_successful: "اكتمل التحديث بنجاح!"
         update_tab: "تحديث Discourse"
         update_title: "التحديثات"
+        update_description: "قم بتحديث Discourse وعرض العمليات الجارية."
         updating: "جارٍ التحديث…"
         repo:
           name: "الاسم"

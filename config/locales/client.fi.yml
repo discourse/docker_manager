@@ -43,6 +43,7 @@ fi:
         update_successful: "Päivitys onnistui!"
         update_tab: "Päivitä Discourse"
         update_title: "Päivitykset"
+        update_description: "Päivitä Discourse ja tarkastele käynnissä olevia prosesseja."
         updating: "Päivitetään…"
         repo:
           name: "Nimi"

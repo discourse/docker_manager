@@ -5,3 +5,5 @@
 # https://translate.discourse.org/
 
 hu:
+  docker_manager:
+    title: "Discourse frissítés menedzser"

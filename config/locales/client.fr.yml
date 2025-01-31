@@ -43,6 +43,7 @@ fr:
         update_successful: "Mise à jour terminée avec succès !"
         update_tab: "Mettre à jour Discourse"
         update_title: "Mises à jour"
+        update_description: "Mettez à jour Discourse et visualisez les processus en cours."
         updating: "Mise à jour…"
         repo:
           name: "Nom"

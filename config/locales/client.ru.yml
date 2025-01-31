@@ -45,6 +45,7 @@ ru:
         update_successful: "Обновление выполнено!"
         update_tab: "Обновить Discourse"
         update_title: "Обновления"
+        update_description: "Обновите Discourse и просмотрите запущенные процессы."
         updating: "Обновление…"
         repo:
           name: "Название"

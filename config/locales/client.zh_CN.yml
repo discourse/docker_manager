@@ -42,6 +42,7 @@ zh_CN:
         update_successful: "更新成功完成！"
         update_tab: "更新 Discourse"
         update_title: "更新"
+        update_description: "更新 Discourse 并查看正在运行的进程。"
         updating: "正在更新…"
         repo:
           name: "名称"

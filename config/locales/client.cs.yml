@@ -45,6 +45,7 @@ cs:
         update_successful: "Aktualizace byla úspěšně dokončena!"
         update_tab: "Aktualizace Discourse"
         update_title: "Aktualizace"
+        update_description: "Aktualizujte Discourse a zobrazte spuštěné procesy."
         updating: "Aktualizace…"
         repo:
           name: "Název"

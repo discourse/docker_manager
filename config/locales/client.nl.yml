@@ -43,6 +43,7 @@ nl:
         update_successful: "Bijwerken voltooid!"
         update_tab: "Discourse bijwerken"
         update_title: "Updates"
+        update_description: "Werk Discourse bij en bekijk lopende processen."
         updating: "Bijwerken…"
         repo:
           name: "Naam"

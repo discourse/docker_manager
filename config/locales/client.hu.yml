@@ -8,12 +8,50 @@ hu:
   js:
     admin:
       docker:
+        all_up_to_date: "Minden naprakész"
+        checking: "Új verzió keresése…"
+        commits:
+          one: "%{count} új commit"
+          other: "%{count} új commit"
+        everything_up_to_date: "Minden naprakész"
+        forked_plugin: "Forkolt hivatalos plugin"
         last_updated: "Legutóbb frissítve:"
+        latest_version: "Legújabb verzió:"
+        main_branch_warning: "<b>FIGYELMEZTETÉS</b>: A Discourse a 'main' ágat követi, ami instabil lehet, <a href='%{url}'> ezért javasoljuk a 'tests-passed' ág követését</a>."
+        navigation:
+          processes: Folyamatok
+          versions: Verziók
+        new_version_available: "Új verzió elérhető!"
+        official_plugin: "Hivatalos bővítmény"
+        outdated_image_header: "Ön a Discourse képfájl régi verzióját használja"
+        outdated_image_info: "A webes felhasználói felületen keresztüli frissítések le vannak tiltva, amíg le nem futtatja a legújabb képfájlt. Ehhez jelentkezzen be a szerverére SSH használatával, és futtassa:"
+        outdated_image_link: "További információ támogatási oldalunkon"
         outdated_notice: "Az installált Discourse elavult."
+        perform_update: "Kattintson ide a frissítéshez."
+        repo_newest_version: "%{name} a legújabb verzió."
+        repository: "Tároló"
+        reset_update: "Frissítés visszaállítása"
+        reset_warning: "FIGYELMEZTETÉS: Csak azokat a frissítéseket állítsa vissza, amelyek meghiúsultak és nem futnak. Ez NEM törli a jelenleg futó buildeket, és csak végső megoldásként használható."
+        start_updating: "Frissítés megkezdése"
         status: "Állapot"
+        up_to_date: "Naprakész"
         update_action: "Frissítés"
+        update_all: "Összes frissítése"
+        update_error: "Elnézést, hiba történt a Discourse frissítésében. Kérjük, ellenőrizze az alábbi naplófájlokat."
+        update_everything: "Frissítsen mindent"
+        update_repo: "%{name} frissítése"
+        update_successful: "A frissítés sikeresen befejeződött!"
+        update_tab: "Discourse frissítése"
+        update_title: "Frissítések"
+        update_description: "A Discourse frissítése és a futó folyamatok megtekintése."
         updating: "Frissítés"
         repo:
           name: "Név"
+          commit_hash: "Commit Hash"
           last_updated: "Legutóbb frissítve"
+          latest_version: "Legújabb verzió"
           status: "Állapot"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "Frissítés a legújabb verzióra"
