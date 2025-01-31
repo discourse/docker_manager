@@ -43,6 +43,7 @@ de:
         update_successful: "Softwareaktualisierung erfolgreich abgeschlossen!"
         update_tab: "Discourse aktualisieren"
         update_title: "Updates"
+        update_description: "Discourse aktualisieren und laufende Prozesse anzeigen."
         updating: "Wird aktualisiert …"
         repo:
           name: "Name"

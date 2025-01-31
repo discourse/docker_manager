@@ -43,6 +43,7 @@ tr_TR:
         update_successful: "Güncelleme başarıyla tamamlandı!"
         update_tab: "Discourse'u güncelle"
         update_title: "Güncellemeler"
+        update_description: "Discourse'u güncelleyin ve çalışan işlemleri görüntüleyin."
         updating: "Güncelleniyor…"
         repo:
           name: "Ad"

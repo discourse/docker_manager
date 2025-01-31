@@ -42,6 +42,7 @@ ja:
         update_successful: "更新は正常に完了しました！"
         update_tab: "Discourse の更新"
         update_title: "更新"
+        update_description: "Discourse を更新し、実行中の処理を表示します。"
         updating: "更新中…"
         repo:
           name: "名前"
