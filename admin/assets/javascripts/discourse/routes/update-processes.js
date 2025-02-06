@@ -1,7 +1,7 @@
 import Route from "@ember/routing/route";
 import { cancel } from "@ember/runloop";
-import discourseLater from "discourse-common/lib/later";
-import { bind } from "discourse-common/utils/decorators";
+import { bind } from "discourse/lib/decorators";
+import discourseLater from "discourse/lib/later";
 import ProcessList from "../models/process-list";
 
 const REFRESH_INTERVAL = 5000;
