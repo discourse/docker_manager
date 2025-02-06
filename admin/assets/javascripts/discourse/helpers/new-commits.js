@@ -1,5 +1,5 @@
 import { htmlSafe } from "@ember/template";
-import I18n from "discourse-i18n";
+import { i18n } from "discourse-i18n";
 
 export default function newCommits(commitsBehind, oldSha, newSha, url) {
   if (!commitsBehind) {
@@ -10,7 +10,7 @@ export default function newCommits(commitsBehind, oldSha, newSha, url) {
     return "";
   }
 
-  const description = I18n.t("admin.docker.commits", {
+  const description = i18n("admin.docker.commits", {
     count: commitsBehind,
   });
 

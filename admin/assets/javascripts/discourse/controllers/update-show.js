@@ -1,8 +1,8 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { service } from "@ember/service";
-import { makeArray } from "discourse-common/lib/helpers";
-import I18n from "discourse-i18n";
+import { makeArray } from "discourse/lib/helpers";
+import { i18n } from "discourse-i18n";
 import Repo from "../models/repo";
 
 export default class UpgradeShow extends Controller {
@@ -23,9 +23,9 @@ export default class UpgradeShow extends Controller {
 
   get title() {
     if (this.multiUpgrade) {
-      return I18n.t("admin.docker.update_everything");
+      return i18n("admin.docker.update_everything");
     } else {
-      return I18n.t("admin.docker.update_repo", { name: this.model.name });
+      return i18n("admin.docker.update_repo", { name: this.model.name });
     }
   }
 
@@ -61,7 +61,7 @@ export default class UpgradeShow extends Controller {
   @action
   resetUpgrade() {
     this.dialog.confirm({
-      message: I18n.t("admin.docker.reset_warning"),
+      message: i18n("admin.docker.reset_warning"),
       didConfirm: async () => {
         if (this.multiUpgrade) {
           try {

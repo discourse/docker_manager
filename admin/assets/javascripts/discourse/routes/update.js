@@ -1,7 +1,7 @@
 import Route from "@ember/routing/route";
 import { service } from "@ember/service";
-import { bind } from "discourse-common/utils/decorators";
-import I18n from "discourse-i18n";
+import { bind } from "discourse/lib/decorators";
+import { i18n } from "discourse-i18n";
 import Repo from "../models/repo";
 
 export default class Upgrade extends Route {
@@ -26,7 +26,7 @@ export default class Upgrade extends Route {
     if (discourse?.branch === "origin/main") {
       // Special case: If the branch is "main" warn user
       controller.appendBannerHtml(
-        I18n.t("admin.docker.main_branch_warning", {
+        i18n("admin.docker.main_branch_warning", {
           url: "https://meta.discourse.org/t/17014",
         })
       );
