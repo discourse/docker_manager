@@ -8,6 +8,7 @@ pl_PL:
   js:
     admin:
       docker:
+        all_up_to_date: "Wszystko aktualne"
         checking: "Sprawdzanie nowej wersji…"
         commits:
           one: "%{count} nowy commit"
@@ -15,22 +16,44 @@ pl_PL:
           many: "%{count} nowych commitów"
           other: "%{count} nowych commitów"
         everything_up_to_date: "Wszystko jest aktualne"
+        forked_plugin: "Forkowana oficjalna wtyczka"
         last_updated: "Ostatnio zaktualizowane:"
+        latest_version: "Najnowsza wersja:"
         main_branch_warning: "<b>UWAGA:</b> Twój Discourse śledzi gałąź 'main', która może być niestabilna, <a href='%{url}'>zalecamy śledzenie gałęzi 'tests-passed'</a>."
         navigation:
           processes: Procesy
           versions: Wersje
+        new_version_available: "Nowa wersja dostępna!"
+        official_plugin: "Oficjalna wtyczka"
         outdated_image_header: "Używasz starej wersji obrazu Discourse'a"
+        outdated_image_info: "Aktualizacje za pośrednictwem interfejsu użytkownika są wyłączone do czasu uruchomienia najnowszego obrazu. Aby to zrobić, zaloguj się na swój serwer za pomocą SSH i uruchom:"
         outdated_image_link: "Więcej informacji na naszej stronie wsparcia"
         outdated_notice: "Twoja instancja Discourse wymaga aktualizacji. "
+        perform_update: "Kliknij tutaj, aby zaktualizować."
         repo_newest_version: "%{name} jest w najnowszej wersji."
         repository: "Repozytorium"
+        reset_update: "Resetuj aktualizację"
+        reset_warning: "OSTRZEŻENIE: Powinieneś resetować tylko te aktualizacje, które się nie powiodły i nie są uruchomione. NIE spowoduje to anulowania aktualnie uruchomionych kompilacji i powinno być używane tylko w ostateczności."
+        start_updating: "Rozpocznij aktualizację"
         status: "Status"
         up_to_date: "Aktualny"
         update_action: "Aktualizuj"
+        update_all: "Aktualizuj wszystko"
+        update_error: "Przepraszamy, wystąpił błąd podczas aktualizacji Discourse. Sprawdź dzienniki poniżej."
+        update_everything: "Zaktualizuj wszystko"
+        update_repo: "Zaktualizuj %{name}"
+        update_successful: "Aktualizacja zakończona pomyślnie!"
+        update_tab: "Aktualizacja Discourse"
+        update_title: "Aktualizacje"
+        update_description: "Zaktualizuj Discourse i wyświetl uruchomione procesy."
         updating: "Aktualizowanie…"
         repo:
           name: "Nazwa"
+          commit_hash: "Hash commitu"
           last_updated: "Ostatnio zaktualizowany"
           latest_version: "Najnowsza wersja"
           status: "Status"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "Zaktualizuj do najnowszej wersji"
