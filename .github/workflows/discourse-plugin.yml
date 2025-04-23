@@ -9,3 +9,8 @@ on:
 jobs:
   ci:
     uses: discourse/.github/.github/workflows/discourse-plugin.yml@v1
+
+  ci-stable:
+    uses: discourse/.github/.github/workflows/discourse-plugin.yml@v1
+    with:
+      core_ref: stable
