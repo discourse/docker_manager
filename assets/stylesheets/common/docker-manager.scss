@@ -1,3 +1,5 @@
+@use "lib/viewport";
+
 .dashboard-stats .upgrades-banner {
   background: var(--tertiary-low);
   flex: 1 1 100%;
@@ -117,7 +119,7 @@
     .d-admin-row__overview {
       width: 45%;
 
-      @include breakpoint("tablet") {
+      @include viewport.until(md) {
         width: auto;
       }
     }
@@ -126,7 +128,7 @@
       width: 12%; // set width to minimize layout shift
       text-align: left;
 
-      @include breakpoint("tablet") {
+      @include viewport.until(md) {
         width: auto;
       }
     }
@@ -137,7 +139,7 @@
     }
 
     .repo__latest-version {
-      @include breakpoint("tablet") {
+      @include viewport.until(md) {
         text-align: right;
       }
     }
