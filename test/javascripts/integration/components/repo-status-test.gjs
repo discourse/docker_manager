@@ -1,8 +1,8 @@
 import { getOwner } from "@ember/owner";
 import { render, settled } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
-import hbs from "htmlbars-inline-precompile";
 import { module, test } from "qunit";
+import RepoStatus from "discourse/plugins/docker_manager/discourse/components/repo-status";
 
 const repoProps = {
   unloaded: false,
@@ -46,12 +46,16 @@ module("Integration | Component | RepoStatus", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders correctly", async function (assert) {
+    const self = this;
+
     const store = getOwner(this).lookup("service:store");
     this.set("repo", store.createRecord("repo", repoProps));
     this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
-      hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
+      <template>
+        <RepoStatus @repo={{self.repo}} @managerRepo={{self.managerRepo}} />
+      </template>
     );
 
     assert
@@ -85,13 +89,17 @@ module("Integration | Component | RepoStatus", function (hooks) {
   });
 
   test("official plugin", async function (assert) {
+    const self = this;
+
     const store = getOwner(this).lookup("service:store");
     repoProps.plugin = { name: "discourse", isOfficial: true };
     this.set("repo", store.createRecord("repo", repoProps));
     this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
-      hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
+      <template>
+        <RepoStatus @repo={{self.repo}} @managerRepo={{self.managerRepo}} />
+      </template>
     );
 
     assert
@@ -100,12 +108,16 @@ module("Integration | Component | RepoStatus", function (hooks) {
   });
 
   test("update button", async function (assert) {
+    const self = this;
+
     const store = getOwner(this).lookup("service:store");
     this.set("repo", store.createRecord("repo", repoProps));
     this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
-      hbs`<RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />`
+      <template>
+        <RepoStatus @repo={{self.repo}} @managerRepo={{self.managerRepo}} />
+      </template>
     );
 
     assert
