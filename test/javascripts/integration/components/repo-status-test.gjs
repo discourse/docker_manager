@@ -2,7 +2,7 @@ import { getOwner } from "@ember/owner";
 import { render, settled } from "@ember/test-helpers";
 import { setupRenderingTest } from "ember-qunit";
 import { module, test } from "qunit";
-import RepoStatus from "discourse/plugins/docker_manager/admin/components/repo-status";
+import RepoStatus from "discourse/plugins/docker_manager/discourse/components/repo-status";
 
 const repoProps = {
   unloaded: false,
