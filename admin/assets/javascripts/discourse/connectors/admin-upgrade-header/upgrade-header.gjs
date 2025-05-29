@@ -5,5 +5,7 @@ import UpgradeNotice from "../../components/docker-manager/upgrade-notice";
 @tagName("")
 @classNames("admin-upgrade-header-outlet", "upgrade-header")
 export default class UpgradeHeader extends Component {
-  <template><UpgradeNotice @versionCheck={{@outletArgs.versionCheck}} /></template>
+  <template>
+    <UpgradeNotice @versionCheck={{@outletArgs.versionCheck}} />
+  </template>
 }
