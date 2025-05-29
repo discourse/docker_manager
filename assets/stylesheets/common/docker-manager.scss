@@ -1,5 +1,4 @@
-@use "lib/viewport";
-
+/* stylelint-disable discourse/no-breakpoint-mixin */
 .dashboard-stats .upgrades-banner {
   background: var(--tertiary-low);
   flex: 1 1 100%;
@@ -119,7 +118,7 @@
     .d-admin-row__overview {
       width: 45%;
 
-      @include viewport.until(md) {
+      @include breakpoint("tablet") {
         width: auto;
       }
     }
@@ -128,7 +127,7 @@
       width: 12%; // set width to minimize layout shift
       text-align: left;
 
-      @include viewport.until(md) {
+      @include breakpoint("tablet") {
         width: auto;
       }
     }
@@ -139,7 +138,7 @@
     }
 
     .repo__latest-version {
-      @include viewport.until(md) {
+      @include breakpoint("tablet") {
         text-align: right;
       }
     }
