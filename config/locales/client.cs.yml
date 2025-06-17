@@ -46,7 +46,7 @@ cs:
         update_tab: "Aktualizace Discourse"
         update_title: "Aktualizace"
         update_description: "Aktualizujte Discourse a zobrazte spuštěné procesy."
-        updating: "Aktualizace…"
+        updating: "Probíhá aktualizace…"
         repo:
           name: "Název"
           commit_hash: "Hash commitu"
