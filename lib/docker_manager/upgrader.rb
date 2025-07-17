@@ -27,6 +27,13 @@ class DockerManager::Upgrader
 
     clear_logs
 
+    if @repos.any? { |repo| repo.url.include?("github.com/discoursehosting/") }
+      log "ERROR: Detected a reference to a compromised github organization: github.com/discoursehosting/"
+      log "Please remove any references to this organization from your configuration file."
+      log "For more information, see https://meta.discourse.org/t/374703/6"
+      raise "Compromised organization detected"
+    end
+
     log("********************************************************")
     log("*** Please be patient, next steps might take a while ***")
     log("********************************************************")
