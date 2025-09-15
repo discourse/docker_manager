@@ -8,11 +8,46 @@ pt:
   js:
     admin:
       docker:
+        all_up_to_date: "Tudo atualizado"
+        checking: "A procurar por nova versão..."
+        commits:
+          one: "%{count} nova submissão"
+          other: "%{count} novas submissões"
+        everything_up_to_date: "Está tudo atualizado"
+        forked_plugin: "Plug-in oficial bifurcado"
         last_updated: "Última atualização:"
+        latest_version: "Última versão:"
+        main_branch_warning: "<b>AVISO</b>: o seu Discourse está a monitorizar a ramificação 'principal' que pode ser instável, <a href='%{url}'>nós recomendamos a monitorização da ramificação 'tests-passed'</a>."
+        navigation:
+          processes: Processos
+          versions: Versões
+        new_version_available: "Disponível nova versão!"
+        official_plugin: "Plug-in Oficial"
         outdated_notice: "A sua instalação do Discourse está desatualizada."
+        perform_update: "Clique aqui para atualizar."
+        repo_newest_version: "%{name} é a versão mais recente."
+        repository: "Repositório"
+        reset_update: "Reiniciar Atualização"
+        start_updating: "Iniciar Atualização"
         status: "Estado"
+        up_to_date: "Atualizar"
         update_action: "Atualização"
+        update_all: "Atualizar Tudo"
+        update_error: "Desculpe, ocorreu um erro ao atualizar o Discourse. Por favor, verifique os registos em baixo."
+        update_everything: "Atualizar tudo"
+        update_repo: "Atualizar %{name}"
+        update_successful: "Atualização concluída com sucesso!"
+        update_tab: "Atualizar Discourse"
+        update_title: "Atualizações"
+        update_description: "Atualize o Discourse e veja os processos em execução."
+        updating: "A atualizar..."
         repo:
           name: "Nome"
+          commit_hash: "Hash de Submissão"
           last_updated: "Última Atualização"
+          latest_version: "Versão Mias Recente"
           status: "Estado"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "Atualizar para a versão mais recente"
