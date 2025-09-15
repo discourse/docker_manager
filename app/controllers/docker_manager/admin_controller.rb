@@ -56,7 +56,7 @@ module DockerManager
           end
 
         version = Gem::Version.new(version)
-        expected_version = Gem::Version.new("2.0.20250722-0020")
+        expected_version = Gem::Version.new("2.0.20250915-0018")
         ruby_version = Gem::Version.new(RUBY_VERSION)
         expected_ruby_version = Gem::Version.new("3.2.1")
         min_stable_version = Gem::Version.new("3.0.0")
