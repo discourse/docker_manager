@@ -27,7 +27,7 @@ cs:
         official_plugin: "Oficiální plugin"
         outdated_image_header: "Používáte starou verzi image Discourse"
         outdated_image_info: "Aktualizace prostřednictvím webového uživatelského rozhraní jsou zakázány, dokud nespustíte nejnovější image. Za tímto účelem se přihlaste k serveru pomocí SSH a spusťte:"
-        outdated_image_link: "Více informací na naší stránce podpory"
+        outdated_image_link: "Více informací najdete na naší stránce podpory"
         outdated_notice: "Vaše instalace Discourse je zastaralá."
         perform_update: "Kliknutím sem aktualizujete."
         repo_newest_version: "%{name} je aktuální."
