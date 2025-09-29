@@ -11,7 +11,7 @@ en:
         forked_plugin: "Forked official plugin"
         last_updated: "Last updated:"
         latest_version: "Latest version:"
-        main_branch_warning: "<b>WARNING:</b> Your Discourse is tracking the 'main' branch which may be unstable, <a href='%{url}'> we recommend tracking the 'tests-passed' branch</a>."
+        main_branch_warning: "<b>WARNING:</b> Your Discourse is tracking the 'main' branch which may be unstable, <a href='%{url}'> we recommend tracking the 'latest' branch</a>."
         navigation:
           processes: Processes
           versions: Versions
