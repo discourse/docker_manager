@@ -13,7 +13,6 @@ gl:
           one: "%{count} novo commit"
           other: "%{count} novos commits"
         everything_up_to_date: "Todo está actualizado"
-        main_branch_warning: "<b>ATENCIÓN:</b>A túa instancia de Discourse está seguindo a rama 'main' que pode ser inestable, <a href='%{url}'> recomendámosche cambiar á rama 'test-passed'</a>."
         navigation:
           processes: Procesos
           versions: Versións

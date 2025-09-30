@@ -17,7 +17,6 @@ hu:
         forked_plugin: "Forkolt hivatalos plugin"
         last_updated: "Legutóbb frissítve:"
         latest_version: "Legújabb verzió:"
-        main_branch_warning: "<b>FIGYELMEZTETÉS</b>: A Discourse a 'main' ágat követi, ami instabil lehet, <a href='%{url}'> ezért javasoljuk a 'tests-passed' ág követését</a>."
         navigation:
           processes: Folyamatok
           versions: Verziók

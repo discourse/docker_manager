@@ -19,7 +19,6 @@ cs:
         forked_plugin: "Fork oficiálního pluginu"
         last_updated: "Poslední aktualizace:"
         latest_version: "Poslední verze:"
-        main_branch_warning: "<b>VAROVÁNÍ:</b> Váš Discourse sleduje větev 'main', která může být nestabilní, <a href='%{url}'> doporučujeme sledovat větev 'tests-passed'.</a>"
         navigation:
           processes: Procesy
           versions: Verze

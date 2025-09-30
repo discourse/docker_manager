@@ -17,7 +17,7 @@ de:
         forked_plugin: "Fork von offiziellem Plug-in"
         last_updated: "Zuletzt aktualisiert:"
         latest_version: "Neueste Version:"
-        main_branch_warning: "<b>WARNUNG:</b> Dein Discourse befindet sich auf dem Branch „main“, der instabil sein kann. <a href='%{url}'>Wir empfehlen, auf den Branch „tests-passed“ zu wechseln</a>."
+        main_branch_warning: "<b>WARNUNG:</b> Dein Discourse befindet sich auf dem Branch „main“, der instabil sein kann. <a href='%{url}'>Wir empfehlen, auf den Branch „latest“ zu wechseln</a>."
         navigation:
           processes: Prozesse
           versions: Versionen

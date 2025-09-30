@@ -17,7 +17,6 @@ fr:
         forked_plugin: "Extension officielle ramifiée"
         last_updated: "Dernière mise à jour :"
         latest_version: "Dernière version :"
-        main_branch_warning: "<b>ATTENTION :</b> Votre Discourse suit la branche « main » qui peut être instable, <a href='%{url}'> nous recommandons de suivre la branche « tests-passed »</a>."
         navigation:
           processes: Processus
           versions: Versions

@@ -19,7 +19,6 @@ pl_PL:
         forked_plugin: "Forkowana oficjalna wtyczka"
         last_updated: "Ostatnio zaktualizowane:"
         latest_version: "Najnowsza wersja:"
-        main_branch_warning: "<b>UWAGA:</b> Twój Discourse śledzi gałąź 'main', która może być niestabilna, <a href='%{url}'>zalecamy śledzenie gałęzi 'tests-passed'</a>."
         navigation:
           processes: Procesy
           versions: Wersje

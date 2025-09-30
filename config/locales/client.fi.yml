@@ -17,7 +17,6 @@ fi:
         forked_plugin: "Virallisen lisäosan haarauma"
         last_updated: "Viimeksi päivitetty:"
         latest_version: "Uusin versio:"
-        main_branch_warning: "<b>VAROITUS:</b> Discoursesi seuraa \"main\"-haaraa, joka saattaa olla epävakaa, <a href='%{url}'> suosittelemme \"tests-passed\"-haaran seurantaa</a>."
         navigation:
           processes: Prosessit
           versions: Versiot

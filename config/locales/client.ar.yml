@@ -21,7 +21,6 @@ ar:
         forked_plugin: "نسخة معدَّلة من المكوِّن الإضافي الرسمي"
         last_updated: "آخر تحديث:"
         latest_version: "أحدث إصدار:"
-        main_branch_warning: "<b>تحذير:</b> يتتبَّع Discourse لديك فرع 'main' الذي قد يكون غير مستقر، <a href='%{url}'>نوصي بتتبُّع الفرع 'tests-passed'</a>."
         navigation:
           processes: العمليات
           versions: الإصدارات
