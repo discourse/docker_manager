@@ -16,7 +16,6 @@ ja:
         forked_plugin: "フォークされた公式プラグイン"
         last_updated: "最終更新:"
         latest_version: "最新バージョン:"
-        main_branch_warning: "<b>警告:</b> あなたの Discourse は不安定な可能性のある 'main' ブランチを追跡しています。<a href='%{url}'>'tests-passed' ブランチを追跡することをお勧めします</a>。"
         navigation:
           processes: プロセス
           versions: バージョン

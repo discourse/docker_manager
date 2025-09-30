@@ -19,7 +19,7 @@ he:
         forked_plugin: "תוסף רשמי עם שינויים"
         last_updated: "עדכון אחרון:"
         latest_version: "הגרסה העדכנית ביותר:"
-        main_branch_warning: "<b>אזהרה:</b> עותק ה־Discourse שלך עוקב אחר הענף ‚main’ (ראשי) שעלול להיות רעוע, <a href='%{url}'> אנו ממליצים לעקוב אחר הענף‚'tests-passed’</a> (לאחר בדיקות)."
+        main_branch_warning: "<b>אזהרה:</b> עותק ה־Discourse שלך עוקב אחר הענף ‚main’ (ראשי) שעלול להיות רעוע, <a href='%{url}'> אנו ממליצים לעקוב אחר הענף‚'latest’</a> (העדכני ביותר)."
         navigation:
           processes: תהליכים
           versions: גרסאות

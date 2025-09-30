@@ -17,7 +17,6 @@ it:
         forked_plugin: "Plugin ufficiale forkato"
         last_updated: "Ultimo aggiornamento:"
         latest_version: "Ultima versione:"
-        main_branch_warning: "<b>AVVISO:</b> Il tuo Discourse sta monitorando il branch \"principale\", che potrebbe essere instabile, <a href='%{url}'> ti consigliamo di monitorare il branch \"test superati\"</a>."
         navigation:
           processes: Processi
           versions: Versioni

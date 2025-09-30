@@ -16,7 +16,6 @@ zh_CN:
         forked_plugin: "复刻的官方插件"
         last_updated: "最近更新："
         latest_version: "最新版本："
-        main_branch_warning: "<b>警告</b>：您的 Discourse 正在跟踪可能不稳定的 'main' 分支，<a href='%{url}'>我们建议跟踪 'tests-passed' 分支</a>。"
         navigation:
           processes: 进程
           versions: 版本

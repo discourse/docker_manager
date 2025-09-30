@@ -17,7 +17,6 @@ pt:
         forked_plugin: "Plug-in oficial bifurcado"
         last_updated: "Última atualização:"
         latest_version: "Última versão:"
-        main_branch_warning: "<b>AVISO</b>: o seu Discourse está a monitorizar a ramificação 'principal' que pode ser instável, <a href='%{url}'>nós recomendamos a monitorização da ramificação 'tests-passed'</a>."
         navigation:
           processes: Processos
           versions: Versões
