@@ -30,12 +30,12 @@ export default class Repo {
 
   static async findUpgrading() {
     const result = await Repo.findAll();
-    return result.findBy("upgrading", true);
+    return result.find((item) => item.upgrading === true);
   }
 
   static async find(id) {
     const result = await Repo.findAll();
-    return result.findBy("id", id);
+    return result.find((item) => item.id === id);
   }
 
   static upgradeAll() {
