@@ -658,7 +658,7 @@ RSpec.describe DockerManager::GitRepo do
         @before_local_repo_clone << ->(repo) do
           repo.commit(
             filename: ".discourse-compatibility",
-            commits: [{ content: "<= 1000.0.0: twoPointFiveBranch", date: "2023-03-06T20:31:17Z" }],
+            commits: [{ content: "<= 9000.0.0: twoPointFiveBranch", date: "2023-03-06T20:31:17Z" }],
           )
         end
       end
