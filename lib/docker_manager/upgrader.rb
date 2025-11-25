@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
+require_relative "web_server_adapter"
+require_relative "unicorn_adapter"
+require_relative "pitchfork_adapter"
+
 class DockerManager::Upgrader
   def initialize(user_id, repos, from_version)
     @user_id = user_id
     @user = User.find(user_id)
     @repos = repos.is_a?(Array) ? repos : [repos]
     @from_version = from_version
+    @web_server = select_web_server_adapter
   end
 
   def reset!
@@ -16,7 +21,7 @@ class DockerManager::Upgrader
   end
 
   def min_workers
-    1
+    @web_server.min_workers
   end
 
   def upgrade
@@ -31,40 +36,40 @@ class DockerManager::Upgrader
     log("*** Please be patient, next steps might take a while ***")
     log("********************************************************")
 
-    launcher_pid = unicorn_launcher_pid
-    master_pid = unicorn_master_pid
-    workers = unicorn_workers(master_pid).size
+    launcher_pid = @web_server.launcher_pid
+    master_pid = @web_server.master_pid
+    workers = @web_server.workers(master_pid).size
 
-    if workers < 2
-      log("ABORTING, you do not have enough unicorn workers running")
+    if workers < @web_server.min_workers
+      log("ABORTING, you do not have enough #{@web_server.server_name} workers running")
       raise "Not enough workers"
     end
 
     if launcher_pid <= 0 || master_pid <= 0
-      log("ABORTING, missing unicorn launcher or unicorn master")
-      raise "No unicorn master or launcher"
+      log("ABORTING, missing #{@web_server.server_name} launcher or master/monitor")
+      raise "No #{@web_server.server_name} master or launcher"
     end
 
     percent(5)
 
-    log("Cycling Unicorn, to free up memory")
-    reload_unicorn(launcher_pid)
+    log("Cycling #{@web_server.server_name}, to free up memory")
+    @web_server.reload(launcher_pid, master_pid, method(:log))
 
     percent(10)
     reloaded = false
     num_workers_spun_down = workers - min_workers
 
     if num_workers_spun_down.positive?
-      log "Stopping #{workers - min_workers} Unicorn worker(s), to free up memory"
-      num_workers_spun_down.times { Process.kill("TTOU", unicorn_master_pid) }
+      log "Stopping #{num_workers_spun_down} #{@web_server.server_name} worker(s), to free up memory"
+      @web_server.scale_down_workers(master_pid, num_workers_spun_down)
     end
 
     if ENV["UNICORN_SIDEKIQS"].to_i > 0
-      log "Stopping job queue to reclaim memory, master pid is #{master_pid}"
-      Process.kill("TSTP", unicorn_master_pid)
-      sleep 1
-      # older versions do not have support, so quickly send a cont so master process is not hung
-      Process.kill("CONT", unicorn_master_pid)
+      if @web_server.pause_sidekiq(master_pid)
+        log "Stopping job queue to reclaim memory, master pid is #{master_pid}"
+      else
+        log "Note: #{@web_server.server_name} does not support pausing sidekiq via signals"
+      end
     end
 
     # HEAD@{upstream} is just a fancy way how to say origin/main (in normal case)
@@ -117,7 +122,7 @@ class DockerManager::Upgrader
     run("bundle exec rake s3:upload_assets") if using_s3_assets
 
     percent(80)
-    reload_unicorn(launcher_pid)
+    @web_server.reload(launcher_pid, master_pid, method(:log))
     reloaded = true
 
     # Flush nginx cache here - this is not critical, and the rake task may not exist yet - ignore failures here.
@@ -147,8 +152,8 @@ class DockerManager::Upgrader
     end
 
     if num_workers_spun_down.to_i.positive? && !reloaded
-      log "Spinning up #{num_workers_spun_down} Unicorn worker(s) that were stopped initially"
-      num_workers_spun_down.times { Process.kill("TTIN", unicorn_master_pid) }
+      log "Spinning up #{num_workers_spun_down} #{@web_server.server_name} worker(s) that were stopped initially"
+      @web_server.scale_up_workers(master_pid, num_workers_spun_down)
     end
 
     raise ex
@@ -269,47 +274,13 @@ class DockerManager::Upgrader
 
   private
 
-  def pid_exists?(pid)
-    Process.getpgid(pid)
-  rescue Errno::ESRCH
-    false
-  end
-
-  def unicorn_launcher_pid
-    `ps aux | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`.strip.to_i
-  end
-
-  def unicorn_master_pid
-    `ps aux | grep "unicorn master -E" | grep -v "grep" | awk '{print $2}'`.strip.to_i
-  end
-
-  def unicorn_workers(master_pid)
-    `ps -f --ppid #{master_pid} | grep worker | awk '{ print $2 }'`.split("\n").map(&:to_i)
-  end
-
-  def local_web_url
-    "http://127.0.0.1:#{ENV["UNICORN_PORT"] || 3000}/srv/status"
-  end
-
-  def reload_unicorn(launcher_pid)
-    log("Restarting unicorn pid: #{launcher_pid}")
-    original_master_pid = unicorn_master_pid
-    Process.kill("USR2", launcher_pid)
-
-    iterations = 0
-    while pid_exists?(original_master_pid)
-      iterations += 1
-      break if iterations >= 60
-      log("Waiting for Unicorn to reload#{"." * iterations}")
-      sleep 2
-    end
-
-    iterations = 0
-    while `curl -s #{local_web_url}` != "ok"
-      iterations += 1
-      break if iterations >= 60
-      log("Waiting for Unicorn workers to start up#{"." * iterations}")
-      sleep 2
+  # Select the appropriate web server adapter based on what's defined
+  # @return [WebServerAdapter]
+  def select_web_server_adapter
+    if defined?(Unicorn)
+      DockerManager::UnicornAdapter.new
+    else
+      DockerManager::PitchforkAdapter.new
     end
   end
 end
