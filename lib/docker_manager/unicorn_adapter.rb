@@ -10,9 +10,7 @@ module DockerManager
 
     # @return [Integer]
     def launcher_pid
-      `ps aux | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`
-        .strip
-        .to_i
+      `ps aux | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`.strip.to_i
     end
 
     # @return [Integer]
@@ -22,7 +20,7 @@ module DockerManager
 
     # @param master_pid [Integer]
     # @return [Array<Integer>]
-    def workers(master_pid)
+    def workers
       `ps -f --ppid #{master_pid} | grep worker | awk '{ print $2 }'`.split("\n").map(&:to_i)
     end
 
@@ -30,8 +28,9 @@ module DockerManager
     # @param launcher_pid [Integer]
     # @param original_master_pid [Integer]
     # @param logger [#call]
-    def reload(launcher_pid, original_master_pid, logger)
+    def reload(launcher_pid, logger)
       logger.call("Restarting #{server_name} pid: #{launcher_pid}")
+      original_master_pid = master_pid
       Process.kill("USR2", launcher_pid)
 
       # Wait for the original master to exit (it will spawn a new one)
@@ -56,7 +55,7 @@ module DockerManager
     # Pause Sidekiq by sending TSTP signal to Unicorn master
     # @param master_pid [Integer]
     # @return [Boolean]
-    def pause_sidekiq(master_pid)
+    def pause_sidekiq
       return false if ENV["UNICORN_SIDEKIQS"].to_i <= 0
 
       Process.kill("TSTP", master_pid)
@@ -64,13 +63,6 @@ module DockerManager
       # Older versions do not have support, so quickly send a CONT so master process is not hung
       Process.kill("CONT", master_pid)
       true
-    end
-
-    # Unicorn handles resume automatically with CONT signal sent after TSTP
-    # @param master_pid [Integer]
-    # @return [Boolean]
-    def resume_sidekiq(master_pid)
-      false
     end
 
     # @return [Integer]
