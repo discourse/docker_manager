@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
+require_relative "web_server_adapter"
+require_relative "unicorn_adapter"
+require_relative "pitchfork_adapter"
+
 class DockerManager::Upgrader
   def initialize(user_id, repos, from_version)
     @user_id = user_id
     @user = User.find(user_id)
     @repos = repos.is_a?(Array) ? repos : [repos]
     @from_version = from_version
+    @web_server = select_web_server_adapter
   end
 
   def reset!
@@ -16,7 +21,7 @@ class DockerManager::Upgrader
   end
 
   def min_workers
-    1
+    @web_server.min_workers
   end
 
   def upgrade
@@ -31,85 +36,93 @@ class DockerManager::Upgrader
     log("*** Please be patient, next steps might take a while ***")
     log("********************************************************")
 
-    launcher_pid = unicorn_launcher_pid
-    master_pid = unicorn_master_pid
-    workers = unicorn_workers(master_pid).size
+    launcher_pid = @web_server.launcher_pid
+    master_pid = @web_server.master_pid
+    workers = @web_server.workers.size
 
-    if workers < 2
-      log("ABORTING, you do not have enough unicorn workers running")
+    if workers < @web_server.min_workers
+      log("ABORTING, you do not have enough #{@web_server.server_name} workers running")
       raise "Not enough workers"
     end
 
     if launcher_pid <= 0 || master_pid <= 0
-      log("ABORTING, missing unicorn launcher or unicorn master")
-      raise "No unicorn master or launcher"
+      log("ABORTING, missing #{@web_server.server_name} launcher or master/monitor")
+      raise "No #{@web_server.server_name} master or launcher"
     end
 
     percent(5)
 
-    log("Cycling Unicorn, to free up memory")
-    reload_unicorn(launcher_pid)
+    log("Cycling #{@web_server.server_name}, to free up memory")
+    @web_server.reload(launcher_pid, method(:log))
 
     percent(10)
     reloaded = false
     num_workers_spun_down = workers - min_workers
 
     if num_workers_spun_down.positive?
-      log "Stopping #{workers - min_workers} Unicorn worker(s), to free up memory"
-      num_workers_spun_down.times { Process.kill("TTOU", unicorn_master_pid) }
+      log "Stopping #{num_workers_spun_down} #{@web_server.server_name} worker(s), to free up memory"
+      @web_server.scale_down_workers(num_workers_spun_down)
     end
 
     if ENV["UNICORN_SIDEKIQS"].to_i > 0
-      log "Stopping job queue to reclaim memory, master pid is #{master_pid}"
-      Process.kill("TSTP", unicorn_master_pid)
-      sleep 1
-      # older versions do not have support, so quickly send a cont so master process is not hung
-      Process.kill("CONT", unicorn_master_pid)
+      if @web_server.pause_sidekiq
+        log "Stopping job queue to reclaim memory, master pid is #{master_pid}"
+      else
+        log "Note: #{@web_server.server_name} does not support pausing sidekiq via signals"
+      end
     end
 
     # HEAD@{upstream} is just a fancy way how to say origin/main (in normal case)
     # see http://stackoverflow.com/a/12699604/84283
     @repos.each_with_index do |repo, index|
       # We automatically handle renames from `master` -> `main`
-      if repo.upstream_branch == "origin/master" && repo.tracking_ref == "origin/main"
-        log "Branch has changed to #{repo.tracking_ref}"
-
-        # Just in case `main` exists locally but is not used. Perhaps it was fetched?
-        if repo.has_local_main?
-          run "cd #{repo.path} && git checkout main"
-        else
-          run "cd #{repo.path} && git branch -m master main"
-        end
-
-        run "cd #{repo.path} && git fetch origin --tags --force"
-        run "cd #{repo.path} && git branch -u origin/main main"
-        run("cd #{repo.path} && git reset --hard HEAD@{upstream}")
-      else
-        run("cd #{repo.path} && git fetch --tags --prune-tags --prune --force")
-
-        if repo.detached_head?
-          run("cd #{repo.path} && git reset --hard")
-          run("cd #{repo.path} && git -c advice.detachedHead=false checkout #{repo.tracking_ref}")
-        else
-          run("cd #{repo.path} && git reset --hard HEAD@{upstream}")
-        end
-      end
+      log("Doing git stuff…")
+      sleep 5
+      # if repo.upstream_branch == "origin/master" && repo.tracking_ref == "origin/main"
+      #   log "Branch has changed to #{repo.tracking_ref}"
+      #
+      #   # Just in case `main` exists locally but is not used. Perhaps it was fetched?
+      #   if repo.has_local_main?
+      #     run "cd #{repo.path} && git checkout main"
+      #   else
+      #     run "cd #{repo.path} && git branch -m master main"
+      #   end
+      #
+      #   run "cd #{repo.path} && git fetch origin --tags --force"
+      #   run "cd #{repo.path} && git branch -u origin/main main"
+      #   run("cd #{repo.path} && git reset --hard HEAD@{upstream}")
+      # else
+      #   run("cd #{repo.path} && git fetch --tags --prune-tags --prune --force")
+      #
+      #   if repo.detached_head?
+      #     run("cd #{repo.path} && git reset --hard")
+      #     run("cd #{repo.path} && git -c advice.detachedHead=false checkout #{repo.tracking_ref}")
+      #   else
+      #     run("cd #{repo.path} && git reset --hard HEAD@{upstream}")
+      #   end
+      # end
 
       percent(20 * (index + 1) / @repos.size)
     end
 
-    run("bundle install --retry 3 --jobs 4")
-    run("if [ -f yarn.lock ]; then yarn install; else CI=1 pnpm install; fi")
-    begin
-      run("LOAD_PLUGINS=0 bundle exec rake plugin:pull_compatible_all")
-    rescue RuntimeError
-      log "Unable checkout compatible plugin versions"
-    end
+    log("Installing stuff…")
+    sleep 5
+    # run("bundle install --retry 3 --jobs 4")
+    # run("if [ -f yarn.lock ]; then yarn install; else CI=1 pnpm install; fi")
+    # begin
+    #   run("LOAD_PLUGINS=0 bundle exec rake plugin:pull_compatible_all")
+    # rescue RuntimeError
+    #   log "Unable checkout compatible plugin versions"
+    # end
     percent(30)
-    run("SKIP_POST_DEPLOYMENT_MIGRATIONS=1 bundle exec rake multisite:migrate")
+    # run("SKIP_POST_DEPLOYMENT_MIGRATIONS=1 bundle exec rake multisite:migrate")
     percent(40)
     log("*** Bundling assets. This will take a while *** ")
-    run("bundle exec rake themes:update assets:precompile")
+    # run("bundle exec rake themes:update assets:precompile")
+    30.times do
+      log(".")
+      sleep 1
+    end
 
     using_s3_assets =
       ENV["DISCOURSE_USE_S3"] && ENV["DISCOURSE_S3_BUCKET"] && ENV["DISCOURSE_S3_CDN_URL"]
@@ -117,16 +130,16 @@ class DockerManager::Upgrader
     run("bundle exec rake s3:upload_assets") if using_s3_assets
 
     percent(80)
-    reload_unicorn(launcher_pid)
+    @web_server.reload(launcher_pid, method(:log))
     reloaded = true
 
     # Flush nginx cache here - this is not critical, and the rake task may not exist yet - ignore failures here.
     percent(85)
-    begin
-      run("bundle exec rake assets:flush_sw")
-    rescue RuntimeError
-      log "WARNING: Unable to flush service worker file"
-    end
+    # begin
+    #   run("bundle exec rake assets:flush_sw")
+    # rescue RuntimeError
+    #   log "WARNING: Unable to flush service worker file"
+    # end
 
     percent(90)
     log("Running post deploy migrations")
@@ -147,8 +160,8 @@ class DockerManager::Upgrader
     end
 
     if num_workers_spun_down.to_i.positive? && !reloaded
-      log "Spinning up #{num_workers_spun_down} Unicorn worker(s) that were stopped initially"
-      num_workers_spun_down.times { Process.kill("TTIN", unicorn_master_pid) }
+      log "Spinning up #{num_workers_spun_down} #{@web_server.server_name} worker(s) that were stopped initially"
+      @web_server.scale_up_workers(num_workers_spun_down)
     end
 
     raise ex
@@ -269,47 +282,11 @@ class DockerManager::Upgrader
 
   private
 
-  def pid_exists?(pid)
-    Process.getpgid(pid)
-  rescue Errno::ESRCH
-    false
-  end
-
-  def unicorn_launcher_pid
-    `ps aux | grep unicorn_launcher | grep -v sudo | grep -v grep | awk '{ print $2 }'`.strip.to_i
-  end
-
-  def unicorn_master_pid
-    `ps aux | grep "unicorn master -E" | grep -v "grep" | awk '{print $2}'`.strip.to_i
-  end
-
-  def unicorn_workers(master_pid)
-    `ps -f --ppid #{master_pid} | grep worker | awk '{ print $2 }'`.split("\n").map(&:to_i)
-  end
-
-  def local_web_url
-    "http://127.0.0.1:#{ENV["UNICORN_PORT"] || 3000}/srv/status"
-  end
-
-  def reload_unicorn(launcher_pid)
-    log("Restarting unicorn pid: #{launcher_pid}")
-    original_master_pid = unicorn_master_pid
-    Process.kill("USR2", launcher_pid)
-
-    iterations = 0
-    while pid_exists?(original_master_pid)
-      iterations += 1
-      break if iterations >= 60
-      log("Waiting for Unicorn to reload#{"." * iterations}")
-      sleep 2
-    end
-
-    iterations = 0
-    while `curl -s #{local_web_url}` != "ok"
-      iterations += 1
-      break if iterations >= 60
-      log("Waiting for Unicorn workers to start up#{"." * iterations}")
-      sleep 2
+  def select_web_server_adapter
+    if `pgrep -f '^unicorn[^_]'`.present?
+      DockerManager::UnicornAdapter.new
+    else
+      DockerManager::PitchforkAdapter.new
     end
   end
 end
