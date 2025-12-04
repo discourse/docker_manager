@@ -119,6 +119,10 @@ class DockerManager::Upgrader
     percent(40)
     log("*** Bundling assets. This will take a while *** ")
     # run("bundle exec rake themes:update assets:precompile")
+    30.times do
+      log(".")
+      sleep 1
+    end
 
     using_s3_assets =
       ENV["DISCOURSE_USE_S3"] && ENV["DISCOURSE_S3_BUCKET"] && ENV["DISCOURSE_S3_CDN_URL"]
@@ -279,7 +283,7 @@ class DockerManager::Upgrader
   private
 
   def select_web_server_adapter
-    if `pgrep unicorn`.present?
+    if `pgrep -f '^unicorn[^_]'`.present?
       DockerManager::UnicornAdapter.new
     else
       DockerManager::PitchforkAdapter.new
