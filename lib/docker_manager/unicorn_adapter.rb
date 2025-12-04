@@ -11,11 +11,11 @@ module DockerManager
     end
 
     def master_pid
-      `ps aux | grep "unicorn master -E" | grep -v "grep" | awk '{print $2}'`.strip.to_i
+      `pgrep -f "unicorn master -E"`.strip.to_i
     end
 
     def workers
-      `ps -f --ppid #{master_pid} | grep worker | awk '{ print $2 }'`.split("\n").map(&:to_i)
+      `pgrep -f -P #{master_pid} worker`.split("\n").map(&:to_i)
     end
 
     def reload(launcher_pid, logger)
