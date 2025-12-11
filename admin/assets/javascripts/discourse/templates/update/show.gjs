@@ -1,8 +1,8 @@
 import { on } from "@ember/modifier";
 import RouteTemplate from "ember-route-template";
 import { i18n } from "discourse-i18n";
-import Console from "../components/docker-manager/console";
-import ProgressBar from "../components/docker-manager/progress-bar";
+import Console from "../../components/docker-manager/console";
+import ProgressBar from "../../components/docker-manager/progress-bar";
 
 export default RouteTemplate(
   <template>

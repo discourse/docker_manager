@@ -2,7 +2,7 @@ import Route from "@ember/routing/route";
 import { cancel } from "@ember/runloop";
 import { bind } from "discourse/lib/decorators";
 import discourseLater from "discourse/lib/later";
-import ProcessList from "../models/process-list";
+import ProcessList from "../../models/process-list";
 
 const REFRESH_INTERVAL = 5000;
 
