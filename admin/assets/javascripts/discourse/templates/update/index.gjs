@@ -2,7 +2,7 @@ import { on } from "@ember/modifier";
 import RouteTemplate from "ember-route-template";
 import DButton from "discourse/components/d-button";
 import { i18n } from "discourse-i18n";
-import RepoStatus from "../components/repo-status";
+import RepoStatus from "../../components/repo-status";
 
 export default RouteTemplate(
   <template>
