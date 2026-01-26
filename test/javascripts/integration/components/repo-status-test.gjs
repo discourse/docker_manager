@@ -46,15 +46,13 @@ module("Integration | Component | RepoStatus", function (hooks) {
   setupRenderingTest(hooks);
 
   test("renders correctly", async function (assert) {
-    const self = this;
-
     const store = getOwner(this).lookup("service:store");
     this.set("repo", store.createRecord("repo", repoProps));
     this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
       <template>
-        <RepoStatus @repo={{self.repo}} @managerRepo={{self.managerRepo}} />
+        <RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />
       </template>
     );
 
@@ -89,8 +87,6 @@ module("Integration | Component | RepoStatus", function (hooks) {
   });
 
   test("official plugin", async function (assert) {
-    const self = this;
-
     const store = getOwner(this).lookup("service:store");
     repoProps.plugin = { name: "discourse", isOfficial: true };
     this.set("repo", store.createRecord("repo", repoProps));
@@ -98,7 +94,7 @@ module("Integration | Component | RepoStatus", function (hooks) {
 
     await render(
       <template>
-        <RepoStatus @repo={{self.repo}} @managerRepo={{self.managerRepo}} />
+        <RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />
       </template>
     );
 
@@ -108,15 +104,13 @@ module("Integration | Component | RepoStatus", function (hooks) {
   });
 
   test("update button", async function (assert) {
-    const self = this;
-
     const store = getOwner(this).lookup("service:store");
     this.set("repo", store.createRecord("repo", repoProps));
     this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
       <template>
-        <RepoStatus @repo={{self.repo}} @managerRepo={{self.managerRepo}} />
+        <RepoStatus @repo={{this.repo}} @managerRepo={{this.managerRepo}} />
       </template>
     );
 
