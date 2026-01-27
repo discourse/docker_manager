@@ -92,8 +92,13 @@ module("Integration | Component | RepoStatus", function (hooks) {
     const self = this;
 
     const store = getOwner(this).lookup("service:store");
-    repoProps.plugin = { name: "discourse", isOfficial: true };
-    this.set("repo", store.createRecord("repo", repoProps));
+    this.set(
+      "repo",
+      store.createRecord("repo", {
+        ...repoProps,
+        plugin: { name: "discourse", isOfficial: true },
+      })
+    );
     this.set("managerRepo", store.createRecord("repo", managerProps));
 
     await render(
