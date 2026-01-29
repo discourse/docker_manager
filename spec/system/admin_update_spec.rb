@@ -2,7 +2,7 @@
 
 require_dependency "docker_manager/git_repo"
 
-RSpec.describe "Admin update", type: :system do
+RSpec.describe "Admin update" do
   fab!(:admin)
   let(:admin_update_page) { PageObjects::Pages::AdminUpdate.new }
 
