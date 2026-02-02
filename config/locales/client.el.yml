@@ -8,11 +8,44 @@ el:
   js:
     admin:
       docker:
+        all_up_to_date: "Όλα ενημερωμένα"
+        checking: "Γίνεται έλεγχος για νέα έκδοση…"
+        commits:
+          one: "%{count} νέα υποβολή"
+          other: "%{count} νέες υποβολές"
+        everything_up_to_date: "Τα πάντα είναι ενημερωμένα"
         last_updated: "Τελευταία ενημέρωση:"
+        latest_version: "Τελευταία έκδοση:"
+        navigation:
+          processes: Διεργασίες
+          versions: Εκδόσεις
+        new_version_available: "Νέα έκδοση διαθέσιμη!"
+        official_plugin: "Επίσημο πρόσθετο"
+        outdated_image_link: "Περισσότερες πληροφορίες στον ιστότοπο υποστήριξής μας"
         outdated_notice: "Η εγκατάσταση του Discourse σας δεν είναι ενημερωμένη."
+        perform_update: "Κάντε κλικ εδώ για ενημέρωση."
+        repo_newest_version: "Το %{name} είναι στη νεότερη έκδοση."
+        repository: "Αποθετήριο"
+        reset_update: "Επαναφορά ενημέρωσης"
+        start_updating: "Ξεκινήστε την ενημέρωση"
         status: "Κατάσταση"
+        up_to_date: "Ενημερωμένο"
         update_action: "Ενημέρωση"
+        update_all: "Ενημέρωση όλων"
+        update_everything: "Ενημέρωση όλων"
+        update_repo: "Ενημέρωση %{name}"
+        update_successful: "Η ενημέρωση ολοκληρώθηκε επιτυχώς!"
+        update_tab: "Ενημέρωση Discourse"
+        update_title: "Ενημερώσεις"
+        update_description: "Ενημέρωση του Discourse και προβολή διεργασιών που εκτελούνται."
+        updating: "Ενημερώνεται…"
         repo:
           name: "Όνομα"
+          commit_hash: "Τιμή κατακερματισμού υποβολής"
           last_updated: "Τελευταία ενημέρωση"
+          latest_version: "Τελευταία έκδοση"
           status: "Κατάσταση"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "Ενημέρωση στην τελευταία έκδοση"

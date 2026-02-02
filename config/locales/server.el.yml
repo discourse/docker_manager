@@ -5,3 +5,5 @@
 # https://translate.discourse.org/
 
 el:
+  docker_manager:
+    title: "Διαχειριστής ενημέρωσης Discourse"
