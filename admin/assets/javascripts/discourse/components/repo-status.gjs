@@ -44,22 +44,20 @@ export default class RepoStatus extends Component {
   }
 
   <template>
-    <tr
-      class="d-admin-row__content repo {{if @repo.hasNewVersion 'has-update'}}"
-    >
-      <td class="d-admin-row__overview">
-        <div class="d-admin-row__overview-name">
+    <tr class="d-table__row repo {{if @repo.hasNewVersion 'has-update'}}">
+      <td class="d-table__cell --overview">
+        <div class="d-table__overview-name">
           {{@repo.nameTitleized}}
         </div>
 
         {{#if @repo.author}}
-          <div class="d-admin-row__overview-author">
+          <div class="d-table__overview-author">
             {{@repo.author}}
           </div>
         {{/if}}
 
         {{#if @repo.plugin}}
-          <div class="d-admin-row__overview-about">
+          <div class="d-table__overview-about">
             {{@repo.plugin.about}}
 
             {{#if @repo.linkUrl}}
@@ -82,22 +80,22 @@ export default class RepoStatus extends Component {
         {{/if}}
       </td>
 
-      <td class="d-admin-row__detail">
-        <div class="d-admin-row__mobile-label">
+      <td class="d-table__cell --detail">
+        <div class="d-table__mobile-label">
           {{i18n "admin.docker.repo.commit_hash"}}
         </div>
         {{commitUrl "current" @repo.version @repo.prettyVersion @repo.url}}
       </td>
 
-      <td class="d-admin-row__detail">
-        <div class="d-admin-row__mobile-label">
+      <td class="d-table__cell --detail">
+        <div class="d-table__mobile-label">
           {{i18n "admin.docker.repo.last_updated"}}
         </div>
         {{formatDate @repo.latest.date leaveAgo="true"}}
       </td>
 
-      <td class="d-admin-row__detail">
-        <div class="d-admin-row__mobile-label">
+      <td class="d-table__cell --detail">
+        <div class="d-table__mobile-label">
           {{i18n "admin.docker.repo.latest_version"}}
         </div>
         <div class="repo__latest-version">
@@ -120,7 +118,7 @@ export default class RepoStatus extends Component {
         </div>
       </td>
 
-      <td class="d-admin-row__controls">
+      <td class="d-table__cell --controls">
         {{#if @repo.checkingStatus}}
           <div class="status-label --loading">
             {{i18n "admin.docker.checking"}}
