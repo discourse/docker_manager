@@ -104,7 +104,7 @@ module("Integration | Component | RepoStatus", function (hooks) {
     );
 
     assert
-      .dom("div.d-admin-row__overview-author")
+      .dom("div.d-table__overview-author")
       .hasText("By Discourse", "shows plugin author");
   });
 

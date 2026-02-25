@@ -12,10 +12,10 @@ RSpec.describe "Admin update" do
     visit("/admin/update")
 
     expect(page).to have_css("h3", exact_text: I18n.t("js.admin.docker.update_title"))
-    expect(page).to have_css("tr.repo .d-admin-row__overview-name", exact_text: "Discourse")
-    expect(page).to have_css("tr.repo .d-admin-row__overview-name", exact_text: "Docker Manager")
+    expect(page).to have_css("tr.repo .d-table__overview-name", exact_text: "Discourse")
+    expect(page).to have_css("tr.repo .d-table__overview-name", exact_text: "Docker Manager")
     expect(page).to have_css(
-      "tr.repo .d-admin-row__overview-about a[href='https://meta.discourse.org/t/12655']",
+      "tr.repo .d-table__overview-about a[href='https://meta.discourse.org/t/12655']",
     )
   ensure
     puts page.html if ENV["CI"]

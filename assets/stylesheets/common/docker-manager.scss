@@ -110,12 +110,12 @@
     }
   }
 
-  .d-admin-table {
+  .d-table {
     margin-bottom: var(--space-6);
   }
 
-  .d-admin-row__content.repo {
-    .d-admin-row__overview {
+  .d-table__row.repo {
+    .d-table__cell.--overview {
       width: 45%;
 
       @include breakpoint("tablet") {
@@ -123,7 +123,7 @@
       }
     }
 
-    .d-admin-row__controls {
+    .d-table__cell.--controls {
       width: 12%; // set width to minimize layout shift
       text-align: left;
 

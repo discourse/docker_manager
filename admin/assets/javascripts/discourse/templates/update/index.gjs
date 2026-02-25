@@ -42,8 +42,8 @@ export default RouteTemplate(
       </p>
     {{else}}
 
-      <table class="d-admin-table" id="repos">
-        <thead>
+      <table class="d-table" id="repos">
+        <thead class="d-table__header">
           <th>{{i18n "admin.docker.repo.name"}}</th>
           <th>{{i18n "admin.docker.repo.commit_hash"}}</th>
           <th>{{i18n "admin.docker.repo.last_updated"}}</th>
