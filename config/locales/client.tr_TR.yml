@@ -17,6 +17,7 @@ tr_TR:
         forked_plugin: "Çatallı resmî eklenti"
         last_updated: "Son güncelleme:"
         latest_version: "En son sürüm:"
+        main_branch_warning: "<b>UYARI:</b> Discourse'unuz, kararsız olabilecek ‘ana’ dalı takip ediyor. <a href='%{url}'>'latest' dalını takip etmenizi öneririz</a>."
         navigation:
           processes: Süreçler
           versions: Sürümler
