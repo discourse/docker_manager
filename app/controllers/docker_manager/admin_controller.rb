@@ -59,16 +59,11 @@ module DockerManager
         expected_version = Gem::Version.new("2.0.20260209-1300")
         ruby_version = Gem::Version.new(RUBY_VERSION)
         expected_ruby_version = Gem::Version.new("3.4.7")
-        min_stable_version = Gem::Version.new("3.0.0")
-        min_beta_version = Gem::Version.new("3.1.0.beta1")
-
         upgrade_image = version < expected_version
         upgrade_ruby = ruby_version < expected_ruby_version
-        upgrade_discourse = discourse_upgrade_required?(min_stable_version, min_beta_version)
         missing_core_branch = !core_repo.detached_head? && !core_repo.upstream_branch_exist?
 
-        response[:upgrade_required] = true if upgrade_image || upgrade_ruby || upgrade_discourse ||
-          missing_core_branch
+        response[:upgrade_required] = true if upgrade_image || upgrade_ruby || missing_core_branch
       end
 
       render json: response
@@ -179,15 +174,6 @@ module DockerManager
       else
         params[:version]
       end
-    end
-
-    def discourse_upgrade_required?(min_stable_version, min_beta_version)
-      tracking_stable = Discourse::VERSION::PRE.nil?
-      discourse_version = Gem::Version.new(Discourse::VERSION::STRING)
-
-      target_version = tracking_stable ? min_stable_version : min_beta_version
-
-      discourse_version < target_version
     end
   end
 end
