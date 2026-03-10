@@ -17,6 +17,7 @@ pt_BR:
         forked_plugin: "Plugin oficial bifurcado"
         last_updated: "Última atualização:"
         latest_version: "Versão mais recente:"
+        main_branch_warning: "<b>ATENÇÃO:</b> Seu Discourse está monitorando a branch \"main\", que pode ser instável, <a href='%{url}'> recomendamos monitorar a branch \"latest\"</a>."
         navigation:
           processes: Processos
           versions: Versões
