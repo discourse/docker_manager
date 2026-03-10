@@ -11,7 +11,7 @@ module DockerManager
     end
 
     def master_pid
-      `pgrep -f "unicorn master -E"`.strip.to_i
+      `pgrep -f "^unicorn master -E"`.strip.to_i
     end
   end
 end
