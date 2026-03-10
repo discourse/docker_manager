@@ -31,7 +31,7 @@ RSpec.describe DockerManager::UnicornAdapter do
 
   describe "#master_pid" do
     before do
-      allow_any_instance_of(Kernel).to receive(:`).with('pgrep -f "unicorn master -E"').and_return(
+      allow_any_instance_of(Kernel).to receive(:`).with('pgrep -f "^unicorn master -E"').and_return(
         "5678\n",
       )
     end
