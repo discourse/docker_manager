@@ -1,8 +1,8 @@
 import { cached, tracked } from "@glimmer/tracking";
 import { capitalize } from "@ember/string";
 import { TrackedObject } from "@ember-compat/tracked-built-ins";
+import AdminPlugin from "discourse/admin/models/admin-plugin";
 import { ajax } from "discourse/lib/ajax";
-import AdminPlugin from "admin/models/admin-plugin";
 
 let loaded = [];
 export let needsImageUpgrade = false;
