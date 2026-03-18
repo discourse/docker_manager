@@ -19,6 +19,7 @@ ru:
         forked_plugin: "Форк официального плагина"
         last_updated: "Последнее обновление:"
         latest_version: "Последняя версия:"
+        main_branch_warning: "<b>ПРЕДУПРЕЖДЕНИЕ:</b> Ваш Discourse отслеживает ветку 'main', которая может быть нестабильной, <a href='%{url}'> мы рекомендуем отслеживать ветку 'latest'</a>."
         navigation:
           processes: Процессы
           versions: Версии
