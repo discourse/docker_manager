@@ -17,6 +17,7 @@ es:
         forked_plugin: "Plugin oficial bifurcado"
         last_updated: "Última actualización:"
         latest_version: "Ultima versión:"
+        main_branch_warning: "<b>ATENCIÓN:</b> Tu Discourse está siguiendo la rama «main», que puede ser inestable, <a href='%{url}'> te recomendamos que sigas la rama «latest»</a>."
         navigation:
           processes: Procesos
           versions: Versiones
