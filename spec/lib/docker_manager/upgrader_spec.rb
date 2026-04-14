@@ -80,7 +80,9 @@ RSpec.describe DockerManager::Upgrader do
       let(:workers) { [2001] }
 
       it "raises an error" do
-        expect { upgrader.upgrade }.to raise_error("Not enough workers")
+        expect {
+          expect { upgrader.upgrade }.to output(/FAILED TO UPGRADE/).to_stderr
+        }.to raise_error("Not enough workers")
       end
     end
 
@@ -88,7 +90,9 @@ RSpec.describe DockerManager::Upgrader do
       let(:launcher_pid) { 0 }
 
       it "raises an error" do
-        expect { upgrader.upgrade }.to raise_error("No Pitchfork master or launcher")
+        expect {
+          expect { upgrader.upgrade }.to output(/FAILED TO UPGRADE/).to_stderr
+        }.to raise_error("No Pitchfork master or launcher")
       end
     end
 
@@ -96,7 +100,9 @@ RSpec.describe DockerManager::Upgrader do
       let(:master_pid) { 0 }
 
       it "raises an error" do
-        expect { upgrader.upgrade }.to raise_error("No Pitchfork master or launcher")
+        expect {
+          expect { upgrader.upgrade }.to output(/FAILED TO UPGRADE/).to_stderr
+        }.to raise_error("No Pitchfork master or launcher")
       end
     end
 
@@ -238,17 +244,23 @@ RSpec.describe DockerManager::Upgrader do
       end
 
       it "sets status to failed" do
-        expect { upgrader.upgrade }.to raise_error(RuntimeError)
+        expect {
+          expect { upgrader.upgrade }.to output(/FAILED TO UPGRADE/).to_stderr
+        }.to raise_error(RuntimeError)
         expect(upgrader.last_status).to eq("failed")
       end
 
       it "stops upgrading for all repos" do
-        expect { upgrader.upgrade }.to raise_error(RuntimeError)
+        expect {
+          expect { upgrader.upgrade }.to output(/FAILED TO UPGRADE/).to_stderr
+        }.to raise_error(RuntimeError)
         expect(repo).to have_received(:stop_upgrading)
       end
 
       it "scales workers back up" do
-        expect { upgrader.upgrade }.to raise_error(RuntimeError)
+        expect {
+          expect { upgrader.upgrade }.to output(/FAILED TO UPGRADE/).to_stderr
+        }.to raise_error(RuntimeError)
         expect(upgrader.web_server).to have_received(:scale_up_workers).with(2)
       end
     end
