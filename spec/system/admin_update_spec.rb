@@ -8,11 +8,17 @@ RSpec.describe "Admin update" do
   before do
     sign_in(admin)
 
-    # Avoid running `git` for every repo on every request
-    DockerManager::GitRepo.any_instance.stubs(:latest_origin_commit).returns("a" * 40)
-    DockerManager::GitRepo.any_instance.stubs(:latest_origin_tag_version).returns(nil)
-    DockerManager::GitRepo.any_instance.stubs(:commits_behind).returns(0)
-    DockerManager::GitRepo.any_instance.stubs(:latest_origin_commit_date).returns(Time.current)
+    # Avoid running `git` for every repo on every request.
+    DockerManager::GitRepo.any_instance.stubs(
+      latest_local_commit: "a" * 40,
+      latest_local_tag_version: nil,
+      latest_origin_commit: "a" * 40,
+      latest_origin_tag_version: nil,
+      latest_origin_commit_date: Time.current,
+      commits_behind: 0,
+      tracking_ref: "origin/main",
+      url: "https://github.com/discourse/example",
+    )
   end
 
   it "displays the admin update page with the right repositories" do
