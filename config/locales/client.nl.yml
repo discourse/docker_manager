@@ -17,6 +17,7 @@ nl:
         forked_plugin: "Fork van officiële plug-in"
         last_updated: "Laatst bijgewerkt:"
         latest_version: "Nieuwste versie:"
+        main_branch_warning: "<b>WAARSCHUWING:</b> Je Discourse volgt de 'main'-branch die mogelijk instabiel kan zijn. <a href='%{url}'>We raden aan om de branch latest'</a> te volgen."
         navigation:
           processes: Processen
           versions: Versies
