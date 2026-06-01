@@ -8,20 +8,47 @@ da:
   js:
     admin:
       docker:
+        all_up_to_date: "Alt opdateret"
         checking: "Søger efter ny version…"
+        commits:
+          one: "%{count} ny commit"
+          other: "%{count} nye commits"
         everything_up_to_date: "Alt er opdateret"
         last_updated: "Sidst opdateret:"
+        latest_version: "Seneste Version:"
+        main_branch_warning: "<b>ADVARSEL:</b> Din Discourse følger 'main'-grenen, som kan være ustabil. <a href='%{url}'> Vi anbefaler, at du følger 'latest'-grenen</a>."
         navigation:
           processes: Processer
           versions: Versioner
+        new_version_available: "Ny Version Tilgængelig!"
+        official_plugin: "Officielt plugin"
+        outdated_image_header: "Du kører en gammel version af Discourse-image"
         outdated_image_link: "Mere info på vores supportside"
         outdated_notice: "Din Discourse-installation er forældet."
+        perform_update: "Klik her for at opgradere."
+        repo_newest_version: "%{name} er på den nyeste version."
+        reset_update: "Nulstil Opgradering"
+        reset_warning: "ADVARSEL: Du bør kun nulstille opdateringer, der er mislykkedes og ikke kører. Dette vil IKKE annullere nuværende kørende builds og bør kun bruges som en sidste udvej."
+        start_updating: "Start opgradering"
         status: "Status"
         up_to_date: "Opdateret"
         update_action: "Opdater"
+        update_all: "Opdater Alle"
+        update_error: "Beklager, der opstod en fejl under opdatering af Discourse . Kontroller logs nedenfor."
+        update_everything: "Opgrader alt"
+        update_repo: "Opgrader %{name}"
+        update_successful: "Opgradering gennemført med succes!"
+        update_tab: "Opdater Discourse"
+        update_title: "Opdateringer"
+        update_description: "Opdater Discourse og se kørende processer."
         updating: "Opdaterer…"
         repo:
           name: "Navn"
+          commit_hash: "Commit Hash"
           last_updated: "Sidst opdateret"
           latest_version: "Seneste Version"
           status: "Status"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "Opdater til den seneste version"
