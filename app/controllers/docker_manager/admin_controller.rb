@@ -56,9 +56,9 @@ module DockerManager
           end
 
         version = Gem::Version.new(version)
-        expected_version = Gem::Version.new("2.0.20260726-0220")
+        expected_version = Gem::Version.new("2.0.20260803-0122")
         ruby_version = Gem::Version.new(RUBY_VERSION)
-        expected_ruby_version = Gem::Version.new("3.4.9")
+        expected_ruby_version = Gem::Version.new("3.4.10")
         upgrade_image = version < expected_version
         upgrade_ruby = ruby_version < expected_ruby_version
         missing_core_branch = !core_repo.detached_head? && !core_repo.upstream_branch_exist?
