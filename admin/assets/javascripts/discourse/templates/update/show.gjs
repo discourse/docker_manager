@@ -28,7 +28,7 @@ export default <template>
       <button
         {{on "click" @controller.start}}
         disabled={{@controller.upgrading}}
-        class="btn start-upgrade"
+        class="btn btn-default start-upgrade"
         type="button"
       >
         {{#if @controller.upgrading}}
@@ -41,7 +41,7 @@ export default <template>
       {{#if @controller.upgrading}}
         <button
           {{on "click" @controller.resetUpgrade}}
-          class="btn unlock"
+          class="btn btn-default unlock"
           type="button"
         >
           {{i18n "admin.docker.reset_update"}}
