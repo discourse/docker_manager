@@ -8,11 +8,50 @@ ur:
   js:
     admin:
       docker:
-        last_updated: "آخری دفہ اپ ڈیٹ:"
-        outdated_notice: "آپ کی ڈسکورس انسٹالیشن پرانی ہو چکی ہے۔"
-        status: "سٹیٹس"
+        all_up_to_date: "سب تازہ ترین ہے"
+        checking: "نئے ورژن کی جانچ ہو رہی ہے…"
+        commits:
+          one: "%{count} نیا کمٹ"
+          other: "%{count} نئے کمٹ"
+        everything_up_to_date: "سب کچھ تازہ ترین ہے"
+        forked_plugin: "فورکڈ آفیشل پلگ ان"
+        last_updated: "آخری اپ ڈیٹ:"
+        latest_version: "تازہ ترین ورژن:"
+        main_branch_warning: "<b>انتباہ:</b> آپ کا ڈسکورس 'مین' برانچ کو ٹریک کر رہا ہے جو غیر مستحکم ہو سکتی ہے، <a href='%{url}'> ہم 'تازہ ترین' برانچ کو ٹریک کرنے کی سفارش کرتے ہیں</a> ۔"
+        navigation:
+          processes: اعوامل
+          versions: ورژنز
+        new_version_available: "نیا ورژن دستیاب ہے!"
+        official_plugin: "آفیشل پلگ ان"
+        outdated_image_header: "آپ Discourse امیج کا پرانا ورژن چلا رہے ہیں۔"
+        outdated_image_info: "ویب UI کے ذریعے اپ ڈیٹس اس وقت تک غیر فعال ہیں جب تک آپ کے پاس تازہ ترین امیج نہ ہو۔ ایسا کرنے کے لیے SSH کے ذریعے اپنے سرور میں لاگ ان کریں اور درج ذیل کمانڈ لکھیں:"
+        outdated_image_link: "مزید معلومات کے لیے ہماری سپورٹ سائٹ ملاحظہ کریں۔"
+        outdated_notice: "آپ کی Discourse انسٹالیشن پرانی ہو چکی ہے۔"
+        perform_update: "اپ ڈیٹ کرنے کے لیے یہاں کلک کریں۔"
+        repo_newest_version: "%{name} تازہ ترین ورژن پر ہے۔"
+        repository: "ریپوزیٹری"
+        reset_update: "اپ ڈیٹ کو ری سیٹ کریں"
+        reset_warning: "انتباہ: آپ کو صرف ان اپ ڈیٹس کو ری سیٹ کرنا چاہیے جو ناکام ہو چکی ہیں اور چل نہیں رہی ہیں۔ یہ فی الحال چلنے والی بلڈز کو منسوخ نہیں کرے گا اور صرف آخری چارہ کے طور پر استعمال کیا جانا چاہیے۔"
+        start_updating: "اپ ڈیٹ کرنا شروع کریں"
+        status: "حیثیت"
+        up_to_date: "تازہ ترین"
         update_action: "اپ ڈیٹ"
+        update_all: "سب کو اپ ڈیٹ کریں"
+        update_error: "معذرت، Discourse کو اپ ڈیٹ کرتے وقت ایک خرابی پیش آئی۔ براہ کرم نیچے دیے گئے لاگز چیک کریں۔"
+        update_everything: "سبھی کو اپ ڈیٹ کریں"
+        update_repo: "%{name} کو اپ ڈیٹ کریں"
+        update_successful: "اپ ڈیٹ کامیابی کے ساتھ مکمل ہو گیا!"
+        update_tab: "Discourse اپ ڈیٹ"
+        update_title: "اپ ڈیٹس"
+        update_description: "Discourse کو اپ ڈیٹ کریں اور چلنے والے اعوامل دیکھیں۔"
+        updating: "اپڈیٹ ہو رہا ہے۔۔۔"
         repo:
           name: "نام"
-          last_updated: "آخری دفہ اپ ڈیٹ"
-          status: "سٹیٹس"
+          commit_hash: "کمٹ ہیش"
+          last_updated: "آخری اپ ڈیٹ"
+          latest_version: "تازہ ترین ورژن"
+          status: "حیثیت"
+      logs:
+        staff_actions:
+          actions:
+            discourse_update: "تازہ ترین ورژن پر اپ ڈیٹ کریں"
