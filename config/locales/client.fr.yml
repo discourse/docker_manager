@@ -9,14 +9,15 @@ fr:
     admin:
       docker:
         all_up_to_date: "Tout est à jour"
-        checking: "Vérification de la nouvelle version…"
+        checking: "Recherche d'une nouvelle version…"
         commits:
-          one: "%{count} nouveau commit"
-          other: "%{count} nouveaux commits"
+          one: "%{count} nouveau commit"
+          other: "%{count} nouveaux commits"
         everything_up_to_date: "Tout est à jour"
-        forked_plugin: "Extension officielle ramifiée"
+        forked_plugin: "Extension officielle issue d'un fork"
         last_updated: "Dernière mise à jour :"
         latest_version: "Dernière version :"
+        main_branch_warning: "<b>AVERTISSEMENT :</b> votre installation Discourse suit la branche 'main', qui peut être instable. <a href='%{url}'>Nous vous recommandons de suivre la branche 'latest'</a>."
         navigation:
           processes: Processus
           versions: Versions
@@ -27,10 +28,10 @@ fr:
         outdated_image_link: "Plus d'informations sur notre site d'assistance"
         outdated_notice: "Votre installation de Discourse n'est pas à jour."
         perform_update: "Cliquez ici pour mettre à jour."
-        repo_newest_version: "%{name} correspond à la version la plus récente."
-        repository: "Référentiel"
+        repo_newest_version: "%{name} est déjà à la dernière version."
+        repository: "Dépôt"
         reset_update: "Réinitialiser la mise à jour"
-        reset_warning: "AVERTISSEMENT : vous ne devez réinitialiser que les mises à jour qui ont échoué et qui ne sont pas en cours d'exécution. Cela n'annulera PAS les versions en cours d'exécution et ne doit être utilisé qu'en dernier recours."
+        reset_warning: "AVERTISSEMENT : vous ne devez réinitialiser que les mises à jour qui ont échoué et qui ne sont pas en cours d'exécution. Cela n'annulera PAS les opérations de reconstruction en cours d'exécution et ne doit être utilisé qu'en dernier recours."
         start_updating: "Commencer la mise à jour"
         status: "Statut"
         up_to_date: "À jour"
@@ -38,7 +39,7 @@ fr:
         update_all: "Tout mettre à jour"
         update_error: "Nous sommes désolés, une erreur s'est produite lors de la mise à jour de Discourse. Veuillez consulter les journaux ci-dessous."
         update_everything: "Tout mettre à jour"
-        update_repo: "Mise à jour %{name}"
+        update_repo: "Mise à jour de %{name}"
         update_successful: "Mise à jour terminée avec succès !"
         update_tab: "Mettre à jour Discourse"
         update_title: "Mises à jour"
@@ -46,11 +47,11 @@ fr:
         updating: "Mise à jour…"
         repo:
           name: "Nom"
-          commit_hash: "Valider le hachage"
-          last_updated: "Dernière mise à jour "
-          latest_version: "Dernière version "
+          commit_hash: "Empreinte du commit"
+          last_updated: "Dernière mise à jour"
+          latest_version: "Dernière version"
           status: "Statut"
       logs:
         staff_actions:
           actions:
-            discourse_update: "Mettre à jour vers la dernière version"
+            discourse_update: "Mise à jour vers la dernière version"
