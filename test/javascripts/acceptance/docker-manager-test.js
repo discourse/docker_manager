@@ -7,6 +7,30 @@ acceptance("docker_manager", function (needs) {
   needs.user({ admin: true });
 
   test("basic navigation", async function (assert) {
+    pretender.get("/admin/dashboard.json", () =>
+      response({
+        sections: [
+          {
+            id: "system",
+            data: {
+              version: {
+                installed_version: "3.5.0.beta1",
+                installed_sha: "010370f8b1cfa56cea3736059c96d0578e7918e2",
+                latest_version: "3.5.0.beta2",
+                missing_versions_count: 1,
+                critical_updates: false,
+                updated_at: "2026-10-29T00:00:00.000Z",
+                stale_data: false,
+                version_check_pending: false,
+              },
+            },
+          },
+        ],
+        configuration: { sections: [{ id: "system", visible: true }] },
+        problems: [],
+      })
+    );
+
     await visit("/admin");
     assert.dom(".upgrades-banner").exists();
 
