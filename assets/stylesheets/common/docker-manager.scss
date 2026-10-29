@@ -1,8 +1,7 @@
 /* stylelint-disable discourse/no-breakpoint-mixin */
-.dashboard-stats .upgrades-banner {
+.upgrades-banner {
   background: var(--tertiary-low);
   flex: 1 1 100%;
-  margin-bottom: 2rem;
   padding: 1rem;
 
   &.upgrade-needed {
