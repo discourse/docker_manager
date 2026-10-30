@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "base_image"
 require_relative "web_server_adapter"
 require_relative "unicorn_adapter"
 require_relative "pitchfork_adapter"
@@ -44,6 +45,12 @@ class DockerManager::Upgrader
     if launcher_pid <= 0 || master_pid <= 0
       log("ABORTING, missing #{server_name} launcher or master/monitor")
       raise "No #{server_name} master or launcher"
+    end
+
+    if DockerManager::BaseImage.outdated?
+      log("ABORTING, you are running an old version of the Discourse image")
+      log("Rebuild it with `./launcher rebuild app` before you update")
+      raise "Base image is out of date"
     end
 
     percent(5)
