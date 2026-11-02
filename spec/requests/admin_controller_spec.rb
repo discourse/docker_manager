@@ -51,5 +51,39 @@ RSpec.describe DockerManager::AdminController do
       expect(response.status).to eq(200)
       expect(response.parsed_body["repos"].first["official"]).to eq(false)
     end
+
+    context "when the image check runs" do
+      before do
+        sign_in(Fabricate(:admin))
+        Rails.env.stubs(:test?).returns(false)
+        DockerManager::GitRepo.any_instance.stubs(:detached_head?).returns(true)
+      end
+
+      it "requires an upgrade when the base image is out of date" do
+        DockerManager::BaseImage.stubs(:outdated?).returns(true)
+
+        get "/admin/docker/repos.json"
+        expect(response.status).to eq(200)
+        expect(response.parsed_body["upgrade_required"]).to eq(true)
+      end
+
+      it "does not require an upgrade when the base image is current" do
+        DockerManager::BaseImage.stubs(:outdated?).returns(false)
+
+        get "/admin/docker/repos.json"
+        expect(response.status).to eq(200)
+        expect(response.parsed_body).not_to have_key("upgrade_required")
+      end
+
+      it "does not require an upgrade when the base image version cannot be read" do
+        DockerManager::BaseImage.stubs(:outdated?).raises(
+          Discourse::Utils::CommandError.new("git fetch failed"),
+        )
+
+        get "/admin/docker/repos.json"
+        expect(response.status).to eq(200)
+        expect(response.parsed_body).not_to have_key("upgrade_required")
+      end
+    end
   end
 end

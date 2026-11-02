@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_dependency "docker_manager/base_image"
 require_dependency "docker_manager/git_repo"
 require_dependency "docker_manager/upgrader"
 
@@ -48,22 +49,8 @@ module DockerManager
       response = { repos: repos }
 
       if !Rails.env.development? && !Rails.env.test?
-        version =
-          begin
-            File.read("/VERSION")
-          rescue StandardError
-            "1.0.0"
-          end
-
-        version = Gem::Version.new(version)
-        expected_version = Gem::Version.new("2.0.20261027-1647")
-        ruby_version = Gem::Version.new(RUBY_VERSION)
-        expected_ruby_version = Gem::Version.new("4.0.9")
-        upgrade_image = version < expected_version
-        upgrade_ruby = ruby_version < expected_ruby_version
         missing_core_branch = !core_repo.detached_head? && !core_repo.upstream_branch_exist?
-
-        response[:upgrade_required] = true if upgrade_image || upgrade_ruby || missing_core_branch
+        response[:upgrade_required] = true if missing_core_branch || image_outdated?
       end
 
       render json: response
@@ -161,6 +148,13 @@ module DockerManager
     end
 
     private
+
+    def image_outdated?
+      DockerManager::BaseImage.outdated?
+    rescue => e
+      Discourse.warn_exception(e, message: "Unable to check the base image version")
+      false
+    end
 
     def respond_progress(logs: "", percentage: 0, status: nil, repos: nil)
       progress = { logs: logs, percentage: percentage, status: status, repos: repos }

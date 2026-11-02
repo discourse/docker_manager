@@ -57,6 +57,7 @@ RSpec.describe DockerManager::Upgrader do
     before do
       allow_any_instance_of(Kernel).to receive(:`).with(/pgrep/).and_return("")
       allow(Open3).to receive(:popen2e).and_yield([], [], OpenStruct.new(value: 0))
+      allow(DockerManager::BaseImage).to receive(:outdated?).and_return(false)
       allow(upgrader.web_server).to receive_messages(
         launcher_pid:,
         master_pid:,
@@ -103,6 +104,35 @@ RSpec.describe DockerManager::Upgrader do
         expect {
           expect { upgrader.upgrade }.to output(/FAILED TO UPGRADE/).to_stderr
         }.to raise_error("No Pitchfork master or launcher")
+      end
+    end
+
+    context "when the base image is out of date" do
+      before { allow(DockerManager::BaseImage).to receive(:outdated?).and_return(true) }
+
+      it "aborts before it changes anything" do
+        expect {
+          expect { upgrader.upgrade }.to output(/FAILED TO UPGRADE/).to_stderr
+        }.to raise_error("Base image is out of date")
+        expect(upgrader.find_logs).to include("ABORTING")
+        expect(upgrader.web_server).not_to have_received(:reload)
+        expect(Open3).not_to have_received(:popen2e)
+      end
+    end
+
+    context "when the base image version cannot be read" do
+      before do
+        allow(DockerManager::BaseImage).to receive(:outdated?).and_raise(
+          Discourse::Utils::CommandError.new("git fetch failed"),
+        )
+      end
+
+      it "aborts before it changes anything" do
+        expect {
+          expect { upgrader.upgrade }.to output(/FAILED TO UPGRADE/).to_stderr
+        }.to raise_error(Discourse::Utils::CommandError)
+        expect(upgrader.web_server).not_to have_received(:reload)
+        expect(Open3).not_to have_received(:popen2e)
       end
     end
 
