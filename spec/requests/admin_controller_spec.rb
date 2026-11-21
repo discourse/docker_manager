@@ -2,7 +2,7 @@
 
 RSpec.describe DockerManager::AdminController do
   describe "anonymous user" do
-    it "should be a 404" do
+    it "is a 404" do
       get "/admin/update"
 
       expect(response.status).to eq(404)
@@ -10,7 +10,7 @@ RSpec.describe DockerManager::AdminController do
   end
 
   describe "when user is not an admin" do
-    it "should 404" do
+    it "404S" do
       sign_in(Fabricate(:user))
 
       get "/admin/update"
@@ -19,14 +19,14 @@ RSpec.describe DockerManager::AdminController do
   end
 
   describe "when user is an admin" do
-    it "should return the right response" do
+    it "returns the right response" do
       sign_in(Fabricate(:admin))
 
       get "/admin/update"
       expect(response.status).to eq(200)
     end
 
-    it "should redirect to the new route" do
+    it "redirects to the new route" do
       sign_in(Fabricate(:admin))
 
       get "/admin/upgrade"
@@ -44,7 +44,7 @@ RSpec.describe DockerManager::AdminController do
       DockerManager::GitRepo.stubs(:find_all).returns(repos[0...3])
     end
 
-    it "should return the right response" do
+    it "returns the right response" do
       sign_in(Fabricate(:admin))
 
       get "/admin/docker/repos.json"
